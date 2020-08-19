@@ -5,6 +5,19 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 
+static bool s_Perspective = false;
+static float s_AspectRatio = 16.0f/9.0f;
+
+static glm::vec3 s_Position = { 0.0f, 0.0f, 0.0f };
+static float s_Rotation = 0.0f;
+
+static glm::vec3 s_PerspectiveCameraPosition = { 0.0f, 0.0f, -3.0f};
+static glm::vec3 s_OrthoCameraPosition = { 0.0f, 0.0f, 0.0f};
+
+static glm::vec3 s_CameraRotation = { 0.0f, 0.0f, 0.0f };
+
+static float s_FOV = 45.0f;
+
 int main(int argc, const char * argv[])
 {
     iKan::Log::Init();
@@ -55,33 +68,27 @@ int main(int argc, const char * argv[])
     glViewport(0, 0, windowWidth, windowHeight);
     
     // GLFW Callbacks foe events
-    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
-                              {
+    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
+        s_AspectRatio = (float)width / (float)height;
     });
     
-    glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
-                               {
+    glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
     });
     
-    glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
-                       {
+    glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
     });
     
-    glfwSetCharCallback(window, [](GLFWwindow* window, uint32_t keycode)
-                        {
+    glfwSetCharCallback(window, [](GLFWwindow* window, uint32_t keycode) {
     });
     
-    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
-                               {
+    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
     });
     
-    glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
-                          {
+    glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
     });
     
-    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
-                             {
+    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
     });
     
     // ImGui
@@ -163,13 +170,14 @@ int main(int argc, const char * argv[])
     out vec2 v_TexCoord;
     
     uniform mat4 u_Model;
+    uniform mat4 u_ProjectionView;
     
     void main()
     {
     v_Color     = a_Color;
     v_TexCoord  = a_TexCoord;
     
-    gl_Position = u_Model * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+    gl_Position = u_Model * u_ProjectionView * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
     }
     )";
     
@@ -324,10 +332,16 @@ int main(int argc, const char * argv[])
         IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture");
     
     glUniform1i(location, 0);
-
+    
     // Game Loop
     while (!glfwWindowShouldClose(window))
     {
+        glm::mat4 projection = glm::mat4(1.0f);
+        if(s_Perspective)
+            projection = glm::perspective(glm::radians(s_FOV), s_AspectRatio, 0.1f, 100.0f);
+        else
+            projection = glm::ortho(-s_AspectRatio, s_AspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
@@ -335,7 +349,7 @@ int main(int argc, const char * argv[])
         glUseProgram(shaderProgram);
         
         // upload model to shader
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), { 0.5f, 0.0f, 0.0f });
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), s_Position) * glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation), glm::vec3(1, 0, 0));
         // Upload Texture to shader at slot 0
         location = glGetUniformLocation(shaderProgram, "u_Model");
         
@@ -343,6 +357,27 @@ int main(int argc, const char * argv[])
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
         
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
+        
+        glm::mat4 view = glm::mat4(1.0f);
+        if (s_Perspective)
+            view = glm::translate(glm::mat4(1.0f), s_PerspectiveCameraPosition) *
+            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
+            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.y), glm::vec3(0, 1, 0)) *
+            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1));
+
+        else
+            view = glm::inverse(glm::translate(glm::mat4(1.0f), s_OrthoCameraPosition) *
+                                glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
+                                glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.y), glm::vec3(0, 1, 0)) *
+                                glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1)));
+
+        glm::mat4 projectionView = projection * view;
+        location = glGetUniformLocation(shaderProgram, "u_ProjectionView");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
+        
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
         
         // Bind VertexArray
         glBindVertexArray(VAO);
@@ -362,6 +397,25 @@ int main(int argc, const char * argv[])
         // Render Imgui
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::Separator();
+        ImGui::DragFloat3("Model", &s_Position.x);
+        ImGui::DragFloat("Rotation X", &s_Rotation);
+        ImGui::Separator();
+            
+        float position[3];
+        if (s_Perspective)
+            memcpy(position, &s_PerspectiveCameraPosition.x, sizeof(float) * 3);
+        else
+            memcpy(position, &s_OrthoCameraPosition.x, sizeof(float) * 3);
+
+        ImGui::DragFloat3("Camera Position", position);
+        ImGui::DragFloat3("Camera Rotation", &s_CameraRotation.x);
+        ImGui::Separator();
+
+        if (ImGui::Checkbox("Perspective Camera", &s_Perspective))
+        {
+        }
+        ImGui::DragFloat("FOV", &s_FOV);
+        ImGui::Separator();
         
         // End Imgui
         ImGuiIO& io      = ImGui::GetIO();
@@ -377,7 +431,6 @@ int main(int argc, const char * argv[])
             glfwMakeContextCurrent(backup_current_context);
         }
         
-
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
