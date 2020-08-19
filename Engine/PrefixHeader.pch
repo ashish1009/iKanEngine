@@ -1,0 +1,8 @@
+#pragma once
+
+// C++ headers
+#include <iostream>
+#include <memory>
+
+// Logger
+#include <iKan/Core/Log.h>

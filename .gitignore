@@ -1,0 +1,6 @@
+# Directories
+bin/
+bin-int/
+
+# Mac Files
+.DS_Store
