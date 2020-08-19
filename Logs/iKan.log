@@ -1,2 +1,6 @@
-[15:55:56] [info    ] iKAN: Initialized spd logger
-[15:55:57] [info    ] iKAN: Creating Window : iKan Engine (1280x720)
+[16:53:12] [info    ] iKAN: Initialized spd logger
+[16:53:13] [info    ] iKAN: Creating Window : iKan Engine (1280x720)
+[16:53:13] [info    ] iKAN: OpenGl Info :
+[16:53:13] [info    ] iKAN: Vendor   : Intel Inc. 
+[16:53:13] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[16:53:13] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 

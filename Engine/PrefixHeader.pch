@@ -5,6 +5,7 @@
 // C++ headers
 #include <iostream>
 #include <memory>
+#include <string>
 
 // Logger
 #include <iKan/Core/Log.h>
