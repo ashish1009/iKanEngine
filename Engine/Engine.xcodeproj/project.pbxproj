@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375EE24ED274A00A14055 /* libglfw3.a */; };
+		B213761824ED29DF00A14055 /* Core.h in Headers */ = {isa = PBXBuildFile; fileRef = B213761724ED29DF00A14055 /* Core.h */; };
+		B213761A24ED2AA700A14055 /* iKan.h in Headers */ = {isa = PBXBuildFile; fileRef = B213761924ED2AA700A14055 /* iKan.h */; };
+		B213761B24ED35AC00A14055 /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B213760B24ED286700A14055 /* libGlad.a */; };
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
@@ -26,6 +29,8 @@
 /* Begin PBXFileReference section */
 		B21375EE24ED274A00A14055 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/GLFW/lib/libglfw3.a; sourceTree = "<group>"; };
 		B213760624ED286700A14055 /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
+		B213761724ED29DF00A14055 /* Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Core.h; sourceTree = "<group>"; };
+		B213761924ED2AA700A14055 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B24FF88724ED1A3C00884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -37,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B213761B24ED35AC00A14055 /* libGlad.a in Frameworks */,
 				B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,6 +96,7 @@
 		B24FF88E24ED1A7900884EDA /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B213761924ED2AA700A14055 /* iKan.h */,
 				B24FF88F24ED1A8000884EDA /* iKan */,
 			);
 			path = src;
@@ -108,6 +115,7 @@
 			children = (
 				B24FF89124ED1AAB00884EDA /* Log.cpp */,
 				B24FF89224ED1AAB00884EDA /* Log.h */,
+				B213761724ED29DF00A14055 /* Core.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -120,7 +128,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */,
+				B213761824ED29DF00A14055 /* Core.h in Headers */,
 				B24FF89424ED1AAB00884EDA /* Log.h in Headers */,
+				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
