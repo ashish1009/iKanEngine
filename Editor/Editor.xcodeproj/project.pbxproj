@@ -278,6 +278,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
 					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
+					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -299,6 +300,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
 					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
+					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
