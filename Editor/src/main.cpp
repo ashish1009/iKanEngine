@@ -314,7 +314,7 @@ int main(int argc, const char * argv[])
         location = glGetUniformLocation(shaderProgram, "u_Model");
         
         if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture");
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
         
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
         
