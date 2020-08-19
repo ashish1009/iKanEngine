@@ -1,8 +1,14 @@
 #pragma once
 
+#pragma clang diagnostic ignored "-Wdocumentation"
+
 // C++ headers
 #include <iostream>
 #include <memory>
 
 // Logger
 #include <iKan/Core/Log.h>
+
+// GLFW
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>

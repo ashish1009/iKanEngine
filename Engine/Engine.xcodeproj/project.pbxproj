@@ -7,12 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375EE24ED274A00A14055 /* libglfw3.a */; };
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B213760A24ED286700A14055 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B213760624ED286700A14055 /* Glad.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B21375FF24ED286700A14055;
+			remoteInfo = Glad;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		B21375EE24ED274A00A14055 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = vendor/GLFW/lib/libglfw3.a; sourceTree = "<group>"; };
+		B213760624ED286700A14055 /* Glad.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Glad.xcodeproj; path = vendor/Glad/Glad.xcodeproj; sourceTree = "<group>"; };
 		B24FF88724ED1A3C00884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -24,18 +37,45 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B21375ED24ED274A00A14055 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B21375EE24ED274A00A14055 /* libglfw3.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B213760724ED286700A14055 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B213760B24ED286700A14055 /* libGlad.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B213760C24ED286C00A14055 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				B213760624ED286700A14055 /* Glad.xcodeproj */,
+			);
+			name = Dependencies;
+			sourceTree = "<group>";
+		};
 		B24FF87E24ED1A3C00884EDA = {
 			isa = PBXGroup;
 			children = (
+				B213760C24ED286C00A14055 /* Dependencies */,
 				B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */,
 				B24FF88E24ED1A7900884EDA /* src */,
 				B24FF88824ED1A3C00884EDA /* Products */,
+				B21375ED24ED274A00A14055 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -130,12 +170,28 @@
 			mainGroup = B24FF87E24ED1A3C00884EDA;
 			productRefGroup = B24FF88824ED1A3C00884EDA /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B213760724ED286700A14055 /* Products */;
+					ProjectRef = B213760624ED286700A14055 /* Glad.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B24FF88624ED1A3C00884EDA /* Engine */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B213760B24ED286700A14055 /* libGlad.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGlad.a;
+			remoteRef = B213760A24ED286700A14055 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B24FF88424ED1A3C00884EDA /* Sources */ = {
@@ -274,6 +330,12 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",
 					"${PROJECT_DIR}/vendor/spdlog/include",
+					"${PROJECT_DIR}/vendor/GLFW/include",
+					"${PROJECT_DIR}/vendor/Glad/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/vendor/GLFW/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -294,6 +356,12 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",
 					"${PROJECT_DIR}/vendor/spdlog/include",
+					"${PROJECT_DIR}/vendor/GLFW/include",
+					"${PROJECT_DIR}/vendor/Glad/include",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/vendor/GLFW/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

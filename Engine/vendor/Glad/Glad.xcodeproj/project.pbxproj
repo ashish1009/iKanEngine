@@ -7,121 +7,127 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F024ED275600A14055 /* OpenGL.framework */; };
-		B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F224ED275B00A14055 /* IOKit.framework */; };
-		B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F424ED276400A14055 /* Cocoa.framework */; };
-		B24FF87824ED197300884EDA /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF87724ED197300884EDA /* main.cpp */; };
-		B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B24FF89824ED1BF900884EDA /* libEngine.a */; };
+		B213761424ED289700A14055 /* glad.c in Sources */ = {isa = PBXBuildFile; fileRef = B213760E24ED289700A14055 /* glad.c */; };
+		B213761524ED289700A14055 /* khrplatform.h in Headers */ = {isa = PBXBuildFile; fileRef = B213761124ED289700A14055 /* khrplatform.h */; };
+		B213761624ED289700A14055 /* glad.h in Headers */ = {isa = PBXBuildFile; fileRef = B213761324ED289700A14055 /* glad.h */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		B24FF87224ED197300884EDA /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		B24FF87424ED197300884EDA /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
-		B24FF87724ED197300884EDA /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B21375FF24ED286700A14055 /* libGlad.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGlad.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B213760E24ED289700A14055 /* glad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glad.c; sourceTree = "<group>"; };
+		B213761124ED289700A14055 /* khrplatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = khrplatform.h; sourceTree = "<group>"; };
+		B213761324ED289700A14055 /* glad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glad.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B24FF87124ED197300884EDA /* Frameworks */ = {
+		B21375FD24ED286700A14055 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */,
-				B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */,
-				B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */,
-				B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B24FF86B24ED197300884EDA = {
+		B21375F624ED286700A14055 = {
 			isa = PBXGroup;
 			children = (
-				B24FF87624ED197300884EDA /* src */,
-				B24FF87524ED197300884EDA /* Products */,
-				B24FF89724ED1BF900884EDA /* Frameworks */,
+				B213760F24ED289700A14055 /* include */,
+				B213760D24ED289700A14055 /* src */,
+				B213760024ED286700A14055 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		B24FF87524ED197300884EDA /* Products */ = {
+		B213760024ED286700A14055 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B24FF87424ED197300884EDA /* Editor */,
+				B21375FF24ED286700A14055 /* libGlad.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B24FF87624ED197300884EDA /* src */ = {
+		B213760D24ED289700A14055 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				B24FF87724ED197300884EDA /* main.cpp */,
+				B213760E24ED289700A14055 /* glad.c */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		B24FF89724ED1BF900884EDA /* Frameworks */ = {
+		B213760F24ED289700A14055 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				B21375F424ED276400A14055 /* Cocoa.framework */,
-				B21375F224ED275B00A14055 /* IOKit.framework */,
-				B21375F024ED275600A14055 /* OpenGL.framework */,
-				B24FF89824ED1BF900884EDA /* libEngine.a */,
+				B213761024ED289700A14055 /* KHR */,
+				B213761224ED289700A14055 /* glad */,
 			);
-			name = Frameworks;
+			path = include;
+			sourceTree = "<group>";
+		};
+		B213761024ED289700A14055 /* KHR */ = {
+			isa = PBXGroup;
+			children = (
+				B213761124ED289700A14055 /* khrplatform.h */,
+			);
+			path = KHR;
+			sourceTree = "<group>";
+		};
+		B213761224ED289700A14055 /* glad */ = {
+			isa = PBXGroup;
+			children = (
+				B213761324ED289700A14055 /* glad.h */,
+			);
+			path = glad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		B21375FB24ED286700A14055 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B213761624ED289700A14055 /* glad.h in Headers */,
+				B213761524ED289700A14055 /* khrplatform.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
-		B24FF87324ED197300884EDA /* Editor */ = {
+		B21375FE24ED286700A14055 /* Glad */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24FF87B24ED197300884EDA /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildConfigurationList = B213760324ED286700A14055 /* Build configuration list for PBXNativeTarget "Glad" */;
 			buildPhases = (
-				B24FF87024ED197300884EDA /* Sources */,
-				B24FF87124ED197300884EDA /* Frameworks */,
-				B24FF87224ED197300884EDA /* CopyFiles */,
+				B21375FB24ED286700A14055 /* Headers */,
+				B21375FC24ED286700A14055 /* Sources */,
+				B21375FD24ED286700A14055 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Editor;
-			productName = Editor;
-			productReference = B24FF87424ED197300884EDA /* Editor */;
-			productType = "com.apple.product-type.tool";
+			name = Glad;
+			productName = Glad;
+			productReference = B21375FF24ED286700A14055 /* libGlad.a */;
+			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B24FF86C24ED197300884EDA /* Project object */ = {
+		B21375F724ED286700A14055 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Ashish .";
 				TargetAttributes = {
-					B24FF87324ED197300884EDA = {
+					B21375FE24ED286700A14055 = {
 						CreatedOnToolsVersion = 11.6;
 					};
 				};
 			};
-			buildConfigurationList = B24FF86F24ED197300884EDA /* Build configuration list for PBXProject "Editor" */;
+			buildConfigurationList = B21375FA24ED286700A14055 /* Build configuration list for PBXProject "Glad" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -129,29 +135,29 @@
 				en,
 				Base,
 			);
-			mainGroup = B24FF86B24ED197300884EDA;
-			productRefGroup = B24FF87524ED197300884EDA /* Products */;
+			mainGroup = B21375F624ED286700A14055;
+			productRefGroup = B213760024ED286700A14055 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B24FF87324ED197300884EDA /* Editor */,
+				B21375FE24ED286700A14055 /* Glad */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B24FF87024ED197300884EDA /* Sources */ = {
+		B21375FC24ED286700A14055 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B24FF87824ED197300884EDA /* main.cpp in Sources */,
+				B213761424ED289700A14055 /* glad.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		B24FF87924ED197300884EDA /* Debug */ = {
+		B213760124ED286700A14055 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -209,7 +215,7 @@
 			};
 			name = Debug;
 		};
-		B24FF87A24ED197300884EDA /* Release */ = {
+		B213760224ED286700A14055 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -260,72 +266,50 @@
 			};
 			name = Release;
 		};
-		B24FF87C24ED197300884EDA /* Debug */ = {
+		B213760424ED286700A14055 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-					IK_ENABLE_LOG,
-					IK_ENABLE_ASSERT,
-				);
-				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../Engine/src",
-					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
-					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
-					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
-				);
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		B24FF87D24ED197300884EDA /* Release */ = {
+		B213760524ED286700A14055 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					IK_ENABLE_LOG,
-					IK_ENABLE_ASSERT,
-				);
-				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../Engine/src",
-					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
-					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
-					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
-				);
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B24FF86F24ED197300884EDA /* Build configuration list for PBXProject "Editor" */ = {
+		B21375FA24ED286700A14055 /* Build configuration list for PBXProject "Glad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24FF87924ED197300884EDA /* Debug */,
-				B24FF87A24ED197300884EDA /* Release */,
+				B213760124ED286700A14055 /* Debug */,
+				B213760224ED286700A14055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24FF87B24ED197300884EDA /* Build configuration list for PBXNativeTarget "Editor" */ = {
+		B213760324ED286700A14055 /* Build configuration list for PBXNativeTarget "Glad" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24FF87C24ED197300884EDA /* Debug */,
-				B24FF87D24ED197300884EDA /* Release */,
+				B213760424ED286700A14055 /* Debug */,
+				B213760524ED286700A14055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B24FF86C24ED197300884EDA /* Project object */;
+	rootObject = B21375F724ED286700A14055 /* Project object */;
 }
