@@ -13,6 +13,8 @@
 		B213761B24ED35AC00A14055 /* libGlad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B213760B24ED286700A14055 /* libGlad.a */; };
 		B213795324ED4E6400A14055 /* stb_image.h in Headers */ = {isa = PBXBuildFile; fileRef = B21376CE24ED4E6100A14055 /* stb_image.h */; };
 		B213795424ED4E6400A14055 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B21376CF24ED4E6100A14055 /* stb_image.cpp */; };
+		B2137A5724ED78FA00A14055 /* ImGuiBuild.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2137A5424ED78FA00A14055 /* ImGuiBuild.cpp */; };
+		B2137A5824ED7A8700A14055 /* libImgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2137A5024ED784E00A14055 /* libImgui.a */; };
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
@@ -26,6 +28,13 @@
 			remoteGlobalIDString = B21375FF24ED286700A14055;
 			remoteInfo = Glad;
 		};
+		B2137A4F24ED784E00A14055 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B2137A4B24ED784D00A14055 /* Imgui.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B2137A4424ED784D00A14055;
+			remoteInfo = Imgui;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +44,8 @@
 		B213761924ED2AA700A14055 /* iKan.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iKan.h; sourceTree = "<group>"; };
 		B21376CE24ED4E6100A14055 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		B21376CF24ED4E6100A14055 /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
+		B2137A4B24ED784D00A14055 /* Imgui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Imgui.xcodeproj; path = vendor/Imgui/Imgui.xcodeproj; sourceTree = "<group>"; };
+		B2137A5424ED78FA00A14055 /* ImGuiBuild.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiBuild.cpp; sourceTree = "<group>"; };
 		B24FF88724ED1A3C00884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -46,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2137A5824ED7A8700A14055 /* libImgui.a in Frameworks */,
 				B213761B24ED35AC00A14055 /* libGlad.a in Frameworks */,
 				B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */,
 			);
@@ -73,6 +85,7 @@
 		B213760C24ED286C00A14055 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				B2137A4B24ED784D00A14055 /* Imgui.xcodeproj */,
 				B213760624ED286700A14055 /* Glad.xcodeproj */,
 			);
 			name = Dependencies;
@@ -93,6 +106,22 @@
 				B21376CF24ED4E6100A14055 /* stb_image.cpp */,
 			);
 			path = stbimage;
+			sourceTree = "<group>";
+		};
+		B2137A4C24ED784D00A14055 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B2137A5024ED784E00A14055 /* libImgui.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B2137A5124ED78FA00A14055 /* ImGui */ = {
+			isa = PBXGroup;
+			children = (
+				B2137A5424ED78FA00A14055 /* ImGuiBuild.cpp */,
+			);
+			path = ImGui;
 			sourceTree = "<group>";
 		};
 		B24FF87E24ED1A3C00884EDA = {
@@ -127,6 +156,7 @@
 		B24FF88F24ED1A8000884EDA /* iKan */ = {
 			isa = PBXGroup;
 			children = (
+				B2137A5124ED78FA00A14055 /* ImGui */,
 				B24FF89024ED1A9E00884EDA /* Core */,
 			);
 			path = iKan;
@@ -208,6 +238,10 @@
 					ProductGroup = B213760724ED286700A14055 /* Products */;
 					ProjectRef = B213760624ED286700A14055 /* Glad.xcodeproj */;
 				},
+				{
+					ProductGroup = B2137A4C24ED784D00A14055 /* Products */;
+					ProjectRef = B2137A4B24ED784D00A14055 /* Imgui.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -224,6 +258,13 @@
 			remoteRef = B213760A24ED286700A14055 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B2137A5024ED784E00A14055 /* libImgui.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libImgui.a;
+			remoteRef = B2137A4F24ED784E00A14055 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -232,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */,
+				B2137A5724ED78FA00A14055 /* ImGuiBuild.cpp in Sources */,
 				B213795424ED4E6400A14055 /* stb_image.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +410,7 @@
 					"${PROJECT_DIR}/vendor/Glad/include",
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/glm",
+					"${PROJECT_DIR}/vendor/Imgui/Imgui",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -396,6 +439,7 @@
 					"${PROJECT_DIR}/vendor/Glad/include",
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/glm",
+					"${PROJECT_DIR}/vendor/Imgui/Imgui",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

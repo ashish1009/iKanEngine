@@ -2,6 +2,9 @@
 
 #include <stb_image.h>
 
+#include <examples/imgui_impl_opengl3.h>
+#include <examples/imgui_impl_glfw.h>
+
 int main(int argc, const char * argv[])
 {
     iKan::Log::Init();
@@ -80,6 +83,29 @@ int main(int argc, const char * argv[])
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
                              {
     });
+    
+    // ImGui
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+    
+    /* Setup Dear ImGui style */
+    ImGui::StyleColorsDark();
+    
+    /* When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones. */
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+        
+    /* Setup Platform/Renderer bindings */
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 410");
     
     float vertices[] =
     {
@@ -327,10 +353,38 @@ int main(int argc, const char * argv[])
         
         // Draw Element
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        
+        // Begin Imgui
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        
+        // Render Imgui
+        ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::Separator();
+        
+        // End Imgui
+        ImGuiIO& io      = ImGui::GetIO();
+        io.DisplaySize   = ImVec2((float)width, (float)height);
+        
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
+        
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
+    
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     
     // Terminate the window after the Ending of game
     glfwDestroyWindow(window);
