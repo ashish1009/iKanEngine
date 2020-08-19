@@ -84,10 +84,10 @@ int main(int argc, const char * argv[])
     float vertices[] =
     {
         /* Position */          /* Color */                 /* TexCoord */
-         0.5f,  0.5f, 0.0f,     0.3f, 0.5f, 0.6f, 1.0f,     0.0f, 0.0f,
-         0.5f, -0.5f, 0.0f,     0.3f, 0.5f, 0.6f, 1.0f,     0.0f, 1.0f,
-        -0.5f, -0.5f, 0.0f,     0.3f, 0.5f, 0.6f, 1.0f,     1.0f, 1.0f,
-        -0.5f,  0.5f, 0.0f,     0.3f, 0.5f, 0.6f, 1.0f,     1.0f, 0.0f
+         0.5f,  0.5f, 0.0f,     0.1f, 0.4f, 0.2f, 1.0f,     0.0f, 0.0f,
+         0.5f, -0.5f, 0.0f,     0.2f, 0.3f, 0.4f, 1.0f,     0.0f, 1.0f,
+        -0.5f, -0.5f, 0.0f,     0.3f, 0.2f, 0.6f, 1.0f,     1.0f, 1.0f,
+        -0.5f,  0.5f, 0.0f,     0.4f, 0.1f, 0.8f, 1.0f,     1.0f, 0.0f
     };
     
     unsigned int indices[] =
@@ -136,12 +136,14 @@ int main(int argc, const char * argv[])
     out vec4 v_Color;
     out vec2 v_TexCoord;
     
+    uniform mat4 u_Model;
+    
     void main()
     {
     v_Color     = a_Color;
     v_TexCoord  = a_TexCoord;
     
-    gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+    gl_Position = u_Model * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
     }
     )";
     
@@ -305,6 +307,16 @@ int main(int argc, const char * argv[])
         
         // Bind Shader
         glUseProgram(shaderProgram);
+        
+        // upload model to shader
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), { 0.5f, 0.0f, 0.0f });
+        // Upload Texture to shader at slot 0
+        location = glGetUniformLocation(shaderProgram, "u_Model");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture");
+        
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
         
         // Bind VertexArray
         glBindVertexArray(VAO);
