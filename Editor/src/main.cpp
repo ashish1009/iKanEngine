@@ -14,13 +14,21 @@ static float s_Rotation = 0.0f;
 static glm::vec3 s_OrthoCameraPosition = { 0.0f, 0.0f, 0.0f};
 static glm::vec3 s_PerspectiveCameraPosition = { 0.0f, 0.0f, 3.0f};
 
-static glm::vec3 s_Eye = { 0.0f, 0.0f, 0.0f };
-static glm::vec3 s_Center = { 0.0f, 0.0f, 0.0f };
-static glm::vec3 s_Up = { 0.0f, 1.0f, 0.0f };
+static glm::vec3 s_CameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+static glm::vec3 s_CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+static glm::vec3 s_CameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 
 static glm::vec3 s_CameraRotation = { 0.0f, 0.0f, 0.0f };
 
 static float s_FOV = 45.0f;
+
+static float s_DeltaTime = 0.0f;    // Time between current frame and last frame
+static float s_LastFrame = 0.0f; // Time of last frame
+
+static bool s_FirstMouse = true;
+static float s_LastX = 0, s_LastY = 0;
+
+static float s_Yaw = -90.0f, s_Pitch = 0.0f;
 
 int main(int argc, const char * argv[])
 {
@@ -72,7 +80,8 @@ int main(int argc, const char * argv[])
     glViewport(0, 0, windowWidth, windowHeight);
     
     // GLFW Callbacks foe events
-    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
+    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
+    {
         glViewport(0, 0, width, height);
         s_AspectRatio = (float)width / (float)height;
     });
@@ -89,10 +98,43 @@ int main(int argc, const char * argv[])
     glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
     });
     
-    glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
+    glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
+    {
+        s_CameraRotation.x += yOffset;
+        s_CameraRotation.y += xOffset;
     });
     
-    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
+    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
+    {
+//        if (s_FirstMouse)
+//        {
+//            s_LastX = xPos;
+//            s_LastY = yPos;
+//            s_FirstMouse = false;
+//        }
+//
+//        float xoffset = xPos - s_LastX;
+//        float yoffset = s_LastY - yPos;
+//        s_LastX = xPos;
+//        s_LastY = yPos;
+//
+//        float sensitivity = 0.1f;
+//        xoffset *= sensitivity;
+//        yoffset *= sensitivity;
+//
+//        s_Yaw   += xoffset;
+//        s_Pitch += yoffset;
+//
+//        if(s_Pitch > 89.0f)
+//            s_Pitch = 89.0f;
+//        if(s_Pitch < -89.0f)
+//            s_Pitch = -89.0f;
+//
+//        glm::vec3 direction;
+//        direction.x = cos(glm::radians(s_Yaw)) * cos(glm::radians(s_Pitch));
+//        direction.y = sin(glm::radians(s_Pitch));
+//        direction.z = sin(glm::radians(s_Yaw)) * cos(glm::radians(s_Pitch));
+//        s_CameraFront = glm::normalize(direction);
     });
     
     // OpenGl Init
@@ -123,48 +165,64 @@ int main(int argc, const char * argv[])
     
     float vertices[] =
     {
-        /* position */              /* Color */                     /* TexCoords */
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,
+        /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/
+        // FRONT FACE
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
         
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,
+        // BACK FACE
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,        0.0f,          8.0f,
         
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,
+        // LEFT FACE
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
         
-         0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         1.0f, 0.0f,
+        // RIGHT FACE
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
         
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,
+        // BOTTOM FACE
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
         
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f
+        // UP FACE
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+//    };
+//
+//    float PlaneVertices[]
+//    {
+        -10.5f, 0.0f, -10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,        1.0f,          20.0f,
+        +10.5f, 0.0f, -10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 1.0f,        1.0f,          20.0f,
+        +10.5f, 0.0f,  10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,        1.0f,          20.0f,
+        +10.5f, 0.0f,  10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,        1.0f,          20.0f,
+        -10.5f, 0.0f,  10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 0.0f,        1.0f,          20.0f,
+        -10.5f, 0.0f, -10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,        1.0f,          20.0f
     };
     
     unsigned int indices[] =
@@ -191,27 +249,56 @@ int main(int argc, const char * argv[])
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     // lInking vertex Attributes
+    uint32_t stride = 11, offset = 0, size = 0, idx = 0;
+
     // Position
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)0);
-    
+    offset = 0;
+    size = 3;
+    glEnableVertexAttribArray(idx);
+    glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
+    idx++;
+
     // Color
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)12);
-
+    offset += size;
+    size = 4;
+    glEnableVertexAttribArray(idx);
+    glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
+    idx++;
+    
     // TexCoord
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 9 * sizeof(float), (void*)28);
-
+    offset += size;
+    size = 2;
+    glEnableVertexAttribArray(idx);
+    glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
+    idx++;
+    
+    // TexCoordIndex
+    offset += size;
+    size = 1;
+    glEnableVertexAttribArray(idx);
+    glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
+    idx++;
+    
+    // Tiling Factor
+    offset += size;
+    size = 1;
+    glEnableVertexAttribArray(idx);
+    glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
+    idx++;
+    
     std::string vertexSrc = R"(
     #version 330 core
     
     layout (location = 0) in vec3 a_Position;
     layout (location = 1) in vec4 a_Color;
     layout (location = 2) in vec2 a_TexCoord;
+    layout (location = 3) in float a_TextureIndex;
+    layout (location = 4) in float a_TilingFactor;
     
     out vec4 v_Color;
     out vec2 v_TexCoord;
+    out float v_TextureIndex;
+    out float v_TilingFactor;
     
     uniform mat4 u_Model;
     uniform mat4 u_ProjectionView;
@@ -220,6 +307,8 @@ int main(int argc, const char * argv[])
     {
     v_Color     = a_Color;
     v_TexCoord  = a_TexCoord;
+    v_TextureIndex = a_TextureIndex;
+    v_TilingFactor = a_TilingFactor;
     
     gl_Position = u_Model * u_ProjectionView * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
     }
@@ -229,15 +318,17 @@ int main(int argc, const char * argv[])
     #version 330 core
     
     out vec4 FragColor;
+    in float v_TextureIndex;
     
     in vec4 v_Color;
     in vec2 v_TexCoord;
+    in float v_TilingFactor;
     
-    uniform sampler2D u_Texture;
+    uniform sampler2D u_Texture[2];
     
     void main()
     {
-    FragColor = texture(u_Texture, v_TexCoord) * v_Color;
+    FragColor = texture(u_Texture[int(v_TextureIndex)], v_TexCoord * v_TilingFactor) * v_Color;
     }
     )";
     
@@ -355,9 +446,9 @@ int main(int argc, const char * argv[])
     }
     IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
     
-    uint32_t textureID;
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    uint32_t checkBoardTextureID;
+    glGenTextures(1, &checkBoardTextureID);
+    glBindTexture(GL_TEXTURE_2D, checkBoardTextureID);
     
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -370,16 +461,78 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
-    int location = glGetUniformLocation(shaderProgram, "u_Texture");
+    int location = glGetUniformLocation(shaderProgram, "u_Texture[0]");
     
     if (-1 == location)
-        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture");
+        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[0]");
     
     glUniform1i(location, 0);
+    
+    /// Another Texutre
+    // Texture
+    stbi_set_flip_vertically_on_load(1);
+    
+    data = nullptr;
+    data = stbi_load("../../Editor/assets/textures/metal.png", &width, &height, &channel, 0);
+    
+    IK_CORE_ASSERT(data, "Failed to load stbi Image");
+    
+    internalFormat = GL_RGB8;
+    dataFormat     = GL_RGB;
+    
+    if (4 == channel)
+    {
+        internalFormat = GL_RGBA8;
+        dataFormat     = GL_RGBA;
+    }
+    else if (3 == channel)
+    {
+        internalFormat = GL_RGB8;
+        dataFormat     = GL_RGB;
+    }
+    IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
+    
+    uint32_t gridTextureID;
+    glGenTextures(1, &gridTextureID);
+    glBindTexture(GL_TEXTURE_2D, gridTextureID);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
+    
+    if (data)
+        stbi_image_free(data);
+    
+    // Upload Texture to shader at slot 0
+    location = glGetUniformLocation(shaderProgram, "u_Texture[1]");
+    
+    if (-1 == location)
+        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[1]");
+    
+    glUniform1i(location, 1);
     
     // Game Loop
     while (!glfwWindowShouldClose(window))
     {
+        float currentFrame = glfwGetTime();
+        s_DeltaTime = currentFrame - s_LastFrame;
+        s_LastFrame = currentFrame;
+        
+        // Move camera
+        const float cameraSpeed = 5.5 * s_DeltaTime;
+        
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            s_CameraPos += cameraSpeed * s_CameraFront;
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            s_CameraPos -= cameraSpeed * s_CameraFront;
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            s_CameraPos -= glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            s_CameraPos += glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
+        
         glm::mat4 projection = glm::mat4(1.0f);
         if(s_Perspective)
             projection = glm::perspective(glm::radians(s_FOV), s_AspectRatio, 0.1f, 100.0f);
@@ -404,7 +557,10 @@ int main(int argc, const char * argv[])
         
         glm::mat4 view;
         if (s_Perspective)
-            view = glm::lookAt(s_Eye, s_Center, s_Up);
+            view = glm::lookAt(s_CameraPos, s_CameraPos + s_CameraFront, s_CameraUp) *
+            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
+            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.y), glm::vec3(0, 1, 0)) *
+            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1));
             
         else
             view = glm::inverse(glm::translate(glm::mat4(1.0f), s_OrthoCameraPosition) *
@@ -425,10 +581,13 @@ int main(int argc, const char * argv[])
         
         // Bind Texture
         glActiveTexture(GL_TEXTURE0 + 0);
-        glBindTexture(GL_TEXTURE_2D, textureID);
+        glBindTexture(GL_TEXTURE_2D, checkBoardTextureID);
+
+        glActiveTexture(GL_TEXTURE0 + 1);
+        glBindTexture(GL_TEXTURE_2D, gridTextureID);
         
         // Draw Element
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDrawArrays(GL_TRIANGLES, 0, 42);
 
         // Begin Imgui
         ImGui_ImplOpenGL3_NewFrame();
@@ -457,9 +616,9 @@ int main(int argc, const char * argv[])
         }
         ImGui::DragFloat("FOV", &s_FOV);
         ImGui::Separator();
-        ImGui::DragFloat3("eye", &s_Eye.x);
-        ImGui::DragFloat3("center", &s_Center.x);
-        ImGui::DragFloat3("up", &s_Up.x);
+        ImGui::DragFloat3("Pos", &s_CameraPos.x);
+        ImGui::DragFloat3("front", &s_CameraFront.x);
+        ImGui::DragFloat3("up", &s_CameraUp.x);
         ImGui::Separator();
         
         // End Imgui
