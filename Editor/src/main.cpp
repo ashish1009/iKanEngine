@@ -5,14 +5,18 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 
-static bool s_Perspective = false;
+static bool s_Perspective = true;
 static float s_AspectRatio = 16.0f/9.0f;
 
 static glm::vec3 s_Position = { 0.0f, 0.0f, 0.0f };
 static float s_Rotation = 0.0f;
 
-static glm::vec3 s_PerspectiveCameraPosition = { 0.0f, 0.0f, -3.0f};
 static glm::vec3 s_OrthoCameraPosition = { 0.0f, 0.0f, 0.0f};
+static glm::vec3 s_PerspectiveCameraPosition = { 0.0f, 0.0f, 3.0f};
+
+static glm::vec3 s_Eye = { 0.0f, 0.0f, 0.0f };
+static glm::vec3 s_Center = { 0.0f, 0.0f, 0.0f };
+static glm::vec3 s_Up = { 0.0f, 1.0f, 0.0f };
 
 static glm::vec3 s_CameraRotation = { 0.0f, 0.0f, 0.0f };
 
@@ -91,6 +95,9 @@ int main(int argc, const char * argv[])
     glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
     });
     
+    // OpenGl Init
+    glEnable(GL_DEPTH_TEST);
+    
     // ImGui
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -116,11 +123,48 @@ int main(int argc, const char * argv[])
     
     float vertices[] =
     {
-        /* Position */          /* Color */                 /* TexCoord */
-         0.5f,  0.5f, 0.0f,     0.1f, 0.4f, 0.2f, 1.0f,     0.0f, 0.0f,
-         0.5f, -0.5f, 0.0f,     0.2f, 0.3f, 0.4f, 1.0f,     0.0f, 1.0f,
-        -0.5f, -0.5f, 0.0f,     0.3f, 0.2f, 0.6f, 1.0f,     1.0f, 1.0f,
-        -0.5f,  0.5f, 0.0f,     0.4f, 0.1f, 0.8f, 1.0f,     1.0f, 0.0f
+        /* position */              /* Color */                     /* TexCoords */
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,
+        
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,
+        
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,
+        
+         0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         0.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,         1.0f, 0.0f,
+        
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,
+        
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 1.0f,
+         0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f
     };
     
     unsigned int indices[] =
@@ -343,8 +387,8 @@ int main(int argc, const char * argv[])
             projection = glm::ortho(-s_AspectRatio, s_AspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
         // Bind Shader
         glUseProgram(shaderProgram);
         
@@ -358,13 +402,10 @@ int main(int argc, const char * argv[])
         
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
         
-        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 view;
         if (s_Perspective)
-            view = glm::translate(glm::mat4(1.0f), s_PerspectiveCameraPosition) *
-            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
-            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.y), glm::vec3(0, 1, 0)) *
-            glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1));
-
+            view = glm::lookAt(s_Eye, s_Center, s_Up);
+            
         else
             view = glm::inverse(glm::translate(glm::mat4(1.0f), s_OrthoCameraPosition) *
                                 glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
@@ -387,8 +428,8 @@ int main(int argc, const char * argv[])
         glBindTexture(GL_TEXTURE_2D, textureID);
         
         // Draw Element
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+
         // Begin Imgui
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -415,6 +456,10 @@ int main(int argc, const char * argv[])
         {
         }
         ImGui::DragFloat("FOV", &s_FOV);
+        ImGui::Separator();
+        ImGui::DragFloat3("eye", &s_Eye.x);
+        ImGui::DragFloat3("center", &s_Center.x);
+        ImGui::DragFloat3("up", &s_Up.x);
         ImGui::Separator();
         
         // End Imgui
