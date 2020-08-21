@@ -27,7 +27,12 @@ static float s_DeltaTime = 0.0f;    // Time between current frame and last frame
 static float s_LastFrame = 0.0f; // Time of last frame
 
 // Light
-static glm::vec3 s_LightPos(1.2f, 1.0f, 2.0f);
+static glm::vec3 s_LightPos = { 1.2f, 1.0f, 2.0f };
+static glm::vec4 s_LightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+static bool s_IsAmbient = true;
+static bool s_IsDiffuse = false;
+static bool s_IsSpecular = false;
 
 int main(int argc, const char * argv[])
 {
@@ -80,7 +85,7 @@ int main(int argc, const char * argv[])
     
     // GLFW Callbacks foe events
     glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
-    {
+                              {
         glViewport(0, 0, width, height);
         s_AspectRatio = (float)width / (float)height;
     });
@@ -98,7 +103,7 @@ int main(int argc, const char * argv[])
     });
     
     glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
-    {
+                          {
         s_CameraRotation.x += yOffset;
         s_CameraRotation.y += xOffset;
     });
@@ -130,7 +135,7 @@ int main(int argc, const char * argv[])
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
-        
+    
     /* Setup Platform/Renderer bindings */
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 410");
@@ -139,73 +144,71 @@ int main(int argc, const char * argv[])
     
     float vertices[] =
     {
-        /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/
+        /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/            /* Normal */
         // back FACE
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
+        +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
         
         // front FACE
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
+        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
         
         // LEFT FACE
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
         
         // RIGHT FACE
-        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
+        +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
         
         // BOTTOM FACE
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
         
         // UP FACE
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-//    };
-//
-//    float PlaneVertices[]
-//    {
-        // Plane
-        -100.5f, -2.0f, -100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f,        2.0f,          1.0f,
-        +100.5f, -2.0f, -100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 1.0f,        2.0f,          1.0f,
-        +100.5f, -2.0f,  100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,        2.0f,          1.0f,
-        +100.5f, -2.0f,  100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,        2.0f,          1.0f,
-        -100.5f, -2.0f,  100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 0.0f,        2.0f,          1.0f,
-        -100.5f, -2.0f, -100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f,        2.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
+        +0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
         
+#if 1
+        // Plane
+        -100.5f, -2.0f, -100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
+        +100.5f, -2.0f, -100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
+        +100.5f, -2.0f,  100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
+        +100.5f, -2.0f,  100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
+        -100.5f, -2.0f,  100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
+        -100.5f, -2.0f, -100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
+#endif
         // Grass
-        -0.5f, -0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
-        +0.5f, -0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,          3.0f,          1.0f,
-        +0.5f,  0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
-        +0.5f,  0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
-        -0.5f,  0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,          3.0f,          1.0f,
-        -0.5f, -0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
+        -0.5f, -0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
+        +0.5f, -0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
+        +0.5f,  0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
+        +0.5f,  0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
     };
     
     unsigned int indices[] =
@@ -232,15 +235,15 @@ int main(int argc, const char * argv[])
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     // lInking vertex Attributes
-    uint32_t stride = 11, offset = 0, size = 0, idx = 0;
-
+    uint32_t stride = 14, offset = 0, size = 0, idx = 0;
+    
     // Position
     offset = 0;
     size = 3;
     glEnableVertexAttribArray(idx);
     glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
     idx++;
-
+    
     // Color
     offset += size;
     size = 4;
@@ -269,31 +272,43 @@ int main(int argc, const char * argv[])
     glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
     idx++;
     
+    // Normal
+    offset += size;
+    size = 3;
+    glEnableVertexAttribArray(idx);
+    glVertexAttribPointer(idx, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)(offset * sizeof(float)));
+    idx++;
+    
     std::string vertexSrc = R"(
     #version 330 core
     
-    layout (location = 0) in vec3 a_Position;
-    layout (location = 1) in vec4 a_Color;
-    layout (location = 2) in vec2 a_TexCoord;
+    layout (location = 0) in vec3  a_Position;
+    layout (location = 1) in vec4  a_Color;
+    layout (location = 2) in vec2  a_TexCoord;
     layout (location = 3) in float a_TextureIndex;
     layout (location = 4) in float a_TilingFactor;
+    layout (location = 5) in vec3  a_Normal;
     
-    out vec4 v_Color;
-    out vec2 v_TexCoord;
+    out vec3  v_Position;
+    out vec4  v_Color;
+    out vec2  v_TexCoord;
     out float v_TextureIndex;
     out float v_TilingFactor;
+    out vec3  v_Normal;
     
     uniform mat4 u_Model;
     uniform mat4 u_ProjectionView;
     
     void main()
     {
-    v_Color     = a_Color;
-    v_TexCoord  = a_TexCoord;
-    v_TextureIndex = a_TextureIndex;
-    v_TilingFactor = a_TilingFactor;
+    v_Position      = vec3(u_Model * vec4(a_Position, 1.0));
+    v_Color         = a_Color;
+    v_TexCoord      = a_TexCoord;
+    v_TextureIndex  = a_TextureIndex;
+    v_TilingFactor  = a_TilingFactor;
+    v_Normal        = a_Normal;
     
-    gl_Position = u_Model * u_ProjectionView * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+    gl_Position = u_ProjectionView * u_Model * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
     }
     )";
     
@@ -301,17 +316,46 @@ int main(int argc, const char * argv[])
     #version 330 core
     
     out vec4 FragColor;
-    in float v_TextureIndex;
     
-    in vec4 v_Color;
-    in vec2 v_TexCoord;
+    in vec3  v_Position;
+    in vec4  v_Color;
+    in vec2  v_TexCoord;
+    in float v_TextureIndex;
     in float v_TilingFactor;
+    in vec3  v_Normal;
     
     uniform sampler2D u_Texture[16];
+    uniform vec4 u_LightColor;
+    uniform vec3 u_LightPos;
+    
+    uniform int u_IsAmbient;
+    uniform int u_IsDiffuse;
     
     void main()
     {
-    vec4 Color = texture(u_Texture[int(v_TextureIndex)], v_TexCoord * v_TilingFactor) * v_Color;
+    vec4 result = v_Color;
+    
+    // ambient
+    if (1 == int(u_IsAmbient))
+    {
+    float ambientStrength = 0.1;
+    vec4  ambient         = ambientStrength *  ;
+    
+    result *= ambient;
+    }
+    
+//    // diffuse
+//    if (1 == int(u_IsDiffuse))
+//    {
+//    vec3 norm       = normalize(v_Normal);
+//    vec3 lightDir   = normalize(u_LightPos - v_Position);
+//    float diff      = max(dot(norm, lightDir), 0.0);
+//    vec4 diffuse    = diff * u_LightColor;
+//
+//    result *= diffuse;
+//    }
+    
+    vec4 Color = texture(u_Texture[int(v_TextureIndex)], v_TexCoord * v_TilingFactor) * result;
     if (Color.a < 0.1)
         discard;
     FragColor = Color;
@@ -404,56 +448,57 @@ int main(int argc, const char * argv[])
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
     
+    /// Light
     float lightVertices[] =
     {
         /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/
         // back FACE
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
         
         // front FACE
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
         
         // LEFT FACE
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
         
         // RIGHT FACE
-        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
         
         // BOTTOM FACE
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
         
         // UP FACE
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
     };
     
     // Creating Vertex Array
@@ -466,7 +511,7 @@ int main(int argc, const char * argv[])
     glGenBuffers(1, &lightVBO);
     glBindBuffer(GL_ARRAY_BUFFER, lightVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(lightVertices), lightVertices, GL_STATIC_DRAW);
-        
+    
     // lInking vertex Attributes
     stride = 11;
     offset = 0;
@@ -509,35 +554,12 @@ int main(int argc, const char * argv[])
     idx++;
     
     /// Shader 2
-    std::string vertexLightSrc = R"(
-    #version 330 core
-    layout (location = 0) in vec3 a_Position;
-    
-    uniform mat4 u_Model;
-    uniform mat4 u_ProjectionView;
-    
-    void main()
-    {
-    gl_Position = u_ProjectionView * u_Model * vec4(a_Position, 1.0);
-    }
-    )";
-    
-    std::string fragmentLightSrc = R"(
-    #version 330 core
-    out vec4 FragColor;
-    
-    void main()
-    {
-    FragColor = vec4(1.0); // set all 4 vector values to 1.0
-    }
-    )";
-    
     // Creating Vertex Shader
     uint32_t vertexLightShader;
     vertexLightShader = glCreateShader(GL_VERTEX_SHADER);
     
     // Attch the shader source and then compile
-    const char* vertecLightString = vertexLightSrc.c_str();
+    const char* vertecLightString = vertexSrc.c_str();
     glShaderSource(vertexLightShader, 1, &vertecLightString, nullptr);
     glCompileShader(vertexLightShader);
     
@@ -563,7 +585,7 @@ int main(int argc, const char * argv[])
     fragmentLightShader = glCreateShader(GL_FRAGMENT_SHADER);
     
     // Attch the shader source and then compile
-    const char* fragmentLightString = fragmentLightSrc.c_str();
+    const char* fragmentLightString = fragmentSrc.c_str();
     glShaderSource(fragmentLightShader, 1, &fragmentLightString, nullptr);
     glCompileShader(fragmentLightShader);
     
@@ -627,7 +649,7 @@ int main(int argc, const char * argv[])
     data = stbi_load("../../Editor/assets/textures/Checkerboard.png", &width, &height, &channel, 0);
     
     IK_CORE_ASSERT(data, "Failed to load stbi Image");
-
+    
     GLenum internalFormat = GL_RGB8;
     GLenum dataFormat     = GL_RGB;
     
@@ -658,6 +680,9 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
+    // Bind the shader
+    glUseProgram(shaderProgram);
+    
     int location = glGetUniformLocation(shaderProgram, "u_Texture[1]");
     
     if (-1 == location)
@@ -704,6 +729,9 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
+    // Bind the shader
+    glUseProgram(shaderProgram);
+    
     location = glGetUniformLocation(shaderProgram, "u_Texture[2]");
     
     if (-1 == location)
@@ -750,6 +778,9 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
+    // Bind the shader
+    glUseProgram(shaderProgram);
+    
     location = glGetUniformLocation(shaderProgram, "u_Texture[3]");
     
     if (-1 == location)
@@ -763,15 +794,15 @@ int main(int argc, const char * argv[])
     height = 1;
     internalFormat = GL_RGBA8;
     dataFormat = GL_RGBA;
-        
+    
     glGenTextures(1, &whiteTextureId);
     glBindTexture(GL_TEXTURE_2D, whiteTextureId);
-        
+    
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
+    
     uint32_t whiteTextureData = 0xffffffff;
     void* whiteTextureDataPtr = &whiteTextureData;
     
@@ -780,6 +811,9 @@ int main(int argc, const char * argv[])
     uint16_t bpp = dataFormat == GL_RGBA ? 4 : 3;
     IK_CORE_ASSERT((textureSize == width * height * bpp), "Data must be entire texture");
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, whiteTextureDataPtr);
+    
+    // Bind the shader
+    glUseProgram(shaderProgram);
     
     location = glGetUniformLocation(shaderProgram, "u_Texture[0]");
     
@@ -831,16 +865,15 @@ int main(int argc, const char * argv[])
             s_OrthoCameraPosition.y += cameraSpeed;
         }
         
-        
         glm::mat4 projection = glm::mat4(1.0f);
         if(s_Perspective)
             projection = glm::perspective(glm::radians(s_FOV), s_AspectRatio, 0.1f, 100.0f);
         else
             projection = glm::ortho(-s_AspectRatio * s_OrthoZoom, s_AspectRatio * s_OrthoZoom, -s_OrthoZoom, s_OrthoZoom, -100.0f, 100.0f);
-
+        
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+        
         // Bind Shader
         glUseProgram(shaderProgram);
         
@@ -864,20 +897,42 @@ int main(int argc, const char * argv[])
             glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
             glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.y), glm::vec3(0, 1, 0)) *
             glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1));
-            
+        
         else
             view = glm::inverse(glm::translate(glm::mat4(1.0f), s_OrthoCameraPosition) *
                                 glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
                                 glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.y), glm::vec3(0, 1, 0)) *
                                 glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1)));
-
+        
         glm::mat4 projectionView = projection * view;
         location = glGetUniformLocation(shaderProgram, "u_ProjectionView");
         
         if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_ProjectionView");
         
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
+        
+        location = glGetUniformLocation(shaderProgram, "u_LightColor");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_LightColor");
+        
+        glUniform4f(location, s_LightColor.r, s_LightColor.g, s_LightColor.b, s_LightColor.a);
+        
+        location = glGetUniformLocation(shaderProgram, "u_IsAmbient");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_IsAmbient");
+        
+        glUniform1i(location, (int)s_IsDiffuse);
+        
+//        location = glGetUniformLocation(shaderProgram, "u_IsDiffuse");
+//
+//        if (-1 == location)
+//            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_IsDiffuse");
+//
+//        glUniform1i(location, (int)s_IsDiffuse);
+        
         
         // Bind VertexArray
         glBindVertexArray(VAO);
@@ -899,36 +954,34 @@ int main(int argc, const char * argv[])
         uint32_t count = sizeof(vertices) / (sizeof(float) * stride);
         glDrawArrays(GL_TRIANGLES, 0, count);
         
-        
         /// Light
-//        // Bind Shader
-//        glUseProgram(lightShaderProgram);
-//
-//        // upload model to shader
-//        model = glm::translate(glm::mat4(1.0f), s_LightPos) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-//
-//        // Upload Texture to shader at slot 0
-//        location = glGetUniformLocation(lightShaderProgram, "u_Model");
-//
-//        if (-1 == location)
-//            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Model");
-//
-//        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
-//
-//        location = glGetUniformLocation(lightShaderProgram, "u_ProjectionView");
-//
-//        if (-1 == location)
-//            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
-//
-//        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
-//
-//        // Bind VertexArray
-//        glBindVertexArray(lightVAO);
-//
-//        // Draw Element
-//        count = sizeof(lightVertices) / (sizeof(float) * stride);
-//        glDrawArrays(GL_TRIANGLES, 0, count);
-        
+        // Bind Shader
+        glUseProgram(lightShaderProgram);
+
+        // upload model to shader
+        model = glm::translate(glm::mat4(1.0f), s_LightPos) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+
+        // Upload Texture to shader at slot 0
+        location = glGetUniformLocation(lightShaderProgram, "u_Model");
+
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Model");
+
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
+
+        location = glGetUniformLocation(lightShaderProgram, "u_ProjectionView");
+
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
+
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
+
+        // Bind VertexArray
+        glBindVertexArray(lightVAO);
+
+        // Draw Element
+        count = sizeof(lightVertices) / (sizeof(float) * stride);
+        glDrawArrays(GL_TRIANGLES, 0, count);
 
         // Begin Imgui
         ImGui_ImplOpenGL3_NewFrame();
@@ -945,9 +998,7 @@ int main(int argc, const char * argv[])
         ImGui::Separator();
             
         ImGui::Text("Camera");
-        if (ImGui::Checkbox("Perspective Camera", &s_Perspective))
-        {
-        }
+        ImGui::Checkbox("Perspective Camera", &s_Perspective);
         ImGui::Separator();
 
         ImGui::DragFloat2("Ortho Pos", &s_OrthoCameraPosition.x);
@@ -955,7 +1006,17 @@ int main(int argc, const char * argv[])
         ImGui::DragFloat3("Rotation", &s_CameraRotation.x);
         ImGui::DragFloat("Perspective FOV", &s_FOV);
         ImGui::Separator();
-
+        
+        ImGui::Text("Light");
+        ImGui::Checkbox("Ambient", &s_IsAmbient);
+//        ImGui::Checkbox("Diffuse", &s_IsDiffuse);
+//        ImGui::Checkbox("Specular", &s_IsSpecular);
+        ImGui::Separator();
+        
+        ImGui::DragFloat3("Light Pos", &s_LightPos.x);
+        ImGui::Separator();
+        ImGui::ColorEdit4("LightColor", &s_LightColor.r);
+        ImGui::Separator();
         
         // End Imgui
         ImGuiIO& io      = ImGui::GetIO();
