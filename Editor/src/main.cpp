@@ -5,17 +5,18 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 
-static bool s_Perspective = true;
+static bool s_Perspective = false;
 static float s_AspectRatio = 16.0f/9.0f;
 
 static glm::vec3 s_Position = { 0.0f, 0.0f, 0.0f };
-static float s_Rotation = 0.0f;
+static glm::vec3 s_Rotation = { 0.0f, 0.0f, 0.0f };
 
 static glm::vec3 s_OrthoCameraPosition = { 0.0f, 0.0f, 0.0f};
-static glm::vec3 s_PerspectiveCameraPosition = { 0.0f, 0.0f, 3.0f};
+static float s_OrthoZoom = 1.0f;
 
-static glm::vec3 s_CameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+static glm::vec3 s_PerspectivCameraPosition   = glm::vec3(0.0f, 0.0f,  3.0f);
 static glm::vec3 s_CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+static glm::vec3 s_CameraLeft  = glm::vec3(-1.0f, 0.0f, 0.0f);
 static glm::vec3 s_CameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
 
 static glm::vec3 s_CameraRotation = { 0.0f, 0.0f, 0.0f };
@@ -24,11 +25,6 @@ static float s_FOV = 45.0f;
 
 static float s_DeltaTime = 0.0f;    // Time between current frame and last frame
 static float s_LastFrame = 0.0f; // Time of last frame
-
-static bool s_FirstMouse = true;
-static float s_LastX = 0, s_LastY = 0;
-
-static float s_Yaw = -90.0f, s_Pitch = 0.0f;
 
 int main(int argc, const char * argv[])
 {
@@ -104,41 +100,14 @@ int main(int argc, const char * argv[])
         s_CameraRotation.y += xOffset;
     });
     
-    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
-    {
-//        if (s_FirstMouse)
-//        {
-//            s_LastX = xPos;
-//            s_LastY = yPos;
-//            s_FirstMouse = false;
-//        }
-//
-//        float xoffset = xPos - s_LastX;
-//        float yoffset = s_LastY - yPos;
-//        s_LastX = xPos;
-//        s_LastY = yPos;
-//
-//        float sensitivity = 0.1f;
-//        xoffset *= sensitivity;
-//        yoffset *= sensitivity;
-//
-//        s_Yaw   += xoffset;
-//        s_Pitch += yoffset;
-//
-//        if(s_Pitch > 89.0f)
-//            s_Pitch = 89.0f;
-//        if(s_Pitch < -89.0f)
-//            s_Pitch = -89.0f;
-//
-//        glm::vec3 direction;
-//        direction.x = cos(glm::radians(s_Yaw)) * cos(glm::radians(s_Pitch));
-//        direction.y = sin(glm::radians(s_Pitch));
-//        direction.z = sin(glm::radians(s_Yaw)) * cos(glm::radians(s_Pitch));
-//        s_CameraFront = glm::normalize(direction);
+    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
     });
     
     // OpenGl Init
     glEnable(GL_DEPTH_TEST);
+    
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
     // ImGui
     IMGUI_CHECKVERSION();
@@ -163,66 +132,77 @@ int main(int argc, const char * argv[])
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 410");
     
+    float cubeTileIdx = 1.0f;
+    
     float vertices[] =
     {
         /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/
-        // FRONT FACE
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        // back FACE
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
         
-        // BACK FACE
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 0.0f,          0.0f, 0.0f,        0.0f,          8.0f,
+        // front FACE
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
         
         // LEFT FACE
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
-        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
         
         // RIGHT FACE
-        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
         
         // BOTTOM FACE
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
-        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
         
         // UP FACE
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          8.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          8.0f,
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          8.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
 //    };
 //
 //    float PlaneVertices[]
 //    {
-        -10.5f, 0.0f, -10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,        1.0f,          20.0f,
-        +10.5f, 0.0f, -10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 1.0f,        1.0f,          20.0f,
-        +10.5f, 0.0f,  10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,        1.0f,          20.0f,
-        +10.5f, 0.0f,  10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         1.0f, 0.0f,        1.0f,          20.0f,
-        -10.5f, 0.0f,  10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 0.0f,        1.0f,          20.0f,
-        -10.5f, 0.0f, -10.5f,        0.0f, 0.0f, 0.8f, 1.0f,         0.0f, 1.0f,        1.0f,          20.0f
+        // Plane
+        -100.5f, 0.0f, -100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         0.0f, 1.0f,        2.0f,          100.0f,
+        +100.5f, 0.0f, -100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         1.0f, 1.0f,        2.0f,          100.0f,
+        +100.5f, 0.0f,  100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         1.0f, 0.0f,        2.0f,          100.0f,
+        +100.5f, 0.0f,  100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         1.0f, 0.0f,        2.0f,          100.0f,
+        -100.5f, 0.0f,  100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         0.0f, 0.0f,        2.0f,          100.0f,
+        -100.5f, 0.0f, -100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         0.0f, 1.0f,        2.0f,          100.0f,
+        
+        // Grass
+        -0.5f, -0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
+        +0.5f, -0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,          3.0f,          1.0f,
+        +0.5f,  0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
+        +0.5f,  0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
+        -0.5f,  0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,          3.0f,          1.0f,
+        -0.5f, -0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
     };
     
     unsigned int indices[] =
@@ -324,11 +304,14 @@ int main(int argc, const char * argv[])
     in vec2 v_TexCoord;
     in float v_TilingFactor;
     
-    uniform sampler2D u_Texture[2];
+    uniform sampler2D u_Texture[16];
     
     void main()
     {
-    FragColor = texture(u_Texture[int(v_TextureIndex)], v_TexCoord * v_TilingFactor) * v_Color;
+    vec4 Color = texture(u_Texture[int(v_TextureIndex)], v_TexCoord * v_TilingFactor) * v_Color;
+    if (Color.a < 0.1)
+        discard;
+    FragColor = Color;
     }
     )";
     
@@ -450,7 +433,7 @@ int main(int argc, const char * argv[])
     glGenTextures(1, &checkBoardTextureID);
     glBindTexture(GL_TEXTURE_2D, checkBoardTextureID);
     
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -461,19 +444,19 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
-    int location = glGetUniformLocation(shaderProgram, "u_Texture[0]");
+    int location = glGetUniformLocation(shaderProgram, "u_Texture[1]");
     
     if (-1 == location)
-        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[0]");
+        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[1]");
     
-    glUniform1i(location, 0);
+    glUniform1i(location, 1);
     
     /// Another Texutre
     // Texture
     stbi_set_flip_vertically_on_load(1);
     
     data = nullptr;
-    data = stbi_load("../../Editor/assets/textures/metal.png", &width, &height, &channel, 0);
+    data = stbi_load("../../Editor/assets/textures/window.png", &width, &height, &channel, 0);
     
     IK_CORE_ASSERT(data, "Failed to load stbi Image");
     
@@ -507,12 +490,89 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
-    location = glGetUniformLocation(shaderProgram, "u_Texture[1]");
+    location = glGetUniformLocation(shaderProgram, "u_Texture[2]");
     
     if (-1 == location)
-        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[1]");
+        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[2]");
     
-    glUniform1i(location, 1);
+    glUniform1i(location, 2);
+    
+    /// Another Texutre
+    // Texture
+    stbi_set_flip_vertically_on_load(1);
+    
+    data = nullptr;
+    data = stbi_load("../../Editor/assets/textures/grass.png", &width, &height, &channel, 0);
+    
+    IK_CORE_ASSERT(data, "Failed to load stbi Image");
+    
+    internalFormat = GL_RGB8;
+    dataFormat     = GL_RGB;
+    
+    if (4 == channel)
+    {
+        internalFormat = GL_RGBA8;
+        dataFormat     = GL_RGBA;
+    }
+    else if (3 == channel)
+    {
+        internalFormat = GL_RGB8;
+        dataFormat     = GL_RGB;
+    }
+    IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
+    
+    uint32_t grassTextureID;
+    glGenTextures(1, &grassTextureID);
+    glBindTexture(GL_TEXTURE_2D, grassTextureID);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
+    
+    if (data)
+        stbi_image_free(data);
+    
+    // Upload Texture to shader at slot 0
+    location = glGetUniformLocation(shaderProgram, "u_Texture[3]");
+    
+    if (-1 == location)
+        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[3]");
+    
+    glUniform1i(location, 3);
+    
+    /// White Texture
+    uint32_t whiteTextureId ;
+    width = 1;
+    height = 1;
+    internalFormat = GL_RGBA8;
+    dataFormat = GL_RGBA;
+        
+    glGenTextures(1, &whiteTextureId);
+    glBindTexture(GL_TEXTURE_2D, whiteTextureId);
+        
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    uint32_t whiteTextureData = 0xffffffff;
+    void* whiteTextureDataPtr = &whiteTextureData;
+    
+    uint32_t textureSize = sizeof(uint32_t);
+    
+    uint16_t bpp = dataFormat == GL_RGBA ? 4 : 3;
+    IK_CORE_ASSERT((textureSize == width * height * bpp), "Data must be entire texture");
+    glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, whiteTextureDataPtr);
+    
+    location = glGetUniformLocation(shaderProgram, "u_Texture[0]");
+    
+    if (-1 == location)
+        IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", "u_Texture[0]");
+    
+    glUniform1i(location, 0);
     
     // Game Loop
     while (!glfwWindowShouldClose(window))
@@ -524,20 +584,45 @@ int main(int argc, const char * argv[])
         // Move camera
         const float cameraSpeed = 5.5 * s_DeltaTime;
         
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-            s_CameraPos += cameraSpeed * s_CameraFront;
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-            s_CameraPos -= cameraSpeed * s_CameraFront;
+        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        {
+            s_PerspectivCameraPosition += cameraSpeed * s_CameraFront;
+            s_OrthoZoom -= cameraSpeed;
+            s_OrthoZoom = std::max(s_OrthoZoom, 0.25f);
+            
+        }
+        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        {
+            s_PerspectivCameraPosition -= cameraSpeed * s_CameraFront;
+            s_OrthoZoom += cameraSpeed;
+        }
         if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-            s_CameraPos -= glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
+        {
+            s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
+            s_OrthoCameraPosition.x -= cameraSpeed;
+        }
         if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-            s_CameraPos += glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
+        {
+            s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
+            s_OrthoCameraPosition.x += cameraSpeed;
+        }
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        {
+            s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
+            s_OrthoCameraPosition.y -= cameraSpeed;
+        }
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        {
+            s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
+            s_OrthoCameraPosition.y += cameraSpeed;
+        }
+        
         
         glm::mat4 projection = glm::mat4(1.0f);
         if(s_Perspective)
             projection = glm::perspective(glm::radians(s_FOV), s_AspectRatio, 0.1f, 100.0f);
         else
-            projection = glm::ortho(-s_AspectRatio, s_AspectRatio, -1.0f, 1.0f, -1.0f, 1.0f);
+            projection = glm::ortho(-s_AspectRatio * s_OrthoZoom, s_AspectRatio * s_OrthoZoom, -s_OrthoZoom, s_OrthoZoom, -100.0f, 100.0f);
 
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -546,7 +631,11 @@ int main(int argc, const char * argv[])
         glUseProgram(shaderProgram);
         
         // upload model to shader
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), s_Position) * glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation), glm::vec3(1, 0, 0));
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), s_Position) *
+        glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.x), glm::vec3(1, 0, 0)) *
+        glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.y), glm::vec3(0, 1, 0)) *
+        glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.z), glm::vec3(0, 0, 1))
+        ;
         // Upload Texture to shader at slot 0
         location = glGetUniformLocation(shaderProgram, "u_Model");
         
@@ -557,7 +646,7 @@ int main(int argc, const char * argv[])
         
         glm::mat4 view;
         if (s_Perspective)
-            view = glm::lookAt(s_CameraPos, s_CameraPos + s_CameraFront, s_CameraUp) *
+            view = glm::lookAt(s_PerspectivCameraPosition, s_PerspectivCameraPosition + s_CameraFront, s_CameraUp) *
             glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.x), glm::vec3(1, 0, 0)) *
             glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.y), glm::vec3(0, 1, 0)) *
             glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1));
@@ -581,13 +670,20 @@ int main(int argc, const char * argv[])
         
         // Bind Texture
         glActiveTexture(GL_TEXTURE0 + 0);
-        glBindTexture(GL_TEXTURE_2D, checkBoardTextureID);
+        glBindTexture(GL_TEXTURE_2D, whiteTextureId);
 
         glActiveTexture(GL_TEXTURE0 + 1);
+        glBindTexture(GL_TEXTURE_2D, checkBoardTextureID);
+
+        glActiveTexture(GL_TEXTURE0 + 2);
         glBindTexture(GL_TEXTURE_2D, gridTextureID);
         
+        glActiveTexture(GL_TEXTURE0 + 3);
+        glBindTexture(GL_TEXTURE_2D, grassTextureID);
+
         // Draw Element
-        glDrawArrays(GL_TRIANGLES, 0, 42);
+        uint32_t count = sizeof(vertices) / (sizeof(float) * stride);
+        glDrawArrays(GL_TRIANGLES, 0, count);
 
         // Begin Imgui
         ImGui_ImplOpenGL3_NewFrame();
@@ -597,29 +693,24 @@ int main(int argc, const char * argv[])
         // Render Imgui
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::Separator();
-        ImGui::DragFloat3("Model", &s_Position.x);
-        ImGui::DragFloat("Rotation X", &s_Rotation);
+        
+        ImGui::Text("Model Transformation");
+        ImGui::DragFloat2("Pos", &s_Position.x);
+        ImGui::DragFloat3("Rot", &s_Rotation.x);
         ImGui::Separator();
             
-        float position[3];
-        if (s_Perspective)
-            memcpy(position, &s_PerspectiveCameraPosition.x, sizeof(float) * 3);
-        else
-            memcpy(position, &s_OrthoCameraPosition.x, sizeof(float) * 3);
-
-        ImGui::DragFloat3("Camera Position", position);
-        ImGui::DragFloat3("Camera Rotation", &s_CameraRotation.x);
-        ImGui::Separator();
-
+        ImGui::Text("Camera");
         if (ImGui::Checkbox("Perspective Camera", &s_Perspective))
         {
         }
-        ImGui::DragFloat("FOV", &s_FOV);
         ImGui::Separator();
-        ImGui::DragFloat3("Pos", &s_CameraPos.x);
-        ImGui::DragFloat3("front", &s_CameraFront.x);
-        ImGui::DragFloat3("up", &s_CameraUp.x);
+
+        ImGui::DragFloat2("Ortho Pos", &s_OrthoCameraPosition.x);
+        ImGui::DragFloat3("Perspective Pos ", &s_PerspectivCameraPosition.x);
+        ImGui::DragFloat3("Rotation", &s_CameraRotation.x);
+        ImGui::DragFloat("Perspective FOV", &s_FOV);
         ImGui::Separator();
+
         
         // End Imgui
         ImGuiIO& io      = ImGui::GetIO();
