@@ -317,6 +317,22 @@ int main(int argc, const char * argv[])
     
     out vec4 FragColor;
     
+    struct Material
+    {
+        vec3  Ambient;
+        vec3  Diffuse;
+        vec3  Specular;
+        float Shininess;
+    };
+    
+    struct Light
+    {
+        vec3 Position;
+        vec3 Ambient;
+        vec3 Diffuse;
+        vec3 Specular;
+    };
+    
     in vec3  v_Position;
     in vec4  v_Color;
     in vec2  v_TexCoord;
@@ -325,9 +341,9 @@ int main(int argc, const char * argv[])
     in vec3  v_Normal;
     
     uniform sampler2D u_Texture[16];
-    uniform vec4 u_LightColor;
-    uniform vec3 u_LightPos;
-    uniform vec3 u_ViewPos;
+    uniform Material  u_Material;
+    uniform Light     u_Light;
+    uniform vec3      u_ViewPos;
     
     uniform int u_IsAmbient;
     uniform int u_IsDiffuse;
@@ -336,37 +352,36 @@ int main(int argc, const char * argv[])
     void main()
     {
         vec4 result     = vec4(0.0f, 0.0f, 0.0f, 0.0f);
-        vec3 norm       = normalize(v_Normal);
-        vec3 lightDir   = normalize(u_LightPos - v_Position);
+    
+        vec3  norm      = normalize(v_Normal);
+        vec3  lightDir  = normalize(u_Light.Position - v_Position);
 
         // ambient
         if (1 == int(u_IsAmbient))
         {
-            float ambientStrength = 0.1;
-            vec4  ambient         = ambientStrength * u_LightColor;
-            
-            result += ambient;
+            vec3 ambient = u_Light.Ambient * u_Material.Ambient;
+            result += vec4(ambient, 1.0f);
         }
         
         // diffuse
         if (1 == int(u_IsDiffuse))
         {
-            float diff       = max(dot(norm, lightDir), 0.0);
-            vec4  diffuse    = diff * u_LightColor;
-            
-            result += diffuse;
+            float diff      = max(dot(norm, lightDir), 0.0);
+            vec3  diffuse   = u_Light.Diffuse * (diff * u_Material.Diffuse);
+    
+            result += vec4(diffuse, 1.0f);
         }
     
         // specular
         if (1 == int(u_IsSpecular))
         {
-            float specularStrength  = 0.5;
-            vec3  viewDir           = normalize(u_ViewPos - v_Position);
-            vec3  reflectDir        = reflect(-lightDir, norm);
-            float spec              = pow(max(dot(viewDir, reflectDir), 0.0), 32);
-            vec4  specular          = specularStrength * spec * u_LightColor;
+            vec3 viewDir    = normalize(u_ViewPos - v_Position);
+            vec3 reflectDir = reflect(-lightDir, norm);
     
-            result += specular;
+            float spec      = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
+            vec3  specular  = u_Light.Specular * (spec * u_Material.Specular);
+    
+            result += vec4(specular, 1.0f);
         }
     
         if (0 == int(u_IsAmbient) && 0 == int(u_IsDiffuse) && 0 == int(u_IsSpecular))
@@ -931,17 +946,10 @@ int main(int argc, const char * argv[])
         
         
         /// Light
-        location = glGetUniformLocation(shaderProgram, "u_LightColor");
+        location = glGetUniformLocation(shaderProgram, "u_Light.Position");
         
         if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_LightColor");
-        
-        glUniform4f(location, s_LightColor.r, s_LightColor.g, s_LightColor.b, s_LightColor.a);
-
-        location = glGetUniformLocation(shaderProgram, "u_LightPos");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_LightPos");
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Position");
         
         glUniform3f(location, s_LightPos.x, s_LightPos.y, s_LightPos.z);
         
@@ -951,6 +959,8 @@ int main(int argc, const char * argv[])
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_ViewPos");
         
         glUniform3f(location, s_PerspectivCameraPosition.x, s_PerspectivCameraPosition.y, s_PerspectivCameraPosition.z);
+        
+        /// Bool for Ambient Diffuse and specular
         
         location = glGetUniformLocation(shaderProgram, "u_IsAmbient");
         
@@ -972,6 +982,61 @@ int main(int argc, const char * argv[])
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_IsSpecular");
         
         glUniform1i(location, (int)s_IsSpecular);
+        
+        /// light Porp
+        glm::vec4 diffuseColor = s_LightColor * glm::vec4(0.5f, 0.5f, 0.5f, 1.0f); // decrease the influence
+        glm::vec4 ambientColor = diffuseColor * glm::vec4(0.2f, 0.2f, 0.2f, 1.0f); // low influence
+        
+        location = glGetUniformLocation(shaderProgram, "u_Light.Ambient");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Diffuse");
+        
+        glUniform3f(location, ambientColor.x, ambientColor.y, ambientColor.z);
+        
+        location = glGetUniformLocation(shaderProgram, "u_Light.Diffuse");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Specular");
+        
+        glUniform3f(location, diffuseColor.x, diffuseColor.y, diffuseColor.z);
+        
+        location = glGetUniformLocation(shaderProgram, "u_Light.Specular");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Specular");
+        
+        glUniform3f(location, 1.0f, 1.0f, 1.0f);
+        
+        /// Material Prop
+        
+        location = glGetUniformLocation(shaderProgram, "u_Material.Ambient");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Diffuse");
+        
+        glUniform3f(location, 1.0f, 0.5f, 0.31f);
+        
+        location = glGetUniformLocation(shaderProgram, "u_Material.Diffuse");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
+        
+        glUniform3f(location, 1.0f, 0.5f, 0.31f);
+        
+        location = glGetUniformLocation(shaderProgram, "u_Material.Specular");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
+        
+        glUniform3f(location, 0.5f, 0.5f, 0.5f);
+        
+        location = glGetUniformLocation(shaderProgram, "u_Material.Shininess");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Shininess");
+        
+        glUniform1f(location, 32.0f);
 
         // Bind VertexArray
         glBindVertexArray(VAO);
