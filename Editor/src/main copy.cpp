@@ -149,12 +149,12 @@ int main(int argc, const char * argv[])
         -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
         
         // front FACE
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
         
         // LEFT FACE
         -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
@@ -181,29 +181,31 @@ int main(int argc, const char * argv[])
         -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
         
         // UP FACE
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
-        -0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
-
-#if 1
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,
+//    };
+//
+//    float PlaneVertices[]
+//    {
         // Plane
-        -100.5f, -2.0f, -100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         0.0f, 1.0f,        2.0f,          1.0f,
-        +100.5f, -2.0f, -100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         1.0f, 1.0f,        2.0f,          1.0f,
-        +100.5f, -2.0f,  100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         1.0f, 0.0f,        2.0f,          1.0f,
-        +100.5f, -2.0f,  100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         1.0f, 0.0f,        2.0f,          1.0f,
-        -100.5f, -2.0f,  100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         0.0f, 0.0f,        2.0f,          1.0f,
-        -100.5f, -2.0f, -100.5f,        1.0f, 1.0f, 1.0f, 1.0f,         0.0f, 1.0f,        2.0f,          1.0f,
-#endif
+        -100.5f, -2.0f, -100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f,        2.0f,          1.0f,
+        +100.5f, -2.0f, -100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 1.0f,        2.0f,          1.0f,
+        +100.5f, -2.0f,  100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,        2.0f,          1.0f,
+        +100.5f, -2.0f,  100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         1.0f, 0.0f,        2.0f,          1.0f,
+        -100.5f, -2.0f,  100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 0.0f,        2.0f,          1.0f,
+        -100.5f, -2.0f, -100.5f,        0.5f, 0.5f, 0.5f, 1.0f,         0.0f, 1.0f,        2.0f,          1.0f,
+        
         // Grass
-        -0.5f, -0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
-        +0.5f, -0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,          3.0f,          1.0f,
-        +0.5f,  0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
-        +0.5f,  0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
-        -0.5f,  0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,          3.0f,          1.0f,
-        -0.5f, -0.5f,  0.51f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
+        -0.5f, -0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
+        +0.5f, -0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,          3.0f,          1.0f,
+        +0.5f,  0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
+        +0.5f,  0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,          3.0f,          1.0f,
+        -0.5f,  0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,          3.0f,          1.0f,
+        -0.5f, -0.5f,  0.51f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,          3.0f,          1.0f,
     };
     
     unsigned int indices[] =
@@ -291,7 +293,7 @@ int main(int argc, const char * argv[])
     v_TextureIndex = a_TextureIndex;
     v_TilingFactor = a_TilingFactor;
     
-    gl_Position = u_ProjectionView * u_Model * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+    gl_Position = u_Model * u_ProjectionView * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
     }
     )";
     
@@ -401,58 +403,57 @@ int main(int argc, const char * argv[])
     }
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
-
-    /// Light
+    
     float lightVertices[] =
     {
         /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/
         // back FACE
-        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
         
         // front FACE
-        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
         
         // LEFT FACE
-        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
         
         // RIGHT FACE
-        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
         
         // BOTTOM FACE
-        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
         
         // UP FACE
-        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-        -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        +0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f,  0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
+        -0.5f,  0.5f, -0.5f,        0.5f, 0.5f, 0.5f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
     };
     
     // Creating Vertex Array
@@ -465,7 +466,7 @@ int main(int argc, const char * argv[])
     glGenBuffers(1, &lightVBO);
     glBindBuffer(GL_ARRAY_BUFFER, lightVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(lightVertices), lightVertices, GL_STATIC_DRAW);
-    
+        
     // lInking vertex Attributes
     stride = 11;
     offset = 0;
@@ -508,12 +509,35 @@ int main(int argc, const char * argv[])
     idx++;
     
     /// Shader 2
+    std::string vertexLightSrc = R"(
+    #version 330 core
+    layout (location = 0) in vec3 a_Position;
+    
+    uniform mat4 u_Model;
+    uniform mat4 u_ProjectionView;
+    
+    void main()
+    {
+    gl_Position = u_ProjectionView * u_Model * vec4(a_Position, 1.0);
+    }
+    )";
+    
+    std::string fragmentLightSrc = R"(
+    #version 330 core
+    out vec4 FragColor;
+    
+    void main()
+    {
+    FragColor = vec4(1.0); // set all 4 vector values to 1.0
+    }
+    )";
+    
     // Creating Vertex Shader
     uint32_t vertexLightShader;
     vertexLightShader = glCreateShader(GL_VERTEX_SHADER);
     
     // Attch the shader source and then compile
-    const char* vertecLightString = vertexSrc.c_str();
+    const char* vertecLightString = vertexLightSrc.c_str();
     glShaderSource(vertexLightShader, 1, &vertecLightString, nullptr);
     glCompileShader(vertexLightShader);
     
@@ -539,7 +563,7 @@ int main(int argc, const char * argv[])
     fragmentLightShader = glCreateShader(GL_FRAGMENT_SHADER);
     
     // Attch the shader source and then compile
-    const char* fragmentLightString = fragmentSrc.c_str();
+    const char* fragmentLightString = fragmentLightSrc.c_str();
     glShaderSource(fragmentLightShader, 1, &fragmentLightString, nullptr);
     glCompileShader(fragmentLightShader);
     
@@ -634,9 +658,6 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
-    // Bind the shader
-    glUseProgram(shaderProgram);
-
     int location = glGetUniformLocation(shaderProgram, "u_Texture[1]");
     
     if (-1 == location)
@@ -683,9 +704,6 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
-    // Bind the shader
-    glUseProgram(shaderProgram);
-
     location = glGetUniformLocation(shaderProgram, "u_Texture[2]");
     
     if (-1 == location)
@@ -732,9 +750,6 @@ int main(int argc, const char * argv[])
         stbi_image_free(data);
     
     // Upload Texture to shader at slot 0
-    // Bind the shader
-    glUseProgram(shaderProgram);
-
     location = glGetUniformLocation(shaderProgram, "u_Texture[3]");
     
     if (-1 == location)
@@ -765,9 +780,6 @@ int main(int argc, const char * argv[])
     uint16_t bpp = dataFormat == GL_RGBA ? 4 : 3;
     IK_CORE_ASSERT((textureSize == width * height * bpp), "Data must be entire texture");
     glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, whiteTextureDataPtr);
-    
-    // Bind the shader
-    glUseProgram(shaderProgram);
     
     location = glGetUniformLocation(shaderProgram, "u_Texture[0]");
     
@@ -887,34 +899,36 @@ int main(int argc, const char * argv[])
         uint32_t count = sizeof(vertices) / (sizeof(float) * stride);
         glDrawArrays(GL_TRIANGLES, 0, count);
         
+        
         /// Light
-        // Bind Shader
-        glUseProgram(lightShaderProgram);
-
-        // upload model to shader
-        model = glm::translate(glm::mat4(1.0f), s_LightPos) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-
-        // Upload Texture to shader at slot 0
-        location = glGetUniformLocation(lightShaderProgram, "u_Model");
-
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Model");
-
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
-
-        location = glGetUniformLocation(lightShaderProgram, "u_ProjectionView");
-
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
-
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
-
-        // Bind VertexArray
-        glBindVertexArray(lightVAO);
-
-        // Draw Element
-        count = sizeof(lightVertices) / (sizeof(float) * stride);
-        glDrawArrays(GL_TRIANGLES, 0, count);
+//        // Bind Shader
+//        glUseProgram(lightShaderProgram);
+//
+//        // upload model to shader
+//        model = glm::translate(glm::mat4(1.0f), s_LightPos) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+//
+//        // Upload Texture to shader at slot 0
+//        location = glGetUniformLocation(lightShaderProgram, "u_Model");
+//
+//        if (-1 == location)
+//            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Model");
+//
+//        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(model));
+//
+//        location = glGetUniformLocation(lightShaderProgram, "u_ProjectionView");
+//
+//        if (-1 == location)
+//            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Texture");
+//
+//        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
+//
+//        // Bind VertexArray
+//        glBindVertexArray(lightVAO);
+//
+//        // Draw Element
+//        count = sizeof(lightVertices) / (sizeof(float) * stride);
+//        glDrawArrays(GL_TRIANGLES, 0, count);
+        
 
         // Begin Imgui
         ImGui_ImplOpenGL3_NewFrame();
@@ -941,10 +955,7 @@ int main(int argc, const char * argv[])
         ImGui::DragFloat3("Rotation", &s_CameraRotation.x);
         ImGui::DragFloat("Perspective FOV", &s_FOV);
         ImGui::Separator();
-        
-        ImGui::Text("Light");
-        ImGui::DragFloat3("Light Pos", &s_LightPos.x);
-        ImGui::Separator();
+
         
         // End Imgui
         ImGuiIO& io      = ImGui::GetIO();
