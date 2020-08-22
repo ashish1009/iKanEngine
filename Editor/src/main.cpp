@@ -5,34 +5,55 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 
-static bool s_Perspective = true;
+static bool  s_Perspective = true;
 static float s_AspectRatio = 16.0f/9.0f;
 
 static glm::vec3 s_Position = { 0.0f, 0.0f, 0.0f };
 static glm::vec3 s_Rotation = { 0.0f, 0.0f, 0.0f };
 
 static glm::vec3 s_OrthoCameraPosition = { 0.0f, 0.0f, 0.0f};
-static float s_OrthoZoom = 1.0f;
+static float     s_OrthoZoom           = 1.0f;
 
-static glm::vec3 s_PerspectivCameraPosition   = glm::vec3(0.0f, 0.0f,  3.0f);
-static glm::vec3 s_CameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-static glm::vec3 s_CameraLeft  = glm::vec3(-1.0f, 0.0f, 0.0f);
-static glm::vec3 s_CameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+static glm::vec3 s_PerspectivCameraPosition = glm::vec3(0.0f, 0.0f,  3.0f);
+static glm::vec3 s_CameraFront              = glm::vec3(0.0f, 0.0f, -1.0f);
+static glm::vec3 s_CameraLeft               = glm::vec3(-1.0f, 0.0f, 0.0f);
+static glm::vec3 s_CameraUp                 = glm::vec3(0.0f, 1.0f,  0.0f);
 
 static glm::vec3 s_CameraRotation = { 0.0f, 0.0f, 0.0f };
 
 static float s_FOV = 45.0f;
 
-static float s_DeltaTime = 0.0f;    // Time between current frame and last frame
+static float s_DeltaTime = 0.0f; // Time between current frame and last frame
 static float s_LastFrame = 0.0f; // Time of last frame
 
 // Light
-static glm::vec3 s_LightPos = { 1.2f, 1.0f, 2.0f };
-static glm::vec4 s_LightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+struct Light
+{
+    glm::vec3 Position = { 1.2f, 1.0f, 2.0f };
+    glm::vec3 Diffuse  = { 0.5f, 0.5f, 0.5f};
+    glm::vec3 Ambient  = Diffuse * glm::vec3(0.2f, 0.2f, 0.2f);
+    glm::vec3 Specular = { 1.0f, 1.0f, 1.0f};
+    
+    float Constant  = 1.0f;
+    float Linear    = 0.09f;
+    float Quadratic = 0.032f;
+};
 
-static bool s_IsAmbient = true;
-static bool s_IsDiffuse = true;
-static bool s_IsSpecular = false;
+struct Material
+{
+    glm::vec3 Ambient   = { 1.0f, 0.5f, 0.31f };
+    glm::vec3 Diffuse   = { 1.0f, 0.5f, 0.31f };
+    glm::vec3 Specular  = { 0.5f, 0.5f, 0.5f };
+    float     Shininess = 32.0f;
+};
+
+static Material s_Material;
+static Light    s_Light;
+
+static bool s_IsAmbient     = true;
+static bool s_IsDiffuse     = true;
+static bool s_IsSpecular    = true;
+static bool s_IsAttenuation = true;
 
 int main(int argc, const char * argv[])
 {
@@ -85,7 +106,7 @@ int main(int argc, const char * argv[])
     
     // GLFW Callbacks foe events
     glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
-                              {
+    {
         glViewport(0, 0, width, height);
         s_AspectRatio = (float)width / (float)height;
     });
@@ -103,7 +124,7 @@ int main(int argc, const char * argv[])
     });
     
     glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
-                          {
+    {
         s_CameraRotation.x += yOffset;
         s_CameraRotation.y += xOffset;
     });
@@ -301,12 +322,12 @@ int main(int argc, const char * argv[])
     
     void main()
     {
-        v_Position      = vec3(u_Model * vec4(a_Position, 1.0));
-        v_Color         = a_Color;
-        v_TexCoord      = a_TexCoord;
-        v_TextureIndex  = a_TextureIndex;
-        v_TilingFactor  = a_TilingFactor;
-        v_Normal        = a_Normal;
+        v_Position     = vec3(u_Model * vec4(a_Position, 1.0));
+        v_Color        = a_Color;
+        v_TexCoord     = a_TexCoord;
+        v_TextureIndex = a_TextureIndex;
+        v_TilingFactor = a_TilingFactor;
+        v_Normal       = a_Normal;
         
         gl_Position = u_ProjectionView * u_Model * vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
     }
@@ -331,6 +352,10 @@ int main(int argc, const char * argv[])
         vec3 Ambient;
         vec3 Diffuse;
         vec3 Specular;
+    
+        float Constant;
+        float Linear;
+        float Quadratic;
     };
     
     in vec3  v_Position;
@@ -348,26 +373,43 @@ int main(int argc, const char * argv[])
     uniform int u_IsAmbient;
     uniform int u_IsDiffuse;
     uniform int u_IsSpecular;
+    uniform int u_IsAttenuation;
     
     void main()
     {
-        vec4 result     = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+        vec4 result    = vec4(0.0f, 0.0f, 0.0f, 0.0f);
     
-        vec3  norm      = normalize(v_Normal);
-        vec3  lightDir  = normalize(u_Light.Position - v_Position);
+        vec3  norm     = normalize(v_Normal);
+        vec3  lightDir = normalize(u_Light.Position - v_Position);
+    
+        float attenuation = 0.0f;
+    
+        // Attenuation
+        if (1 == int(u_IsAttenuation))
+        {
+            float distance = length(u_Light.Position - v_Position);
+            attenuation    = 1.0 / (u_Light.Constant + u_Light.Linear * distance + u_Light.Quadratic * (distance * distance));
+        }
 
         // ambient
         if (1 == int(u_IsAmbient))
         {
             vec3 ambient = u_Light.Ambient * u_Material.Ambient;
+            
+            if (1 == int(u_IsAttenuation))
+                ambient *= attenuation;
+
             result += vec4(ambient, 1.0f);
         }
         
         // diffuse
         if (1 == int(u_IsDiffuse))
         {
-            float diff      = max(dot(norm, lightDir), 0.0);
-            vec3  diffuse   = u_Light.Diffuse * (diff * u_Material.Diffuse);
+            float diff    = max(dot(norm, lightDir), 0.0);
+            vec3  diffuse = u_Light.Diffuse * (diff * u_Material.Diffuse);
+            
+            if (1 == int(u_IsAttenuation))
+                diffuse  *= attenuation;
     
             result += vec4(diffuse, 1.0f);
         }
@@ -380,6 +422,9 @@ int main(int argc, const char * argv[])
     
             float spec      = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
             vec3  specular  = u_Light.Specular * (spec * u_Material.Specular);
+    
+            if (1 == int(u_IsAttenuation))
+                specular *= attenuation;
     
             result += vec4(specular, 1.0f);
         }
@@ -913,8 +958,8 @@ int main(int argc, const char * argv[])
         glm::mat4 model = glm::translate(glm::mat4(1.0f), s_Position) *
         glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.x), glm::vec3(1, 0, 0)) *
         glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.y), glm::vec3(0, 1, 0)) *
-        glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.z), glm::vec3(0, 0, 1))
-        ;
+        glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.z), glm::vec3(0, 0, 1));
+        
         // Upload Texture to shader at slot 0
         location = glGetUniformLocation(shaderProgram, "u_Model");
         
@@ -951,7 +996,7 @@ int main(int argc, const char * argv[])
         if (-1 == location)
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Position");
         
-        glUniform3f(location, s_LightPos.x, s_LightPos.y, s_LightPos.z);
+        glUniform3f(location, s_Light.Position.x, s_Light.Position.y, s_Light.Position.z);
         
         location = glGetUniformLocation(shaderProgram, "u_ViewPos");
         
@@ -983,60 +1028,85 @@ int main(int argc, const char * argv[])
         
         glUniform1i(location, (int)s_IsSpecular);
         
-        /// light Porp
-        glm::vec4 diffuseColor = s_LightColor * glm::vec4(0.5f, 0.5f, 0.5f, 1.0f); // decrease the influence
-        glm::vec4 ambientColor = diffuseColor * glm::vec4(0.2f, 0.2f, 0.2f, 1.0f); // low influence
+        location = glGetUniformLocation(shaderProgram, "u_IsAttenuation");
         
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_IsAttenuation");
+        
+        glUniform1i(location, (int)s_IsAttenuation);
+        
+        /// light Porp
         location = glGetUniformLocation(shaderProgram, "u_Light.Ambient");
         
         if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Diffuse");
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Ambient");
         
-        glUniform3f(location, ambientColor.x, ambientColor.y, ambientColor.z);
+        glUniform3f(location, s_Light.Ambient.x, s_Light.Ambient.y, s_Light.Ambient.z);
         
         location = glGetUniformLocation(shaderProgram, "u_Light.Diffuse");
         
         if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Specular");
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Diffuse");
         
-        glUniform3f(location, diffuseColor.x, diffuseColor.y, diffuseColor.z);
+        glUniform3f(location, s_Light.Diffuse.x, s_Light.Diffuse.y, s_Light.Diffuse.z);
         
         location = glGetUniformLocation(shaderProgram, "u_Light.Specular");
         
         if (-1 == location)
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Specular");
         
-        glUniform3f(location, 1.0f, 1.0f, 1.0f);
+        glUniform3f(location, s_Light.Specular.x, s_Light.Specular.y, s_Light.Specular.z);
         
+        location = glGetUniformLocation(shaderProgram, "u_Light.Constant");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Constant");
+        
+        glUniform1f(location, s_Light.Constant);
+
+        location = glGetUniformLocation(shaderProgram, "u_Light.Linear");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Linear");
+        
+        glUniform1f(location, s_Light.Linear);
+
+        location = glGetUniformLocation(shaderProgram, "u_Light.Quadratic");
+        
+        if (-1 == location)
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Quadratic");
+        
+        glUniform1f(location, s_Light.Quadratic);
+
         /// Material Prop
         
         location = glGetUniformLocation(shaderProgram, "u_Material.Ambient");
         
         if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Diffuse");
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Ambient");
         
-        glUniform3f(location, 1.0f, 0.5f, 0.31f);
+        glUniform3f(location, s_Material.Ambient.x, s_Material.Ambient.y, s_Material.Ambient.z);
         
         location = glGetUniformLocation(shaderProgram, "u_Material.Diffuse");
         
         if (-1 == location)
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
         
-        glUniform3f(location, 1.0f, 0.5f, 0.31f);
+        glUniform3f(location, s_Material.Diffuse.x, s_Material.Diffuse.y, s_Material.Diffuse.z);
         
         location = glGetUniformLocation(shaderProgram, "u_Material.Specular");
         
         if (-1 == location)
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
         
-        glUniform3f(location, 0.5f, 0.5f, 0.5f);
+        glUniform3f(location, s_Material.Specular.x, s_Material.Specular.y, s_Material.Specular.z);
         
         location = glGetUniformLocation(shaderProgram, "u_Material.Shininess");
         
         if (-1 == location)
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Shininess");
         
-        glUniform1f(location, 32.0f);
+        glUniform1f(location, s_Material.Shininess);
 
         // Bind VertexArray
         glBindVertexArray(VAO);
@@ -1063,7 +1133,7 @@ int main(int argc, const char * argv[])
         glUseProgram(lightShaderProgram);
         
         // upload model to shader
-        model = glm::translate(glm::mat4(1.0f), s_LightPos) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+        model = glm::translate(glm::mat4(1.0f), s_Light.Position) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
         
         // Upload Texture to shader at slot 0
         location = glGetUniformLocation(lightShaderProgram, "u_Model");
@@ -1093,9 +1163,11 @@ int main(int argc, const char * argv[])
         ImGui::NewFrame();
         
         // Render Imgui
+        ImGui::Begin("Frame");
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::Separator();
+        ImGui::End();
         
+        ImGui::Begin("Model Camera");
         ImGui::Text("Model Transformation");
         ImGui::DragFloat2("Pos", &s_Position.x);
         ImGui::DragFloat3("Rot", &s_Rotation.x);
@@ -1110,17 +1182,42 @@ int main(int argc, const char * argv[])
         ImGui::DragFloat3("Rotation", &s_CameraRotation.x);
         ImGui::DragFloat("Perspective FOV", &s_FOV);
         ImGui::Separator();
+        ImGui::End();
         
+        ImGui::Begin("Light");
         ImGui::Text("Light");
         ImGui::Checkbox("Ambient", &s_IsAmbient);
         ImGui::Checkbox("Diffuse", &s_IsDiffuse);
         ImGui::Checkbox("Specular", &s_IsSpecular);
+        ImGui::Checkbox("Attenuation (Point Light)", &s_IsAttenuation);
         ImGui::Separator();
         
-        ImGui::DragFloat3("Light Pos", &s_LightPos.x);
+        ImGui::DragFloat3("Light Pos", &s_Light.Position.x);
         ImGui::Separator();
-        ImGui::ColorEdit4("LightColor", &s_LightColor.r);
+        ImGui::ColorEdit3("Light Ambient", &s_Light.Ambient.r);
+        ImGui::ColorEdit3("Light Diffuse", &s_Light.Diffuse.r);
+        ImGui::ColorEdit3("Light Specular", &s_Light.Specular.r);
+        
+        ImGui::SliderFloat("Light Constant", &s_Light.Constant, 0.0f, 10.0f);
+        ImGui::SliderFloat("Light Linear", &s_Light.Linear, 0.0f, 0.1f);
+        ImGui::SliderFloat("Light Quadratic", &s_Light.Quadratic, 0.0f, 0.05f);
+        
         ImGui::Separator();
+        
+        ImGui::Text("Material");
+        ImGui::Separator();
+        ImGui::ColorEdit3("Material Ambient", &s_Material.Ambient.r);
+        ImGui::ColorEdit3("Material Diffuse", &s_Material.Diffuse.r);
+        ImGui::ColorEdit3("Material Specular", &s_Material.Specular.r);
+        ImGui::SliderFloat("Shininess", &s_Material.Shininess, 0.0f, 128.0f);
+        ImGui::Separator();
+                
+//        if(ImGui::ImageButton((void*)(size_t)checkBoardTextureID, ImVec2{ 100.0f, 100.0f }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 }))
+//        {
+//            // TODO: will add after batch rendering
+//        }
+        
+        ImGui::End();
         
         // End Imgui
         ImGuiIO& io      = ImGui::GetIO();
