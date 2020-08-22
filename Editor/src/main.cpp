@@ -387,7 +387,7 @@ int main(int argc, const char * argv[])
         // Attenuation
         if (1 == int(u_IsAttenuation))
         {
-            float distance = length(u_Light.Position - v_Position);
+            float distance = length(lightDir);
             attenuation    = 1.0 / (u_Light.Constant + u_Light.Linear * distance + u_Light.Quadratic * (distance * distance));
         }
 
@@ -989,15 +989,7 @@ int main(int argc, const char * argv[])
         
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
         
-        
-        /// Light
-        location = glGetUniformLocation(shaderProgram, "u_Light.Position");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Position");
-        
-        glUniform3f(location, s_Light.Position.x, s_Light.Position.y, s_Light.Position.z);
-        
+        // ------------------------------------------------      View Pos   -----------------------------------------
         location = glGetUniformLocation(shaderProgram, "u_ViewPos");
         
         if (-1 == location)
@@ -1005,8 +997,7 @@ int main(int argc, const char * argv[])
         
         glUniform3f(location, s_PerspectivCameraPosition.x, s_PerspectivCameraPosition.y, s_PerspectivCameraPosition.z);
         
-        /// Bool for Ambient Diffuse and specular
-        
+        // ------------------------------------------------      Controller -----------------------------------------
         location = glGetUniformLocation(shaderProgram, "u_IsAmbient");
         
         if (-1 == location)
@@ -1015,10 +1006,10 @@ int main(int argc, const char * argv[])
         glUniform1i(location, (int)s_IsAmbient);
         
         location = glGetUniformLocation(shaderProgram, "u_IsDiffuse");
-
+        
         if (-1 == location)
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_IsDiffuse");
-
+        
         glUniform1i(location, (int)s_IsDiffuse);
         
         location = glGetUniformLocation(shaderProgram, "u_IsSpecular");
@@ -1035,79 +1026,97 @@ int main(int argc, const char * argv[])
         
         glUniform1i(location, (int)s_IsAttenuation);
         
-        /// light Porp
-        location = glGetUniformLocation(shaderProgram, "u_Light.Ambient");
+        
+        // -------------------------------------------------      Light     ------------------------------------------
+        location = glGetUniformLocation(shaderProgram, "u_Light.Position");
         
         if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Ambient");
+            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Position");
         
-        glUniform3f(location, s_Light.Ambient.x, s_Light.Ambient.y, s_Light.Ambient.z);
+        glUniform3f(location, s_Light.Position.x, s_Light.Position.y, s_Light.Position.z);
         
-        location = glGetUniformLocation(shaderProgram, "u_Light.Diffuse");
+        if (s_IsAmbient)
+        {
+            location = glGetUniformLocation(shaderProgram, "u_Light.Ambient");
         
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Diffuse");
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Ambient");
+            
+            glUniform3f(location, s_Light.Ambient.x, s_Light.Ambient.y, s_Light.Ambient.z);
+            
+            location = glGetUniformLocation(shaderProgram, "u_Material.Ambient");
+            
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Ambient");
+            
+            glUniform3f(location, s_Material.Ambient.x, s_Material.Ambient.y, s_Material.Ambient.z);
+        }
         
-        glUniform3f(location, s_Light.Diffuse.x, s_Light.Diffuse.y, s_Light.Diffuse.z);
+        if (s_IsDiffuse)
+        {
+            location = glGetUniformLocation(shaderProgram, "u_Light.Diffuse");
         
-        location = glGetUniformLocation(shaderProgram, "u_Light.Specular");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Specular");
-        
-        glUniform3f(location, s_Light.Specular.x, s_Light.Specular.y, s_Light.Specular.z);
-        
-        location = glGetUniformLocation(shaderProgram, "u_Light.Constant");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Constant");
-        
-        glUniform1f(location, s_Light.Constant);
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Diffuse");
+            
+            glUniform3f(location, s_Light.Diffuse.x, s_Light.Diffuse.y, s_Light.Diffuse.z);
+            
+            location = glGetUniformLocation(shaderProgram, "u_Material.Diffuse");
 
-        location = glGetUniformLocation(shaderProgram, "u_Light.Linear");
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
+            
+            glUniform3f(location, s_Material.Diffuse.x, s_Material.Diffuse.y, s_Material.Diffuse.z);
+        }
         
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Linear");
+        if (s_IsSpecular)
+        {
+            location = glGetUniformLocation(shaderProgram, "u_Light.Specular");
         
-        glUniform1f(location, s_Light.Linear);
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Specular");
+            
+            glUniform3f(location, s_Light.Specular.x, s_Light.Specular.y, s_Light.Specular.z);
+            
+            location = glGetUniformLocation(shaderProgram, "u_Material.Specular");
 
-        location = glGetUniformLocation(shaderProgram, "u_Light.Quadratic");
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
+            
+            glUniform3f(location, s_Material.Specular.x, s_Material.Specular.y, s_Material.Specular.z);
+            
+            location = glGetUniformLocation(shaderProgram, "u_Material.Shininess");
+            
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Shininess");
+            
+            glUniform1f(location, s_Material.Shininess);
+        }
         
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Quadratic");
+        if (s_IsAttenuation)
+        {
+            location = glGetUniformLocation(shaderProgram, "u_Light.Constant");
         
-        glUniform1f(location, s_Light.Quadratic);
-
-        /// Material Prop
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Constant");
+            
+            glUniform1f(location, s_Light.Constant);
+            
+            location = glGetUniformLocation(shaderProgram, "u_Light.Linear");
+            
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Linear");
+            
+            glUniform1f(location, s_Light.Linear);
+            
+            location = glGetUniformLocation(shaderProgram, "u_Light.Quadratic");
+            
+            if (-1 == location)
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Quadratic");
+            
+            glUniform1f(location, s_Light.Quadratic);
+        }
         
-        location = glGetUniformLocation(shaderProgram, "u_Material.Ambient");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Ambient");
-        
-        glUniform3f(location, s_Material.Ambient.x, s_Material.Ambient.y, s_Material.Ambient.z);
-        
-        location = glGetUniformLocation(shaderProgram, "u_Material.Diffuse");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
-        
-        glUniform3f(location, s_Material.Diffuse.x, s_Material.Diffuse.y, s_Material.Diffuse.z);
-        
-        location = glGetUniformLocation(shaderProgram, "u_Material.Specular");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Specular");
-        
-        glUniform3f(location, s_Material.Specular.x, s_Material.Specular.y, s_Material.Specular.z);
-        
-        location = glGetUniformLocation(shaderProgram, "u_Material.Shininess");
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Shininess");
-        
-        glUniform1f(location, s_Material.Shininess);
-
         // Bind VertexArray
         glBindVertexArray(VAO);
         
