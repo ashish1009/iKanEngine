@@ -30,9 +30,9 @@ static float s_LastFrame = 0.0f; // Time of last frame
 struct Light
 {
     glm::vec3 Position = { 1.2f, 1.0f, 2.0f };
-    glm::vec3 Diffuse  = { 0.5f, 0.5f, 0.5f};
+    glm::vec3 Diffuse  = { 0.5f, 0.5f, 0.5f };
     glm::vec3 Ambient  = Diffuse * glm::vec3(0.2f, 0.2f, 0.2f);
-    glm::vec3 Specular = { 1.0f, 1.0f, 1.0f};
+    glm::vec3 Specular = { 1.0f, 1.0f, 1.0f };
     
     float Constant  = 1.0f;
     float Linear    = 0.09f;
@@ -41,7 +41,6 @@ struct Light
 
 struct Material
 {
-    glm::vec3 Ambient   = { 1.0f, 0.5f, 0.31f };
     glm::vec3 Diffuse   = { 1.0f, 0.5f, 0.31f };
     glm::vec3 Specular  = { 0.5f, 0.5f, 0.5f };
     float     Shininess = 32.0f;
@@ -50,87 +49,20 @@ struct Material
 static Material s_Material;
 static Light    s_Light;
 
-static bool s_IsAmbient     = true;
-static bool s_IsDiffuse     = true;
-static bool s_IsSpecular    = true;
-static bool s_IsAttenuation = true;
+static bool s_IsAmbient     = false;
+static bool s_IsDiffuse     = false;
+static bool s_IsSpecular    = false;
+static bool s_IsAttenuation = false;
 
 int main(int argc, const char * argv[])
 {
     iKan::Log::Init();
     IK_CORE_INFO("Initialized spd logger");
     
-    // Initialize the GLFW
-    bool success = glfwInit();
-    IK_CORE_ASSERT(success, "Can not initialize the GLFW");
-    
-    // Configure GLFW
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    
-    // For Mac Only : TODO: Add platform specific macro ifdef here
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    
-    // Creating Window
-    int windowWidth = 1280, windowHeight = 720;
-    std::string  title = "iKan Engine";
-    GLFWwindow* window = glfwCreateWindow(windowWidth, windowHeight, title.c_str(), nullptr, nullptr);
-    if (!window)
-    {
-        IK_CORE_CRITICAL("Can not create wWindow");
-        glfwTerminate();
-        return -1;
-    }
-    IK_CORE_INFO("Creating Window : {0} ({1}x{2})", title, windowWidth, windowHeight);
-    
-    // make GLFW Window Context
-    glfwMakeContextCurrent(window);
-    
-    // Initialize OpenGl (Glad)
-    /*
-     We pass GLAD the function to load the address of the OpenGL function
-     pointers which is OS-specific. GLFW gives us glfwGetProcAddress that
-     defines the correct function based on which OS we're compiling for
-     */
-    success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    IK_CORE_ASSERT(success, "Can not initialize the Glad");
-    
-    IK_CORE_INFO("OpenGl Info :");
-    IK_CORE_INFO("Vendor   : {0} ", glGetString(GL_VENDOR));
-    IK_CORE_INFO("Renderer : {0} ", glGetString(GL_RENDERER));
-    IK_CORE_INFO("Version  : {0} ", glGetString(GL_VERSION));
+    iKan::Window windowInstance;
     
     // set the view Port
-    glViewport(0, 0, windowWidth, windowHeight);
-    
-    // GLFW Callbacks foe events
-    glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
-    {
-        glViewport(0, 0, width, height);
-        s_AspectRatio = (float)width / (float)height;
-    });
-    
-    glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
-    });
-    
-    glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-    });
-    
-    glfwSetCharCallback(window, [](GLFWwindow* window, uint32_t keycode) {
-    });
-    
-    glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
-    });
-    
-    glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
-    {
-        s_CameraRotation.x += yOffset;
-        s_CameraRotation.y += xOffset;
-    });
-    
-    glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
-    });
+    glViewport(0, 0, windowInstance.GetWidth(), windowInstance.GetHeight());
     
     // OpenGl Init
     glEnable(GL_DEPTH_TEST);
@@ -158,7 +90,7 @@ int main(int argc, const char * argv[])
     }
     
     /* Setup Platform/Renderer bindings */
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplGlfw_InitForOpenGL(windowInstance.GetNativeWindow(), true);
     ImGui_ImplOpenGL3_Init("#version 410");
     
     float cubeTileIdx = 0.0f;
@@ -340,7 +272,6 @@ int main(int argc, const char * argv[])
     
     struct Material
     {
-        vec3  Ambient;
         vec3  Diffuse;
         vec3  Specular;
         float Shininess;
@@ -375,30 +306,28 @@ int main(int argc, const char * argv[])
     uniform int u_IsSpecular;
     uniform int u_IsAttenuation;
     
-    void main()
+    void LightProp(vec3 lightDir)
     {
-        vec4 result    = vec4(0.0f, 0.0f, 0.0f, 0.0f);
-    
-        vec3  norm     = normalize(v_Normal);
-        vec3  lightDir = normalize(u_Light.Position - v_Position);
-    
-        float attenuation = 0.0f;
-    
+        vec4 result = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+        
+        vec3  norm          = normalize(v_Normal);
+        float attenuation   = 0.0f;
+        
         // Attenuation
         if (1 == int(u_IsAttenuation))
         {
             float distance = length(lightDir);
             attenuation    = 1.0 / (u_Light.Constant + u_Light.Linear * distance + u_Light.Quadratic * (distance * distance));
         }
-
+        
         // ambient
         if (1 == int(u_IsAmbient))
         {
-            vec3 ambient = u_Light.Ambient * u_Material.Ambient;
+            vec3 ambient = u_Light.Ambient * u_Material.Diffuse;
             
             if (1 == int(u_IsAttenuation))
                 ambient *= attenuation;
-
+            
             result += vec4(ambient, 1.0f);
         }
         
@@ -410,25 +339,25 @@ int main(int argc, const char * argv[])
             
             if (1 == int(u_IsAttenuation))
                 diffuse  *= attenuation;
-    
+        
             result += vec4(diffuse, 1.0f);
         }
-    
+        
         // specular
         if (1 == int(u_IsSpecular))
         {
             vec3 viewDir    = normalize(u_ViewPos - v_Position);
             vec3 reflectDir = reflect(-lightDir, norm);
-    
+            
             float spec      = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
             vec3  specular  = u_Light.Specular * (spec * u_Material.Specular);
-    
+            
             if (1 == int(u_IsAttenuation))
                 specular *= attenuation;
-    
+            
             result += vec4(specular, 1.0f);
         }
-    
+        
         if (0 == int(u_IsAmbient) && 0 == int(u_IsDiffuse) && 0 == int(u_IsSpecular))
             result = vec4(1.0f, 1.0f, 1.0f, 1.0f);
         
@@ -436,6 +365,13 @@ int main(int argc, const char * argv[])
         if (Color.a < 0.1)
             discard;
         FragColor = Color;
+    }
+    
+    void main()
+    {
+        vec3  lightDir = normalize(u_Light.Position - v_Position);
+
+        LightProp(lightDir);
     }
     )";
     
@@ -900,7 +836,7 @@ int main(int argc, const char * argv[])
     glUniform1i(location, 0);
     
     // Game Loop
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(windowInstance.GetNativeWindow()))
     {
         float currentFrame = glfwGetTime();
         s_DeltaTime = currentFrame - s_LastFrame;
@@ -909,34 +845,34 @@ int main(int argc, const char * argv[])
         // Move camera
         const float cameraSpeed = 5.5 * s_DeltaTime;
         
-        if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_Q) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition += cameraSpeed * s_CameraFront;
             s_OrthoZoom -= cameraSpeed;
             s_OrthoZoom = std::max(s_OrthoZoom, 0.25f);
             
         }
-        if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_E) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition -= cameraSpeed * s_CameraFront;
             s_OrthoZoom += cameraSpeed;
         }
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_A) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
             s_OrthoCameraPosition.x -= cameraSpeed;
         }
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_D) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
             s_OrthoCameraPosition.x += cameraSpeed;
         }
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_S) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
             s_OrthoCameraPosition.y -= cameraSpeed;
         }
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_W) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
             s_OrthoCameraPosition.y += cameraSpeed;
@@ -1044,12 +980,12 @@ int main(int argc, const char * argv[])
             
             glUniform3f(location, s_Light.Ambient.x, s_Light.Ambient.y, s_Light.Ambient.z);
             
-            location = glGetUniformLocation(shaderProgram, "u_Material.Ambient");
+            location = glGetUniformLocation(shaderProgram, "u_Light.Diffuse");
             
             if (-1 == location)
-                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Material.Ambient");
+                IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", "u_Light.Diffuse");
             
-            glUniform3f(location, s_Material.Ambient.x, s_Material.Ambient.y, s_Material.Ambient.z);
+            glUniform3f(location, s_Light.Diffuse.x, s_Light.Diffuse.y, s_Light.Diffuse.z);
         }
         
         if (s_IsDiffuse)
@@ -1193,34 +1129,31 @@ int main(int argc, const char * argv[])
         ImGui::Separator();
         ImGui::End();
         
-        ImGui::Begin("Light");
-        ImGui::Text("Light");
-        ImGui::Checkbox("Ambient", &s_IsAmbient);
-        ImGui::Checkbox("Diffuse", &s_IsDiffuse);
-        ImGui::Checkbox("Specular", &s_IsSpecular);
-        ImGui::Checkbox("Attenuation (Point Light)", &s_IsAttenuation);
-        ImGui::Separator();
-        
+        ImGui::Begin("Light and Material");
         ImGui::DragFloat3("Light Pos", &s_Light.Position.x);
         ImGui::Separator();
+        
+        ImGui::Checkbox("Ambient", &s_IsAmbient);
         ImGui::ColorEdit3("Light Ambient", &s_Light.Ambient.r);
+        ImGui::Separator();
+
+        ImGui::Checkbox("Diffuse", &s_IsDiffuse);
         ImGui::ColorEdit3("Light Diffuse", &s_Light.Diffuse.r);
-        ImGui::ColorEdit3("Light Specular", &s_Light.Specular.r);
-        
-        ImGui::SliderFloat("Light Constant", &s_Light.Constant, 0.0f, 10.0f);
-        ImGui::SliderFloat("Light Linear", &s_Light.Linear, 0.0f, 0.1f);
-        ImGui::SliderFloat("Light Quadratic", &s_Light.Quadratic, 0.0f, 0.05f);
-        
-        ImGui::Separator();
-        
-        ImGui::Text("Material");
-        ImGui::Separator();
-        ImGui::ColorEdit3("Material Ambient", &s_Material.Ambient.r);
         ImGui::ColorEdit3("Material Diffuse", &s_Material.Diffuse.r);
+        ImGui::Separator();
+
+        ImGui::Checkbox("Specular", &s_IsSpecular);
+        ImGui::ColorEdit3("Light Specular", &s_Light.Specular.r);
         ImGui::ColorEdit3("Material Specular", &s_Material.Specular.r);
         ImGui::SliderFloat("Shininess", &s_Material.Shininess, 0.0f, 128.0f);
         ImGui::Separator();
-                
+
+        ImGui::Checkbox("Attenuation (Point Light)", &s_IsAttenuation);
+        ImGui::SliderFloat("Light Constant", &s_Light.Constant, 0.0f, 10.0f);
+        ImGui::SliderFloat("Light Linear", &s_Light.Linear, 0.0f, 0.1f);
+        ImGui::SliderFloat("Light Quadratic", &s_Light.Quadratic, 0.0f, 0.05f);
+        ImGui::Separator();
+        
 //        if(ImGui::ImageButton((void*)(size_t)checkBoardTextureID, ImVec2{ 100.0f, 100.0f }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 }))
 //        {
 //            // TODO: will add after batch rendering
@@ -1242,16 +1175,12 @@ int main(int argc, const char * argv[])
             glfwMakeContextCurrent(backup_current_context);
         }
         
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+        windowInstance.Update();
     }
     
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
     
-    // Terminate the window after the Ending of game
-    glfwDestroyWindow(window);
-    glfwTerminate();
     return 0;
 }
