@@ -6,6 +6,11 @@ namespace iKan {
     Window::Window(const std::string& title, uint32_t width, uint32_t height)
     : m_Width(width), m_Height(height), m_Title(title)
     {
+        Init();
+    }
+    
+    void Window::Init()
+    {
         // Initialize the GLFW
         bool success = glfwInit();
         IK_CORE_ASSERT(success, "Can not initialize the GLFW");
@@ -28,28 +33,18 @@ namespace iKan {
         }
         IK_CORE_INFO("Creating Window : {0} ({1}x{2})", m_Title, m_Width, m_Height);
         
-        // make GLFW Window Context
-        glfwMakeContextCurrent(m_Window);
+        m_Context = GraphicsContext::CreateContext(m_Window);
         
-        // Initialize OpenGl (Glad)
-        /*
-         We pass GLAD the function to load the address of the OpenGL function
-         pointers which is OS-specific. GLFW gives us glfwGetProcAddress that
-         defines the correct function based on which OS we're compiling for
-         */
-        success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        IK_CORE_ASSERT(success, "Can not initialize the Glad");
-        
-        IK_CORE_INFO("OpenGl Info :");
-        IK_CORE_INFO("Vendor   : {0} ", glGetString(GL_VENDOR));
-        IK_CORE_INFO("Renderer : {0} ", glGetString(GL_RENDERER));
-        IK_CORE_INFO("Version  : {0} ", glGetString(GL_VERSION));
-        
+        SetCallBacks();
+    }
+    
+    void Window::SetCallBacks()
+    {
         // GLFW Callbacks foe events
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
                                   {
-//            glViewport(0, 0, width, height);
-//            s_AspectRatio = (float)width / (float)height;
+            //            glViewport(0, 0, width, height);
+            //            s_AspectRatio = (float)width / (float)height;
         });
         
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
@@ -66,8 +61,8 @@ namespace iKan {
         
         glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
                               {
-//            s_CameraRotation.x += yOffset;
-//            s_CameraRotation.y += xOffset;
+            //            s_CameraRotation.x += yOffset;
+            //            s_CameraRotation.y += xOffset;
         });
         
         glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos) {
@@ -76,16 +71,21 @@ namespace iKan {
     
     Window::~Window()
     {
-        // Terminate the window after the Ending of game
-        glfwDestroyWindow(m_Window);
-        IK_CORE_INFO("Window : {0} Destroyed", m_Title);
-        glfwTerminate();
+        Shutdown();
     }
     
     void Window::Update()
     {
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
         glfwPollEvents();
+    }
+    
+    void Window::Shutdown()
+    {
+        // Terminate the window after the Ending of game
+        glfwDestroyWindow(m_Window);
+        IK_CORE_INFO("Window : {0} Destroyed", m_Title);
+        glfwTerminate();
     }
     
 }
