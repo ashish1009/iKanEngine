@@ -60,11 +60,82 @@ void OnWindowResize(iKan::WindowResizeEvent& event)
     s_AspectRatio = (float)event.GetWidth() / (float)event.GetHeight();
 }
 
+void OnKeyPressed(iKan::KeyPressedEvent& event)
+{
+    IK_CORE_INFO("pressed {0}", event.GetKeyCode());
+}
+
+void OnKeyRelease(iKan::KeyReleasedEvent& event)
+{
+    IK_CORE_INFO("rela {0}", event.GetKeyCode());
+}
+
+void OnKeyType(iKan::KeyTypeEvent& event)
+{
+    IK_CORE_INFO("type {0}", event.GetKeyCode());
+}
+
+void OnMouseScroll(iKan::MouseScrollEvent& event)
+{
+    s_CameraRotation.x += event.GetXOffset();
+    s_CameraRotation.y += event.GetYOffset();
+}
+
+void OnMouseMove(iKan::MouseMoveEvent& event)
+{
+    IK_CORE_INFO("Move {0}, {1}", event.GetXPos(), event.GetYPos());
+}
+
+void OnMouseButtonPress(iKan::MouseButtonPressEvent& event)
+{
+    IK_CORE_INFO("Move {0}", event.GetButtonCode());
+}
+
+void OnMouseButtonRelease(iKan::MouseButtonPressEvent& event)
+{
+    IK_CORE_INFO("Move {0}", event.GetButtonCode());
+}
+
 void OnEvent(iKan::Event& event)
 {
     if (event.GetType() == iKan::EventType::WindowResize)
     {
         OnWindowResize(static_cast<iKan::WindowResizeEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::KeyPressed)
+    {
+        OnKeyPressed(static_cast<iKan::KeyPressedEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::KeyReleased)
+    {
+        OnKeyRelease(static_cast<iKan::KeyReleasedEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::KeyType)
+    {
+        OnKeyType(static_cast<iKan::KeyTypeEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::MouseMove)
+    {
+        OnMouseMove(static_cast<iKan::MouseMoveEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::MouseScroll)
+    {
+        OnMouseScroll(static_cast<iKan::MouseScrollEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::MouseButtonPressed)
+    {
+        OnMouseButtonPress(static_cast<iKan::MouseButtonPressEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::MouseButtonPressed)
+    {
+        OnMouseButtonRelease(static_cast<iKan::MouseButtonPressEvent&>(event));
     }
 }
 

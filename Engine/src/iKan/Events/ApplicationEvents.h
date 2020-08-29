@@ -15,7 +15,7 @@ namespace iKan {
         uint32_t GetWidth() const { return m_Width; }
         uint32_t GetHeight() const { return m_Height; }
         
-        EventType GetType() { return EventType::WindowResize; }
+        virtual EventType GetType() const { return EventType::WindowResize; }
         
     private:
         uint32_t m_Width = 0, m_Height = 0;
@@ -27,7 +27,7 @@ namespace iKan {
         WindowCloseEvent() = default;
         virtual ~WindowCloseEvent() = default;
         
-        EventType GetType() { return EventType::WindowClose; }
+        virtual EventType GetType() const { return EventType::WindowClose; }
     };
     
 }

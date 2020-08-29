@@ -22,6 +22,8 @@
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
+		B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0724FA7E5C005EF655 /* KeyEvents.h */; };
+		B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0B24FAB248005EF655 /* MouseEvents.h */; };
 		B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */; };
 		B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */; };
 		B2F0FC0424F80E960004443A /* GraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FC0224F80E960004443A /* GraphicsContext.cpp */; };
@@ -64,6 +66,8 @@
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		B2752D0724FA7E5C005EF655 /* KeyEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvents.h; sourceTree = "<group>"; };
+		B2752D0B24FAB248005EF655 /* MouseEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvents.h; sourceTree = "<group>"; };
 		B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlGraphicsContext.cpp; sourceTree = "<group>"; };
 		B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlGraphicsContext.h; sourceTree = "<group>"; };
 		B2F0FC0224F80E960004443A /* GraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsContext.cpp; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 			children = (
 				B23D4E7A24F829880049238A /* Events.h */,
 				B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */,
+				B2752D0724FA7E5C005EF655 /* KeyEvents.h */,
+				B2752D0B24FAB248005EF655 /* MouseEvents.h */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -248,10 +254,12 @@
 				B213795324ED4E6400A14055 /* stb_image.h in Headers */,
 				B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */,
 				B24FF89424ED1AAB00884EDA /* Log.h in Headers */,
+				B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */,
 				B2F0FC0524F80E960004443A /* GraphicsContext.h in Headers */,
 				B23D4E7B24F829880049238A /* Events.h in Headers */,
 				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
 				B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */,
+				B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

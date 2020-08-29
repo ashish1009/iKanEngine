@@ -6,6 +6,8 @@ namespace iKan {
     {
         None = 0,
         WindowClose, WindowResize,
+        KeyPressed, KeyReleased, KeyType,
+        MouseMove, MouseScroll, MouseButtonPressed, MouseButtonReleased,
     };
     
     class Event
@@ -14,7 +16,7 @@ namespace iKan {
         Event() = default;
         virtual ~Event() = default;
         
-        virtual EventType GetType() = 0;
+        virtual EventType GetType() const = 0;
         
     private:
     };

@@ -5,3 +5,5 @@
 
 #include <iKan/Events/Events.h>
 #include <iKan/Events/ApplicationEvents.h>
+#include <iKan/Events/KeyEvents.h>
+#include <iKan/Events/MouseEvents.h>
