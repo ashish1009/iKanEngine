@@ -5,6 +5,8 @@
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 
+static bool s_IsRunning = true;
+
 static bool  s_Perspective = true;
 static float s_AspectRatio = 16.0f/9.0f;
 
@@ -60,6 +62,11 @@ void OnWindowResize(iKan::WindowResizeEvent& event)
     s_AspectRatio = (float)event.GetWidth() / (float)event.GetHeight();
 }
 
+void OnWindowClose(iKan::WindowCloseEvent& event)
+{
+    s_IsRunning = false;
+}
+
 void OnKeyPressed(iKan::KeyPressedEvent& event)
 {
     IK_CORE_INFO("pressed {0}", event.GetKeyCode());
@@ -101,6 +108,11 @@ void OnEvent(iKan::Event& event)
     if (event.GetType() == iKan::EventType::WindowResize)
     {
         OnWindowResize(static_cast<iKan::WindowResizeEvent&>(event));
+    }
+    
+    if (event.GetType() == iKan::EventType::WindowClose)
+    {
+        OnWindowClose(static_cast<iKan::WindowCloseEvent&>(event));
     }
     
     if (event.GetType() == iKan::EventType::KeyPressed)
@@ -921,7 +933,7 @@ int main(int argc, const char * argv[])
     glUniform1i(location, 0);
     
     // Game Loop
-    while (!glfwWindowShouldClose(windowInstance.GetNativeWindow()))
+    while (s_IsRunning)
     {
         float currentFrame = glfwGetTime();
         s_DeltaTime = currentFrame - s_LastFrame;
@@ -930,34 +942,34 @@ int main(int argc, const char * argv[])
         // Move camera
         const float cameraSpeed = 5.5 * s_DeltaTime;
         
-        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_Q) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), (int32_t)iKan::Key::Q) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition += cameraSpeed * s_CameraFront;
             s_OrthoZoom -= cameraSpeed;
             s_OrthoZoom = std::max(s_OrthoZoom, 0.25f);
             
         }
-        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_E) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), (int32_t)iKan::Key::E) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition -= cameraSpeed * s_CameraFront;
             s_OrthoZoom += cameraSpeed;
         }
-        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_A) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), (int32_t)iKan::Key::A) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
             s_OrthoCameraPosition.x -= cameraSpeed;
         }
-        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_D) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), (int32_t)iKan::Key::D) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
             s_OrthoCameraPosition.x += cameraSpeed;
         }
-        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_S) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), (int32_t)iKan::Key::S) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
             s_OrthoCameraPosition.y -= cameraSpeed;
         }
-        if (glfwGetKey(windowInstance.GetNativeWindow(), GLFW_KEY_W) == GLFW_PRESS)
+        if (glfwGetKey(windowInstance.GetNativeWindow(), (int32_t)iKan::Key::W) == GLFW_PRESS)
         {
             s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
             s_OrthoCameraPosition.y += cameraSpeed;

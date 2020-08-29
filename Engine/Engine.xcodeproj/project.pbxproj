@@ -24,6 +24,8 @@
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
 		B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0724FA7E5C005EF655 /* KeyEvents.h */; };
 		B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0B24FAB248005EF655 /* MouseEvents.h */; };
+		B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0D24FABB8D005EF655 /* KeyCode.h */; };
+		B2752D1024FABBA1005EF655 /* MouseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0F24FABBA1005EF655 /* MouseCode.h */; };
 		B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */; };
 		B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */; };
 		B2F0FC0424F80E960004443A /* GraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FC0224F80E960004443A /* GraphicsContext.cpp */; };
@@ -68,6 +70,8 @@
 		B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B2752D0724FA7E5C005EF655 /* KeyEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvents.h; sourceTree = "<group>"; };
 		B2752D0B24FAB248005EF655 /* MouseEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvents.h; sourceTree = "<group>"; };
+		B2752D0D24FABB8D005EF655 /* KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
+		B2752D0F24FABBA1005EF655 /* MouseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseCode.h; sourceTree = "<group>"; };
 		B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlGraphicsContext.cpp; sourceTree = "<group>"; };
 		B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlGraphicsContext.h; sourceTree = "<group>"; };
 		B2F0FC0224F80E960004443A /* GraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsContext.cpp; sourceTree = "<group>"; };
@@ -208,6 +212,8 @@
 				B213761724ED29DF00A14055 /* Core.h */,
 				B21F821B24F6D1D20040B427 /* Window.cpp */,
 				B21F821C24F6D1D20040B427 /* Window.h */,
+				B2752D0D24FABB8D005EF655 /* KeyCode.h */,
+				B2752D0F24FABBA1005EF655 /* MouseCode.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -248,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */,
+				B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */,
 				B213761824ED29DF00A14055 /* Core.h in Headers */,
 				B21F821E24F6D1D20040B427 /* Window.h in Headers */,
 				B2F0FC0A24F816F70004443A /* RendererAPI.h in Headers */,
@@ -256,6 +263,7 @@
 				B24FF89424ED1AAB00884EDA /* Log.h in Headers */,
 				B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */,
 				B2F0FC0524F80E960004443A /* GraphicsContext.h in Headers */,
+				B2752D1024FABBA1005EF655 /* MouseCode.h in Headers */,
 				B23D4E7B24F829880049238A /* Events.h in Headers */,
 				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
 				B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */,

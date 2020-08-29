@@ -1,113 +1,67 @@
-[21:46:09] [info    ] iKAN: Initialized spd logger
-[21:46:09] [info    ] iKAN: Creating Window : ENGINE (1280x720)
-[21:46:09] [info    ] iKAN: OpenGl Info :
-[21:46:09] [info    ] iKAN: Vendor   : Intel Inc. 
-[21:46:09] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
-[21:46:09] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
-[21:46:12] [info    ] iKAN: Move 559, 295
-[21:46:12] [info    ] iKAN: Move 606, 296
-[21:46:12] [info    ] iKAN: Move 647, 298
-[21:46:12] [info    ] iKAN: Move 665, 299
-[21:46:12] [info    ] iKAN: Move 673, 300
-[21:46:12] [info    ] iKAN: Move 674, 300
-[21:46:12] [info    ] iKAN: Move 675, 300
-[21:46:12] [info    ] iKAN: Move 676, 300
-[21:46:12] [info    ] iKAN: Move 676, 300
-[21:46:15] [info    ] iKAN: Move 677, 308
-[21:46:15] [info    ] iKAN: Move 682, 315
-[21:46:15] [info    ] iKAN: Move 694, 326
-[21:46:15] [info    ] iKAN: Move 713, 337
-[21:46:15] [info    ] iKAN: Move 741, 346
-[21:46:15] [info    ] iKAN: Move 778, 353
-[21:46:15] [info    ] iKAN: Move 843, 355
-[21:46:15] [info    ] iKAN: Move 878, 355
-[21:46:15] [info    ] iKAN: Move 939, 342
-[21:46:15] [info    ] iKAN: Move 967, 333
-[21:46:15] [info    ] iKAN: Move 990, 322
-[21:46:15] [info    ] iKAN: Move 1008, 312
-[21:46:15] [info    ] iKAN: Move 1018, 306
-[21:46:15] [info    ] iKAN: Move 1031, 297
-[21:46:15] [info    ] iKAN: Move 1039, 290
-[21:46:15] [info    ] iKAN: Move 1043, 285
-[21:46:15] [info    ] iKAN: Move 1047, 279
-[21:46:15] [info    ] iKAN: Move 1051, 268
-[21:46:15] [info    ] iKAN: Move 1054, 256
-[21:46:15] [info    ] iKAN: Move 1056, 246
-[21:46:15] [info    ] iKAN: Move 1057, 237
-[21:46:15] [info    ] iKAN: Move 1057, 233
-[21:46:15] [info    ] iKAN: Move 1057, 229
-[21:46:15] [info    ] iKAN: Move 1057, 226
-[21:46:15] [info    ] iKAN: Move 1054, 225
-[21:46:15] [info    ] iKAN: Move 1047, 223
-[21:46:15] [info    ] iKAN: Move 1034, 223
-[21:46:15] [info    ] iKAN: Move 1016, 223
-[21:46:15] [info    ] iKAN: Move 999, 223
-[21:46:15] [info    ] iKAN: Move 981, 224
-[21:46:15] [info    ] iKAN: Move 971, 226
-[21:46:15] [info    ] iKAN: Move 956, 228
-[21:46:15] [info    ] iKAN: Move 938, 232
-[21:46:15] [info    ] iKAN: Move 925, 237
-[21:46:15] [info    ] iKAN: Move 915, 241
-[21:46:15] [info    ] iKAN: Move 907, 243
-[21:46:15] [info    ] iKAN: Move 900, 246
-[21:46:15] [info    ] iKAN: Move 896, 247
-[21:46:15] [info    ] iKAN: Move 891, 249
-[21:46:16] [info    ] iKAN: Move 886, 250
-[21:46:16] [info    ] iKAN: Move 879, 250
-[21:46:16] [info    ] iKAN: Move 871, 250
-[21:46:16] [info    ] iKAN: Move 861, 250
-[21:46:16] [info    ] iKAN: Move 845, 250
-[21:46:16] [info    ] iKAN: Move 834, 246
-[21:46:16] [info    ] iKAN: Move 824, 240
-[21:46:16] [info    ] iKAN: Move 822, 239
-[21:46:16] [info    ] iKAN: Move 814, 233
-[21:46:16] [info    ] iKAN: Move 807, 228
-[21:46:16] [info    ] iKAN: Move 804, 223
-[21:46:16] [info    ] iKAN: Move 802, 219
-[21:46:16] [info    ] iKAN: Move 800, 215
-[21:46:16] [info    ] iKAN: Move 800, 212
-[21:46:16] [info    ] iKAN: Move 800, 207
-[21:46:16] [info    ] iKAN: Move 800, 202
-[21:46:16] [info    ] iKAN: Move 800, 198
-[21:46:16] [info    ] iKAN: Move 800, 195
-[21:46:16] [info    ] iKAN: Move 801, 193
-[21:46:16] [info    ] iKAN: Move 803, 193
-[21:46:16] [info    ] iKAN: Move 806, 193
-[21:46:16] [info    ] iKAN: Move 811, 193
-[21:46:17] [info    ] iKAN: pressed 71
-[21:46:17] [info    ] iKAN: type 103
-[21:46:17] [info    ] iKAN: rela 71
-[21:46:17] [info    ] iKAN: pressed 71
-[21:46:17] [info    ] iKAN: type 103
-[21:46:17] [info    ] iKAN: rela 71
-[21:46:17] [info    ] iKAN: pressed 71
-[21:46:17] [info    ] iKAN: type 103
-[21:46:17] [info    ] iKAN: rela 71
-[21:46:18] [info    ] iKAN: pressed 71
-[21:46:18] [info    ] iKAN: type 103
-[21:46:18] [info    ] iKAN: rela 71
-[21:46:18] [info    ] iKAN: pressed 71
-[21:46:18] [info    ] iKAN: type 103
-[21:46:18] [info    ] iKAN: rela 71
-[21:46:20] [info    ] iKAN: pressed 71
-[21:46:20] [info    ] iKAN: type 103
-[21:46:20] [info    ] iKAN: rela 71
-[21:46:20] [info    ] iKAN: pressed 71
-[21:46:20] [info    ] iKAN: type 103
-[21:46:21] [info    ] iKAN: rela 71
-[21:46:21] [info    ] iKAN: pressed 71
-[21:46:21] [info    ] iKAN: type 103
-[21:46:22] [info    ] iKAN: rela 71
-[21:46:22] [info    ] iKAN: pressed 71
-[21:46:22] [info    ] iKAN: type 103
-[21:46:22] [info    ] iKAN: rela 71
-[21:46:22] [info    ] iKAN: pressed 71
-[21:46:22] [info    ] iKAN: type 103
-[21:46:23] [info    ] iKAN: rela 71
-[21:46:23] [info    ] iKAN: pressed 71
-[21:46:23] [info    ] iKAN: type 103
-[21:46:23] [info    ] iKAN: rela 71
-[21:46:23] [info    ] iKAN: Move 814, 193
-[21:46:23] [info    ] iKAN: Move 828, 188
-[21:46:27] [info    ] iKAN: pressed 343
-[21:46:27] [info    ] iKAN: Window : ENGINE Destroyed
+[22:12:27] [info    ] iKAN: Initialized spd logger
+[22:12:27] [info    ] iKAN: Creating Window : ENGINE (1280x720)
+[22:12:27] [info    ] iKAN: OpenGl Info :
+[22:12:27] [info    ] iKAN: Vendor   : Intel Inc. 
+[22:12:27] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[22:12:27] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[22:12:28] [info    ] iKAN: pressed 65
+[22:12:28] [info    ] iKAN: type 65
+[22:12:29] [info    ] iKAN: pressed 83
+[22:12:29] [info    ] iKAN: type 83
+[22:12:29] [info    ] iKAN: pressed 68
+[22:12:29] [info    ] iKAN: type 68
+[22:12:29] [info    ] iKAN: rela 65
+[22:12:29] [info    ] iKAN: rela 83
+[22:12:29] [info    ] iKAN: pressed 65
+[22:12:29] [info    ] iKAN: type 65
+[22:12:29] [info    ] iKAN: rela 68
+[22:12:29] [info    ] iKAN: pressed 83
+[22:12:29] [info    ] iKAN: type 83
+[22:12:29] [info    ] iKAN: rela 65
+[22:12:29] [info    ] iKAN: pressed 68
+[22:12:29] [info    ] iKAN: type 68
+[22:12:29] [info    ] iKAN: rela 83
+[22:12:29] [info    ] iKAN: pressed 87
+[22:12:29] [info    ] iKAN: type 87
+[22:12:29] [info    ] iKAN: rela 68
+[22:12:30] [info    ] iKAN: pressed 87
+[22:12:30] [info    ] iKAN: type 87
+[22:12:30] [info    ] iKAN: pressed 87
+[22:12:30] [info    ] iKAN: type 87
+[22:12:30] [info    ] iKAN: pressed 87
+[22:12:30] [info    ] iKAN: type 87
+[22:12:30] [info    ] iKAN: pressed 87
+[22:12:30] [info    ] iKAN: type 87
+[22:12:30] [info    ] iKAN: pressed 65
+[22:12:30] [info    ] iKAN: type 65
+[22:12:30] [info    ] iKAN: rela 87
+[22:12:30] [info    ] iKAN: pressed 83
+[22:12:30] [info    ] iKAN: type 83
+[22:12:30] [info    ] iKAN: rela 65
+[22:12:30] [info    ] iKAN: pressed 68
+[22:12:30] [info    ] iKAN: type 68
+[22:12:30] [info    ] iKAN: rela 83
+[22:12:30] [info    ] iKAN: pressed 65
+[22:12:30] [info    ] iKAN: type 65
+[22:12:30] [info    ] iKAN: rela 68
+[22:12:30] [info    ] iKAN: pressed 83
+[22:12:30] [info    ] iKAN: type 83
+[22:12:30] [info    ] iKAN: rela 65
+[22:12:30] [info    ] iKAN: pressed 68
+[22:12:30] [info    ] iKAN: type 68
+[22:12:30] [info    ] iKAN: rela 83
+[22:12:31] [info    ] iKAN: pressed 87
+[22:12:31] [info    ] iKAN: type 87
+[22:12:31] [info    ] iKAN: rela 68
+[22:12:31] [info    ] iKAN: pressed 87
+[22:12:31] [info    ] iKAN: type 87
+[22:12:31] [info    ] iKAN: pressed 65
+[22:12:31] [info    ] iKAN: type 65
+[22:12:31] [info    ] iKAN: rela 87
+[22:12:31] [info    ] iKAN: pressed 68
+[22:12:31] [info    ] iKAN: type 68
+[22:12:31] [info    ] iKAN: rela 65
+[22:12:31] [info    ] iKAN: rela 68
+[22:12:31] [info    ] iKAN: pressed 343
+[22:12:32] [info    ] iKAN: rela 343
+[22:12:32] [info    ] iKAN: Window : ENGINE Destroyed

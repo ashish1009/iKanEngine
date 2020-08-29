@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iKan/Core/Core.h>
+#include <iKan/Core/KeyCode.h>
+#include <iKan/Core/MouseCode.h>
 #include <iKan/Core/Window.h>
 
 #include <iKan/Events/Events.h>
