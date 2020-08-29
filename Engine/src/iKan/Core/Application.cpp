@@ -1,12 +1,16 @@
 #include <iKan/Core/Application.h>
 #include <iKan/Core/Core.h>
 
+#include <iKan/Core/Input.h>
+
 #include <stb_image.h>
 
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
 
 namespace iKan {
+    
+    Application* Application::s_Instance = nullptr;
     
     static bool s_IsRunning = true;
     
@@ -61,10 +65,14 @@ namespace iKan {
     
     Application::Application()
     {
-        m_Window.SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+        IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
+        s_Instance = this;
+        
+        m_Window = std::make_unique<Window>();
+        m_Window->SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
         
         // set the view Port
-        glViewport(0, 0, m_Window.GetWidth(), m_Window.GetHeight());
+        glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
         
         // OpenGl Init
         glEnable(GL_DEPTH_TEST);
@@ -91,7 +99,7 @@ namespace iKan {
         }
         
         /* Setup Platform/Renderer bindings */
-        ImGui_ImplGlfw_InitForOpenGL(m_Window.GetNativeWindow(), true);
+        ImGui_ImplGlfw_InitForOpenGL(m_Window->GetNativeWindow(), true);
         ImGui_ImplOpenGL3_Init("#version 410");
         
         float cubeTileIdx = 0.0f;
@@ -845,7 +853,6 @@ namespace iKan {
             s_DeltaTime = currentFrame - s_LastFrame;
             s_LastFrame = currentFrame;
             
-#if 0 // TODO: After Window access from outside
             // Move camera
             const float cameraSpeed = 5.5 * s_DeltaTime;
             if (iKan::Input::IsKeyPressed(iKan::Key::Q))
@@ -881,7 +888,7 @@ namespace iKan {
                 s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
                 s_OrthoCameraPosition.y += cameraSpeed;
             }
-#endif
+
             glm::mat4 projection = glm::mat4(1.0f);
             if(s_Perspective)
                 projection = glm::perspective(glm::radians(s_FOV), s_AspectRatio, 0.1f, 100.0f);
@@ -1165,7 +1172,7 @@ namespace iKan {
             
             // End Imgui
             ImGuiIO& io      = ImGui::GetIO();
-            io.DisplaySize   = ImVec2((float)m_Window.GetWidth(), (float)m_Window.GetHeight());
+            io.DisplaySize   = ImVec2((float)m_Window->GetWidth(), (float)m_Window->GetHeight());
             
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -1177,7 +1184,7 @@ namespace iKan {
                 glfwMakeContextCurrent(backup_current_context);
             }
             
-            m_Window.OnUpdate();
+            m_Window->OnUpdate();
         }
     }
     

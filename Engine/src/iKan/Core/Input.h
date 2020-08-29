@@ -9,6 +9,11 @@ namespace iKan {
     {
     public:
         static bool IsKeyPressed(KeyCode key);
+        static bool IsMouseButtonPressed(MouseCode key);
+
+        static bool IsKeyReleased(KeyCode key);
+        static bool IsMouseButtonReleased(MouseCode key);
+
     };
     
 }
