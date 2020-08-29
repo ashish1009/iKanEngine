@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iKan/Events/Events.h>
+#include <iKan/Core/MouseCode.h>
 
 namespace iKan {
     
@@ -41,32 +42,32 @@ namespace iKan {
     class MouseButtonPressEvent : public Event
     {
     public:
-        MouseButtonPressEvent(int buttonCode)
+        MouseButtonPressEvent(MouseCode buttonCode)
         : m_ButtonCode(buttonCode) {}
         
         virtual ~MouseButtonPressEvent() = default;
         
-        int GetButtonCode() const { return m_ButtonCode; }
+        MouseCode GetButtonCode() const { return m_ButtonCode; }
         
         virtual EventType GetType() const { return EventType::MouseButtonPressed; }
         
     private:
-        int m_ButtonCode;
+        MouseCode m_ButtonCode;
     };
     
     class MouseReleasePressEvent : public Event
     {
     public:
-        MouseReleasePressEvent(int buttonCode)
+        MouseReleasePressEvent(MouseCode buttonCode)
         : m_ButtonCode(buttonCode) {}
         
         virtual ~MouseReleasePressEvent() = default;
         
-        int GetButtonCode() const { return m_ButtonCode; }
+        MouseCode GetButtonCode() const { return m_ButtonCode; }
         
         virtual EventType GetType() const { return EventType::MouseButtonReleased; }
         
     private:
-        int m_ButtonCode;
+        MouseCode m_ButtonCode;
     };
 }

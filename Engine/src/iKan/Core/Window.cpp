@@ -1,5 +1,7 @@
 #include <iKan/Core/Window.h>
 #include <iKan/Core/Core.h>
+#include <iKan/Core/KeyCode.h>
+#include <iKan/Core/MouseCode.h>
 
 #include <iKan/Events/ApplicationEvents.h>
 #include <iKan/Events/KeyEvents.h>
@@ -75,13 +77,13 @@ namespace iKan {
             {
                 case GLFW_PRESS:
                 {
-                    KeyPressedEvent event(key, 0);
+                    KeyPressedEvent event((KeyCode)key, 0);
                     data.EventFunc(event);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    KeyReleasedEvent event(key);
+                    KeyReleasedEvent event((KeyCode)key);
                     data.EventFunc(event);
                     break;
                 }
@@ -89,7 +91,7 @@ namespace iKan {
                 case GLFW_REPEAT:
                 {
                     int count = 1;
-                    KeyPressedEvent event(key, count);
+                    KeyPressedEvent event((KeyCode)key, count);
                     data.EventFunc(event);
                     break;
                 }
@@ -103,7 +105,7 @@ namespace iKan {
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             
-            KeyTypeEvent event(keycode);
+            KeyTypeEvent event((KeyCode)keycode);
             data.EventFunc(event);
         });
         
@@ -115,13 +117,13 @@ namespace iKan {
             {
                 case GLFW_PRESS:
                 {
-                    MouseButtonPressEvent event(button);
+                    MouseButtonPressEvent event((MouseCode)button);
                     data.EventFunc(event);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    MouseButtonPressEvent event(button);
+                    MouseButtonPressEvent event((MouseCode)button);
                     data.EventFunc(event);
                     break;
                 }

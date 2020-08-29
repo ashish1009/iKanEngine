@@ -1,67 +1,7 @@
-[22:12:27] [info    ] iKAN: Initialized spd logger
-[22:12:27] [info    ] iKAN: Creating Window : ENGINE (1280x720)
-[22:12:27] [info    ] iKAN: OpenGl Info :
-[22:12:27] [info    ] iKAN: Vendor   : Intel Inc. 
-[22:12:27] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
-[22:12:27] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
-[22:12:28] [info    ] iKAN: pressed 65
-[22:12:28] [info    ] iKAN: type 65
-[22:12:29] [info    ] iKAN: pressed 83
-[22:12:29] [info    ] iKAN: type 83
-[22:12:29] [info    ] iKAN: pressed 68
-[22:12:29] [info    ] iKAN: type 68
-[22:12:29] [info    ] iKAN: rela 65
-[22:12:29] [info    ] iKAN: rela 83
-[22:12:29] [info    ] iKAN: pressed 65
-[22:12:29] [info    ] iKAN: type 65
-[22:12:29] [info    ] iKAN: rela 68
-[22:12:29] [info    ] iKAN: pressed 83
-[22:12:29] [info    ] iKAN: type 83
-[22:12:29] [info    ] iKAN: rela 65
-[22:12:29] [info    ] iKAN: pressed 68
-[22:12:29] [info    ] iKAN: type 68
-[22:12:29] [info    ] iKAN: rela 83
-[22:12:29] [info    ] iKAN: pressed 87
-[22:12:29] [info    ] iKAN: type 87
-[22:12:29] [info    ] iKAN: rela 68
-[22:12:30] [info    ] iKAN: pressed 87
-[22:12:30] [info    ] iKAN: type 87
-[22:12:30] [info    ] iKAN: pressed 87
-[22:12:30] [info    ] iKAN: type 87
-[22:12:30] [info    ] iKAN: pressed 87
-[22:12:30] [info    ] iKAN: type 87
-[22:12:30] [info    ] iKAN: pressed 87
-[22:12:30] [info    ] iKAN: type 87
-[22:12:30] [info    ] iKAN: pressed 65
-[22:12:30] [info    ] iKAN: type 65
-[22:12:30] [info    ] iKAN: rela 87
-[22:12:30] [info    ] iKAN: pressed 83
-[22:12:30] [info    ] iKAN: type 83
-[22:12:30] [info    ] iKAN: rela 65
-[22:12:30] [info    ] iKAN: pressed 68
-[22:12:30] [info    ] iKAN: type 68
-[22:12:30] [info    ] iKAN: rela 83
-[22:12:30] [info    ] iKAN: pressed 65
-[22:12:30] [info    ] iKAN: type 65
-[22:12:30] [info    ] iKAN: rela 68
-[22:12:30] [info    ] iKAN: pressed 83
-[22:12:30] [info    ] iKAN: type 83
-[22:12:30] [info    ] iKAN: rela 65
-[22:12:30] [info    ] iKAN: pressed 68
-[22:12:30] [info    ] iKAN: type 68
-[22:12:30] [info    ] iKAN: rela 83
-[22:12:31] [info    ] iKAN: pressed 87
-[22:12:31] [info    ] iKAN: type 87
-[22:12:31] [info    ] iKAN: rela 68
-[22:12:31] [info    ] iKAN: pressed 87
-[22:12:31] [info    ] iKAN: type 87
-[22:12:31] [info    ] iKAN: pressed 65
-[22:12:31] [info    ] iKAN: type 65
-[22:12:31] [info    ] iKAN: rela 87
-[22:12:31] [info    ] iKAN: pressed 68
-[22:12:31] [info    ] iKAN: type 68
-[22:12:31] [info    ] iKAN: rela 65
-[22:12:31] [info    ] iKAN: rela 68
-[22:12:31] [info    ] iKAN: pressed 343
-[22:12:32] [info    ] iKAN: rela 343
-[22:12:32] [info    ] iKAN: Window : ENGINE Destroyed
+[23:02:53] [info    ] iKAN: Initialized spd logger
+[23:02:53] [info    ] iKAN: Creating Window : ENGINE (1280x720)
+[23:02:53] [info    ] iKAN: OpenGl Info :
+[23:02:53] [info    ] iKAN: Vendor   : Intel Inc. 
+[23:02:53] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[23:02:53] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[23:03:05] [info    ] iKAN: Window : ENGINE Destroyed
