@@ -1,3 +1,7 @@
-[22:09:03] [info    ] iKAN: Initialized spd logger
-[22:09:04] [info    ] iKAN: Creating Window : ENGINE (1280x720)
-[22:09:04] [critical] iKAN: Assertion Failed Invalid Renderer API {0}
+[17:18:03] [info    ] iKAN: Initialized spd logger
+[17:18:03] [info    ] iKAN: Creating Window : ENGINE (1280x720)
+[17:18:03] [info    ] iKAN: OpenGl Info :
+[17:18:03] [info    ] iKAN: Vendor   : Intel Inc. 
+[17:18:03] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[17:18:03] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[17:18:14] [info    ] iKAN: Window : ENGINE Destroyed

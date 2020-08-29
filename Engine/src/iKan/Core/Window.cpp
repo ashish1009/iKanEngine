@@ -1,16 +1,21 @@
 #include <iKan/Core/Window.h>
 #include <iKan/Core/Core.h>
 
+#include <iKan/Events/ApplicationEvents.h>
+
 namespace iKan {
     
-    Window::Window(const std::string& title, uint32_t width, uint32_t height)
-    : m_Width(width), m_Height(height), m_Title(title)
+    Window::Window(const WindowProp& prop)
     {
-        Init();
+        Init(prop);
     }
     
-    void Window::Init()
+    void Window::Init(const WindowProp& prop)
     {
+        m_Data.Width  = prop.Width;
+        m_Data.Height = prop.Height;
+        m_Data.Title  = prop.Title;
+        
         // Initialize the GLFW
         bool success = glfwInit();
         IK_CORE_ASSERT(success, "Can not initialize the GLFW");
@@ -24,16 +29,17 @@ namespace iKan {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         
         // Creating Window
-        m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+        m_Window = glfwCreateWindow((int)m_Data.Width, (int)m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
         if (!m_Window)
         {
             IK_CORE_CRITICAL("Can not create wWindow");
             glfwTerminate();
             return;
         }
-        IK_CORE_INFO("Creating Window : {0} ({1}x{2})", m_Title, m_Width, m_Height);
+        IK_CORE_INFO("Creating Window : {0} ({1}x{2})", m_Data.Title, m_Data.Width, m_Data.Height);
         
         m_Context = GraphicsContext::CreateContext(m_Window);
+        glfwSetWindowUserPointer(m_Window, &m_Data);
         
         SetCallBacks();
     }
@@ -42,9 +48,13 @@ namespace iKan {
     {
         // GLFW Callbacks foe events
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
-                                  {
-            //            glViewport(0, 0, width, height);
-            //            s_AspectRatio = (float)width / (float)height;
+        {
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            data.Width = width;
+            data.Height = height;
+            
+            WindowResizeEvent event(width, height);
+            data.EventFunc(event);
         });
         
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window) {
@@ -74,7 +84,7 @@ namespace iKan {
         Shutdown();
     }
     
-    void Window::Update()
+    void Window::OnUpdate()
     {
         m_Context->SwapBuffers();
         glfwPollEvents();
@@ -84,7 +94,7 @@ namespace iKan {
     {
         // Terminate the window after the Ending of game
         glfwDestroyWindow(m_Window);
-        IK_CORE_INFO("Window : {0} Destroyed", m_Title);
+        IK_CORE_INFO("Window : {0} Destroyed", m_Data.Title);
         glfwTerminate();
     }
     

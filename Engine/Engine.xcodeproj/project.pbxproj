@@ -17,6 +17,8 @@
 		B2137A5824ED7A8700A14055 /* libImgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2137A5024ED784E00A14055 /* libImgui.a */; };
 		B21F821D24F6D1D20040B427 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B21F821B24F6D1D20040B427 /* Window.cpp */; };
 		B21F821E24F6D1D20040B427 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = B21F821C24F6D1D20040B427 /* Window.h */; };
+		B23D4E7B24F829880049238A /* Events.h in Headers */ = {isa = PBXBuildFile; fileRef = B23D4E7A24F829880049238A /* Events.h */; };
+		B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */; };
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
@@ -56,6 +58,8 @@
 		B2137A5424ED78FA00A14055 /* ImGuiBuild.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiBuild.cpp; sourceTree = "<group>"; };
 		B21F821B24F6D1D20040B427 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		B21F821C24F6D1D20040B427 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
+		B23D4E7A24F829880049238A /* Events.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
+		B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvents.h; sourceTree = "<group>"; };
 		B24FF88724ED1A3C00884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -140,6 +144,15 @@
 			path = ImGui;
 			sourceTree = "<group>";
 		};
+		B23D4E7724F829740049238A /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				B23D4E7A24F829880049238A /* Events.h */,
+				B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
 		B24FF87E24ED1A3C00884EDA = {
 			isa = PBXGroup;
 			children = (
@@ -173,6 +186,7 @@
 		B24FF88F24ED1A8000884EDA /* iKan */ = {
 			isa = PBXGroup;
 			children = (
+				B23D4E7724F829740049238A /* Events */,
 				B2F0FC0124F80E870004443A /* Renderer */,
 				B2137A5124ED78FA00A14055 /* ImGui */,
 				B24FF89024ED1A9E00884EDA /* Core */,
@@ -232,8 +246,10 @@
 				B21F821E24F6D1D20040B427 /* Window.h in Headers */,
 				B2F0FC0A24F816F70004443A /* RendererAPI.h in Headers */,
 				B213795324ED4E6400A14055 /* stb_image.h in Headers */,
+				B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */,
 				B24FF89424ED1AAB00884EDA /* Log.h in Headers */,
 				B2F0FC0524F80E960004443A /* GraphicsContext.h in Headers */,
+				B23D4E7B24F829880049238A /* Events.h in Headers */,
 				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
 				B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */,
 			);

@@ -54,19 +54,33 @@ static bool s_IsDiffuse     = false;
 static bool s_IsSpecular    = false;
 static bool s_IsAttenuation = false;
 
+void OnWindowResize(iKan::WindowResizeEvent& event)
+{
+    glViewport(0, 0, event.GetWidth(), event.GetHeight());
+    s_AspectRatio = (float)event.GetWidth() / (float)event.GetHeight();
+}
+
+void OnEvent(iKan::Event& event)
+{
+    if (event.GetType() == iKan::EventType::WindowResize)
+    {
+        OnWindowResize(static_cast<iKan::WindowResizeEvent&>(event));
+    }
+}
+
 int main(int argc, const char * argv[])
 {
     iKan::Log::Init();
     IK_CORE_INFO("Initialized spd logger");
     
     iKan::Window windowInstance;
+    windowInstance.SetEventCallBack(std::bind(&OnEvent, std::placeholders::_1));
     
     // set the view Port
     glViewport(0, 0, windowInstance.GetWidth(), windowInstance.GetHeight());
     
     // OpenGl Init
     glEnable(GL_DEPTH_TEST);
-    
 //    glEnable(GL_BLEND);
 //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
@@ -1175,7 +1189,7 @@ int main(int argc, const char * argv[])
             glfwMakeContextCurrent(backup_current_context);
         }
         
-        windowInstance.Update();
+        windowInstance.OnUpdate();
     }
     
     ImGui_ImplOpenGL3_Shutdown();
