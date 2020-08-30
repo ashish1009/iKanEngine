@@ -18,6 +18,8 @@ namespace iKan {
         virtual EventType GetType() const override { return EventType::WindowResize; }
         virtual int GetCategoryBit() const override { return EventCategory::WindowCategory; }
         
+        static EventType GetStaticType() { return EventType::WindowResize; }
+        
     private:
         uint32_t m_Width = 0, m_Height = 0;
     };
@@ -30,6 +32,8 @@ namespace iKan {
         
         virtual EventType GetType() const override { return EventType::WindowClose; }
         virtual int GetCategoryBit() const override { return EventCategory::WindowCategory; }
+        
+        static EventType GetStaticType() { return EventType::WindowClose; }
     };
     
 }

@@ -800,26 +800,24 @@ namespace iKan {
     
     void ExampleLayer::OnEvent(Event& event)
     {
-        if (event.GetType() == EventType::WindowResize)
-        {
-            OnWindowResize(static_cast<WindowResizeEvent&>(event));
-        }
+        EventDispatcher dispatcher(event);
         
-        if (event.GetType() == EventType::MouseScroll)
-        {
-            OnMouseScroll(static_cast<MouseScrollEvent&>(event));
-        }
+        dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(ExampleLayer::OnWindowResize));
+        dispatcher.Dispatch<MouseScrollEvent> (IK_BIND_EVENT_FN(ExampleLayer::OnMouseScroll));
     }
     
-    void ExampleLayer::OnWindowResize(WindowResizeEvent& event)
+    bool ExampleLayer::OnWindowResize(WindowResizeEvent& event)
     {
         s_AspectRatio = (float)event.GetWidth() / (float)event.GetHeight();
+        return false;
     }
     
-    void ExampleLayer::OnMouseScroll(MouseScrollEvent& event)
+    bool ExampleLayer::OnMouseScroll(MouseScrollEvent& event)
     {
         s_CameraRotation.x += event.GetXOffset();
         s_CameraRotation.y += event.GetYOffset();
+        
+        return false;
     }
                              
     void ExampleLayer::OnUpdate(TimeStep timeStep)

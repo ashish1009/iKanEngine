@@ -35,4 +35,22 @@ namespace iKan {
         bool Handled = false;
     };
     
+    class EventDispatcher
+    {
+    public:
+        EventDispatcher(Event& event)
+        : m_Event(event) { }
+        
+        /* F will be deduced by the compiler */
+        template<typename T, typename F>
+        void Dispatch(const F& func)
+        {
+            if (m_Event.GetType() == T::GetStaticType())
+                m_Event.Handled = func(static_cast<T&>(m_Event));
+        }
+        
+    private:
+        Event& m_Event;
+    };
+    
 }

@@ -14,7 +14,7 @@ namespace iKan {
         s_Instance = this;
         
         m_Window = std::make_unique<Window>();
-        m_Window->SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
+        m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
         RenderCommand::Depth(State::Enable);
         
@@ -60,27 +60,24 @@ namespace iKan {
         }
     }
     
-    void Application::OnWindowResize(WindowResizeEvent& event)
+    bool Application::OnWindowResize(WindowResizeEvent& event)
     {
         RenderCommand::SetViewPort(event.GetWidth(), event.GetHeight());
+        return false;
     }
 
-    void Application::OnWindowClose(WindowCloseEvent& event)
+    bool Application::OnWindowClose(WindowCloseEvent& event)
     {
         m_IsRunning = false;
+        return false;
     }
 
     void Application::OnEvent(Event& event)
     {
-        if (event.GetType() == EventType::WindowResize)
-        {
-            OnWindowResize(static_cast<WindowResizeEvent&>(event));
-        }
-
-        if (event.GetType() == EventType::WindowClose)
-        {
-            OnWindowClose(static_cast<WindowCloseEvent&>(event));
-        }
+        EventDispatcher dispatcher(event);
+        
+        dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(Application::OnWindowResize));
+        dispatcher.Dispatch<WindowCloseEvent>(IK_BIND_EVENT_FN(Application::OnWindowClose));
 
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); it++)
         {

@@ -19,6 +19,8 @@ namespace iKan {
         virtual EventType GetType() const override { return EventType::MouseMove; }
         virtual int GetCategoryBit() const override { return EventCategory::MouseCategory; }
 
+        static EventType GetStaticType() { return EventType::MouseMove; }
+
     private:
         int m_XPos = 0, m_YPos = 0;
     };
@@ -36,6 +38,8 @@ namespace iKan {
         
         virtual EventType GetType() const override { return EventType::MouseScroll; }
         virtual int GetCategoryBit() const override { return EventCategory::MouseCategory; }
+        
+        static EventType GetStaticType() { return EventType::MouseScroll; }
 
     private:
         int m_XOffset = 0, m_YOffset = 0;
@@ -53,6 +57,8 @@ namespace iKan {
         
         virtual EventType GetType() const override { return EventType::MouseButtonPressed; }
         virtual int GetCategoryBit() const override { return EventCategory::MouseCategory; }
+        
+        static EventType GetStaticType() { return EventType::MouseButtonPressed; }
 
     private:
         MouseCode m_ButtonCode;
@@ -70,6 +76,8 @@ namespace iKan {
         
         virtual EventType GetType() const override { return EventType::MouseButtonReleased; }
         virtual int GetCategoryBit() const override { return EventCategory::MouseCategory; }
+        
+        static EventType GetStaticType() { return EventType::MouseButtonReleased; }
 
     private:
         MouseCode m_ButtonCode;

@@ -27,8 +27,8 @@ namespace iKan {
         static Application& Get() { return *s_Instance; }
         
     private:
-        void OnWindowResize(WindowResizeEvent& event);
-        void OnWindowClose(WindowCloseEvent& event);
+        bool OnWindowResize(WindowResizeEvent& event);
+        bool OnWindowClose(WindowCloseEvent& event);
         
     private:
         /*

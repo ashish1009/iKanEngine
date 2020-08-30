@@ -15,8 +15,8 @@ namespace iKan {
         virtual void OnImguiRender() override;
         
     private:
-        void OnWindowResize(WindowResizeEvent& event);
-        void OnMouseScroll(MouseScrollEvent& event);
+        bool OnWindowResize(WindowResizeEvent& event);
+        bool OnMouseScroll(MouseScrollEvent& event);
         
     private:
         uint32_t m_Shader, m_LightShaderProgram;

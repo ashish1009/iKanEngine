@@ -18,6 +18,8 @@ namespace iKan {
         virtual EventType GetType() const override { return EventType::KeyPressed; }
         virtual int GetCategoryBit() const override { return EventCategory::KeyCategory; }
         
+        static EventType GetStaticType() { return EventType::KeyPressed; }
+        
     private:
         KeyCode m_KeyCode;
     };
@@ -34,6 +36,8 @@ namespace iKan {
         
         virtual EventType GetType() const override { return EventType::KeyReleased; }
         virtual int GetCategoryBit() const override { return EventCategory::KeyCategory; }
+        
+        static EventType GetStaticType() { return EventType::KeyReleased; }
 
     private:
         KeyCode m_KeyCode;
@@ -51,6 +55,8 @@ namespace iKan {
         
         virtual EventType GetType() const override { return EventType::KeyType; }
         virtual int GetCategoryBit() const override { return EventCategory::KeyCategory; }
+        
+        static EventType GetStaticType() { return EventType::KeyType; }
 
     private:
         KeyCode m_KeyCode;
