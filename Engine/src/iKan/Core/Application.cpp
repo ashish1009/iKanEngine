@@ -1,7 +1,8 @@
 #include <iKan/Core/Application.h>
 #include <iKan/Core/Core.h>
-
 #include <iKan/Core/Input.h>
+
+#include <iKan/Renderer/RenderCommand.h>
 
 #include <stb_image.h>
 
@@ -11,8 +12,6 @@
 namespace iKan {
     
     Application* Application::s_Instance = nullptr;
-    
-    static bool s_IsRunning = true;
     
     static bool  s_Perspective = true;
     static float s_AspectRatio = 16.0f/9.0f;
@@ -72,12 +71,10 @@ namespace iKan {
         m_Window->SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
         
         // set the view Port
-        glViewport(0, 0, m_Window->GetWidth(), m_Window->GetHeight());
+        RenderCommand::SetViewPort(m_Window->GetWidth(), m_Window->GetHeight());
         
         // OpenGl Init
-        glEnable(GL_DEPTH_TEST);
-        //    glEnable(GL_BLEND);
-        //    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        RenderCommand::Depth(State::Enable);
         
         // ImGui
         IMGUI_CHECKVERSION();
@@ -847,7 +844,7 @@ namespace iKan {
     void Application::OnUpdate()
     {
         // Game Loop
-        while (s_IsRunning)
+        while (m_IsRunning)
         {
             float currentFrame = glfwGetTime();
             s_DeltaTime = currentFrame - s_LastFrame;
@@ -895,8 +892,8 @@ namespace iKan {
             else
                 projection = glm::ortho(-s_AspectRatio * s_OrthoZoom, s_AspectRatio * s_OrthoZoom, -s_OrthoZoom, s_OrthoZoom, -100.0f, 100.0f);
             
-            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+            RenderCommand::Clear();
             
             // Bind Shader
             glUseProgram(m_Shader);
@@ -1190,13 +1187,13 @@ namespace iKan {
     
     void Application::OnWindowResize(WindowResizeEvent& event)
     {
-        glViewport(0, 0, event.GetWidth(), event.GetHeight());
+        RenderCommand::SetViewPort(event.GetWidth(), event.GetHeight());
         s_AspectRatio = (float)event.GetWidth() / (float)event.GetHeight();
     }
 
     void Application::OnWindowClose(WindowCloseEvent& event)
     {
-        s_IsRunning = false;
+        m_IsRunning = false;
     }
 
     void Application::OnMouseScroll(MouseScrollEvent& event)
