@@ -1,13 +1,13 @@
 #pragma once
 
-#include <iKan/Core/Application.h>
+extern iKan::Application* iKan::CreateApplication();
 
 int main(int argc, const char * argv[])
 {
     iKan::Log::Init();
     IK_CORE_INFO("Initialized spd logger");
     
-    iKan::Application* app = new iKan::Application();
+    iKan::Application* app = iKan::CreateApplication();
     app->OnUpdate();
     delete app;
     

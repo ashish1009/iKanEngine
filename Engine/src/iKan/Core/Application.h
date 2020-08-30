@@ -15,7 +15,7 @@ namespace iKan {
     {
     public:
         Application();
-        ~Application();
+        virtual ~Application();
         
         void OnEvent(Event& event);
         void OnUpdate();
@@ -29,7 +29,6 @@ namespace iKan {
     private:
         void OnWindowResize(WindowResizeEvent& event);
         void OnWindowClose(WindowCloseEvent& event);
-        void OnMouseScroll(MouseScrollEvent& event);
         
     private:
         /*
@@ -43,12 +42,11 @@ namespace iKan {
         ImguiLayer* m_ImguiLayer; // Not using smart pounter because we are deleting all the layers
         
         bool m_IsRunning = true;
+        float m_LastFrame = 0.0f;
         
-        uint32_t m_Shader, m_LightShaderProgram;
-        uint32_t m_VAO, m_LightVAO;
-        uint32_t m_WhiteTextureId, m_CheckBoardTextureID, m_GridTextureID, m_GrassTextureID;
-
         static Application* s_Instance;
     };
     
+    Application* CreateApplication();
+
 }

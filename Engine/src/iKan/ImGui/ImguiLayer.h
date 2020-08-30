@@ -12,7 +12,7 @@ namespace iKan {
         ImguiLayer()
         : Layer("Imgui Layer") {}
         
-        ~ImguiLayer() = default;
+        virtual ~ImguiLayer() = default;
         
         virtual void OnAttach() override;
         virtual void OnDetach() override;

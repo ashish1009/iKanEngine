@@ -1,6 +1,7 @@
-[22:53:28] [info    ] iKAN: Initialized spd logger
-[22:53:28] [info    ] iKAN: Creating Window : ENGINE (1280x720)
-[22:53:28] [info    ] iKAN: OpenGl Info :
-[22:53:28] [info    ] iKAN: Vendor   : Intel Inc. 
-[22:53:28] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
-[22:53:28] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[23:48:51] [info    ] iKAN: Initialized spd logger
+[23:48:51] [info    ] iKAN: Creating Window : ENGINE (1280x720)
+[23:48:51] [info    ] iKAN: OpenGl Info :
+[23:48:51] [info    ] iKAN: Vendor   : Intel Inc. 
+[23:48:51] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[23:48:51] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[23:49:01] [info    ] iKAN: Window : ENGINE Destroyed

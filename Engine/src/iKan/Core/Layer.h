@@ -2,6 +2,8 @@
 
 #include <iKan/Events/Events.h>
 
+#include <iKan/Core/TimeStep.h>
+
 namespace iKan {
     
     class Layer
@@ -13,7 +15,7 @@ namespace iKan {
         virtual ~Layer() = default;
 
         virtual void OnAttach() {}
-        virtual void OnUpdate() {}
+        virtual void OnUpdate(TimeStep timeStep) {}
         virtual void OnImguiRender() {}
         virtual void OnDetach() {}
         virtual void OnEvent(Event& event) {}

@@ -46,6 +46,7 @@
 		B2FEC92624FBB5F800388451 /* LayerStack.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FEC92424FBB5F800388451 /* LayerStack.h */; };
 		B2FEC92924FC0A1900388451 /* ImguiLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2FEC92724FC0A1900388451 /* ImguiLayer.cpp */; };
 		B2FEC92A24FC0A1900388451 /* ImguiLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FEC92824FC0A1900388451 /* ImguiLayer.h */; };
+		B2FEC92F24FC207800388451 /* TimeStep.h in Headers */ = {isa = PBXBuildFile; fileRef = B2FEC92E24FC207800388451 /* TimeStep.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		B2FEC92424FBB5F800388451 /* LayerStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LayerStack.h; sourceTree = "<group>"; };
 		B2FEC92724FC0A1900388451 /* ImguiLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImguiLayer.cpp; sourceTree = "<group>"; };
 		B2FEC92824FC0A1900388451 /* ImguiLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiLayer.h; sourceTree = "<group>"; };
+		B2FEC92E24FC207800388451 /* TimeStep.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TimeStep.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +254,7 @@
 				B2FEC92024FBB3DF00388451 /* Layer.h */,
 				B2FEC92324FBB5F700388451 /* LayerStack.cpp */,
 				B2FEC92424FBB5F800388451 /* LayerStack.h */,
+				B2FEC92E24FC207800388451 /* TimeStep.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 				B2FEC91C24FB9AA500388451 /* OpenGlRenderAPI.h in Headers */,
 				B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */,
 				B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */,
+				B2FEC92F24FC207800388451 /* TimeStep.h in Headers */,
 				B2FEC92624FBB5F800388451 /* LayerStack.h in Headers */,
 				B2FEC92224FBB3DF00388451 /* Layer.h in Headers */,
 				B2752D1E24FACD64005EF655 /* RenderCommand.h in Headers */,
