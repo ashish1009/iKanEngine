@@ -70,34 +70,10 @@ namespace iKan {
         m_Window = std::make_unique<Window>();
         m_Window->SetEventCallBack(std::bind(&Application::OnEvent, this, std::placeholders::_1));
         
-        // set the view Port
-        RenderCommand::SetViewPort(m_Window->GetWidth(), m_Window->GetHeight());
-        
-        // OpenGl Init
         RenderCommand::Depth(State::Enable);
         
-        // ImGui
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
-        
-        /* Setup Dear ImGui style */
-        ImGui::StyleColorsDark();
-        
-        /* When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones. */
-        ImGuiStyle& style = ImGui::GetStyle();
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            style.WindowRounding = 0.0f;
-            style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-        }
-        
-        /* Setup Platform/Renderer bindings */
-        ImGui_ImplGlfw_InitForOpenGL(m_Window->GetNativeWindow(), true);
-        ImGui_ImplOpenGL3_Init("#version 410");
+        m_ImguiLayer = new ImguiLayer();
+        PushOverlay(m_ImguiLayer);
         
         float cubeTileIdx = 0.0f;
         
@@ -836,9 +812,19 @@ namespace iKan {
     
     Application::~Application()
     {
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+    
+    }
+    
+    void Application::PushLayer(Layer* layer)
+    {
+        m_LayerStack.PushLayer(layer);
+        layer->OnAttach();
+    }
+    
+    void Application::PushOverlay(Layer *layer)
+    {
+        m_LayerStack.PushOverlay(layer);
+        layer->OnAttach();
     }
     
     void Application::OnUpdate()
@@ -1108,11 +1094,7 @@ namespace iKan {
             // Draw Element
             glDrawArrays(GL_TRIANGLES, 0, 36);
             
-            // Begin Imgui
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-            
+            m_ImguiLayer->Begin();
             // Render Imgui
             ImGui::Begin("Frame");
             ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -1166,21 +1148,8 @@ namespace iKan {
 //        }
             
             ImGui::End();
-            
-            // End Imgui
-            ImGuiIO& io      = ImGui::GetIO();
-            io.DisplaySize   = ImVec2((float)m_Window->GetWidth(), (float)m_Window->GetHeight());
-            
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-            {
-                GLFWwindow* backup_current_context = glfwGetCurrentContext();
-                ImGui::UpdatePlatformWindows();
-                ImGui::RenderPlatformWindowsDefault();
-                glfwMakeContextCurrent(backup_current_context);
-            }
-            
+            m_ImguiLayer->End();
+                
             m_Window->OnUpdate();
         }
     }
@@ -1217,6 +1186,13 @@ namespace iKan {
         if (event.GetType() == EventType::MouseScroll)
         {
             OnMouseScroll(static_cast<MouseScrollEvent&>(event));
+        }
+        
+        for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); it++)
+        {
+            if (event.Handled)
+                break;
+            (*it)->OnEvent(event);
         }
     }
 

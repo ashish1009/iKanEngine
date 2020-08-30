@@ -5,6 +5,9 @@
 #include <iKan/Events/ApplicationEvents.h>
 
 #include <iKan/Core/Window.h>
+#include <iKan/Core/LayerStack.h>
+
+#include <iKan/ImGui/ImguiLayer.h>
 
 namespace iKan {
     
@@ -16,6 +19,9 @@ namespace iKan {
         
         void OnEvent(Event& event);
         void OnUpdate();
+        
+        void PushLayer(Layer* layer);
+        void PushOverlay(Layer* layer);
         
         Window& GetWindow() { return *m_Window; }
         static Application& Get() { return *s_Instance; }
@@ -33,6 +39,8 @@ namespace iKan {
          Detaching layer will happen after Terminating the Window)
          */
         std::unique_ptr<Window> m_Window;
+        LayerStack m_LayerStack;
+        ImguiLayer* m_ImguiLayer; // Not using smart pounter because we are deleting all the layers
         
         bool m_IsRunning = true;
         
