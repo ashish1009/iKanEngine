@@ -46,7 +46,7 @@ namespace iKan {
         // Encapsulate the Data that needs to be sent to glfw as pointer
         struct WindowData
         {
-            uint32_t Width = 0, Height = 0;
+            uint32_t    Width = 0, Height = 0;
             std::string Title = "";
             
             std::function<void(Event&)> EventFunc;

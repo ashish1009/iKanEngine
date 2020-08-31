@@ -38,10 +38,11 @@ namespace iKan {
          Detaching layer will happen after Terminating the Window)
          */
         std::unique_ptr<Window> m_Window;
-        LayerStack m_LayerStack;
+        
+        LayerStack  m_LayerStack;
         ImguiLayer* m_ImguiLayer; // Not using smart pounter because we are deleting all the layers
         
-        bool m_IsRunning = true;
+        bool  m_IsRunning = true;
         float m_LastFrame = 0.0f;
         
         static Application* s_Instance;
