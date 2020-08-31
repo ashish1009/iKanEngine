@@ -54,7 +54,6 @@ namespace iKan {
     : Layer("Example Layer")
     {
         float cubeTileIdx = 0.0f;
-        
         float vertices[] =
         {
             /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/            /* Normal */
@@ -131,8 +130,7 @@ namespace iKan {
         };
         
         // Creating Vertex Array
-        glGenVertexArrays(1, &m_VAO);
-        glBindVertexArray(m_VAO);
+        m_VAO = VertexArray::Create();
         
         // creating memory on the GPU where we store the vertex data
         uint32_t VBO;
@@ -473,8 +471,7 @@ namespace iKan {
         };
         
         // Creating Vertex Array
-        glGenVertexArrays(1, &m_LightVAO);
-        glBindVertexArray(m_LightVAO);
+        m_LightVAO = VertexArray::Create();
         
         // creating memory on the GPU where we store the vertex data
         uint32_t lightVBO;
@@ -1034,7 +1031,7 @@ namespace iKan {
         }
         
         // Bind VertexArray
-        glBindVertexArray(m_VAO);
+        m_VAO->Bind();
         
         // Bind Texture
         glActiveTexture(GL_TEXTURE0 + 0);
@@ -1075,7 +1072,7 @@ namespace iKan {
         glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(projectionView));
         
         // Bind VertexArray
-        glBindVertexArray(m_LightVAO);
+        m_LightVAO->Bind();
         
         // Draw Element
         glDrawArrays(GL_TRIANGLES, 0, 36);

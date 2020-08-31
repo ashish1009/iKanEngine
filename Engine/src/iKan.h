@@ -15,3 +15,4 @@
 #include <iKan/Events/MouseEvents.h>
 
 #include <iKan/Renderer/RenderCommand.h>
+#include <iKan/Renderer/VertexArray.h>

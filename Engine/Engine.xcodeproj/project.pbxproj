@@ -19,6 +19,10 @@
 		B21F821E24F6D1D20040B427 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = B21F821C24F6D1D20040B427 /* Window.h */; };
 		B23D4E7B24F829880049238A /* Events.h in Headers */ = {isa = PBXBuildFile; fileRef = B23D4E7A24F829880049238A /* Events.h */; };
 		B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */; };
+		B2473FD124FD1DB40099535D /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2473FCF24FD1DB40099535D /* VertexArray.cpp */; };
+		B2473FD224FD1DB40099535D /* VertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = B2473FD024FD1DB40099535D /* VertexArray.h */; };
+		B2473FD724FD1E350099535D /* OpenGlVertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2473FD524FD1E350099535D /* OpenGlVertexArray.cpp */; };
+		B2473FD824FD1E350099535D /* OpenGlVertexArray.h in Headers */ = {isa = PBXBuildFile; fileRef = B2473FD624FD1E350099535D /* OpenGlVertexArray.h */; };
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
@@ -79,6 +83,10 @@
 		B21F821C24F6D1D20040B427 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
 		B23D4E7A24F829880049238A /* Events.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvents.h; sourceTree = "<group>"; };
+		B2473FCF24FD1DB40099535D /* VertexArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexArray.cpp; sourceTree = "<group>"; };
+		B2473FD024FD1DB40099535D /* VertexArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VertexArray.h; sourceTree = "<group>"; };
+		B2473FD524FD1E350099535D /* OpenGlVertexArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlVertexArray.cpp; sourceTree = "<group>"; };
+		B2473FD624FD1E350099535D /* OpenGlVertexArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlVertexArray.h; sourceTree = "<group>"; };
 		B24FF88724ED1A3C00884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -274,6 +282,8 @@
 				B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */,
 				B2FEC91924FB9AA500388451 /* OpenGlRenderAPI.cpp */,
 				B2FEC91A24FB9AA500388451 /* OpenGlRenderAPI.h */,
+				B2473FD524FD1E350099535D /* OpenGlVertexArray.cpp */,
+				B2473FD624FD1E350099535D /* OpenGlVertexArray.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -287,6 +297,8 @@
 				B2F0FC0824F816F70004443A /* RenderAPI.h */,
 				B2752D1B24FACD64005EF655 /* RenderCommand.cpp */,
 				B2752D1C24FACD64005EF655 /* RenderCommand.h */,
+				B2473FCF24FD1DB40099535D /* VertexArray.cpp */,
+				B2473FD024FD1DB40099535D /* VertexArray.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -316,10 +328,12 @@
 				B2752D1024FABBA1005EF655 /* MouseCode.h in Headers */,
 				B2752D1A24FAC201005EF655 /* Application.h in Headers */,
 				B23D4E7B24F829880049238A /* Events.h in Headers */,
+				B2473FD224FD1DB40099535D /* VertexArray.h in Headers */,
 				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
 				B2FEC92A24FC0A1900388451 /* ImguiLayer.h in Headers */,
 				B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */,
 				B2752D1624FAC1AF005EF655 /* EntryPoint.h in Headers */,
+				B2473FD824FD1E350099535D /* OpenGlVertexArray.h in Headers */,
 				B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */,
 				B2752D1424FABDF3005EF655 /* Input.h in Headers */,
 			);
@@ -419,6 +433,8 @@
 				B2FEC91B24FB9AA500388451 /* OpenGlRenderAPI.cpp in Sources */,
 				B2F0FC0424F80E960004443A /* GraphicsContext.cpp in Sources */,
 				B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */,
+				B2473FD724FD1E350099535D /* OpenGlVertexArray.cpp in Sources */,
+				B2473FD124FD1DB40099535D /* VertexArray.cpp in Sources */,
 				B2752D1D24FACD64005EF655 /* RenderCommand.cpp in Sources */,
 				B2F0FC0924F816F70004443A /* RenderAPI.cpp in Sources */,
 				B213795424ED4E6400A14055 /* stb_image.cpp in Sources */,
