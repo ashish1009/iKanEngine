@@ -50,86 +50,6 @@ namespace iKan {
     static bool s_IsSpecular    = false;
     static bool s_IsAttenuation = false;
     
-    enum class ShaderDataType
-    {
-        NoType = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
-    };
-    
-    static uint32_t ShaderDataTypeSize(ShaderDataType type)
-    {
-        switch (type)
-        {
-            case ShaderDataType::NoType : return 0;         break;
-            case ShaderDataType::Float  : return 4;         break;
-            case ShaderDataType::Float2 : return 4 * 2;     break;
-            case ShaderDataType::Float3 : return 4 * 3;     break;
-            case ShaderDataType::Float4 : return 4 * 4;     break;
-            case ShaderDataType::Mat3   : return 4 * 3 * 3; break;
-            case ShaderDataType::Mat4   : return 4 * 4 * 5; break;
-            case ShaderDataType::Int    : return 4;         break;
-            case ShaderDataType::Int2   : return 4 * 2;     break;
-            case ShaderDataType::Int3   : return 4 * 3;     break;
-            case ShaderDataType::Int4   : return 4 * 4;     break;
-            case ShaderDataType::Bool   : return 1;         break;
-        }
-        IK_CORE_ASSERT(false, "Invalid Type");
-        return 0;
-    }
-    
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-    {
-        switch (type)
-        {
-            case ShaderDataType::NoType:   return 0;
-            case ShaderDataType::Float:    return GL_FLOAT;
-            case ShaderDataType::Float2:   return GL_FLOAT;
-            case ShaderDataType::Float3:   return GL_FLOAT;
-            case ShaderDataType::Float4:   return GL_FLOAT;
-            case ShaderDataType::Mat3:     return GL_FLOAT;
-            case ShaderDataType::Mat4:     return GL_FLOAT;
-            case ShaderDataType::Int:      return GL_INT;
-            case ShaderDataType::Int2:     return GL_INT;
-            case ShaderDataType::Int3:     return GL_INT;
-            case ShaderDataType::Int4:     return GL_INT;
-            case ShaderDataType::Bool:     return GL_BOOL;
-        }
-        
-        IK_CORE_ASSERT(false, "Unknown ShaderDataType!");
-        return 0;
-    }
-    
-    static uint32_t GetElementCount(ShaderDataType type)
-    {
-        switch (type)
-        {
-            case ShaderDataType::NoType : return 0;
-            case ShaderDataType::Float :  return 1;
-            case ShaderDataType::Float2 : return 2;
-            case ShaderDataType::Float3 : return 3;
-            case ShaderDataType::Float4 : return 4;
-            case ShaderDataType::Mat3:    return 3; // 3* float3
-            case ShaderDataType::Mat4:    return 4; // 4* float4
-            case ShaderDataType::Int :    return 1;
-            case ShaderDataType::Int2 :   return 2;
-            case ShaderDataType::Int3 :   return 3;
-            case ShaderDataType::Int4 :   return 4;
-            case ShaderDataType::Bool :   return 1;
-        }
-        IK_CORE_ASSERT(false, "Unkown Shader datatype!! ");
-    }
-    
-    struct BufferElement
-    {
-        std::string Name;
-        ShaderDataType Type;
-        uint32_t Size;
-        uint32_t Count;
-        
-        BufferElement(const std::string& name, ShaderDataType type)
-        : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Count(GetElementCount(type)) {}
-    };
-
-    
     ExampleLayer::ExampleLayer()
     : Layer("Example Layer")
     {
@@ -215,25 +135,15 @@ namespace iKan {
         std::shared_ptr<VertexBuffer> VBO = VertexBuffer::Create(sizeof(vertices), vertices);
         std::shared_ptr<IndexBuffer> EBO  = IndexBuffer::Create(6, indices);
         
-        std::vector<BufferElement> elements;
-        elements.emplace_back("a_Position",     ShaderDataType::Float3);
-        elements.emplace_back("a_Color",        ShaderDataType::Float4);
-        elements.emplace_back("a_TexCoord",     ShaderDataType::Float2);
-        elements.emplace_back("a_TextureIndex", ShaderDataType::Float);
-        elements.emplace_back("a_TilingFactor", ShaderDataType::Float);
-        elements.emplace_back("a_Normal",       ShaderDataType::Float3);
-        
-        uint32_t stride = 14 * sizeof(float);
-        
-        uint32_t index = 0;
-        size_t offset = 0;
-        for (auto element : elements)
-        {
-            glEnableVertexAttribArray(index);
-            glVertexAttribPointer(index, element.Count, ShaderDataTypeToOpenGLBaseType(element.Type), GL_FALSE, stride, (void*)(offset));
-            offset += element.Size;
-            index++;
-        }
+        VBO->AddLayout({
+            { ShaderDataType::Float3, "a_Position" },
+            { ShaderDataType::Float4, "a_Color" },
+            { ShaderDataType::Float2, "a_TexCoord" },
+            { ShaderDataType::Float , "a_TextureIndex" },
+            { ShaderDataType::Float , "a_TilingFactor" },
+            { ShaderDataType::Float3, "a_Normal" }
+        });
+        m_VAO->AddVertexBuffer(VBO);
         
         std::string vertexSrc = R"(
         #version 330 core
@@ -520,24 +430,14 @@ namespace iKan {
         m_LightVAO = VertexArray::Create();
         std::shared_ptr<VertexBuffer> lightVBO = VertexBuffer::Create(sizeof(lightVertices), lightVertices);
         
-        std::vector<BufferElement> lightElements;
-        lightElements.emplace_back("a_Position",     ShaderDataType::Float3);
-        lightElements.emplace_back("a_Color",        ShaderDataType::Float4);
-        lightElements.emplace_back("a_TexCoord",     ShaderDataType::Float2);
-        lightElements.emplace_back("a_TextureIndex", ShaderDataType::Float);
-        lightElements.emplace_back("a_TilingFactor", ShaderDataType::Float);
-        
-        uint32_t lightStride = 11 * sizeof(float);
-        
-        uint32_t lightIndex = 0;
-        size_t lightOffset = 0;
-        for (auto element : lightElements)
-        {
-            glEnableVertexAttribArray(lightIndex);
-            glVertexAttribPointer(lightIndex, element.Count, ShaderDataTypeToOpenGLBaseType(element.Type), GL_FALSE, lightStride, (void*)(lightOffset));
-            lightOffset += element.Size;
-            lightIndex++;
-        }
+        lightVBO->AddLayout({
+            { ShaderDataType::Float3, "a_Position" },
+            { ShaderDataType::Float4, "a_Color" },
+            { ShaderDataType::Float2, "a_TexCoord" },
+            { ShaderDataType::Float , "a_TextureIndex" },
+            { ShaderDataType::Float , "a_TilingFactor" },
+        });
+        m_LightVAO->AddVertexBuffer(lightVBO);
         
         /// Shader 2
         // Creating Vertex Shader

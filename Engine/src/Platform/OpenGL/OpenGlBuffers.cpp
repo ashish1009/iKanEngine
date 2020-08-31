@@ -12,19 +12,19 @@ namespace iKan {
     
     OpenGlVertexBuffer::~OpenGlVertexBuffer()
     {
-        
+        glDeleteBuffers(1, &m_RendererId);
     }
     
     void OpenGlVertexBuffer::Bind()
     {
-        
+        glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
     }
     
     void OpenGlVertexBuffer::Unbind()
     {
-        
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
-    
+        
     // -------------------------------------- Index Buffer -------------------------------------
     OpenGlIndexBuffer::OpenGlIndexBuffer(uint32_t count, uint32_t* data)
     {
@@ -35,17 +35,17 @@ namespace iKan {
     
     OpenGlIndexBuffer::~OpenGlIndexBuffer()
     {
-        
+        glDeleteBuffers(1, &m_RendererId);
     }
     
     void OpenGlIndexBuffer::Bind()
     {
-        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
     }
     
     void OpenGlIndexBuffer::Unbind()
     {
-        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     
 }
