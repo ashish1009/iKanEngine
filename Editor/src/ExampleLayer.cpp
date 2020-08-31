@@ -132,17 +132,8 @@ namespace iKan {
         // Creating Vertex Array
         m_VAO = VertexArray::Create();
         
-        // creating memory on the GPU where we store the vertex data
-        uint32_t VBO;
-        glGenBuffers(1, &VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        
-        // Creating Element Buffer
-        uint32_t EBO;
-        glGenBuffers(1, &EBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        std::shared_ptr<VertexBuffer> VBO = VertexBuffer::Create(sizeof(vertices), vertices);
+        std::shared_ptr<IndexBuffer> EBO  = IndexBuffer::Create(6, indices);
         
         // lInking vertex Attributes
         uint32_t stride = 14, offset = 0, size = 0, idx = 0;
