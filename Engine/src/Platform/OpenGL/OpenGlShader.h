@@ -24,7 +24,12 @@ namespace iKan {
         virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) override;
 
     private:
+        void Compile(const std::unordered_map<GLenum, std::string>& source);
+        int32_t GetUniformLocation(const std::string& name);
+
+    private:
         uint32_t m_RendererId;
+        std::unordered_map<std::string, int32_t> m_LocationMap;
     };
     
 }

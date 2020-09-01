@@ -5,63 +5,56 @@
 namespace iKan {
     
     OpenGlShader::OpenGlShader(const std::string& vertexSrc, const std::string& fragmentSrc)
-    {       
-        // Creating Vertex Shader
-        uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER); // DDD
+    {
+        std::unordered_map<GLenum, std::string> source;
+        source[GL_VERTEX_SHADER] = vertexSrc;
+        source[GL_FRAGMENT_SHADER] = fragmentSrc;
         
-        // Attch the shader source and then compile
-        const char* vertecString = vertexSrc.c_str(); // DDD
-        glShaderSource(vertexShader, 1, &vertecString, nullptr);
-        glCompileShader(vertexShader);
-        
-        // Error Handling
-        GLint isVertexCompiled = 0;
-        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isVertexCompiled);
-        if (isVertexCompiled == GL_FALSE)
+        Compile(source);
+    }
+    
+    void OpenGlShader::Compile(const std::unordered_map<GLenum, std::string>& source)
+    {
+        int program = glCreateProgram();
+        std::array<uint32_t, 2> shaderId;
+        int glShaderIDIndex = 0;
+
+        for (auto& kv : source)
         {
-            GLint maxLength = 0;
-            glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+            GLenum type = kv.first;
+            std::string src = kv.second;
             
-            std::vector<GLchar> infoLog(maxLength);
-            glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &infoLog[0]);
+            uint32_t shader = glCreateShader(type);
             
-            glDeleteShader(vertexShader);
+            // Attch the shader source and then compile
+            const char* string = src.c_str();
+            glShaderSource(shader, 1, &string, nullptr);
+            glCompileShader(shader);
             
-            IK_CORE_ERROR("{0}", infoLog.data());
-            IK_CORE_ASSERT(false, "Shader compilation failure!");
-        }
-        
-        // Creating VertFragmentex Shader
-        uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        
-        // Attch the shader source and then compile
-        const char* fragmentString = fragmentSrc.c_str();
-        glShaderSource(fragmentShader, 1, &fragmentString, nullptr);
-        glCompileShader(fragmentShader);
-        
-        // Error Handling
-        GLint isFragmentCompiled = 0;
-        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isFragmentCompiled);
-        if (isFragmentCompiled == GL_FALSE)
-        {
-            GLint maxLength = 0;
-            glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength);
-            
-            std::vector<GLchar> infoLog(maxLength);
-            glGetShaderInfoLog(fragmentShader, maxLength, &maxLength, &infoLog[0]);
-            
-            glDeleteShader(fragmentShader);
-            
-            IK_CORE_ERROR("{0}", infoLog.data());
-            IK_CORE_ASSERT(false, "Shader compilation failure!");
+            // Error Handling
+            GLint isCompiled = 0;
+            glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+            if (isCompiled == GL_FALSE)
+            {
+                GLint maxLength = 0;
+                glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+                
+                std::vector<GLchar> infoLog(maxLength);
+                glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
+                
+                glDeleteShader(shader);
+                
+                IK_CORE_ERROR("{0}", infoLog.data());
+                IK_CORE_ASSERT(false, "Shader compilation failure!");
+            }
+            // Attach both shader and link them
+            glAttachShader(program, shader);
+            shaderId[glShaderIDIndex] = shader;
         }
         
         // Create Shader program to activate and linke the shader
-        m_RendererId = glCreateProgram();
+        m_RendererId = program;
         
-        // Attach both shader and link them
-        glAttachShader(m_RendererId, vertexShader);
-        glAttachShader(m_RendererId, fragmentShader);
         glLinkProgram(m_RendererId);
         
         // Error Handling
@@ -80,14 +73,14 @@ namespace iKan {
             /* We don't need the program anymore. */
             glDeleteProgram(m_RendererId);
             
-            glDeleteShader(vertexShader);
-            glDeleteShader(fragmentShader);
+            for (auto id : shaderId)
+                glDeleteShader(id);
             
             IK_CORE_ERROR("{0}", infoLog.data());
             IK_CORE_ASSERT(false, "Shader link failure!");
         }
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
+        for (auto id : shaderId)
+            glDeleteShader(id);
     }
     
     OpenGlShader::~OpenGlShader()
@@ -108,72 +101,51 @@ namespace iKan {
     //-------------------------------- Uniforms --------------------------------
     void OpenGlShader::SetUniformInt1(const std::string& name, int value)
     {
-        int location = glGetUniformLocation(m_RendererId, name.c_str());
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist!", name);
-        
-        glUniform1i(location, value);
+        glUniform1i(GetUniformLocation(name), value);
     }
     
     void OpenGlShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
     {
-        int location = glGetUniformLocation(m_RendererId, name.c_str());
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", name);
-        
-        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
+        glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
 
     void OpenGlShader::SetUniformMat3(const std::string& name, const glm::mat3& value)
     {
-        int location = glGetUniformLocation(m_RendererId, name.c_str());
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", name);
-        
-        glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(value));
+        glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
     
     void OpenGlShader::SetUniformFloat1(const std::string& name, float value)
     {
-        int location = glGetUniformLocation(m_RendererId, name.c_str());
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", name);
-        
-        glUniform1f(location, value);
+        glUniform1f(GetUniformLocation(name), value);
     }
     
     void OpenGlShader::SetUniformFloat2(const std::string& name, const glm::vec2& value)
     {
-        int location = glGetUniformLocation(m_RendererId, name.c_str());
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", name);
-        
-        glUniform2f(location, value.x, value.y);
+        glUniform2f(GetUniformLocation(name), value.x, value.y);
     }
     
     void OpenGlShader::SetUniformFloat3(const std::string& name, const glm::vec3& value)
     {
-        int location = glGetUniformLocation(m_RendererId, name.c_str());
-        
-        if (-1 == location)
-            IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", name);
-        
-        glUniform3f(location, value.x, value.y, value.z);
+        glUniform3f(GetUniformLocation(name), value.x, value.y, value.z);
     }
     
     void OpenGlShader::SetUniformFloat4(const std::string& name, const glm::vec4& value)
     {
-        int location = glGetUniformLocation(m_RendererId, name.c_str());
+        glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
+    }
+    
+    int32_t OpenGlShader::GetUniformLocation(const std::string& name)
+    {
+        if (m_LocationMap.find(name) != m_LocationMap.end())
+            return m_LocationMap[name];
         
+        int32_t location = glGetUniformLocation(m_RendererId, name.c_str());
         if (-1 == location)
             IK_CORE_WARN("Warning: uniform '{0}' doesnt exist", name);
-        
-        glUniform4f(location, value.x, value.y, value.z, value.w);
+
+        m_LocationMap[name] = location;
+        return location;
     }
+
     
 }
