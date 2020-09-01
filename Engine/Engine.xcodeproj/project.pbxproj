@@ -30,6 +30,10 @@
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
+		B266521424FEBA1A0032AF99 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B266521224FEBA1A0032AF99 /* Shader.cpp */; };
+		B266521524FEBA1A0032AF99 /* Shader.h in Headers */ = {isa = PBXBuildFile; fileRef = B266521324FEBA1A0032AF99 /* Shader.h */; };
+		B266521A24FEBB000032AF99 /* OpenGlShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B266521824FEBB000032AF99 /* OpenGlShader.cpp */; };
+		B266521B24FEBB000032AF99 /* OpenGlShader.h in Headers */ = {isa = PBXBuildFile; fileRef = B266521924FEBB000032AF99 /* OpenGlShader.h */; };
 		B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0724FA7E5C005EF655 /* KeyEvents.h */; };
 		B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0B24FAB248005EF655 /* MouseEvents.h */; };
 		B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0D24FABB8D005EF655 /* KeyCode.h */; };
@@ -99,6 +103,10 @@
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		B266521224FEBA1A0032AF99 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		B266521324FEBA1A0032AF99 /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
+		B266521824FEBB000032AF99 /* OpenGlShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlShader.cpp; sourceTree = "<group>"; };
+		B266521924FEBB000032AF99 /* OpenGlShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlShader.h; sourceTree = "<group>"; };
 		B2752D0724FA7E5C005EF655 /* KeyEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvents.h; sourceTree = "<group>"; };
 		B2752D0B24FAB248005EF655 /* MouseEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvents.h; sourceTree = "<group>"; };
 		B2752D0D24FABB8D005EF655 /* KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
@@ -294,6 +302,8 @@
 				B2473FD624FD1E350099535D /* OpenGlVertexArray.h */,
 				B2473FDD24FD232E0099535D /* OpenGlBuffers.cpp */,
 				B2473FDE24FD232E0099535D /* OpenGlBuffers.h */,
+				B266521824FEBB000032AF99 /* OpenGlShader.cpp */,
+				B266521924FEBB000032AF99 /* OpenGlShader.h */,
 			);
 			path = OpenGL;
 			sourceTree = "<group>";
@@ -311,6 +321,8 @@
 				B2473FD024FD1DB40099535D /* VertexArray.h */,
 				B2473FD924FD22380099535D /* Buffers.cpp */,
 				B2473FDA24FD22380099535D /* Buffers.h */,
+				B266521224FEBA1A0032AF99 /* Shader.cpp */,
+				B266521324FEBA1A0032AF99 /* Shader.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -325,6 +337,8 @@
 				B2FEC91C24FB9AA500388451 /* OpenGlRenderAPI.h in Headers */,
 				B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */,
 				B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */,
+				B266521524FEBA1A0032AF99 /* Shader.h in Headers */,
+				B266521B24FEBB000032AF99 /* OpenGlShader.h in Headers */,
 				B2FEC92F24FC207800388451 /* TimeStep.h in Headers */,
 				B2FEC92624FBB5F800388451 /* LayerStack.h in Headers */,
 				B2FEC92224FBB3DF00388451 /* Layer.h in Headers */,
@@ -448,10 +462,12 @@
 				B2F0FC0424F80E960004443A /* GraphicsContext.cpp in Sources */,
 				B2473FDF24FD232E0099535D /* OpenGlBuffers.cpp in Sources */,
 				B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */,
+				B266521424FEBA1A0032AF99 /* Shader.cpp in Sources */,
 				B2473FDB24FD22380099535D /* Buffers.cpp in Sources */,
 				B2473FD724FD1E350099535D /* OpenGlVertexArray.cpp in Sources */,
 				B2473FD124FD1DB40099535D /* VertexArray.cpp in Sources */,
 				B2752D1D24FACD64005EF655 /* RenderCommand.cpp in Sources */,
+				B266521A24FEBB000032AF99 /* OpenGlShader.cpp in Sources */,
 				B2F0FC0924F816F70004443A /* RenderAPI.cpp in Sources */,
 				B213795424ED4E6400A14055 /* stb_image.cpp in Sources */,
 				B21F821D24F6D1D20040B427 /* Window.cpp in Sources */,

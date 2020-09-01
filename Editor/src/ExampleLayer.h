@@ -20,7 +20,7 @@ namespace iKan {
         
     private:
         std::shared_ptr<VertexArray> m_VAO, m_LightVAO;
-        uint32_t m_Shader, m_LightShaderProgram;
+        std::shared_ptr<Shader> m_Shader, m_LightShader;
 //        uint32_t m_VAO, m_LightVAO;
         uint32_t m_WhiteTextureId, m_CheckBoardTextureID, m_GridTextureID, m_GrassTextureID;        
     };
