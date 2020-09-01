@@ -4,7 +4,7 @@
 
 namespace iKan {
     
-    static bool  s_Perspective = true;
+    static bool  s_Perspective = false;
     static float s_AspectRatio = 16.0f/9.0f;
     
     static glm::vec3 s_Position = { 0.0f, 0.0f, 0.0f };
@@ -53,87 +53,25 @@ namespace iKan {
     ExampleLayer::ExampleLayer()
     : Layer("Example Layer")
     {
-        float cubeTileIdx = 0.0f;
-        float vertices[] =
+        float vertices[]
         {
-            /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/            /* Normal */
-            // back FACE
-            -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
-            +0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
-            +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
-            +0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
-            -0.5f,  0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f,        0.1f, 0.3f, 0.5f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f, -1.0f,
-            
-            // front FACE
-            -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
-            +0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
-            +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
-            +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
-            -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f,  0.5f,        0.5f, 0.3f, 0.6f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  0.0f,  1.0f,
-            
-            // LEFT FACE
-            -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f,        0.4f, 0.0f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                    -1.0f,  0.0f,  0.0f,
-            
-            // RIGHT FACE
-            +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
-            +0.5f,  0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
-            +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
-            +0.5f, -0.5f, -0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
-            +0.5f, -0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
-            +0.5f,  0.5f,  0.5f,        0.0f, 0.5f, 0.0f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     1.0f,  0.0f,  0.0f,
-            
-            // BOTTOM FACE
-            -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
-            +0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
-            +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
-            +0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
-            -0.5f, -0.5f,  0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f,        0.0f, 0.0f, 0.8f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f, -1.0f,  0.0f,
-            
-            // UP FACE
-            -0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
-            +0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
-            +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
-            +0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          1.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 0.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f, -0.5f,        0.5f, 0.3f, 0.1f, 1.0f,          0.0f, 1.0f,        cubeTileIdx,          1.0f,                     0.0f,  1.0f,  0.0f,
-            
-#if 1
-            // Plane
-            -100.5f, -2.0f, -100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
-            +100.5f, -2.0f, -100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
-            +100.5f, -2.0f,  100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
-            +100.5f, -2.0f,  100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
-            -100.5f, -2.0f,  100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
-            -100.5f, -2.0f, -100.5f,    1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        2.0f,                 1.0f,                     0.0f,  1.0f,  0.0f,
-#endif
-            // Grass
-            -0.5f, -0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
-            +0.5f, -0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
-            +0.5f,  0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
-            +0.5f,  0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
-            -0.5f,  0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
-            -0.5f, -0.5f,  0.51f,       1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        3.0f,                 1.0f,                     0.0f,  0.0f,  1.0f,
+            -0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 0.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
+             0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 0.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
+             0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 1.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
+            -0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 1.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
         };
         
-        unsigned int indices[] =
+        uint32_t indices[]
         {
-            0, 1, 3,
-            1, 2, 3
+            0, 1, 2,
+            2, 3, 0
         };
         
         // Creating Vertex Array
         m_VAO = VertexArray::Create();
         
         std::shared_ptr<VertexBuffer> VBO = VertexBuffer::Create(sizeof(vertices), vertices);
-        std::shared_ptr<IndexBuffer> EBO  = IndexBuffer::Create(6, indices);
+        std::shared_ptr<IndexBuffer> EBO  = IndexBuffer::Create(sizeof(indices) / sizeof(uint32_t), indices);
         
         VBO->AddLayout({
             { ShaderDataType::Float3, "a_Position" },
@@ -144,6 +82,8 @@ namespace iKan {
             { ShaderDataType::Float3, "a_Normal" }
         });
         m_VAO->AddVertexBuffer(VBO);
+        
+        m_VAO->SetIndexBuffer(EBO);
         
         std::string vertexSrc = R"(
         #version 330 core
@@ -376,59 +316,22 @@ namespace iKan {
         /// Light
         float lightVertices[] =
         {
-            /* position */              /* Color */                     /* TexCoords */    /* TexIdx*/     /* Tiling Fatpr*/
-            // back FACE
-            -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            
-            // front FACE
-            -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            
-            // LEFT FACE
-            -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            
-            // RIGHT FACE
-            +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            
-            // BOTTOM FACE
-            -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            -0.5f, -0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            -0.5f, -0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            
-            // UP FACE
-            -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 1.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            +0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f,        0.0f,          1.0f,
-            -0.5f,  0.5f,  0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 0.0f,        0.0f,          1.0f,
-            -0.5f,  0.5f, -0.5f,        1.0f, 1.0f, 1.0f, 1.0f,          0.0f, 1.0f,        0.0f,          1.0f,
+            -0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 0.0f,     0.0f,    1.0f,
+             0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 0.0f,     0.0f,    1.0f,
+             0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 1.0f,     0.0f,    1.0f,
+            -0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 1.0f,     0.0f,    1.0f,
+        };
+        
+        uint32_t lightIndices[] =
+        {
+            0, 1, 2,
+            2, 3, 0
         };
         
         // Creating Vertex Array
         m_LightVAO = VertexArray::Create();
         std::shared_ptr<VertexBuffer> lightVBO = VertexBuffer::Create(sizeof(lightVertices), lightVertices);
+        std::shared_ptr<IndexBuffer> lightEBO  = IndexBuffer::Create(sizeof(lightIndices) / sizeof(uint32_t), lightIndices);
         
         lightVBO->AddLayout({
             { ShaderDataType::Float3, "a_Position" },
@@ -438,6 +341,7 @@ namespace iKan {
             { ShaderDataType::Float , "a_TilingFactor" },
         });
         m_LightVAO->AddVertexBuffer(lightVBO);
+        m_LightVAO->SetIndexBuffer(lightEBO);
         
         /// Shader 2
         // Creating Vertex Shader
@@ -949,9 +853,6 @@ namespace iKan {
             glUniform1f(location, s_Light.Quadratic);
         }
         
-        // Bind VertexArray
-        m_VAO->Bind();
-        
         // Bind Texture
         glActiveTexture(GL_TEXTURE0 + 0);
         glBindTexture(GL_TEXTURE_2D, m_WhiteTextureId);
@@ -966,7 +867,7 @@ namespace iKan {
         glBindTexture(GL_TEXTURE_2D, m_GrassTextureID);
         
         // Draw Element
-        glDrawArrays(GL_TRIANGLES, 0, 42);
+        RenderCommand::DrawIndexed(m_VAO);
         
         /// Light
         // Bind Shader
@@ -994,7 +895,7 @@ namespace iKan {
         m_LightVAO->Bind();
         
         // Draw Element
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        RenderCommand::DrawIndexed(m_LightVAO);
     }
 
     void ExampleLayer::OnImguiRender()

@@ -35,17 +35,17 @@ namespace iKan {
         glDeleteVertexArrays(1, &m_RendererId);
     }
     
-    void OpenGlVertexArray::Bind()
+    void OpenGlVertexArray::Bind() const
     {
         glBindVertexArray(m_RendererId);
     }
     
-    void OpenGlVertexArray::Unbind()
+    void OpenGlVertexArray::Unbind() const
     {
         glBindVertexArray(0);
     }
     
-    void OpenGlVertexArray::AddVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer)
+    void OpenGlVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
     {
         glBindVertexArray(m_RendererId);
         m_VertexBuffers.push_back(vertexBuffer);

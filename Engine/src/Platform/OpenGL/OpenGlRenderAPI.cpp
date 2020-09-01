@@ -22,12 +22,28 @@ namespace iKan {
     
     void OpenGlRenderAPI::Blend(State state)
     {
-        
+        if (State::Enable == state)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+        else if (State::Disable == state)
+        {
+            glDisable(GL_BLEND);
+        }
     }
     
     void OpenGlRenderAPI::SetViewPort(uint32_t widht, uint32_t height)
     {
         glViewport(0, 0, widht, height);
+    }
+    
+    void OpenGlRenderAPI::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+    {
+        vertexArray->Bind();
+        glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        vertexArray->Unbind();
     }
     
 }

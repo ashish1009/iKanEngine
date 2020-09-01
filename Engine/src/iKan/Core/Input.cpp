@@ -21,7 +21,6 @@ namespace iKan {
         return status == GLFW_PRESS;
     }
 
-    
     bool Input::IsMouseButtonReleased(MouseCode button)
     {
         auto status = glfwGetMouseButton(Application::Get().GetWindow().GetNativeWindow(), (int32_t)button);

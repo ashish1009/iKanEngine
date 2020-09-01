@@ -12,6 +12,7 @@ namespace iKan {
         static void Depth(State state) { s_RenderAPI->Depth(state); }
         static void Blend(State state) { s_RenderAPI->Blend(state); }
         static void SetViewPort(uint32_t widht, uint32_t height) { s_RenderAPI->SetViewPort(widht, height); }
+        static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) { s_RenderAPI->DrawIndexed(vertexArray); }
         
     private:
         static std::unique_ptr<RenderAPI> s_RenderAPI;

@@ -12,6 +12,7 @@ namespace iKan {
         virtual void Depth(State state) override;
         virtual void Blend(State state) override;
         virtual void SetViewPort(uint32_t widht, uint32_t height) override;
+        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
     };
     
 }
