@@ -55,10 +55,10 @@ namespace iKan {
     {
         float vertices[]
         {
-            -0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 0.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
-             0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 0.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
-             0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 1.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
-            -0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 1.0f,     1.0f,    1.0f,     0.0f,  0.0f, -1.0f,
+            -0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 0.0f,     0.0f,    2.0f,     0.0f,  0.0f, -1.0f,
+             0.5f, -0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 0.0f,     0.0f,    2.0f,     0.0f,  0.0f, -1.0f,
+             0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      1.0f, 1.0f,     0.0f,    2.0f,     0.0f,  0.0f, -1.0f,
+            -0.5f,  0.5f, 0.0f,     0.1f, 0.3f, 0.5f, 1.0f,      0.0f, 1.0f,     0.0f,    2.0f,     0.0f,  0.0f, -1.0f,
         };
         
         m_VAO = VertexArray::Create();
@@ -262,158 +262,21 @@ namespace iKan {
         
         m_LightShader = Shader::Create(vertexSrc, fragmentSrc);
         
-        // Texture
-        stbi_set_flip_vertically_on_load(1);
-        
-        int height, width, channel;
-        
-        stbi_uc* data = nullptr;
-        data = stbi_load("../../Editor/assets/textures/Checkerboard.png", &width, &height, &channel, 0);
-        
-        IK_CORE_ASSERT(data, "Failed to load stbi Image");
-        
-        GLenum internalFormat = GL_RGB8;
-        GLenum dataFormat     = GL_RGB;
-        
-        if (4 == channel)
-        {
-            internalFormat = GL_RGBA8;
-            dataFormat     = GL_RGBA;
-        }
-        else if (3 == channel)
-        {
-            internalFormat = GL_RGB8;
-            dataFormat     = GL_RGB;
-        }
-        IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
-        
-        glGenTextures(1, &m_CheckBoardTextureID);
-        glBindTexture(GL_TEXTURE_2D, m_CheckBoardTextureID);
-        
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
-        
-        if (data)
-            stbi_image_free(data);
-        
-        // Upload Texture to shader at slot 0
-        // Bind the shader
         m_Shader->Bind();
+        // Texture
+        m_CheckboardTexture = Texture::Create("../../Editor/assets/textures/Checkerboard.png");
         m_Shader->SetUniformInt1("u_Texture[1]", 1);
         
-        /// Another Texutre
-        // Texture
-        stbi_set_flip_vertically_on_load(1);
-        
-        data = nullptr;
-        data = stbi_load("../../Editor/assets/textures/metal.png", &width, &height, &channel, 0);
-        
-        IK_CORE_ASSERT(data, "Failed to load stbi Image");
-        
-        internalFormat = GL_RGB8;
-        dataFormat     = GL_RGB;
-        
-        if (4 == channel)
-        {
-            internalFormat = GL_RGBA8;
-            dataFormat     = GL_RGBA;
-        }
-        else if (3 == channel)
-        {
-            internalFormat = GL_RGB8;
-            dataFormat     = GL_RGB;
-        }
-        IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
-        
-        glGenTextures(1, &m_GridTextureID);
-        glBindTexture(GL_TEXTURE_2D, m_GridTextureID);
-        
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
-        
-        if (data)
-            stbi_image_free(data);
-        
-        // Upload Texture to shader at slot 0
-        // Bind the shader
-        m_Shader->Bind();
+        m_GridTexture       = Texture::Create("../../Editor/assets/textures/metal.png");
         m_Shader->SetUniformInt1("u_Texture[2]", 2);
-        
-        /// Another Texutre
-        // Texture
-        stbi_set_flip_vertically_on_load(1);
-        
-        data = nullptr;
-        data = stbi_load("../../Editor/assets/textures/grass.png", &width, &height, &channel, 0);
-        
-        IK_CORE_ASSERT(data, "Failed to load stbi Image");
-        
-        internalFormat = GL_RGB8;
-        dataFormat     = GL_RGB;
-        
-        if (4 == channel)
-        {
-            internalFormat = GL_RGBA8;
-            dataFormat     = GL_RGBA;
-        }
-        else if (3 == channel)
-        {
-            internalFormat = GL_RGB8;
-            dataFormat     = GL_RGB;
-        }
-        IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
-        
-        glGenTextures(1, &m_GrassTextureID);
-        glBindTexture(GL_TEXTURE_2D, m_GrassTextureID);
-        
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
-        
-        if (data)
-            stbi_image_free(data);
-        
-        // Upload Texture to shader at slot 0
-        // Bind the shader
-        m_Shader->Bind();
+
+        m_GrassTexture      = Texture::Create("../../Editor/assets/textures/grass.png");
         m_Shader->SetUniformInt1("u_Texture[3]", 3);
         
-        /// White Texture
-        width = 1;
-        height = 1;
-        internalFormat = GL_RGBA8;
-        dataFormat = GL_RGBA;
-        
-        glGenTextures(1, &m_WhiteTextureId);
-        glBindTexture(GL_TEXTURE_2D, m_WhiteTextureId);
-        
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        
+        // White Texture
         uint32_t whiteTextureData = 0xffffffff;
         void* whiteTextureDataPtr = &whiteTextureData;
-        
-        uint32_t textureSize = sizeof(uint32_t);
-        
-        uint16_t bpp = dataFormat == GL_RGBA ? 4 : 3;
-        IK_CORE_ASSERT((textureSize == width * height * bpp), "Data must be entire texture");
-        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, dataFormat, GL_UNSIGNED_BYTE, whiteTextureDataPtr);
-        
-        // Bind the shader
-        m_Shader->Bind();
+        m_WhiteTexture = Texture::Create(1, 1, whiteTextureDataPtr, sizeof(uint32_t));
         m_Shader->SetUniformInt1("u_Texture[0]", 0);
     }
     
@@ -563,18 +426,10 @@ namespace iKan {
         }
         
         // Bind Texture
-        glActiveTexture(GL_TEXTURE0 + 0);
-        glBindTexture(GL_TEXTURE_2D, m_WhiteTextureId);
-        
-        glActiveTexture(GL_TEXTURE0 + 1);
-        glBindTexture(GL_TEXTURE_2D, m_CheckBoardTextureID);
-        
-        glActiveTexture(GL_TEXTURE0 + 2);
-        glBindTexture(GL_TEXTURE_2D, m_GridTextureID);
-        
-        glActiveTexture(GL_TEXTURE0 + 3);
-        glBindTexture(GL_TEXTURE_2D, m_GrassTextureID);
-        
+        m_WhiteTexture->Bind(0);
+        m_CheckboardTexture->Bind(1);
+        m_GrassTexture->Bind(2);
+        m_GrassTexture->Bind(3);
         // Draw Element
         RenderCommand::DrawIndexed(m_VAO);
         

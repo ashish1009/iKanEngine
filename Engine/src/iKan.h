@@ -18,3 +18,4 @@
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/Buffers.h>
 #include <iKan/Renderer/Shader.h>
+#include <iKan/Renderer/Texture.h>
