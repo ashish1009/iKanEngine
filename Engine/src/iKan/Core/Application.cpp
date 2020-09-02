@@ -8,12 +8,12 @@ namespace iKan {
     
     Application* Application::s_Instance = nullptr;
     
-    Application::Application()
+    Application::Application(const std::string& title, uint32_t widht, uint32_t height)
     {
         IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         s_Instance = this;
         
-        m_Window = std::make_unique<Window>();
+        m_Window = std::make_unique<Window>(WindowProp(title, widht, height));
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
         RenderCommand::Depth(State::Enable);

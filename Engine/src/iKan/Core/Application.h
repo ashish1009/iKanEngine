@@ -14,7 +14,7 @@ namespace iKan {
     class Application
     {
     public:
-        Application();
+        Application(const std::string& title = "iKan Engine", uint32_t widht = s_WindowWidth, uint32_t height = s_WindowHeight);
         virtual ~Application();
         
         void OnEvent(Event& event);

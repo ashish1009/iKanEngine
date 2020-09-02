@@ -2,9 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Engine/Engine.xcodeproj">
+      location = "group:Mario/Mario.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Editor/Editor.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Engine/Engine.xcodeproj">
    </FileRef>
 </Workspace>

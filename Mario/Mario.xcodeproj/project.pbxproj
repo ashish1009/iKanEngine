@@ -7,16 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F024ED275600A14055 /* OpenGL.framework */; };
-		B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F224ED275B00A14055 /* IOKit.framework */; };
-		B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F424ED276400A14055 /* Cocoa.framework */; };
-		B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF87724ED197300884EDA /* EditorApp.cpp */; };
-		B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B24FF89824ED1BF900884EDA /* libEngine.a */; };
-		B2FEC92D24FC1D2800388451 /* ExampleLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2FEC92B24FC1D2800388451 /* ExampleLayer.cpp */; };
+		B22B330D24FFAAE00002D428 /* MarioApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22B330C24FFAAE00002D428 /* MarioApp.cpp */; };
+		B22B331524FFB02D0002D428 /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331424FFB02D0002D428 /* libEngine.a */; };
+		B22B331724FFB0330002D428 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331624FFB0330002D428 /* Cocoa.framework */; };
+		B22B331924FFB0390002D428 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331824FFB0390002D428 /* OpenGL.framework */; };
+		B22B331B24FFB0460002D428 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331A24FFB0460002D428 /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B24FF87224ED197300884EDA /* CopyFiles */ = {
+		B22B330724FFAAE00002D428 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -28,101 +27,61 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		B22B32CD24FF6B7A0002D428 /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
-		B22B32CE24FF6B7A0002D428 /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
-		B22B32CF24FF6B7A0002D428 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
-		B22B32D024FF6B7A0002D428 /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
-		B22B32D124FF6B7A0002D428 /* Checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkerboard.png; sourceTree = "<group>"; };
-		B22B32D324FF6B7A0002D428 /* Texture.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Texture.glsl; sourceTree = "<group>"; };
-		B24FF87424ED197300884EDA /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
-		B24FF87724ED197300884EDA /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
-		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2FEC92B24FC1D2800388451 /* ExampleLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleLayer.cpp; sourceTree = "<group>"; };
-		B2FEC92C24FC1D2800388451 /* ExampleLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleLayer.h; sourceTree = "<group>"; };
+		B22B330924FFAAE00002D428 /* Mario */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Mario; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22B330C24FFAAE00002D428 /* MarioApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioApp.cpp; sourceTree = "<group>"; };
+		B22B331424FFB02D0002D428 /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22B331624FFB0330002D428 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		B22B331824FFB0390002D428 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		B22B331A24FFB0460002D428 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B24FF87124ED197300884EDA /* Frameworks */ = {
+		B22B330624FFAAE00002D428 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */,
-				B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */,
-				B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */,
-				B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */,
+				B22B331B24FFB0460002D428 /* IOKit.framework in Frameworks */,
+				B22B331924FFB0390002D428 /* OpenGL.framework in Frameworks */,
+				B22B331724FFB0330002D428 /* Cocoa.framework in Frameworks */,
+				B22B331524FFB02D0002D428 /* libEngine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B22B32CB24FF6B7A0002D428 /* assets */ = {
+		B22B330024FFAAE00002D428 = {
 			isa = PBXGroup;
 			children = (
-				B22B32D224FF6B7A0002D428 /* shaders */,
-				B22B32CC24FF6B7A0002D428 /* textures */,
-			);
-			path = assets;
-			sourceTree = "<group>";
-		};
-		B22B32CC24FF6B7A0002D428 /* textures */ = {
-			isa = PBXGroup;
-			children = (
-				B22B32CD24FF6B7A0002D428 /* metal.png */,
-				B22B32CE24FF6B7A0002D428 /* grid.png */,
-				B22B32CF24FF6B7A0002D428 /* grass.png */,
-				B22B32D024FF6B7A0002D428 /* window.png */,
-				B22B32D124FF6B7A0002D428 /* Checkerboard.png */,
-			);
-			path = textures;
-			sourceTree = "<group>";
-		};
-		B22B32D224FF6B7A0002D428 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				B22B32D324FF6B7A0002D428 /* Texture.glsl */,
-			);
-			path = shaders;
-			sourceTree = "<group>";
-		};
-		B24FF86B24ED197300884EDA = {
-			isa = PBXGroup;
-			children = (
-				B24FF87624ED197300884EDA /* src */,
-				B22B32CB24FF6B7A0002D428 /* assets */,
-				B24FF87524ED197300884EDA /* Products */,
-				B24FF89724ED1BF900884EDA /* Frameworks */,
+				B22B330B24FFAAE00002D428 /* src */,
+				B22B330A24FFAAE00002D428 /* Products */,
+				B22B331324FFB02D0002D428 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		B24FF87524ED197300884EDA /* Products */ = {
+		B22B330A24FFAAE00002D428 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B24FF87424ED197300884EDA /* Editor */,
+				B22B330924FFAAE00002D428 /* Mario */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B24FF87624ED197300884EDA /* src */ = {
+		B22B330B24FFAAE00002D428 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				B24FF87724ED197300884EDA /* EditorApp.cpp */,
-				B2FEC92B24FC1D2800388451 /* ExampleLayer.cpp */,
-				B2FEC92C24FC1D2800388451 /* ExampleLayer.h */,
+				B22B330C24FFAAE00002D428 /* MarioApp.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		B24FF89724ED1BF900884EDA /* Frameworks */ = {
+		B22B331324FFB02D0002D428 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B21375F424ED276400A14055 /* Cocoa.framework */,
-				B21375F224ED275B00A14055 /* IOKit.framework */,
-				B21375F024ED275600A14055 /* OpenGL.framework */,
-				B24FF89824ED1BF900884EDA /* libEngine.a */,
+				B22B331A24FFB0460002D428 /* IOKit.framework */,
+				B22B331824FFB0390002D428 /* OpenGL.framework */,
+				B22B331624FFB0330002D428 /* Cocoa.framework */,
+				B22B331424FFB02D0002D428 /* libEngine.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -130,39 +89,39 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B24FF87324ED197300884EDA /* Editor */ = {
+		B22B330824FFAAE00002D428 /* Mario */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24FF87B24ED197300884EDA /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildConfigurationList = B22B331024FFAAE00002D428 /* Build configuration list for PBXNativeTarget "Mario" */;
 			buildPhases = (
-				B24FF87024ED197300884EDA /* Sources */,
-				B24FF87124ED197300884EDA /* Frameworks */,
-				B24FF87224ED197300884EDA /* CopyFiles */,
+				B22B330524FFAAE00002D428 /* Sources */,
+				B22B330624FFAAE00002D428 /* Frameworks */,
+				B22B330724FFAAE00002D428 /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Editor;
-			productName = Editor;
-			productReference = B24FF87424ED197300884EDA /* Editor */;
+			name = Mario;
+			productName = Mario;
+			productReference = B22B330924FFAAE00002D428 /* Mario */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B24FF86C24ED197300884EDA /* Project object */ = {
+		B22B330124FFAAE00002D428 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "Ashish .";
 				TargetAttributes = {
-					B24FF87324ED197300884EDA = {
+					B22B330824FFAAE00002D428 = {
 						CreatedOnToolsVersion = 11.6;
 					};
 				};
 			};
-			buildConfigurationList = B24FF86F24ED197300884EDA /* Build configuration list for PBXProject "Editor" */;
+			buildConfigurationList = B22B330424FFAAE00002D428 /* Build configuration list for PBXProject "Mario" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -170,30 +129,29 @@
 				en,
 				Base,
 			);
-			mainGroup = B24FF86B24ED197300884EDA;
-			productRefGroup = B24FF87524ED197300884EDA /* Products */;
+			mainGroup = B22B330024FFAAE00002D428;
+			productRefGroup = B22B330A24FFAAE00002D428 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B24FF87324ED197300884EDA /* Editor */,
+				B22B330824FFAAE00002D428 /* Mario */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B24FF87024ED197300884EDA /* Sources */ = {
+		B22B330524FFAAE00002D428 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2FEC92D24FC1D2800388451 /* ExampleLayer.cpp in Sources */,
-				B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */,
+				B22B330D24FFAAE00002D428 /* MarioApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		B24FF87924ED197300884EDA /* Debug */ = {
+		B22B330E24FFAAE00002D428 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -251,7 +209,7 @@
 			};
 			name = Debug;
 		};
-		B24FF87A24ED197300884EDA /* Release */ = {
+		B22B330F24FFAAE00002D428 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -302,51 +260,49 @@
 			};
 			name = Release;
 		};
-		B24FF87C24ED197300884EDA /* Debug */ = {
+		B22B331124FFAAE00002D428 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
+					IK_EANBLE_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../Engine/src",
-					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
-					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
-					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
-					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 					"${PROJECT_DIR}/../Engine/vendor/glm",
+					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
+					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
+					"${PROJECT_DIR}/../Engine/vendor/stbimage",
+					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		B24FF87D24ED197300884EDA /* Release */ = {
+		B22B331224FFAAE00002D428 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
+					IK_ENABLE_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../Engine/src",
-					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
-					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
-					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
-					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 					"${PROJECT_DIR}/../Engine/vendor/glm",
+					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
+					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
+					"${PROJECT_DIR}/../Engine/vendor/stbimage",
+					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -355,25 +311,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B24FF86F24ED197300884EDA /* Build configuration list for PBXProject "Editor" */ = {
+		B22B330424FFAAE00002D428 /* Build configuration list for PBXProject "Mario" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24FF87924ED197300884EDA /* Debug */,
-				B24FF87A24ED197300884EDA /* Release */,
+				B22B330E24FFAAE00002D428 /* Debug */,
+				B22B330F24FFAAE00002D428 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24FF87B24ED197300884EDA /* Build configuration list for PBXNativeTarget "Editor" */ = {
+		B22B331024FFAAE00002D428 /* Build configuration list for PBXNativeTarget "Mario" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24FF87C24ED197300884EDA /* Debug */,
-				B24FF87D24ED197300884EDA /* Release */,
+				B22B331124FFAAE00002D428 /* Debug */,
+				B22B331224FFAAE00002D428 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B24FF86C24ED197300884EDA /* Project object */;
+	rootObject = B22B330124FFAAE00002D428 /* Project object */;
 }
