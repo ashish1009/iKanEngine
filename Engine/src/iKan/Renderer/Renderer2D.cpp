@@ -8,9 +8,6 @@
 
 namespace iKan {
     
-#define NumQuadVertex 4
-#define NumQuadIndices 6
-    
     struct QuadVertex
     {
         glm::vec3 Position;
@@ -40,6 +37,8 @@ namespace iKan {
         QuadVertex* QuadVertexBasePtr = nullptr;
 
         glm::vec4 QuadVertexPositions[4];
+        
+        Renderer2D::Statistics Stats;
     };
     static RendererData s_Data;
     
@@ -123,6 +122,8 @@ namespace iKan {
             s_Data.QuadVertexPtr++;
         }
         s_Data.QuadIndexCount += NumQuadIndices;
+        
+        s_Data.Stats.QuadCount++;
     }
     
     void Renderer2D::EndScene()
@@ -133,11 +134,24 @@ namespace iKan {
         s_Data.WhiteTexture->Bind();
         
         RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
+        s_Data.Stats.DrawCalls++;
     }
     
     void Renderer2D::Shutdown()
     {
-        
+        delete[] s_Data.QuadVertexBasePtr;
     }
     
+    // --------------------------------- Statistics -------------------------------------------------------
+    
+    void Renderer2D::ResetStats()
+    {
+        memset(&s_Data.Stats, 0, sizeof(Statistics));
+    }
+    
+    Renderer2D::Statistics Renderer2D::GetStats()
+    {
+        return s_Data.Stats;
+    }
+
 }
