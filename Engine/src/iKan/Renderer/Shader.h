@@ -13,6 +13,7 @@ namespace iKan {
         virtual const std::string& GetName() = 0;
         
         virtual void SetUniformInt1(const std::string& name, int value) = 0;
+        virtual void SetIntArray(const std::string& name, int* values, uint32_t count) = 0;
         
         virtual void SetUniformMat4(const std::string& name, const glm::mat4& value) = 0;
         virtual void SetUniformMat3(const std::string& name, const glm::mat3& value) = 0;

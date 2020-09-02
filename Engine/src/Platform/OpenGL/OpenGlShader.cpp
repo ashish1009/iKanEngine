@@ -182,6 +182,11 @@ namespace iKan {
         glUniform1i(GetUniformLocation(name), value);
     }
     
+    void OpenGlShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+    {
+        glUniform1iv(GetUniformLocation(name), count, values);
+    }
+    
     void OpenGlShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
     {
         glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));

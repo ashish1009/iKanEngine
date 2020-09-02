@@ -12,6 +12,7 @@
 		B22B331724FFB0330002D428 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331624FFB0330002D428 /* Cocoa.framework */; };
 		B22B331924FFB0390002D428 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331824FFB0390002D428 /* OpenGL.framework */; };
 		B22B331B24FFB0460002D428 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331A24FFB0460002D428 /* IOKit.framework */; };
+		B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D022500072E003291C4 /* MarioLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,9 @@
 		B22B331624FFB0330002D428 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B22B331824FFB0390002D428 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B22B331A24FFB0460002D428 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B26D9D022500072E003291C4 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; };
+		B26D9D032500072E003291C4 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
+		B26D9D0D2500168D003291C4 /* Shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.glsl; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 		B22B330024FFAAE00002D428 = {
 			isa = PBXGroup;
 			children = (
+				B26D9D0B2500168D003291C4 /* assets */,
 				B22B330B24FFAAE00002D428 /* src */,
 				B22B330A24FFAAE00002D428 /* Products */,
 				B22B331324FFB02D0002D428 /* Frameworks */,
@@ -71,6 +76,8 @@
 			isa = PBXGroup;
 			children = (
 				B22B330C24FFAAE00002D428 /* MarioApp.cpp */,
+				B26D9D022500072E003291C4 /* MarioLayer.cpp */,
+				B26D9D032500072E003291C4 /* MarioLayer.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -84,6 +91,22 @@
 				B22B331424FFB02D0002D428 /* libEngine.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B26D9D0B2500168D003291C4 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				B26D9D0C2500168D003291C4 /* shaders */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		B26D9D0C2500168D003291C4 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B26D9D0D2500168D003291C4 /* Shader.glsl */,
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,6 +167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */,
 				B22B330D24FFAAE00002D428 /* MarioApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

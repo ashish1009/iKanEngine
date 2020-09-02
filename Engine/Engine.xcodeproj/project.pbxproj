@@ -38,6 +38,8 @@
 		B266521F24FECADF0032AF99 /* Texture.h in Headers */ = {isa = PBXBuildFile; fileRef = B266521D24FECADF0032AF99 /* Texture.h */; };
 		B266522224FECB2F0032AF99 /* OpenGlTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B266522024FECB2F0032AF99 /* OpenGlTexture.cpp */; };
 		B266522324FECB2F0032AF99 /* OpenGlTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = B266522124FECB2F0032AF99 /* OpenGlTexture.h */; };
+		B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D05250009A3003291C4 /* Renderer2D.cpp */; };
+		B26D9D08250009A3003291C4 /* Renderer2D.h in Headers */ = {isa = PBXBuildFile; fileRef = B26D9D06250009A3003291C4 /* Renderer2D.h */; };
 		B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0724FA7E5C005EF655 /* KeyEvents.h */; };
 		B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0B24FAB248005EF655 /* MouseEvents.h */; };
 		B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0D24FABB8D005EF655 /* KeyCode.h */; };
@@ -115,6 +117,8 @@
 		B266521D24FECADF0032AF99 /* Texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
 		B266522024FECB2F0032AF99 /* OpenGlTexture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlTexture.cpp; sourceTree = "<group>"; };
 		B266522124FECB2F0032AF99 /* OpenGlTexture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlTexture.h; sourceTree = "<group>"; };
+		B26D9D05250009A3003291C4 /* Renderer2D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer2D.cpp; sourceTree = "<group>"; };
+		B26D9D06250009A3003291C4 /* Renderer2D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer2D.h; sourceTree = "<group>"; };
 		B2752D0724FA7E5C005EF655 /* KeyEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvents.h; sourceTree = "<group>"; };
 		B2752D0B24FAB248005EF655 /* MouseEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvents.h; sourceTree = "<group>"; };
 		B2752D0D24FABB8D005EF655 /* KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
@@ -321,6 +325,8 @@
 		B2F0FC0124F80E870004443A /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				B26D9D05250009A3003291C4 /* Renderer2D.cpp */,
+				B26D9D06250009A3003291C4 /* Renderer2D.h */,
 				B2F0FC0224F80E960004443A /* GraphicsContext.cpp */,
 				B2F0FC0324F80E960004443A /* GraphicsContext.h */,
 				B2F0FC0724F816F70004443A /* RenderAPI.cpp */,
@@ -370,6 +376,7 @@
 				B266521F24FECADF0032AF99 /* Texture.h in Headers */,
 				B2473FD224FD1DB40099535D /* VertexArray.h in Headers */,
 				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
+				B26D9D08250009A3003291C4 /* Renderer2D.h in Headers */,
 				B2FEC92A24FC0A1900388451 /* ImguiLayer.h in Headers */,
 				B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */,
 				B2752D1624FAC1AF005EF655 /* EntryPoint.h in Headers */,
@@ -472,6 +479,7 @@
 				B2FEC92924FC0A1900388451 /* ImguiLayer.cpp in Sources */,
 				B2FEC92524FBB5F800388451 /* LayerStack.cpp in Sources */,
 				B2752D1924FAC201005EF655 /* Application.cpp in Sources */,
+				B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */,
 				B266521E24FECADF0032AF99 /* Texture.cpp in Sources */,
 				B2752D1324FABDF3005EF655 /* Input.cpp in Sources */,
 				B2FEC91B24FB9AA500388451 /* OpenGlRenderAPI.cpp in Sources */,

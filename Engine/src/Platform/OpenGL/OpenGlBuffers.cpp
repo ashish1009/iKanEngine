@@ -3,6 +3,14 @@
 namespace iKan {
 
     // -------------------------------------- Vertex Buffer -------------------------------------
+    
+    OpenGlVertexBuffer::OpenGlVertexBuffer(uint32_t size)
+    {
+        glGenBuffers(1, &m_RendererId);
+        glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
+        glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
+    }
+
     OpenGlVertexBuffer::OpenGlVertexBuffer(uint32_t size, float* data)
     {
         glGenBuffers(1, &m_RendererId);
@@ -23,6 +31,12 @@ namespace iKan {
     void OpenGlVertexBuffer::Unbind() const
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
+    
+    void OpenGlVertexBuffer::SetData(const void* data, uint32_t size)
+    {
+        glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
     }
         
     // -------------------------------------- Index Buffer -------------------------------------

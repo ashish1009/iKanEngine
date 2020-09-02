@@ -18,6 +18,7 @@ namespace iKan {
         virtual const std::string& GetName() override { return m_Name; }
         
         virtual void SetUniformInt1(const std::string& name, int value) override;
+        virtual void SetIntArray(const std::string& name, int* values, uint32_t count) override;
         
         virtual void SetUniformMat4(const std::string& name, const glm::mat4& value) override;
         virtual void SetUniformMat3(const std::string& name, const glm::mat3& value) override;

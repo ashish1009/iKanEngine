@@ -19,3 +19,4 @@
 #include <iKan/Renderer/Buffers.h>
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
+#include <iKan/Renderer/Renderer2D.h>

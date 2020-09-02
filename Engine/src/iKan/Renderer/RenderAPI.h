@@ -20,7 +20,7 @@ namespace iKan {
         virtual void Depth(State state) = 0;
         virtual void Blend(State state) = 0;
         virtual void SetViewPort(uint32_t widht, uint32_t height) = 0;
-        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count = 0) = 0;
         
     private:
         static API s_API;

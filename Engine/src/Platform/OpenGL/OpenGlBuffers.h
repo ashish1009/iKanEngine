@@ -7,11 +7,15 @@ namespace iKan {
     class OpenGlVertexBuffer : public VertexBuffer
     {
     public:
+        OpenGlVertexBuffer(uint32_t size);
         OpenGlVertexBuffer(uint32_t size, float* data);
         virtual ~OpenGlVertexBuffer();
         
         virtual void Bind() const override;
         virtual void Unbind() const override;
+
+        virtual void SetData(const void* data, uint32_t size) override;
+
         virtual void AddLayout(const BufferLayout& layout) override { m_Layout = layout; }
         virtual const BufferLayout& GetLayout() const override { return m_Layout; }
         
@@ -19,7 +23,8 @@ namespace iKan {
         uint32_t     m_RendererId;
         BufferLayout m_Layout;
     };
-    
+
+    // ---------------------------------- Index Buffer ----------------------------------------
     class OpenGlIndexBuffer : public IndexBuffer
     {
     public:

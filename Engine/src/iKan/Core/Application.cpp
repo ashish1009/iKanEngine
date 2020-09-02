@@ -3,6 +3,7 @@
 #include <iKan/Core/Input.h>
 
 #include <iKan/Renderer/RenderCommand.h>
+#include <iKan/Renderer/Renderer2D.h>
 
 namespace iKan {
     
@@ -17,6 +18,7 @@ namespace iKan {
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
         RenderCommand::Depth(State::Enable);
+        Renderer2D::Init();
         
         m_ImguiLayer = new ImguiLayer();
         PushOverlay(m_ImguiLayer);
@@ -24,7 +26,7 @@ namespace iKan {
     
     Application::~Application()
     {
-    
+        Renderer2D::Shutdown();
     }
     
     void Application::PushLayer(Layer* layer)
