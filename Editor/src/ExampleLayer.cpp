@@ -85,7 +85,7 @@ namespace iKan {
         std::shared_ptr<IndexBuffer> EBO  = IndexBuffer::Create(sizeof(indices) / sizeof(uint32_t), indices);
         m_VAO->SetIndexBuffer(EBO);
         
-        m_Shader = Shader::Create("../../Editor/assets/shaders/Texture.glsl");
+        m_ShaderLibrary.Load("../../Editor/assets/shaders/Texture.glsl");
         
         // Light
         float lightVertices[] =
@@ -117,24 +117,25 @@ namespace iKan {
         m_LightVAO->AddVertexBuffer(lightVBO);
         m_LightVAO->SetIndexBuffer(lightEBO);
         
-        m_LightShader = Shader::Create("../../Editor/assets/shaders/Texture.glsl");
-
-        m_Shader->Bind();
+        m_ShaderLibrary.Load("../../Editor/assets/shaders/Texture.glsl");
+        
+        auto textureShader = m_ShaderLibrary.Get("Texture");
+        textureShader->Bind();
         // Texture
         m_CheckboardTexture = Texture::Create("../../Editor/assets/textures/Checkerboard.png");
-        m_Shader->SetUniformInt1("u_Texture[1]", 1);
+        textureShader->SetUniformInt1("u_Texture[1]", 1);
         
         m_GridTexture       = Texture::Create("../../Editor/assets/textures/metal.png");
-        m_Shader->SetUniformInt1("u_Texture[2]", 2);
+        textureShader->SetUniformInt1("u_Texture[2]", 2);
 
         m_GrassTexture      = Texture::Create("../../Editor/assets/textures/grass.png");
-        m_Shader->SetUniformInt1("u_Texture[3]", 3);
+        textureShader->SetUniformInt1("u_Texture[3]", 3);
         
         // White Texture
         uint32_t whiteTextureData = 0xffffffff;
         void* whiteTextureDataPtr = &whiteTextureData;
         m_WhiteTexture = Texture::Create(1, 1, whiteTextureDataPtr, sizeof(uint32_t));
-        m_Shader->SetUniformInt1("u_Texture[0]", 0);
+        textureShader->SetUniformInt1("u_Texture[0]", 0);
     }
     
     void ExampleLayer::OnAttach()
@@ -217,7 +218,8 @@ namespace iKan {
         RenderCommand::Clear();
         
         // Bind Shader
-        m_Shader->Bind();
+        auto textureShader = m_ShaderLibrary.Get("Texture");
+        textureShader->Bind();
         
         // upload model to shader
         glm::mat4 model = glm::translate(glm::mat4(1.0f), s_Position) *
@@ -226,7 +228,7 @@ namespace iKan {
         glm::rotate(glm::mat4(1.0f), glm::radians(s_Rotation.z), glm::vec3(0, 0, 1));
         
         // Upload Texture to shader at slot 0
-        m_Shader->SetUniformMat4("u_Model", model);
+        textureShader->SetUniformMat4("u_Model", model);
         
         glm::mat4 view;
         if (s_Perspective)
@@ -242,44 +244,44 @@ namespace iKan {
                                 glm::rotate(glm::mat4(1.0f), glm::radians(s_CameraRotation.z), glm::vec3(0, 0, 1)));
         
         glm::mat4 projectionView = projection * view;
-        m_Shader->SetUniformMat4("u_ProjectionView", projectionView);
+        textureShader->SetUniformMat4("u_ProjectionView", projectionView);
 
         // ------------------------------------------------      View Pos   -----------------------------------------
-        m_Shader->SetUniformFloat3("u_ViewPos", s_PerspectivCameraPosition);
+        textureShader->SetUniformFloat3("u_ViewPos", s_PerspectivCameraPosition);
         
         // ------------------------------------------------      Controller -----------------------------------------
-        m_Shader->SetUniformInt1("u_IsAmbient", (int)s_IsAmbient);
-        m_Shader->SetUniformInt1("u_IsDiffuse", (int)s_IsDiffuse);
-        m_Shader->SetUniformInt1("u_IsSpecular", (int)s_IsSpecular);
-        m_Shader->SetUniformInt1("u_IsAttenuation", (int)s_IsAttenuation);
+        textureShader->SetUniformInt1("u_IsAmbient", (int)s_IsAmbient);
+        textureShader->SetUniformInt1("u_IsDiffuse", (int)s_IsDiffuse);
+        textureShader->SetUniformInt1("u_IsSpecular", (int)s_IsSpecular);
+        textureShader->SetUniformInt1("u_IsAttenuation", (int)s_IsAttenuation);
         
         // -------------------------------------------------      Light     ------------------------------------------
-        m_Shader->SetUniformFloat3("u_Light.Position", s_Light.Position);
+        textureShader->SetUniformFloat3("u_Light.Position", s_Light.Position);
 
         if (s_IsAmbient)
         {
-            m_Shader->SetUniformFloat3("u_Light.Ambient", s_Light.Ambient);
-            m_Shader->SetUniformFloat3("u_Light.Diffuse", s_Light.Diffuse);
+            textureShader->SetUniformFloat3("u_Light.Ambient", s_Light.Ambient);
+            textureShader->SetUniformFloat3("u_Light.Diffuse", s_Light.Diffuse);
         }
         
         if (s_IsDiffuse)
         {
-            m_Shader->SetUniformFloat3("u_Light.Diffuse", s_Light.Diffuse);
-            m_Shader->SetUniformFloat3("u_Material.Diffuse", s_Material.Diffuse);
+            textureShader->SetUniformFloat3("u_Light.Diffuse", s_Light.Diffuse);
+            textureShader->SetUniformFloat3("u_Material.Diffuse", s_Material.Diffuse);
         }
         
         if (s_IsSpecular)
         {
-            m_Shader->SetUniformFloat3("u_Light.Specular", s_Light.Specular);
-            m_Shader->SetUniformFloat3("u_Material.Specular", s_Material.Specular);
-            m_Shader->SetUniformFloat1("u_Material.Shininess", s_Material.Shininess);
+            textureShader->SetUniformFloat3("u_Light.Specular", s_Light.Specular);
+            textureShader->SetUniformFloat3("u_Material.Specular", s_Material.Specular);
+            textureShader->SetUniformFloat1("u_Material.Shininess", s_Material.Shininess);
         }
         
         if (s_IsAttenuation)
         {
-            m_Shader->SetUniformFloat1("u_Light.Constant", s_Light.Constant);
-            m_Shader->SetUniformFloat1("u_Light.Linear", s_Light.Linear);
-            m_Shader->SetUniformFloat1("u_Light.Quadratic", s_Light.Quadratic);
+            textureShader->SetUniformFloat1("u_Light.Constant", s_Light.Constant);
+            textureShader->SetUniformFloat1("u_Light.Linear", s_Light.Linear);
+            textureShader->SetUniformFloat1("u_Light.Quadratic", s_Light.Quadratic);
         }
         
         // Bind Texture
@@ -292,14 +294,15 @@ namespace iKan {
         
         /// Light
         // Bind Shader
-        m_LightShader->Bind();
+        auto lightShader = m_ShaderLibrary.Get("Texture");
+        lightShader->Bind();
         
         // upload model to shader
         model = glm::translate(glm::mat4(1.0f), s_Light.Position) * glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
         
         // Upload Texture to shader at slot 0
-        m_LightShader->SetUniformMat4("u_Model", model);
-        m_LightShader->SetUniformMat4("u_ProjectionView", projectionView);
+        lightShader->SetUniformMat4("u_Model", model);
+        lightShader->SetUniformMat4("u_ProjectionView", projectionView);
 
         // Bind VertexArray
         m_LightVAO->Bind();

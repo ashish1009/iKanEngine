@@ -29,5 +29,30 @@ namespace iKan {
         return nullptr;
     }
 
+    // ------------------------------------------ Shader Library -------------------------------------
+    std::shared_ptr<Shader> ShaderLibrary::Load(const std::string& path)
+    {
+        std::shared_ptr<Shader> shader = Shader::Create(path);
+        m_Shaders[shader->GetName()] = shader;
+        return shader;
+    }
+    
+    std::shared_ptr<Shader> ShaderLibrary::Load(const std::string&name, const std::string& filapath)
+    {
+        std::shared_ptr<Shader> shader = Shader::Create(filapath);
+        m_Shaders[name] = shader;
+        return shader;
+    }
+
+    std::shared_ptr<Shader> ShaderLibrary::Get(const std::string& name)
+    {
+        IK_CORE_ASSERT(Exists(name), "Shader not found!");
+        return m_Shaders[name];
+    }
+    
+    bool ShaderLibrary::Exists(const std::string& name) const
+    {
+        return m_Shaders.find(name) != m_Shaders.end();
+    }
 
 }

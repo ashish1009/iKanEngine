@@ -15,6 +15,8 @@ namespace iKan {
         virtual void Bind() const override;
         virtual void Unbind() const override;
         
+        virtual const std::string& GetName() override { return m_Name; }
+        
         virtual void SetUniformInt1(const std::string& name, int value) override;
         
         virtual void SetUniformMat4(const std::string& name, const glm::mat4& value) override;
@@ -33,6 +35,7 @@ namespace iKan {
 
     private:
         uint32_t m_RendererId;
+        std::string m_Name;
         std::unordered_map<std::string, int32_t> m_LocationMap;
         std::unordered_map<GLenum, std::string> m_Source;
     };
