@@ -8,6 +8,8 @@ namespace iKan {
     {
     public:
         OpenGlShader(const std::string& vertexSrc, const std::string& fragmantSrc);
+        OpenGlShader(const std::string& path);
+        
         virtual ~OpenGlShader();
         
         virtual void Bind() const override;
@@ -24,12 +26,15 @@ namespace iKan {
         virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) override;
 
     private:
-        void Compile(const std::unordered_map<GLenum, std::string>& source);
+        void Compile();
         int32_t GetUniformLocation(const std::string& name);
+        std::unordered_map<GLenum, std::string> PreprocessFile(const std::string& path);
+        std::string ReadFromFile(const std::string& path);
 
     private:
         uint32_t m_RendererId;
         std::unordered_map<std::string, int32_t> m_LocationMap;
+        std::unordered_map<GLenum, std::string> m_Source;
     };
     
 }

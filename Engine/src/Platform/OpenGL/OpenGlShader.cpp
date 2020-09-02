@@ -4,22 +4,91 @@
 
 namespace iKan {
     
-    OpenGlShader::OpenGlShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+    static GLenum ShaderTypeFromString(const std::string& type)
     {
-        std::unordered_map<GLenum, std::string> source;
-        source[GL_VERTEX_SHADER] = vertexSrc;
-        source[GL_FRAGMENT_SHADER] = fragmentSrc;
-        
-        Compile(source);
+        if ("vertex" == type)
+            return GL_VERTEX_SHADER;
+        if ("fragment" == type)
+            return GL_FRAGMENT_SHADER;
+        IK_CORE_ASSERT(false, "Unknown shader type!");
+        return 0;
     }
     
-    void OpenGlShader::Compile(const std::unordered_map<GLenum, std::string>& source)
+    OpenGlShader::OpenGlShader(const std::string& vertexSrc, const std::string& fragmentSrc)
+    {
+        m_Source[GL_VERTEX_SHADER]   = vertexSrc;
+        m_Source[GL_FRAGMENT_SHADER] = fragmentSrc;
+        
+        Compile();
+    }
+    
+    OpenGlShader::OpenGlShader(const std::string& path)
+    {
+        std::string source  = ReadFromFile(path);
+        m_Source            = PreprocessFile(source);
+        
+        Compile();
+    }
+    
+    std::string OpenGlShader::ReadFromFile(const std::string& path)
+    {
+        std::string result;
+        std::ifstream in(path, std::ios::in | std::ios::binary);
+        if (in)
+        {
+            in.seekg(0, std::ios::end);
+            size_t size = in.tellg();
+            if (-1 != size)
+            {
+                result.resize(size);
+                in.seekg(0, std::ios::beg);
+                in.read(&result[0], size);
+                in.close();
+            }
+            else
+            {
+                IK_CORE_ERROR("Could not read from file '{0}'", path);
+            }
+        }
+        else
+        {
+            IK_CORE_ERROR("Could not open file '{0}'", path);
+        }
+        
+        return result;
+    }
+    
+    std::unordered_map<GLenum, std::string> OpenGlShader::PreprocessFile(const std::string& source)
+    {
+        std::unordered_map<GLenum, std::string> shaderSource;
+        
+        const char* token = "#type";
+        size_t pos        = source.find(token);
+        while (pos != std::string::npos)
+        {
+            size_t eol = source.find_first_of("\r\n", pos);
+            IK_CORE_ASSERT((eol != std::string::npos), "Syntax error");
+
+            size_t begin     = pos + strlen(token) + 1;
+            std::string type = source.substr(begin, eol - begin);
+            IK_CORE_ASSERT(ShaderTypeFromString(type), "Invalid shader type specified");
+            
+            size_t nextLine = source.find_first_of("\r\n", eol);
+            pos             = source.find(token, nextLine);
+            
+            shaderSource[ShaderTypeFromString(type)] = source.substr(nextLine, pos - (nextLine == std::string::npos ? source.size() - 1 : nextLine));
+        }
+        
+        return shaderSource;
+    }
+    
+    void OpenGlShader::Compile()
     {
         int program = glCreateProgram();
         std::array<uint32_t, 2> shaderId;
         int glShaderIDIndex = 0;
 
-        for (auto& kv : source)
+        for (auto& kv : m_Source)
         {
             GLenum type = kv.first;
             std::string src = kv.second;

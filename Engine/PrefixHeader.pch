@@ -7,6 +7,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <fstream>
 
 // Logger
 #include <iKan/Core/Log.h>

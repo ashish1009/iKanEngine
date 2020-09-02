@@ -31,6 +31,12 @@
 		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		B22B32CD24FF6B7A0002D428 /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
+		B22B32CE24FF6B7A0002D428 /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
+		B22B32CF24FF6B7A0002D428 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
+		B22B32D024FF6B7A0002D428 /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
+		B22B32D124FF6B7A0002D428 /* Checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkerboard.png; sourceTree = "<group>"; };
+		B22B32D324FF6B7A0002D428 /* Texture.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Texture.glsl; sourceTree = "<group>"; };
 		B24FF87424ED197300884EDA /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF87724ED197300884EDA /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
 		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,9 +59,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B22B32CB24FF6B7A0002D428 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				B22B32CC24FF6B7A0002D428 /* textures */,
+				B22B32D224FF6B7A0002D428 /* shaders */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		B22B32CC24FF6B7A0002D428 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				B22B32CD24FF6B7A0002D428 /* metal.png */,
+				B22B32CE24FF6B7A0002D428 /* grid.png */,
+				B22B32CF24FF6B7A0002D428 /* grass.png */,
+				B22B32D024FF6B7A0002D428 /* window.png */,
+				B22B32D124FF6B7A0002D428 /* Checkerboard.png */,
+			);
+			path = textures;
+			sourceTree = "<group>";
+		};
+		B22B32D224FF6B7A0002D428 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B22B32D324FF6B7A0002D428 /* Texture.glsl */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		B24FF86B24ED197300884EDA = {
 			isa = PBXGroup;
 			children = (
+				B22B32CB24FF6B7A0002D428 /* assets */,
 				B24FF87624ED197300884EDA /* src */,
 				B24FF87524ED197300884EDA /* Products */,
 				B24FF89724ED1BF900884EDA /* Frameworks */,
