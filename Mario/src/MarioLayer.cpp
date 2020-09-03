@@ -14,10 +14,21 @@ namespace iKan {
 
     void MarioLayer::OnAttach()
     {
+        // TODO: Set the position of Shader later
+        Renderer2D::AddShader("../../Mario/assets/shaders/Shader.glsl");
+        
         FramebufferSpecification fbSpec;
         fbSpec.Width  = 1280;
         fbSpec.Height = 720;
         m_Framebuffer = Framebuffer::Create(fbSpec);
+        
+        m_ActiveScene = std::make_shared<Scene>();
+        
+        m_SquareEntity = m_ActiveScene->CreateEntity("Green Square");
+        m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
+        
+        m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+        m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
     }
     
     void MarioLayer::OnDetach()
@@ -33,24 +44,24 @@ namespace iKan {
     void MarioLayer::OnUpdate(TimeStep timeStep)
     {        
         Renderer2D::ResetStats();
+        
         m_Framebuffer->Bind();
         
         RenderCommand::Clear();
         RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
         
-        Renderer2D::BeginScene("../../Mario/assets/shaders/Shader.glsl");
-        Renderer2D::DrawQuad({ 0.0f, 0.0f }, { 1.0f, 1.0f }, { 0.3f, 0.5f, 0.7f, 1.0f });
-        Renderer2D::EndScene();
+        m_ActiveScene->OnUpdate(timeStep);
+        
         m_Framebuffer->Unbind();
     }
                               
     void MarioLayer::OnImguiRender()
     {
         // Note: Switch this to true to enable dockspace
-        static bool dockspaceOpen = true;
-        static bool opt_fullscreen_persistant = true;
-        bool opt_fullscreen = opt_fullscreen_persistant;
-        static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+        static bool               dockspaceOpen              = true;
+        static bool               opt_fullscreen_persistant  = true;
+        bool                      opt_fullscreen             = opt_fullscreen_persistant;
+        static ImGuiDockNodeFlags dockspace_flags            = ImGuiDockNodeFlags_None;
         
         // We are using the ImGuiWindowFlags_NoDocking flag to make the parent window not dockable into,
         // because it would be confusing to have two docking targets within each others.
@@ -78,7 +89,7 @@ namespace iKan {
         if (opt_fullscreen)
             ImGui::PopStyleVar(2);
         
-        // DockSpace
+        // ----------------------- DockSpace --------------------------------------------------------------
         ImGuiIO& io = ImGui::GetIO();
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
         {
@@ -93,9 +104,24 @@ namespace iKan {
                 if (ImGui::MenuItem("Exit")) Application::Get().Close();
                 ImGui::EndMenu();
             }
-            
             ImGui::EndMenuBar();
         }
+        
+        // --------------------------- Settings ------------------------------------------------
+        ImGui::Begin("Settings");
+        if (m_SquareEntity)
+        {
+            auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
+            ImGui::Text("%s", tag.c_str());
+            
+            ImGui::Separator();
+            auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
+            ImGui::ColorEdit4("Color", glm::value_ptr(squareColor));
+        }
+        
+        ImGui::Separator();
+        ImGui::DragFloat3("Camera", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+        ImGui::End();
         
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
@@ -111,9 +137,9 @@ namespace iKan {
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
 
+        //------------------------ View Port ---------------------------------------------------------------
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport");
-        
         m_ViewportFocused = ImGui::IsWindowFocused();
         m_ViewportHovered = ImGui::IsWindowHovered();
         Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);

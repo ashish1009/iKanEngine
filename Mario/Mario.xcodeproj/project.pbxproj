@@ -287,6 +287,7 @@
 		B22B331124FFAAE00002D428 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
@@ -304,6 +305,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
 					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
+					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -312,6 +314,7 @@
 		B22B331224FFAAE00002D428 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
@@ -327,6 +330,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
 					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
+					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

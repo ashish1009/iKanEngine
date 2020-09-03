@@ -90,27 +90,26 @@ namespace iKan {
         int32_t samplers[RendererData::MaxTextureSlots];
         for (uint32_t i = 0; i < RendererData::MaxTextureSlots; i++)
             samplers[i] = i;
-
+        
         s_Data.Shader = Shader::Create(path);
         s_Data.Shader->Bind();
         s_Data.Shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
     }
     
-    void Renderer2D::BeginScene(const std::string& path)
+    void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
     {
-        if (!s_Data.Shader)
-            AddShader(path);
+        glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
         
         s_Data.Shader->Bind();
-        s_Data.Shader->SetUniformMat4("u_ViewProjection", glm::mat4(1.0f));
+        s_Data.Shader->SetUniformMat4("u_ViewProjection", viewProj);
         s_Data.QuadVertexPtr = s_Data.QuadVertexBasePtr;
+
+        s_Data.QuadIndexCount = 0;
     }
     
-    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+    void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
     {
         constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
-
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), { position.x, position.y, 0.0f }) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
         
         for (uint32_t i = 0; i < NumQuadVertex ; i++)
         {
@@ -124,6 +123,13 @@ namespace iKan {
         s_Data.QuadIndexCount += NumQuadIndices;
         
         s_Data.Stats.QuadCount++;
+    }
+    
+    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+    {
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), { position.x, position.y, 0.0f }) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
+        
+        DrawQuad(transform, color);
     }
     
     void Renderer2D::EndScene()
