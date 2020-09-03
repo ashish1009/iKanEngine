@@ -1,7 +1,9 @@
 #pragma once
 
 #include <iKan/Camera/Camera.h>
+
 #include <iKan/Scene/SceneCamera.h>
+#include <iKan/Scene/ScriptableEntity.h>
 
 namespace iKan {
     
@@ -47,6 +49,21 @@ namespace iKan {
 
         CameraComponent() = default;
         CameraComponent(const CameraComponent&) = default;
+    };
+    
+    struct NativeScriptComponent
+    {
+        ScriptableEntity* Instance = nullptr;
+        
+        ScriptableEntity*(*InstantiateScript)();
+        void(*DestroyScript)(NativeScriptComponent*);
+        
+        template<typename T>
+        void Bind()
+        {
+            DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
+            InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
+        }
     };
     
 }

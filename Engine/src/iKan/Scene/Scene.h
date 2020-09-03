@@ -1,9 +1,8 @@
 #pragma once
 
 #include <entt.hpp>
-#include <iKan/Core/TimeStep.h>
 
-#include <iKan/Scene/Components.h>
+#include <iKan/Core/TimeStep.h>
 
 #include <iKan/Renderer/Renderer2D.h>
 
