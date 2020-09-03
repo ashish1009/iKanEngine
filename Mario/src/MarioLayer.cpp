@@ -4,101 +4,26 @@ namespace iKan {
     
     MarioLayer::MarioLayer()
     {
-        
     }
 
     MarioLayer::~MarioLayer()
     {
-        
     }
 
     void MarioLayer::OnAttach()
     {
-        // TODO: Set the position of Shader later
-        Renderer2D::AddShader("../../Mario/assets/shaders/Shader.glsl");
-        
-        FramebufferSpecification fbSpec;
-        fbSpec.Width  = 1280;
-        fbSpec.Height = 720;
-        m_Framebuffer = Framebuffer::Create(fbSpec);
-        
-        m_ActiveScene = std::make_shared<Scene>();
-        
-        m_SquareEntity = m_ActiveScene->CreateEntity("Green Square");
-        m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
-        
-        m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-        m_CameraEntity.AddComponent<CameraComponent>();
-        
-        class CameraController : public ScriptableEntity
-        {
-        public:
-            void OnCreate()
-            {
-            }
-            
-            void OnUpdate(TimeStep ts)
-            {
-                auto& transform = GetComponent<TransformComponent>().Transform;
-                float speed = 0.5f;
-                
-                if(Input::IsKeyPressed(Key::A))
-                    transform[3][0] -= speed * ts;
-                if(Input::IsKeyPressed(Key::D))
-                    transform[3][0] += speed * ts;
-                if(Input::IsKeyPressed(Key::W))
-                    transform[3][1] += speed * ts;
-                if(Input::IsKeyPressed(Key::S))
-                    transform[3][1] -= speed * ts;
-            }
-            
-            void OnDestroy()
-            {
-                
-            }
-            
-            // OnAwake(), CollisionCallbacks()
-        };
-        m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
     }
     
     void MarioLayer::OnDetach()
     {
-        
     }
     
     void MarioLayer::OnEvent(Event& event)
     {
-        
     }
                              
     void MarioLayer::OnUpdate(TimeStep timeStep)
     {
-        /*
-         This will render the 'old' sized framebuffer onto the 'new' sized ImGuiPanel
-         and store the 'new' size in m_ViewportSize.
-         The next frame will first resize the framebuffer as m_ViewportSize differs
-         from m_Framebuffer.Width/Height before updating and rendering.
-         This results in never rendering an empty (black) framebuffer.
-         */
-        if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
-            m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
-            (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
-        {
-            m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-        }
-        
-        Renderer2D::ResetStats();
-        
-        m_Framebuffer->Bind();
-        
-        RenderCommand::Clear();
-        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-        
-        m_ActiveScene->OnUpdate(timeStep);
-        
-        m_Framebuffer->Unbind();
     }
                               
     void MarioLayer::OnImguiRender()
@@ -152,28 +77,7 @@ namespace iKan {
             }
             ImGui::EndMenuBar();
         }
-        
-        // --------------------------- Settings ------------------------------------------------
-        ImGui::Begin("Settings");
-        if (m_SquareEntity)
-        {
-            auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-            ImGui::Text("%s", tag.c_str());
-            
-            ImGui::Separator();
-            auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-            ImGui::ColorEdit4("Color", glm::value_ptr(squareColor));
-        }
-        
-        ImGui::Separator();
-        ImGui::DragFloat3("Camera", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
-        
-        auto& camera     = m_CameraEntity.GetComponent<CameraComponent>().Camera;
-        float orthoSize  = camera.GetOrthographicSize();
-        if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
-            camera.SetOrthographicSize(orthoSize);
-        ImGui::End();
-        
+
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
         auto stats = Renderer2D::GetStats();
@@ -191,15 +95,7 @@ namespace iKan {
         //------------------------ View Port ---------------------------------------------------------------
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport");
-        m_ViewportFocused = ImGui::IsWindowFocused();
-        m_ViewportHovered = ImGui::IsWindowHovered();
-        Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
         
-        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
-        
-        size_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-        ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
         ImGui::End();
         ImGui::PopStyleVar();
         

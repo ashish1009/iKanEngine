@@ -32,8 +32,8 @@ namespace iKan {
         });
         
         // Render 2D Sprites
-        Camera* mainCamera          = nullptr;
-        glm::mat4* cameraTransform  = nullptr;
+        Camera* mainCamera         = nullptr;
+        glm::mat4* cameraTransform = nullptr;
         
         auto view = m_Registry.view<TransformComponent, CameraComponent>();
         for (auto entity : view)
@@ -62,7 +62,7 @@ namespace iKan {
     
     void Scene::OnViewportResize(uint32_t width, uint32_t height)
     {
-        m_ViewportWidth = width;
+        m_ViewportWidth  = width;
         m_ViewportHeight = height;
         
         // Resize our non-FixedAspectRatio cameras
