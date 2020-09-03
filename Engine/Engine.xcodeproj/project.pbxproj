@@ -55,6 +55,7 @@
 		B2752D1A24FAC201005EF655 /* Application.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D1824FAC201005EF655 /* Application.h */; };
 		B2752D1D24FACD64005EF655 /* RenderCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2752D1B24FACD64005EF655 /* RenderCommand.cpp */; };
 		B2752D1E24FACD64005EF655 /* RenderCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D1C24FACD64005EF655 /* RenderCommand.h */; };
+		B2CDABD42500E885008C6BDF /* entt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABD12500E885008C6BDF /* entt.hpp */; };
 		B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */; };
 		B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */; };
 		B2F0FC0424F80E960004443A /* GraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FC0224F80E960004443A /* GraphicsContext.cpp */; };
@@ -138,6 +139,8 @@
 		B2752D1824FAC201005EF655 /* Application.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Application.h; sourceTree = "<group>"; };
 		B2752D1B24FACD64005EF655 /* RenderCommand.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCommand.cpp; sourceTree = "<group>"; };
 		B2752D1C24FACD64005EF655 /* RenderCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderCommand.h; sourceTree = "<group>"; };
+		B2CDABCF2500E885008C6BDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		B2CDABD12500E885008C6BDF /* entt.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = entt.hpp; sourceTree = "<group>"; };
 		B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlGraphicsContext.cpp; sourceTree = "<group>"; };
 		B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlGraphicsContext.h; sourceTree = "<group>"; };
 		B2F0FC0224F80E960004443A /* GraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsContext.cpp; sourceTree = "<group>"; };
@@ -196,6 +199,7 @@
 		B213761C24ED4E6000A14055 /* vendor */ = {
 			isa = PBXGroup;
 			children = (
+				B2CDABCE2500E885008C6BDF /* EnTT */,
 				B21376CD24ED4E6100A14055 /* stbimage */,
 			);
 			path = vendor;
@@ -303,6 +307,23 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		B2CDABCE2500E885008C6BDF /* EnTT */ = {
+			isa = PBXGroup;
+			children = (
+				B2CDABCF2500E885008C6BDF /* LICENSE */,
+				B2CDABD02500E885008C6BDF /* include */,
+			);
+			path = EnTT;
+			sourceTree = "<group>";
+		};
+		B2CDABD02500E885008C6BDF /* include */ = {
+			isa = PBXGroup;
+			children = (
+				B2CDABD12500E885008C6BDF /* entt.hpp */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
 		B2F0FBF924F80AE60004443A /* Platform */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +418,7 @@
 				B2473FE024FD232E0099535D /* OpenGlBuffers.h in Headers */,
 				B26D9D10250022CF003291C4 /* FrameBuffer.h in Headers */,
 				B266522324FECB2F0032AF99 /* OpenGlTexture.h in Headers */,
+				B2CDABD42500E885008C6BDF /* entt.hpp in Headers */,
 				B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */,
 				B2752D1424FABDF3005EF655 /* Input.h in Headers */,
 			);
