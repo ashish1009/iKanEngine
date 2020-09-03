@@ -137,8 +137,8 @@ namespace iKan {
         ImGui::Separator();
         ImGui::DragFloat3("Camera", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
         
-        auto& camera    = m_CameraEntity.GetComponent<CameraComponent>().Camera;
-        float orthoSize = camera.GetOrthographicSize();
+        auto& camera     = m_CameraEntity.GetComponent<CameraComponent>().Camera;
+        float orthoSize  = camera.GetOrthographicSize();
         if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
             camera.SetOrthographicSize(orthoSize);
         ImGui::End();
