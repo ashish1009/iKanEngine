@@ -24,7 +24,7 @@ namespace iKan {
         
         virtual const FramebufferSpecification& GetSpecification() const = 0;
         
-        static Ref<Framebuffer> Create(const FramebufferSpecification& spec);
+        static std::shared_ptr<Framebuffer> Create(const FramebufferSpecification& spec);
     };
     
     

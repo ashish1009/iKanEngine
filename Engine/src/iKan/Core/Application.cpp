@@ -18,6 +18,7 @@ namespace iKan {
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
         RenderCommand::Depth(State::Enable);
+        RenderCommand::Blend(State::Enable);
         Renderer2D::Init();
         
         m_ImguiLayer = new ImguiLayer();

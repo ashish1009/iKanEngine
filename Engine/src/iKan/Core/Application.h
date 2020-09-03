@@ -23,6 +23,9 @@ namespace iKan {
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
         
+        void Close() { m_IsRunning = false; }
+        
+        ImguiLayer* GetImGuiLayer() { return m_ImguiLayer; }
         Window& GetWindow() { return *m_Window; }
         static Application& Get() { return *s_Instance; }
         
