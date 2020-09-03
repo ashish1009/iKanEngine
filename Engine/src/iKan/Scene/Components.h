@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iKan/Camera/Camera.h>
+#include <iKan/Scene/SceneCamera.h>
 
 namespace iKan {
     
@@ -39,14 +40,13 @@ namespace iKan {
     
     struct CameraComponent
     {
-        iKan::Camera Camera;
-        
+        SceneCamera Camera;
+
         bool Primary = true;
-        
+        bool FixedAspectRatio = false;
+
         CameraComponent() = default;
         CameraComponent(const CameraComponent&) = default;
-        CameraComponent(const glm::mat4& projection)
-        : Camera(projection) {}
     };
     
 }

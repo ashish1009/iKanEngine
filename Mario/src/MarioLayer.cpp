@@ -28,7 +28,7 @@ namespace iKan {
         m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
         
         m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-        m_CameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+        m_CameraEntity.AddComponent<CameraComponent>();
     }
     
     void MarioLayer::OnDetach()
@@ -42,7 +42,22 @@ namespace iKan {
     }
                              
     void MarioLayer::OnUpdate(TimeStep timeStep)
-    {        
+    {
+        /*
+         This will render the 'old' sized framebuffer onto the 'new' sized ImGuiPanel
+         and store the 'new' size in m_ViewportSize.
+         The next frame will first resize the framebuffer as m_ViewportSize differs
+         from m_Framebuffer.Width/Height before updating and rendering.
+         This results in never rendering an empty (black) framebuffer.
+         */
+        if (FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+            m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+            (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+        {
+            m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+        }
+        
         Renderer2D::ResetStats();
         
         m_Framebuffer->Bind();
@@ -121,6 +136,11 @@ namespace iKan {
         
         ImGui::Separator();
         ImGui::DragFloat3("Camera", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
+        
+        auto& camera    = m_CameraEntity.GetComponent<CameraComponent>().Camera;
+        float orthoSize = camera.GetOrthographicSize();
+        if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
+            camera.SetOrthographicSize(orthoSize);
         ImGui::End();
         
         //------------------------ Statistics -------------------------------------------------------------
