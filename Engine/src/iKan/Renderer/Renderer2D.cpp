@@ -148,6 +148,20 @@ namespace iKan {
         delete[] s_Data.QuadVertexBasePtr;
     }
     
+    void Renderer2D::ImguiStatsAnfFrameRate()
+    {
+        //------------------------ Statistics -------------------------------------------------------------
+        ImGui::Begin("Stats");
+        const auto& stats = GetStats();
+        ImGui::Text("Draw Calls : %d, Quad Counts : %d, VertexCounts : %d, Index Counts : %d", stats.DrawCalls, stats.QuadCount, stats.GetTotalVertexCount(), stats.GetTotalIndexCount());
+        ImGui::End();
+        
+        //------------------------ Frame Rates -------------------------------------------------------------
+        ImGui::Begin("Frame Rate");
+        ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::End();
+    }
+    
     // --------------------------------- Statistics -------------------------------------------------------
     
     void Renderer2D::ResetStats()

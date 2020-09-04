@@ -20,14 +20,16 @@ namespace iKan {
         static void EndScene();
         static void Shutdown();
         
+        static void ImguiStatsAnfFrameRate();
+        
         /* Stats */
         struct Statistics
         {
             uint32_t DrawCalls = 0;
             uint32_t QuadCount = 0;
             
-            uint32_t GetTotalVertexCount() { return QuadCount * NumQuadVertex; }
-            uint32_t GetTotalIndexCount() { return QuadCount * NumQuadIndices; }
+            uint32_t GetTotalVertexCount() const { return QuadCount * NumQuadVertex; }
+            uint32_t GetTotalIndexCount() const { return QuadCount * NumQuadIndices; }
         };
         
         static void ResetStats();
