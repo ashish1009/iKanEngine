@@ -54,7 +54,10 @@ namespace iKan {
             for (auto entity : group)
             {
                 const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-                Renderer2D::DrawQuad(transform, sprite.Color);
+                if (sprite.SubTexComp)
+                    Renderer2D::DrawQuad(transform, sprite.SubTexComp);
+                else
+                    Renderer2D::DrawQuad(transform, sprite.Color);
             }
             Renderer2D::EndScene();
         }

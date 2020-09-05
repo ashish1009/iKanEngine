@@ -21,12 +21,13 @@ namespace iKan {
         glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
         
         std::shared_ptr<Texture> m_TileSpriteSheet;
+        
         std::unordered_map<char, std::shared_ptr<SubTexture>> m_TextureMap;
+        uint32_t m_MapWidth = 0, m_MapHeight = 0;
 
         std::shared_ptr<Scene> m_Scene;
         
-        Entity m_PrimaryCameraEntity;
-        Entity m_BackgroundEntity;
+        Entity m_CameraEntity;
     };
     
 }

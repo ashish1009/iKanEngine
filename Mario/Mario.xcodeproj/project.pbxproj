@@ -34,6 +34,7 @@
 		B22B331624FFB0330002D428 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B22B331824FFB0390002D428 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B22B331A24FFB0460002D428 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B235F84C2504032600473DAF /* SceneMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneMap.h; sourceTree = "<group>"; };
 		B26D9D022500072E003291C4 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; };
 		B26D9D032500072E003291C4 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
 		B26D9D0D2500168D003291C4 /* Shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.glsl; sourceTree = "<group>"; };
@@ -78,6 +79,7 @@
 				B22B330C24FFAAE00002D428 /* MarioApp.cpp */,
 				B26D9D022500072E003291C4 /* MarioLayer.cpp */,
 				B26D9D032500072E003291C4 /* MarioLayer.h */,
+				B235F84C2504032600473DAF /* SceneMap.h */,
 			);
 			path = src;
 			sourceTree = "<group>";

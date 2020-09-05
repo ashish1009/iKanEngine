@@ -5,6 +5,8 @@
 #include <iKan/Scene/SceneCamera.h>
 #include <iKan/Scene/ScriptableEntity.h>
 
+#include <iKan/Renderer/Texture.h>
+
 namespace iKan {
     
     struct TagComponent
@@ -33,11 +35,16 @@ namespace iKan {
     struct SpriteRendererComponent
     {
         glm::vec4 Color = glm::vec4(1.0f);
+        std::shared_ptr<SubTexture> SubTexComp = nullptr;
         
         SpriteRendererComponent() = default;
         SpriteRendererComponent(const SpriteRendererComponent&) = default;
+        
         SpriteRendererComponent(const glm::vec4& color)
         : Color(color) {}
+        
+        SpriteRendererComponent(const std::shared_ptr<SubTexture>& subtexture)
+        : SubTexComp(subtexture) {}
     };
     
     struct CameraComponent

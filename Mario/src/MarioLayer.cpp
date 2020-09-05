@@ -1,9 +1,31 @@
 #include "MarioLayer.h"
-
+#include "SceneMap.h"
 namespace iKan {
     
     static glm::vec4 s_BgColor = { 0.3f, 0.1f, 0.6f, 1.0f };
-    
+    static float s_Speed = 5.0f;
+    static std::string GetEntityNameFromChar(char type)
+    {
+        switch(type)
+        {
+            case 'G' : return "Ground";                 break;
+            case '|' : return "Castel Brick";           break;
+            case 'o' : return "Castel Gate";            break;
+            case 'u' : return "castel Gate Domb";       break;
+            case '.' : return "Castel Domb";            break;
+            case 'l' : return "Castel Windlow Left";    break;
+            case 'r' : return "Castel Window Right";    break;
+            case 'S' : return "Steps";                  break;
+            case '-' : return "Bridge";                 break;
+            case '!' : return "Pipe Base";              break;
+            case 'Y' : return "Pipe Head";              break;
+            case 'X' : return "Bricks";                 break;
+            case 'B' : return "Bonus";                  break;
+        }
+        IK_ASSERT(false, "Invalid Type");
+        return "";
+    }
+   
     MarioLayer::MarioLayer()
     {
     }
@@ -22,27 +44,94 @@ namespace iKan {
  
         // Frame Buffers
         FramebufferSpecification fbSpec;
-        fbSpec.Width  = iKan::s_WindowWidth;
-        fbSpec.Height = iKan::s_WindowHeight;
+        fbSpec.Width  = s_WindowWidth;
+        fbSpec.Height = s_WindowHeight;
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
         
         // Texture tile
         m_TileSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
+        m_MapWidth        = s_MapWidth;
+        m_MapHeight       = static_cast<uint32_t>(strlen(s_MapTiles)) / s_MapWidth;
+
+        // Adding Texture maps
+        /* Ground */
         m_TextureMap['G'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 21 });
         
+        /* Castel */
+        m_TextureMap['.'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 19, 25 });
+        m_TextureMap['u'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 20, 24 });
+        m_TextureMap['o'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 21, 24 });
+        m_TextureMap['|'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 21, 25 });
+        m_TextureMap['l'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 20, 25 });
+        m_TextureMap['r'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 22, 25 });
+        
+        /* Steps */
+        m_TextureMap['S'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 22 });
+        
+        /* Bridge */
+        m_TextureMap['-'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 15, 19 });
+        
+        /* Pipes */
+        m_TextureMap['!'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 8 }, { 2, 1 });
+        m_TextureMap['Y'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 9 }, { 2, 1 });
+        
+        /* Bonus and Bricks */
+        m_TextureMap['X'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 17, 25 });;
+        m_TextureMap['B'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 24,  21 });
+
         // Adding Scene
         m_Scene = std::make_shared<Scene>();
         
-        m_BackgroundEntity = m_Scene->CreateEntity("Background");
-        m_BackgroundEntity.AddComponent<SpriteRendererComponent>(glm::vec4(0.2f, 0.3f, 0.4f, 1.0f));
+        for (uint32_t y = 0; y < m_MapHeight; y++)
+        {
+            for (uint32_t x = 0; x < m_MapWidth; x++)
+            {
+                char tileType = s_MapTiles[x + y * m_MapWidth];
+                if (m_TextureMap.find(tileType) != m_TextureMap.end())
+                {
+                    std::shared_ptr<SubTexture> subTexture = m_TextureMap[tileType];
+                    
+                    Entity entity     = m_Scene->CreateEntity(GetEntityNameFromChar(tileType));
+                    auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);
+                    auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
+                    
+                    glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, (m_MapHeight / 2.0f) - y, 0.0f}) *
+                                          glm::scale(glm::mat4(1.0f), { spriteSize.x, spriteSize.y, 1.f});
+                    
+                    entity.GetComponent<TransformComponent>().Transform = transform;
+                }
+            }
+        }
+
+        m_CameraEntity = m_Scene->CreateEntity("Camera");
+        m_CameraEntity.AddComponent<CameraComponent>();
         
-        glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), { 2.0f, 1.0f, 1.0f });
+        // Temporary
+        class CameraController : public ScriptableEntity
+        {
+        public:
+            void OnCreate()
+            {
+            }
+            
+            void OnUpdate(TimeStep ts)
+            {
+                auto& transform = GetComponent<TransformComponent>().Transform;
+                float speed = s_Speed;
+                
+                if(Input::IsKeyPressed(Key::Left))
+                    transform[3][0] -= speed * ts;
+                if(Input::IsKeyPressed(Key::Right))
+                    transform[3][0] += speed * ts;
+            }
+            
+            void OnDestroy()
+            {
+            }
+        };
         
-        m_BackgroundEntity.GetComponent<TransformComponent>().Transform = transform;
-        
-        m_PrimaryCameraEntity = m_Scene->CreateEntity("Primary Camera");
-        m_PrimaryCameraEntity.AddComponent<CameraComponent>();
+        m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
     }
     
     void MarioLayer::OnDetach()
@@ -68,18 +157,7 @@ namespace iKan {
         
         RenderCommand::Clear();
         RenderCommand::SetClearColor(s_BgColor);
-        
-        Camera camera(glm::mat4(1.0f));
-        Renderer2D::BeginScene(camera, glm::mat4(1.0f));
-    
-        if (m_TextureMap.find('G') != m_TextureMap.end())
-        {
-            std::shared_ptr<SubTexture> subTexture  = m_TextureMap['G'];
-            Renderer2D::DrawQuad({ 0.0f, 0.0f }, subTexture->GetSpriteSize(), subTexture);
-        }
-        
-        Renderer2D::EndScene();
-        
+                
         m_Scene->OnUpdate(timeStep);
         
         m_FrameBuffer->Unbind();
@@ -171,6 +249,22 @@ namespace iKan {
                 s_BgColor = { color.x, color.y, color.z, color.w };
             }
         }
+        
+        ImGui::Text("Camera Speed");
+        ImGui::SameLine();
+        
+        // Arrow buttons with Repeater
+        static int counter = 0;
+        float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+        ImGui::PushButtonRepeat(true);
+        if (ImGui::ArrowButton("##left", ImGuiDir_Left)) { counter--; }
+        ImGui::SameLine(0.0f, spacing);
+        if (ImGui::ArrowButton("##right", ImGuiDir_Right)) { counter++; }
+        ImGui::PopButtonRepeat();
+        ImGui::SameLine();
+        ImGui::Text("%d", counter);
+        s_Speed = float(counter);
+
         ImGui::End();
         
         //------------------------ View Port ---------------------------------------------------------------
@@ -192,7 +286,7 @@ namespace iKan {
         Renderer2D::ImguiStatsAnfFrameRate();
         
         // Only for Demo
-//        ImGui::ShowDemoWindow();
+        ImGui::ShowDemoWindow();
         
         // Ending of Docking egining
         ImGui::End();

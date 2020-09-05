@@ -86,10 +86,7 @@ namespace iKan {
         
         uint32_t whiteTextureData = 0xffffffff;
         s_Data.WhiteTexture       = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
-        
-        /* Set default shader path */
-        SetShaader("../../iKanEditor/assets/shaders/Texture.glsl");
-        
+                
         /* Set all texture slots to 0 */
         s_Data.TextureSlots[0] = s_Data.WhiteTexture;
         
