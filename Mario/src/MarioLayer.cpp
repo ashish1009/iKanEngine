@@ -32,6 +32,7 @@ namespace iKan {
 
     MarioLayer::~MarioLayer()
     {
+        Player::Destroy();
     }
 
     void MarioLayer::OnAttach()
@@ -49,16 +50,19 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
         
+        m_PlayerInstance = Player::Create();
+        
         // Texture tile
-        m_TileSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
-        m_MapWidth        = s_MapWidth;
-        m_MapHeight       = static_cast<uint32_t>(strlen(s_MapTiles)) / s_MapWidth;
+        m_PlayerSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
+        m_TileSpriteSheet   = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
+        m_MapWidth          = s_MapWidth;
+        m_MapHeight         = static_cast<uint32_t>(strlen(s_MapTiles)) / s_MapWidth;
 
         // Adding Texture maps
-        /* Ground */
+        // Ground
         m_TextureMap['G'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 21 });
         
-        /* Castel */
+        // Castel
         m_TextureMap['.'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 19, 25 });
         m_TextureMap['u'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 20, 24 });
         m_TextureMap['o'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 21, 24 });
@@ -66,19 +70,22 @@ namespace iKan {
         m_TextureMap['l'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 20, 25 });
         m_TextureMap['r'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 22, 25 });
         
-        /* Steps */
+        // Steps
         m_TextureMap['S'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 22 });
         
-        /* Bridge */
+        // Bridge
         m_TextureMap['-'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 15, 19 });
         
-        /* Pipes */
+        // Pipes
         m_TextureMap['!'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 8 }, { 2, 1 });
         m_TextureMap['Y'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 9 }, { 2, 1 });
         
-        /* Bonus and Bricks */
+        // Bonus and Bricks
         m_TextureMap['X'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 17, 25 });;
         m_TextureMap['B'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 24,  21 });
+        
+        // Player Subtexture
+        m_PlayerSubtexture = SubTexture::CreateFromCoords(m_PlayerSpriteSheet, { 0, 12 });
 
         // Adding Scene
         m_Scene = std::make_shared<Scene>();
@@ -96,13 +103,13 @@ namespace iKan {
                     auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);
                     auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
                     
-                    glm::mat4 transform = glm::translate(glm::mat4(1.0f), {x, (m_MapHeight / 2.0f) - y, 0.0f}) *
-                                          glm::scale(glm::mat4(1.0f), { spriteSize.x, spriteSize.y, 1.f});
-                    
-                    entity.GetComponent<TransformComponent>().Transform = transform;
+                    entity.GetComponent<TransformComponent>().SetTransform({ x, (m_MapHeight / 2.0f) - y }, { spriteSize.x, spriteSize.y });
                 }
             }
         }
+        
+        m_PlayerEntity = m_Scene->CreateEntity("Player");
+        m_PlayerEntity.AddComponent<SpriteRendererComponent>(m_PlayerSubtexture);
 
         m_CameraEntity = m_Scene->CreateEntity("Camera");
         m_CameraEntity.AddComponent<CameraComponent>();
@@ -250,21 +257,26 @@ namespace iKan {
             }
         }
         
+        //-------------------------- Camera Speed --------------------------------
         ImGui::Text("Camera Speed");
         ImGui::SameLine();
         
         // Arrow buttons with Repeater
-        static int counter = 0;
-        float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
+        static int counter  = 0;
+        float spacing       = ImGui::GetStyle().ItemInnerSpacing.x;
+        
         ImGui::PushButtonRepeat(true);
-        if (ImGui::ArrowButton("##left", ImGuiDir_Left)) { counter--; }
+        if (ImGui::ArrowButton("##left", ImGuiDir_Left))
+            counter--;
+        
         ImGui::SameLine(0.0f, spacing);
-        if (ImGui::ArrowButton("##right", ImGuiDir_Right)) { counter++; }
+        if (ImGui::ArrowButton("##right", ImGuiDir_Right))
+            counter++;
+        
         ImGui::PopButtonRepeat();
         ImGui::SameLine();
         ImGui::Text("%d", counter);
         s_Speed = float(counter);
-
         ImGui::End();
         
         //------------------------ View Port ---------------------------------------------------------------

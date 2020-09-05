@@ -1,6 +1,9 @@
-[22:51:21] [info    ] iKAN: Creating Window : iKan Mario (1280x720)
-[22:51:21] [info    ] iKAN: OpenGl Info :
-[22:51:21] [info    ] iKAN: Vendor   : Intel Inc. 
-[22:51:21] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
-[22:51:21] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
-[22:52:23] [info    ] iKAN: Window : iKan Mario Destroyed
+[23:52:59] [info    ] iKAN: Initialized spd logger
+[23:53:00] [info    ] iKAN: Creating Window : iKan Mario (1280x720)
+[23:53:00] [info    ] iKAN: OpenGl Info :
+[23:53:00] [info    ] iKAN: Vendor   : Intel Inc. 
+[23:53:00] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[23:53:00] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[23:53:00] [info    ] APP: Player Instance Created
+[23:53:01] [warning ] APP: Player Instance Destroyed
+[23:53:01] [info    ] iKAN: Window : iKan Mario Destroyed
