@@ -1,6 +1,8 @@
-[00:27:12] [info    ] iKAN: Creating Window : iKan Mario (1280x720)
-[00:27:12] [info    ] iKAN: OpenGl Info :
-[00:27:12] [info    ] iKAN: Vendor   : Intel Inc. 
-[00:27:12] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
-[00:27:12] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
-[00:28:06] [info    ] iKAN: Window : iKan Mario Destroyed
+[19:37:57] [info    ] iKAN: Creating Window : iKan Mario (1280x720)
+[19:37:57] [info    ] iKAN: OpenGl Info :
+[19:37:57] [info    ] iKAN: Vendor   : Intel Inc. 
+[19:37:57] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[19:37:57] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[19:37:57] [error   ] iKAN: Could not open file '../../iKanEditor/assets/shaders/Texture.glsl'
+[19:37:57] [warning ] iKAN: Warning: uniform 'u_Textures' doesnt exist
+[19:37:59] [info    ] iKAN: Window : iKan Mario Destroyed

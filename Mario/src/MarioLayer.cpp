@@ -2,21 +2,8 @@
 
 namespace iKan {
     
-    static glm::vec4 s_BgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+    static glm::vec4 s_BgColor = { 0.3f, 0.1f, 0.6f, 1.0f };
     
-    static void HelpMarker(const char* desc)
-    {
-        ImGui::TextDisabled("(?)");
-        if (ImGui::IsItemHovered())
-        {
-            ImGui::BeginTooltip();
-            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-            ImGui::TextUnformatted(desc);
-            ImGui::PopTextWrapPos();
-            ImGui::EndTooltip();
-        }
-    }
-
     MarioLayer::MarioLayer()
     {
     }
@@ -27,11 +14,35 @@ namespace iKan {
 
     void MarioLayer::OnAttach()
     {
+        /*
+         Upload the Shader
+         NOTE: Upload the shader before calling Renderer2D::Begin Scene
+         */
+        Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
+ 
+        // Frame Buffers
         FramebufferSpecification fbSpec;
         fbSpec.Width  = iKan::s_WindowWidth;
         fbSpec.Height = iKan::s_WindowHeight;
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
+        
+        // Texture tile
+        m_TileSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
+        m_TextureMap['G'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 21 });
+        
+        // Adding Scene
+        m_Scene = std::make_shared<Scene>();
+        
+        m_BackgroundEntity = m_Scene->CreateEntity("Background");
+        m_BackgroundEntity.AddComponent<SpriteRendererComponent>(glm::vec4(0.2f, 0.3f, 0.4f, 1.0f));
+        
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), { 2.0f, 1.0f, 1.0f });
+        
+        m_BackgroundEntity.GetComponent<TransformComponent>().Transform = transform;
+        
+        m_PrimaryCameraEntity = m_Scene->CreateEntity("Primary Camera");
+        m_PrimaryCameraEntity.AddComponent<CameraComponent>();
     }
     
     void MarioLayer::OnDetach()
@@ -44,10 +55,32 @@ namespace iKan {
                              
     void MarioLayer::OnUpdate(TimeStep timeStep)
     {
+        if (FramebufferSpecification spec = m_FrameBuffer->GetSpecification();
+            m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+            (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+        {
+            m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_Scene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+        }
+
+        Renderer2D::ResetStats();
         m_FrameBuffer->Bind();
         
         RenderCommand::Clear();
         RenderCommand::SetClearColor(s_BgColor);
+        
+        Camera camera(glm::mat4(1.0f));
+        Renderer2D::BeginScene(camera, glm::mat4(1.0f));
+    
+        if (m_TextureMap.find('G') != m_TextureMap.end())
+        {
+            std::shared_ptr<SubTexture> subTexture  = m_TextureMap['G'];
+            Renderer2D::DrawQuad({ 0.0f, 0.0f }, subTexture->GetSpriteSize(), subTexture);
+        }
+        
+        Renderer2D::EndScene();
+        
+        m_Scene->OnUpdate(timeStep);
         
         m_FrameBuffer->Unbind();
     }
@@ -114,7 +147,7 @@ namespace iKan {
                 
                 static bool alphaPreview = true, alphaHalfPreview = true;
                 ImGui::Checkbox("Alpha", &alphaPreview);  ImGui::SameLine(); ImGui::Checkbox("Half Alpha", &alphaHalfPreview);
-                ImGuiColorEditFlags miscFlags = (alphaHalfPreview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alphaPreview ? ImGuiColorEditFlags_AlphaPreview : 0));
+                ImGuiColorEditFlags miscFlags = ImGuiColorEditFlags_PickerHueWheel | (alphaHalfPreview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alphaPreview ? ImGuiColorEditFlags_AlphaPreview : 0));
                 if (alphaPreview || alphaHalfPreview) miscFlags |= ImGuiColorEditFlags_AlphaBar; else miscFlags |= ImGuiColorEditFlags_NoAlpha;
 
                 static bool sidePreview = true, refColor = false;
@@ -129,18 +162,10 @@ namespace iKan {
                         ImGui::ColorEdit4("##RefColor", &refColorValue.x, ImGuiColorEditFlags_NoInputs | miscFlags);
                     }
                 }
-                
-                static int pickerMode = 0;
-                ImGui::Combo("Picker Mode", &pickerMode, "Auto/Current\0Hue bar + SV rect\0Hue wheel + SV triangle\0");
-                ImGui::SameLine(); HelpMarker("User can right-click the picker to change mode.");
-
-                ImGuiColorEditFlags flags = miscFlags | ImGuiColorEditFlags_PickerHueWheel;
-
-                if (!sidePreview)     flags |= ImGuiColorEditFlags_NoSidePreview;
-                if (pickerMode == 1)  flags |= ImGuiColorEditFlags_PickerHueBar;
-                if (pickerMode == 2)  flags |= ImGuiColorEditFlags_PickerHueWheel;
-                ImGui::ColorPicker4("Back Ground##4", (float*)&color, flags, refColor ? &refColorValue.x : NULL);
-                                
+                if (!sidePreview)
+                    miscFlags |= ImGuiColorEditFlags_NoSidePreview;
+            
+                ImGui::ColorPicker4("Back Ground##4", (float*)&color, miscFlags, refColor ? &refColorValue.x : NULL);
                 ImGui::TreePop();
                 
                 s_BgColor = { color.x, color.y, color.z, color.w };
@@ -167,7 +192,7 @@ namespace iKan {
         Renderer2D::ImguiStatsAnfFrameRate();
         
         // Only for Demo
-        ImGui::ShowDemoWindow();
+//        ImGui::ShowDemoWindow();
         
         // Ending of Docking egining
         ImGui::End();

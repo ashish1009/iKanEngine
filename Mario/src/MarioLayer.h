@@ -18,7 +18,15 @@ namespace iKan {
         bool m_ViewportFocused = false, m_ViewportHovered = false;
 
         std::shared_ptr<Framebuffer> m_FrameBuffer;
-        glm::vec2 m_ViewportSize = { 0.0f, 0.0f };        
+        glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
+        
+        std::shared_ptr<Texture> m_TileSpriteSheet;
+        std::unordered_map<char, std::shared_ptr<SubTexture>> m_TextureMap;
+
+        std::shared_ptr<Scene> m_Scene;
+        
+        Entity m_PrimaryCameraEntity;
+        Entity m_BackgroundEntity;
     };
     
 }

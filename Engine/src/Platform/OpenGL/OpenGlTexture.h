@@ -12,8 +12,18 @@ namespace iKan {
         
         virtual ~OpenGlTexture();
         
+        virtual uint32_t GetWidth() const override { return m_Width;  }
+        virtual uint32_t GetHeight() const override { return m_Height; }
+        
         virtual void Bind(uint32_t slot = 0) const override;
         virtual void Unbind() const override;
+        
+        virtual uint32_t GetRendererID() const override { return m_RendererId; }
+        
+        virtual bool operator==(const Texture& other) const override
+        {
+            return m_RendererId == ((OpenGlTexture&)other).m_RendererId;
+        }
         
     private:
         uint32_t m_RendererId;
