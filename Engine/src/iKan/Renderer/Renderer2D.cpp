@@ -47,6 +47,7 @@ namespace iKan {
     
     void Renderer2D::Init()
     {
+        IK_CORE_INFO("Initialising Renderer2D ");
         s_Data.QuadVertexArray  = VertexArray::Create();
         
         /* Vertex Buffer */

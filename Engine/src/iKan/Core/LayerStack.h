@@ -25,6 +25,8 @@ namespace iKan {
         std::vector<Layer*>::const_reverse_iterator rbegin() const { return m_Layers.rbegin(); }
         std::vector<Layer*>::const_reverse_iterator rend() const { return m_Layers.rend(); }
         
+        uint32_t GetNumInserted() const { return m_LayerInsertIndex; }
+        
     private:
         std::vector<Layer*> m_Layers;
         uint32_t            m_LayerInsertIndex = 0;

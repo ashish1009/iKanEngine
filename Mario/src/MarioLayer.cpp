@@ -1,32 +1,13 @@
 #include "MarioLayer.h"
-#include "SceneMap.h"
+
+#include "Layers/Background.h"
+
 namespace iKan {
     
-    static glm::vec4 s_BgColor = { 0.3f, 0.1f, 0.6f, 1.0f };
     static float s_Speed = 5.0f;
-    static std::string GetEntityNameFromChar(char type)
-    {
-        switch(type)
-        {
-            case 'G' : return "Ground";                 break;
-            case '|' : return "Castel Brick";           break;
-            case 'o' : return "Castel Gate";            break;
-            case 'u' : return "castel Gate Domb";       break;
-            case '.' : return "Castel Domb";            break;
-            case 'l' : return "Castel Windlow Left";    break;
-            case 'r' : return "Castel Window Right";    break;
-            case 'S' : return "Steps";                  break;
-            case '-' : return "Bridge";                 break;
-            case '!' : return "Pipe Base";              break;
-            case 'Y' : return "Pipe Head";              break;
-            case 'X' : return "Bricks";                 break;
-            case 'B' : return "Bonus";                  break;
-        }
-        IK_ASSERT(false, "Invalid Type");
-        return "";
-    }
-   
+    
     MarioLayer::MarioLayer()
+    : Layer("Mario")
     {
     }
 
@@ -43,6 +24,9 @@ namespace iKan {
          */
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
  
+        // Adding Scene
+        m_Scene = std::make_shared<Scene>();
+        
         // Frame Buffers
         FramebufferSpecification fbSpec;
         fbSpec.Width  = s_WindowWidth;
@@ -50,66 +34,8 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
         
-        m_PlayerInstance = Player::Create();
-        
-        // Texture tile
-        m_PlayerSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
-        m_TileSpriteSheet   = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
-        m_MapWidth          = s_MapWidth;
-        m_MapHeight         = static_cast<uint32_t>(strlen(s_MapTiles)) / s_MapWidth;
-
-        // Adding Texture maps
-        // Ground
-        m_TextureMap['G'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 21 });
-        
-        // Castel
-        m_TextureMap['.'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 19, 25 });
-        m_TextureMap['u'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 20, 24 });
-        m_TextureMap['o'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 21, 24 });
-        m_TextureMap['|'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 21, 25 });
-        m_TextureMap['l'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 20, 25 });
-        m_TextureMap['r'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 22, 25 });
-        
-        // Steps
-        m_TextureMap['S'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 22 });
-        
-        // Bridge
-        m_TextureMap['-'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 15, 19 });
-        
-        // Pipes
-        m_TextureMap['!'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 8 }, { 2, 1 });
-        m_TextureMap['Y'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 0, 9 }, { 2, 1 });
-        
-        // Bonus and Bricks
-        m_TextureMap['X'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 17, 25 });;
-        m_TextureMap['B'] = SubTexture::CreateFromCoords(m_TileSpriteSheet, { 24,  21 });
-        
-        // Player Subtexture
-        m_PlayerSubtexture = SubTexture::CreateFromCoords(m_PlayerSpriteSheet, { 0, 12 });
-
-        // Adding Scene
-        m_Scene = std::make_shared<Scene>();
-        
-        for (uint32_t y = 0; y < m_MapHeight; y++)
-        {
-            for (uint32_t x = 0; x < m_MapWidth; x++)
-            {
-                char tileType = s_MapTiles[x + y * m_MapWidth];
-                if (m_TextureMap.find(tileType) != m_TextureMap.end())
-                {
-                    std::shared_ptr<SubTexture> subTexture = m_TextureMap[tileType];
-                    
-                    Entity entity     = m_Scene->CreateEntity(GetEntityNameFromChar(tileType));
-                    auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);
-                    auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
-                    
-                    entity.GetComponent<TransformComponent>().SetTransform({ x, (m_MapHeight / 2.0f) - y }, { spriteSize.x, spriteSize.y });
-                }
-            }
-        }
-        
-        m_PlayerEntity = m_Scene->CreateEntity("Player");
-        m_PlayerEntity.AddComponent<SpriteRendererComponent>(m_PlayerSubtexture);
+        m_PlayerInstance = Player::Create(m_Scene);
+        Background::Init(m_Scene);
 
         m_CameraEntity = m_Scene->CreateEntity("Camera");
         m_CameraEntity.AddComponent<CameraComponent>();
@@ -163,7 +89,7 @@ namespace iKan {
         m_FrameBuffer->Bind();
         
         RenderCommand::Clear();
-        RenderCommand::SetClearColor(s_BgColor);
+        RenderCommand::SetClearColor(Background::GetColor());
                 
         m_Scene->OnUpdate(timeStep);
         
@@ -223,39 +149,7 @@ namespace iKan {
         }
         // ----------------------- Setings ----------------------------------------------------------------
         ImGui::Begin("Setting");
-        if (ImGui::CollapsingHeader("BackGround"))
-        {
-            if (ImGui::TreeNode("Color"))
-            {
-                static ImVec4 color         = ImVec4(s_BgColor.r, s_BgColor.g, s_BgColor.b, s_BgColor.a);
-                static ImVec4 refColorValue = color;
-                
-                static bool alphaPreview = true, alphaHalfPreview = true;
-                ImGui::Checkbox("Alpha", &alphaPreview);  ImGui::SameLine(); ImGui::Checkbox("Half Alpha", &alphaHalfPreview);
-                ImGuiColorEditFlags miscFlags = ImGuiColorEditFlags_PickerHueWheel | (alphaHalfPreview ? ImGuiColorEditFlags_AlphaPreviewHalf : (alphaPreview ? ImGuiColorEditFlags_AlphaPreview : 0));
-                if (alphaPreview || alphaHalfPreview) miscFlags |= ImGuiColorEditFlags_AlphaBar; else miscFlags |= ImGuiColorEditFlags_NoAlpha;
-
-                static bool sidePreview = true, refColor = false;
-                ImGui::Checkbox("Side Preview", &sidePreview);
-                if (sidePreview)
-                {
-                    ImGui::SameLine();
-                    ImGui::Checkbox("Ref Color", &refColor);
-                    if (refColor)
-                    {
-                        ImGui::SameLine();
-                        ImGui::ColorEdit4("##RefColor", &refColorValue.x, ImGuiColorEditFlags_NoInputs | miscFlags);
-                    }
-                }
-                if (!sidePreview)
-                    miscFlags |= ImGuiColorEditFlags_NoSidePreview;
-            
-                ImGui::ColorPicker4("Back Ground##4", (float*)&color, miscFlags, refColor ? &refColorValue.x : NULL);
-                ImGui::TreePop();
-                
-                s_BgColor = { color.x, color.y, color.z, color.w };
-            }
-        }
+        Background::ImGuiRender();
         
         //-------------------------- Camera Speed --------------------------------
         ImGui::Text("Camera Speed");

@@ -32,12 +32,14 @@ namespace iKan {
     
     void Application::PushLayer(Layer* layer)
     {
+        IK_CORE_INFO("Pushing Layer: {0} at {1} ", layer->GetName(), m_LayerStack.GetNumInserted());
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
     }
     
     void Application::PushOverlay(Layer *layer)
     {
+        IK_CORE_INFO("Pushing Layer: {0} at End ", layer->GetName());
         m_LayerStack.PushOverlay(layer);
         layer->OnAttach();
     }

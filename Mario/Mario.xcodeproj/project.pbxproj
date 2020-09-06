@@ -14,6 +14,7 @@
 		B22B331B24FFB0460002D428 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331A24FFB0460002D428 /* IOKit.framework */; };
 		B235F85125040B2F00473DAF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B235F84F25040B2F00473DAF /* Player.cpp */; };
 		B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D022500072E003291C4 /* MarioLayer.cpp */; };
+		B2C881FC2504ECF900254B98 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C881FA2504ECF900254B98 /* Background.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,8 @@
 		B26D9D022500072E003291C4 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; };
 		B26D9D032500072E003291C4 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
 		B26D9D0D2500168D003291C4 /* Shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.glsl; sourceTree = "<group>"; };
+		B2C881FA2504ECF900254B98 /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
+		B2C881FB2504ECF900254B98 /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,12 +82,11 @@
 		B22B330B24FFAAE00002D428 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B2C881F92504ECD100254B98 /* Layers */,
 				B22B330C24FFAAE00002D428 /* MarioApp.cpp */,
 				B26D9D022500072E003291C4 /* MarioLayer.cpp */,
 				B26D9D032500072E003291C4 /* MarioLayer.h */,
 				B235F84C2504032600473DAF /* SceneMap.h */,
-				B235F84F25040B2F00473DAF /* Player.cpp */,
-				B235F85025040B2F00473DAF /* Player.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -114,6 +116,17 @@
 				B26D9D0D2500168D003291C4 /* Shader.glsl */,
 			);
 			path = shaders;
+			sourceTree = "<group>";
+		};
+		B2C881F92504ECD100254B98 /* Layers */ = {
+			isa = PBXGroup;
+			children = (
+				B235F84F25040B2F00473DAF /* Player.cpp */,
+				B235F85025040B2F00473DAF /* Player.h */,
+				B2C881FA2504ECF900254B98 /* Background.cpp */,
+				B2C881FB2504ECF900254B98 /* Background.h */,
+			);
+			path = Layers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -177,6 +190,7 @@
 				B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */,
 				B22B330D24FFAAE00002D428 /* MarioApp.cpp in Sources */,
 				B235F85125040B2F00473DAF /* Player.cpp in Sources */,
+				B2C881FC2504ECF900254B98 /* Background.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

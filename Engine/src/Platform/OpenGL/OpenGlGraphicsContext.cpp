@@ -23,10 +23,12 @@ namespace iKan {
         bool success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         IK_CORE_ASSERT(success, "Can not initialize the Glad");
         
-        IK_CORE_INFO("OpenGl Info :");
+        IK_CORE_INFO("Created Context of OpenGl :");
+        IK_CORE_INFO("--------------------------------------------------");
         IK_CORE_INFO("Vendor   : {0} ", glGetString(GL_VENDOR));
         IK_CORE_INFO("Renderer : {0} ", glGetString(GL_RENDERER));
         IK_CORE_INFO("Version  : {0} ", glGetString(GL_VERSION));
+        IK_CORE_INFO("--------------------------------------------------");
     }
     
     void OpneGlGraphicsContext::SwapBuffers()
