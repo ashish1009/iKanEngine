@@ -1,11 +1,10 @@
 #include "MarioLayer.h"
 
 #include "Layers/Background.h"
+#include "Layers/MarioCamera.h"
 
 namespace iKan {
-    
-    static float s_Speed = 5.0f;
-    
+        
     MarioLayer::MarioLayer()
     : Layer("Mario")
     {
@@ -36,35 +35,7 @@ namespace iKan {
         
         m_PlayerInstance = Player::Create(m_Scene);
         Background::Init(m_Scene);
-
-        m_CameraEntity = m_Scene->CreateEntity("Camera");
-        m_CameraEntity.AddComponent<CameraComponent>();
-        
-        // Temporary
-        class CameraController : public ScriptableEntity
-        {
-        public:
-            void OnCreate()
-            {
-            }
-            
-            void OnUpdate(TimeStep ts)
-            {
-                auto& transform = GetComponent<TransformComponent>().Transform;
-                float speed = s_Speed;
-                
-                if(Input::IsKeyPressed(Key::Left))
-                    transform[3][0] -= speed * ts;
-                if(Input::IsKeyPressed(Key::Right))
-                    transform[3][0] += speed * ts;
-            }
-            
-            void OnDestroy()
-            {
-            }
-        };
-        
-        m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        MarioCamera::Init(m_Scene);
     }
     
     void MarioLayer::OnDetach()
@@ -150,27 +121,7 @@ namespace iKan {
         // ----------------------- Setings ----------------------------------------------------------------
         ImGui::Begin("Setting");
         Background::ImGuiRender();
-        
-        //-------------------------- Camera Speed --------------------------------
-        ImGui::Text("Camera Speed");
-        ImGui::SameLine();
-        
-        // Arrow buttons with Repeater
-        static int counter  = 0;
-        float spacing       = ImGui::GetStyle().ItemInnerSpacing.x;
-        
-        ImGui::PushButtonRepeat(true);
-        if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-            counter--;
-        
-        ImGui::SameLine(0.0f, spacing);
-        if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-            counter++;
-        
-        ImGui::PopButtonRepeat();
-        ImGui::SameLine();
-        ImGui::Text("%d", counter);
-        s_Speed = float(counter);
+        MarioCamera::ImGuiRender();
         ImGui::End();
         
         //------------------------ View Port ---------------------------------------------------------------
@@ -192,7 +143,7 @@ namespace iKan {
         Renderer2D::ImguiStatsAnfFrameRate();
         
         // Only for Demo
-        ImGui::ShowDemoWindow();
+//        ImGui::ShowDemoWindow();
         
         // Ending of Docking egining
         ImGui::End();

@@ -40,29 +40,29 @@ namespace iKan {
         
         // Adding Texture maps
         // Ground
-        s_TextureMap['G'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0, 21 });
+        s_TextureMap['G'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 21.0f });
         
         // Castel
-        s_TextureMap['.'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 19, 25 });
-        s_TextureMap['u'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20, 24 });
-        s_TextureMap['o'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21, 24 });
-        s_TextureMap['|'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21, 25 });
-        s_TextureMap['l'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20, 25 });
-        s_TextureMap['r'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 22, 25 });
+        s_TextureMap['.'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 19.0f, 25.0f });
+        s_TextureMap['u'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 24.0f });
+        s_TextureMap['o'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 24.0f });
+        s_TextureMap['|'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 25.0f });
+        s_TextureMap['l'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 25.0f });
+        s_TextureMap['r'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 22.0f, 25.0f });
         
         // Steps
-        s_TextureMap['S'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0, 22 });
+        s_TextureMap['S'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 22.0f });
         
         // Bridge
-        s_TextureMap['-'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15, 19 });
+        s_TextureMap['-'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 19.0f });
         
         // Pipes
-        s_TextureMap['!'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0, 8 }, { 2, 1 });
-        s_TextureMap['Y'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0, 9 }, { 2, 1 });
+        s_TextureMap['!'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 8.0f }, { 2.0f, 1.0f });
+        s_TextureMap['Y'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 9.0f }, { 2.0f, 1.0f });
         
         // Bonus and Bricks
-        s_TextureMap['X'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17, 25 });;
-        s_TextureMap['B'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24,  21 });
+        s_TextureMap['X'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17.0f, 25.0f });;
+        s_TextureMap['B'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 21.0f });
         
         for (uint32_t y = 0; y < mapHeight; y++)
         {

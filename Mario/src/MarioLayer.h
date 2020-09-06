@@ -24,7 +24,6 @@ namespace iKan {
     
         std::shared_ptr<Scene> m_Scene;
         
-        Entity m_CameraEntity;
         Player* m_PlayerInstance;
     };
     

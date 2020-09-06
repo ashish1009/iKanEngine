@@ -15,6 +15,7 @@
 		B235F85125040B2F00473DAF /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B235F84F25040B2F00473DAF /* Player.cpp */; };
 		B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D022500072E003291C4 /* MarioLayer.cpp */; };
 		B2C881FC2504ECF900254B98 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C881FA2504ECF900254B98 /* Background.cpp */; };
+		B2C881FF2504F9F600254B98 /* MarioCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C881FD2504F9F600254B98 /* MarioCamera.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,8 @@
 		B26D9D0D2500168D003291C4 /* Shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.glsl; sourceTree = "<group>"; };
 		B2C881FA2504ECF900254B98 /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; };
 		B2C881FB2504ECF900254B98 /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
+		B2C881FD2504F9F600254B98 /* MarioCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioCamera.cpp; sourceTree = "<group>"; };
+		B2C881FE2504F9F600254B98 /* MarioCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioCamera.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +89,6 @@
 				B22B330C24FFAAE00002D428 /* MarioApp.cpp */,
 				B26D9D022500072E003291C4 /* MarioLayer.cpp */,
 				B26D9D032500072E003291C4 /* MarioLayer.h */,
-				B235F84C2504032600473DAF /* SceneMap.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -121,10 +123,13 @@
 		B2C881F92504ECD100254B98 /* Layers */ = {
 			isa = PBXGroup;
 			children = (
+				B235F84C2504032600473DAF /* SceneMap.h */,
 				B235F84F25040B2F00473DAF /* Player.cpp */,
 				B235F85025040B2F00473DAF /* Player.h */,
 				B2C881FA2504ECF900254B98 /* Background.cpp */,
 				B2C881FB2504ECF900254B98 /* Background.h */,
+				B2C881FD2504F9F600254B98 /* MarioCamera.cpp */,
+				B2C881FE2504F9F600254B98 /* MarioCamera.h */,
 			);
 			path = Layers;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 			files = (
 				B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */,
 				B22B330D24FFAAE00002D428 /* MarioApp.cpp in Sources */,
+				B2C881FF2504F9F600254B98 /* MarioCamera.cpp in Sources */,
 				B235F85125040B2F00473DAF /* Player.cpp in Sources */,
 				B2C881FC2504ECF900254B98 /* Background.cpp in Sources */,
 			);
