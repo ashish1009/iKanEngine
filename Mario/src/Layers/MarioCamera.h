@@ -9,6 +9,9 @@ namespace iKan {
     public:
         static void Init(const std::shared_ptr<Scene>& scene);
         static void ImGuiRender();
+        
+    private:
+        static float s_Speed;
     };
     
 }

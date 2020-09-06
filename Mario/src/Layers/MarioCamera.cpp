@@ -3,8 +3,8 @@
 
 namespace iKan {
     
-    static float s_Speed = 5.0f;
-
+    float MarioCamera::s_Speed = 10.0f;
+    
     void MarioCamera::Init(const std::shared_ptr<Scene>& scene)
     {
         Entity cameraEntity = scene->CreateEntity("Camera");
@@ -31,27 +31,7 @@ namespace iKan {
     
     void MarioCamera::ImGuiRender()
     {
-        //-------------------------- Camera Speed --------------------------------
-        ImGui::Text("Camera Speed");
-        ImGui::SameLine();
-        
-        // Arrow buttons with Repeater
-        static int counter  = 16;
-        float spacing       = ImGui::GetStyle().ItemInnerSpacing.x;
-        
-        ImGui::PushButtonRepeat(true);
-        if (ImGui::ArrowButton("##left", ImGuiDir_Left))
-            counter--;
-        
-        ImGui::SameLine(0.0f, spacing);
-        if (ImGui::ArrowButton("##right", ImGuiDir_Right))
-            counter++;
-        
-        ImGui::PopButtonRepeat();
-        ImGui::SameLine();
-        ImGui::Text("%d", counter);
-        s_Speed = float(counter);
-
+        ImGuiAPI::Counter("Camera Speed", s_Speed);
     }
     
 }

@@ -4,7 +4,7 @@ namespace iKan {
     
     Player* Player::s_Instance = nullptr;
     
-    std::shared_ptr<Texture> s_PlayerSpriteSheet;
+    static std::shared_ptr<Texture> s_PlayerSpriteSheet;
 
     Player::Player(const std::shared_ptr<Scene>& scene)
     {
@@ -27,7 +27,7 @@ namespace iKan {
                     static float moveIdx = 0.0f;
                     auto playerTexture = SubTexture::CreateFromCoords(s_PlayerSpriteSheet, { (float)((uint32_t)moveIdx), 12.0f });
                     Player::Get()->m_PlayerEntity.GetComponent<SpriteRendererComponent>().SubTexComp = playerTexture;
-                    moveIdx += (timestep * 2);
+                    moveIdx += (timestep * 10);
                     if (moveIdx > 3.0f)
                         moveIdx = 0.0f;
                 }

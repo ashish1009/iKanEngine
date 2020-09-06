@@ -27,3 +27,5 @@
 #include <iKan/Scene/Scene.h>
 
 #include <iKan/Camera/Camera.h>
+
+#include <iKan/ImGui/ImGuiAPI.h>

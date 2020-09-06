@@ -1,14 +1,14 @@
-[19:41:54] [info    ] iKAN: Initialized spd logger
-[19:41:55] [info    ] iKAN: Creating Window : iKan Mario (1280x720)
-[19:41:55] [info    ] iKAN: Created Context of OpenGl :
-[19:41:55] [info    ] iKAN: --------------------------------------------------
-[19:41:55] [info    ] iKAN: Vendor   : Intel Inc. 
-[19:41:55] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
-[19:41:55] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
-[19:41:55] [info    ] iKAN: --------------------------------------------------
-[19:41:55] [info    ] iKAN: Initialising Renderer2D 
-[19:41:55] [info    ] iKAN: Pushing Layer: Imgui Layer at End 
-[19:41:55] [info    ] iKAN: Pushing Layer: Mario at 0 
-[19:41:55] [info    ] APP: Player Instance Created
-[19:41:59] [warning ] APP: Player Instance Destroyed
-[19:41:59] [info    ] iKAN: Window : iKan Mario Destroyed
+[20:38:46] [info    ] iKAN: Initialized spd logger
+[20:38:47] [info    ] iKAN: Creating Window : iKan Mario (1280x720)
+[20:38:47] [info    ] iKAN: Created Context of OpenGl :
+[20:38:47] [info    ] iKAN: --------------------------------------------------
+[20:38:47] [info    ] iKAN: Vendor   : Intel Inc. 
+[20:38:47] [info    ] iKAN: Renderer : Intel(R) HD Graphics 6000 
+[20:38:47] [info    ] iKAN: Version  : 4.1 INTEL-14.6.18 
+[20:38:47] [info    ] iKAN: --------------------------------------------------
+[20:38:47] [info    ] iKAN: Initialising Renderer2D 
+[20:38:47] [info    ] iKAN: Pushing Layer: Imgui Layer at End 
+[20:38:47] [info    ] iKAN: Pushing Layer: Mario at 0 
+[20:38:47] [info    ] APP: Player Instance Created
+[20:38:54] [warning ] APP: Player Instance Destroyed
+[20:38:54] [info    ] iKAN: Window : iKan Mario Destroyed
