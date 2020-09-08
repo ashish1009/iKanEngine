@@ -1,7 +1,5 @@
 #include <iKan.h>
 
-#include "Layers/Player.h"
-
 namespace iKan {
     
     class MarioLayer : public Layer

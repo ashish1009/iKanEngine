@@ -1,7 +1,8 @@
 #include "MarioLayer.h"
 
-#include "Layers/Background.h"
-#include "Layers/MarioCamera.h"
+#include <Layers/Background.h>
+#include <Layers/MarioCamera.h>
+#include <Layers/Player.h>
 
 namespace iKan {
         

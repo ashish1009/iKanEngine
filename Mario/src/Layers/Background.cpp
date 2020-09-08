@@ -1,5 +1,5 @@
-#include "Background.h"
-#include "SceneMap.h"
+#include <Layers/Background.h>
+#include <Layers/SceneMap.h>
 
 namespace iKan {
 

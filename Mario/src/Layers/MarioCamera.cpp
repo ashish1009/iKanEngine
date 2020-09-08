@@ -1,5 +1,7 @@
-#include "MarioCamera.h"
-#include "SceneMap.h"
+#include <Layers/MarioCamera.h>
+#include <Layers/SceneMap.h>
+
+#include <NativeScripts/CameraController.h>
 
 namespace iKan {
     
@@ -9,24 +11,7 @@ namespace iKan {
     {
         Entity cameraEntity = scene->CreateEntity("Camera");
         cameraEntity.AddComponent<CameraComponent>();
-        
-        // Temporary
-        class CameraController : public ScriptableEntity
-        {
-        public:
-            void OnUpdate(TimeStep ts)
-            {
-                auto& transform = GetComponent<TransformComponent>().Transform;
-                float speed = s_Speed;
                 
-                auto& position = transform[3];
-                if(Input::IsKeyPressed(Key::Left))
-                    position[0] -= speed * ts;
-                if(Input::IsKeyPressed(Key::Right))
-                    position[0] += speed * ts;
-            }
-        };
-        
         cameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
     }
     

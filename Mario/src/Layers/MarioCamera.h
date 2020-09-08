@@ -4,6 +4,8 @@
 
 namespace iKan {
     
+    class CameraController;
+    
     class MarioCamera
     {
     public:
@@ -12,6 +14,8 @@ namespace iKan {
         
     private:
         static float s_Speed;
+        
+        friend class CameraController;
     };
     
 }
