@@ -124,12 +124,12 @@
 			isa = PBXGroup;
 			children = (
 				B235F84C2504032600473DAF /* SceneMap.h */,
-				B235F84F25040B2F00473DAF /* Player.cpp */,
-				B235F85025040B2F00473DAF /* Player.h */,
 				B2C881FA2504ECF900254B98 /* Background.cpp */,
 				B2C881FB2504ECF900254B98 /* Background.h */,
 				B2C881FD2504F9F600254B98 /* MarioCamera.cpp */,
 				B2C881FE2504F9F600254B98 /* MarioCamera.h */,
+				B235F84F25040B2F00473DAF /* Player.cpp */,
+				B235F85025040B2F00473DAF /* Player.h */,
 			);
 			path = Layers;
 			sourceTree = "<group>";

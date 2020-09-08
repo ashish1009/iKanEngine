@@ -19,14 +19,15 @@ namespace iKan {
                 auto& transform = GetComponent<TransformComponent>().Transform;
                 float speed = s_Speed;
                 
+                auto& position = transform[3];
                 if(Input::IsKeyPressed(Key::Left))
-                    transform[3][0] -= speed * ts;
+                    position[0] -= speed * ts;
                 if(Input::IsKeyPressed(Key::Right))
-                    transform[3][0] += speed * ts;
+                    position[0] += speed * ts;
             }
         };
         
-//        cameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        cameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
     }
     
     void MarioCamera::ImGuiRender()

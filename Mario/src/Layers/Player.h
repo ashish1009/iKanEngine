@@ -4,24 +4,24 @@
 
 namespace iKan {
     
+    // For Big Player Add the value by 1
+    enum class PlayerColor
+    {
+        Black = 0, Skin = 3, Grey = 6, Blue = 9, BlueOrange = 12, RedOrange = 15, GreenOrange = 18, BlackOrange = 21, GreeWhite = 24, RedWhite = 27, Basic = 30,
+    };
+    
     class PlayerMove;
     
     class Player
     {
     public:
-        Player(const std::shared_ptr<Scene>& scene);
-        ~Player();
+        static void Init (const std::shared_ptr<Scene>& scene);
                 
-        static Player* Create(const std::shared_ptr<Scene>& scene);
-        static void Destroy();
-        static Player* Get() { return s_Instance; }
-        
     private:
-        static Player* s_Instance;
-        
-        std::shared_ptr<SubTexture> m_PlayerSubtexture;
-        
-        Entity m_PlayerEntity;
+        static Entity s_Entity;
+        static std::shared_ptr<SubTexture> s_StandSubtexture;
+        static std::shared_ptr<Texture> s_SpriteSheet;
+        static float s_Color;
         
         friend class PlayerMove;
     };

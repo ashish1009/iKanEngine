@@ -12,7 +12,6 @@ namespace iKan {
 
     MarioLayer::~MarioLayer()
     {
-        Player::Destroy();
     }
 
     void MarioLayer::OnAttach()
@@ -33,7 +32,7 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
         
-        m_PlayerInstance = Player::Create(m_Scene);
+        Player::Init(m_Scene);
         Background::Init(m_Scene);
         MarioCamera::Init(m_Scene);
     }

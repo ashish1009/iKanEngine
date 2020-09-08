@@ -28,12 +28,12 @@ namespace iKan {
         TransformComponent(const glm::mat4& transform)
         : Transform(transform) {}
         
-        void SetTransform(const glm::vec3& position, const glm::vec3& size)
+        void SetTransform(const glm::vec3& position, const glm::vec3& size = glm::vec3(1.0f))
         {
             Transform = glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), size);
         }
 
-        void SetTransform(const glm::vec2& position, const glm::vec2& size)
+        void SetTransform(const glm::vec2& position, const glm::vec2& size = glm::vec2(1.0f))
         {
             SetTransform({ position.x, position.y, 0.0f }, { size.x, size.y, 1.f});
         }

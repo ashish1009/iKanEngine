@@ -1,21 +1,21 @@
 #include "Player.h"
 
 namespace iKan {
-    
-    Player* Player::s_Instance = nullptr;
-    
-    static std::shared_ptr<Texture> s_PlayerSpriteSheet;
 
-    Player::Player(const std::shared_ptr<Scene>& scene)
+    Entity Player::s_Entity;
+    float Player::s_Color = static_cast<float>(PlayerColor::BlueOrange);
+    std::shared_ptr<SubTexture> Player::s_StandSubtexture = nullptr;
+    std::shared_ptr<Texture> Player::s_SpriteSheet = nullptr;
+    
+    void Player::Init(const std::shared_ptr<Scene>& scene)
     {
         IK_INFO("Player Instance Created");
         
-        s_PlayerSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
-        
-        m_PlayerSubtexture = SubTexture::CreateFromCoords(s_PlayerSpriteSheet, { 6.0f, 12.0f });
+        s_SpriteSheet     = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
+        s_StandSubtexture = SubTexture::CreateFromCoords(s_SpriteSheet, { 6.0f, s_Color });
                 
-        m_PlayerEntity = scene->CreateEntity("Player");
-        m_PlayerEntity.AddComponent<SpriteRendererComponent>(m_PlayerSubtexture);
+        s_Entity = scene->CreateEntity("Player");
+        s_Entity.AddComponent<SpriteRendererComponent>(s_StandSubtexture);
         
         class PlayerMove : public ScriptableEntity
         {
@@ -24,41 +24,40 @@ namespace iKan {
             {
                 if (Input::IsKeyPressed(Key::Right))
                 {
-                    static float moveIdx = 0.0f;
-                    auto playerTexture = SubTexture::CreateFromCoords(s_PlayerSpriteSheet, { (float)((uint32_t)moveIdx), 12.0f });
-                    Player::Get()->m_PlayerEntity.GetComponent<SpriteRendererComponent>().SubTexComp = playerTexture;
-                    moveIdx += (timestep * 10);
-                    if (moveIdx > 3.0f)
-                        moveIdx = 0.0f;
+                    PlayerRunTexture(timestep);
+                    float speed = 10;
+                    
+                    auto& transform = GetComponent<TransformComponent>().Transform;
+                    auto position = transform[3];
+                    if(Input::IsKeyPressed(Key::Left))
+                        position[0] -= speed * timestep;
+                    if(Input::IsKeyPressed(Key::Right))
+                        position[0] += speed * timestep;
                 }
                 
                 if (Input::IsKeyReleased(Key::Right))
                 {
-                    auto playerTexture = Player::Get()->m_PlayerSubtexture;
-                    Player::Get()->m_PlayerEntity.GetComponent<SpriteRendererComponent>().SubTexComp = playerTexture;
+                    m_MoveIdx = 0;
+                    Player::s_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = Player::s_StandSubtexture;;
                 }
             }
+            
+        private:
+            void PlayerRunTexture(TimeStep timestep)
+            {
+                auto playerTexture = SubTexture::CreateFromCoords(s_SpriteSheet, { (float)((uint32_t)m_MoveIdx), s_Color });
+                Player::s_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = playerTexture;
+                m_MoveIdx += (timestep * 15);
+                if (m_MoveIdx > 3.0f)
+                    m_MoveIdx = 0.0f;
+            }
+            
+        private:
+            float m_MoveIdx = 0.0f;
+
         };
         
-        m_PlayerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerMove>();
+        s_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerMove>();
     }
-    
-    Player::~Player()
-    {
-        IK_WARN("Player Instance Destroyed");
-    }
-    
-    Player* Player::Create(const std::shared_ptr<Scene>& scene)
-    {
-        if (!s_Instance)
-            s_Instance = new Player(scene);
-        return s_Instance;
-    }
-    
-    void Player::Destroy()
-    {
-        if (s_Instance)
-            delete s_Instance;
-    }
-    
+        
 }
