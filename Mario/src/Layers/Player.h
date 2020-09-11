@@ -33,6 +33,18 @@ namespace iKan {
             return { position[0], position[1] };
         }
         
+        float& GetPositionX()
+        {
+            auto[x, y] = GetPosition();
+            return x;
+        }
+        
+        float& GetPositionY()
+        {
+            auto[x, y] = GetPosition();
+            return y;
+        }
+        
     private:
         Player(const std::shared_ptr<Scene>& scene);
                 

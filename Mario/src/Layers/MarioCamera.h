@@ -17,6 +17,18 @@ namespace iKan {
             return { position[0], position[1] };
         }
         
+        static float& GetPositionX()
+        {
+            auto[x, y] = GetPosition();
+            return x;
+        }
+        
+        static float& GetPositionY()
+        {
+            auto[x, y] = GetPosition();
+            return y;
+        }
+        
     private:
         static Entity m_Entity;
         

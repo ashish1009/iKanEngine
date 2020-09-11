@@ -13,12 +13,15 @@ namespace iKan {
     public:
         void OnUpdate(TimeStep ts)
         {
-            auto[x, y] = MarioCamera::GetPosition();
-            float speed = Player::Get()->GetSpeed();
+            auto& x = MarioCamera::GetPositionX();
+            
+            auto player             = Player::Get();
+            auto[playerX, playerY]  = player->GetPosition();
+            float speed             = player->GetSpeed();
             
             if (Input::IsKeyPressed(Key::Left) && x > CAMERA_START)
                 x -= speed * ts;
-            if(Input::IsKeyPressed(Key::Right))
+            if(Input::IsKeyPressed(Key::Right) && playerX > 10)
                 x += speed * ts;
         }
     };

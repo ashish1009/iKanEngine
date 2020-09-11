@@ -9,7 +9,7 @@ namespace iKan {
     public:
         void OnUpdate(TimeStep timestep)
         {
-            auto[x, y] = Player::Get()->GetPosition();
+            auto& x = Player::Get()->GetPositionX();
             float speed = Player::Get()->m_Speed;
             
             if (Input::IsKeyPressed(Key::Right))
