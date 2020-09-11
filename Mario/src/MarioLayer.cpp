@@ -2,7 +2,6 @@
 
 #include <Layers/Background.h>
 #include <Layers/MarioCamera.h>
-#include <Layers/Player.h>
 
 namespace iKan {
         
@@ -33,7 +32,7 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
         
-        Player::Init(m_Scene);
+        m_Player = Player::Create(m_Scene);
         Background::Init(m_Scene);
         MarioCamera::Init(m_Scene);
     }
@@ -44,8 +43,22 @@ namespace iKan {
     
     void MarioLayer::OnEvent(Event& event)
     {
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(MarioLayer::OnKeyPressed));
+        dispatcher.Dispatch<KeyReleasedEvent>(IK_BIND_EVENT_FN(MarioLayer::OnKeyReleased));
     }
-                             
+    
+    bool MarioLayer::OnKeyPressed(KeyPressedEvent& event)
+    {
+        return false;
+    }
+    
+    bool MarioLayer::OnKeyReleased(KeyReleasedEvent& event)
+    {
+        m_Player->OnKeyReleased(event);
+        return false;
+    }
+                                 
     void MarioLayer::OnUpdate(TimeStep timeStep)
     {
         if (FramebufferSpecification spec = m_FrameBuffer->GetSpecification();

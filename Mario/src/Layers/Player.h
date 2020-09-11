@@ -15,13 +15,26 @@ namespace iKan {
     class Player
     {
     public:
-        static void Init (const std::shared_ptr<Scene>& scene);
+        ~Player();
+        
+        static Player* Create(const std::shared_ptr<Scene>& scene);
+        static Player* Get() { IK_ASSERT(s_Instance, "Player didnt existed !!!"); return s_Instance; }
+        static void Destroy() { if (s_Instance) delete s_Instance; }
+        
+        bool OnKeyPressed(KeyPressedEvent& event);
+        bool OnKeyReleased(KeyReleasedEvent& event);
+        
+    private:
+        Player(const std::shared_ptr<Scene>& scene);
                 
     private:
-        static Entity s_Entity;
-        static std::shared_ptr<SubTexture> s_StandSubtexture;
-        static std::shared_ptr<Texture> s_SpriteSheet;
-        static float s_Color;
+        static Player* s_Instance;
+        
+        Entity m_Entity;
+        std::shared_ptr<SubTexture> m_StandSubtexture;
+        std::shared_ptr<Texture> m_SpriteSheet;
+        float m_Color = static_cast<float>(PlayerColor::BlueOrange);
+        float m_MoveIdx = 0.0f;
         
         friend class PlayerMove;
     };

@@ -9,39 +9,32 @@ namespace iKan {
     public:
         void OnUpdate(TimeStep timestep)
         {
+            auto& position = GetComponent<TransformComponent>().Transform[3];
+            float speed = 10;
+            
             if (Input::IsKeyPressed(Key::Right))
             {
                 PlayerRunTexture(timestep);
-                float speed = 10;
-                
-                auto& transform = GetComponent<TransformComponent>().Transform;
-                auto& position = transform[3];
-                if(Input::IsKeyPressed(Key::Left))
-                    position[0] -= speed * timestep;
-                if(Input::IsKeyPressed(Key::Right))
-                    position[0] += speed * timestep;
+                position[0] += speed * timestep;
             }
-            
-            if (Input::IsKeyReleased(Key::Right))
+            if(Input::IsKeyPressed(Key::Left))
             {
-                m_MoveIdx = 0;
-                Player::s_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = Player::s_StandSubtexture;
+                PlayerRunTexture(timestep);
+                position[0] -= speed * timestep;
             }
         }
         
     private:
         void PlayerRunTexture(TimeStep timestep)
         {
-            auto playerTexture = SubTexture::CreateFromCoords(Player::s_SpriteSheet, { (float)((uint32_t)m_MoveIdx), Player::s_Color });
-            Player::s_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = playerTexture;
-            m_MoveIdx += (timestep * 15);
-            if (m_MoveIdx > 3.0f)
-                m_MoveIdx = 0.0f;
+            auto player = Player::Get();
+            auto playerTexture = SubTexture::CreateFromCoords(player->m_SpriteSheet, { (float)((uint32_t)player->m_MoveIdx), player->m_Color });
+            player->m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = playerTexture;
+            player->m_MoveIdx += (timestep * 15);
+            if (player->m_MoveIdx > 3.0f)
+                player->m_MoveIdx = 0.0f;
         }
-        
-    private:
-        float m_MoveIdx = 0.0f;
-        
+                
     };
 
     

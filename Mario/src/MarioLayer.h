@@ -1,5 +1,7 @@
 #include <iKan.h>
 
+#include <Layers/Player.h>
+
 namespace iKan {
     
     class MarioLayer : public Layer
@@ -15,12 +17,18 @@ namespace iKan {
         virtual void OnImguiRender() override;
         
     private:
+        bool OnKeyPressed(KeyPressedEvent& event);
+        bool OnKeyReleased(KeyReleasedEvent& event);
+        
+    private:
         bool m_ViewportFocused = false, m_ViewportHovered = false;
 
         std::shared_ptr<Framebuffer> m_FrameBuffer;
         std::shared_ptr<Scene> m_Scene;
 
         glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
+        
+        Player* m_Player;
     };
     
 }
