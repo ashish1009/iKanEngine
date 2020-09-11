@@ -15,7 +15,6 @@ namespace iKan {
 
         m_Entity = scene->CreateEntity("Player");
         m_Entity.AddComponent<SpriteRendererComponent>(m_StandSubtexture);
-
         m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerMove>();
     }
     
@@ -41,6 +40,11 @@ namespace iKan {
         else
             s_Instance = new Player(scene);
         return s_Instance;
+    }
+    
+    void Player::ImGuiRender()
+    {
+        ImGuiAPI::Counter("Player Speed", m_Speed);
     }
     
 }

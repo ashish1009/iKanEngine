@@ -5,19 +5,15 @@
 
 namespace iKan {
     
-    float MarioCamera::s_Speed = 10.0f;
+    Entity MarioCamera::m_Entity;
     
     void MarioCamera::Init(const std::shared_ptr<Scene>& scene)
     {
-        Entity cameraEntity = scene->CreateEntity("Camera");
-        cameraEntity.AddComponent<CameraComponent>();
-                
-        cameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        m_Entity = scene->CreateEntity("Camera");
+        m_Entity.AddComponent<CameraComponent>();
+        m_Entity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        // Setting Default start point of Game
+        m_Entity.GetComponent<TransformComponent>().Transform[3][0] += CAMERA_START;
     }
-    
-    void MarioCamera::ImGuiRender()
-    {
-        ImGuiAPI::Counter("Camera Speed", s_Speed);
-    }
-    
+        
 }

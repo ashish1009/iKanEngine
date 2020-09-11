@@ -24,6 +24,15 @@ namespace iKan {
         bool OnKeyPressed(KeyPressedEvent& event);
         bool OnKeyReleased(KeyReleasedEvent& event);
         
+        void ImGuiRender();
+        
+        float GetSpeed() const { return m_Speed; }
+        std::pair<float&, float&> GetPosition()
+        {
+            auto& position = m_Entity.GetComponent<TransformComponent>().Transform[3];
+            return { position[0], position[1] };
+        }
+        
     private:
         Player(const std::shared_ptr<Scene>& scene);
                 
@@ -33,8 +42,10 @@ namespace iKan {
         Entity m_Entity;
         std::shared_ptr<SubTexture> m_StandSubtexture;
         std::shared_ptr<Texture> m_SpriteSheet;
-        float m_Color = static_cast<float>(PlayerColor::BlueOrange);
+        
+        float m_Color   = static_cast<float>(PlayerColor::BlueOrange);
         float m_MoveIdx = 0.0f;
+        float m_Speed   = 10.0f;
         
         friend class PlayerMove;
     };

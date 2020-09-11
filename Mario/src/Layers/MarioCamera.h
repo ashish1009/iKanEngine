@@ -10,10 +10,15 @@ namespace iKan {
     {
     public:
         static void Init(const std::shared_ptr<Scene>& scene);
-        static void ImGuiRender();
+        
+        static std::pair<float&, float&> GetPosition()
+        {
+            auto& position = m_Entity.GetComponent<TransformComponent>().Transform[3];
+            return { position[0], position[1] };
+        }
         
     private:
-        static float s_Speed;
+        static Entity m_Entity;
         
         friend class CameraController;
     };

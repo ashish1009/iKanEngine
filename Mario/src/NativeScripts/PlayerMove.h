@@ -9,18 +9,19 @@ namespace iKan {
     public:
         void OnUpdate(TimeStep timestep)
         {
-            auto& position = GetComponent<TransformComponent>().Transform[3];
-            float speed = 10;
+            auto[x, y] = Player::Get()->GetPosition();
+            float speed = Player::Get()->m_Speed;
             
             if (Input::IsKeyPressed(Key::Right))
             {
                 PlayerRunTexture(timestep);
-                position[0] += speed * timestep;
+                x += speed * timestep;
             }
             if(Input::IsKeyPressed(Key::Left))
             {
                 PlayerRunTexture(timestep);
-                position[0] -= speed * timestep;
+                if (x >= 0)
+                    x -= speed * timestep;
             }
         }
         

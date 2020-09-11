@@ -96,7 +96,7 @@ namespace iKan {
         // ----------------------- Setings ----------------------------------------------------------------
         ImGui::Begin("Setting");
         Background::ImGuiRender();
-        MarioCamera::ImGuiRender();
+        m_Player->ImGuiRender();
         ImGui::End();
         
         //------------------------ View Port ---------------------------------------------------------------
