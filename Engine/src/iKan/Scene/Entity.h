@@ -42,6 +42,8 @@ namespace iKan {
             m_Scene->m_Registry.remove<T>(m_EntityHandle);
         }
         
+        Scene* GetScene() { return m_Scene; }
+        
         operator bool() const { return m_EntityHandle != entt::null; }
         operator uint32_t() const { return (uint32_t)m_EntityHandle; }
         

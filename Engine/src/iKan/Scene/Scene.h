@@ -20,6 +20,7 @@ namespace iKan {
         void OnViewportResize(uint32_t width, uint32_t height);
 
         void OnUpdate(TimeStep ts);
+        bool CollisionDetection(Entity& entity);
         
     private:
         /* Container that contain all the entities */

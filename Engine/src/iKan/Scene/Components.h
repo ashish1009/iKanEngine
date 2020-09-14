@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iKan/Camera/Camera.h>
-
 #include <iKan/Scene/SceneCamera.h>
 #include <iKan/Scene/ScriptableEntity.h>
 
@@ -70,17 +68,18 @@ namespace iKan {
     
     struct NativeScriptComponent
     {
-        ScriptableEntity* Instance = nullptr;
-        
-        ScriptableEntity*(*InstantiateScript)();
-        void(*DestroyScript)(NativeScriptComponent*);
+    public:
+        std::vector<ScriptableEntity*> Scripts;
         
         template<typename T>
         void Bind()
         {
-            InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
-            DestroyScript     = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
+            Instance = static_cast<ScriptableEntity*>(new T());
+            Scripts.emplace_back(Instance);
         }
+        
+    private:
+        ScriptableEntity* Instance = nullptr;
     };
     
 }

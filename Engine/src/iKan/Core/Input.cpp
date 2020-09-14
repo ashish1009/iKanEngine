@@ -27,5 +27,24 @@ namespace iKan {
         return status == GLFW_RELEASE;
     }
 
+    std::pair<float, float> Input::GetMousePosition()
+    {
+        double xpos, ypos;
+        glfwGetCursorPos(Application::Get().GetWindow().GetNativeWindow(), &xpos, &ypos);
+        
+        return { (float)xpos, (float)ypos };
+    }
+    
+    float Input::GetMouseX()
+    {
+        auto[x, y] = GetMousePosition();
+        return x;
+    }
+    
+    float Input::GetMouseY()
+    {
+        auto[x, y] = GetMousePosition();
+        return y;
+    }
 
 }

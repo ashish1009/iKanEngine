@@ -13,6 +13,10 @@ namespace iKan {
 
         static bool IsKeyReleased(KeyCode key);
         static bool IsMouseButtonReleased(MouseCode key);
+        
+        static std::pair<float, float> GetMousePosition();
+        static float GetMouseX();
+        static float GetMouseY();
 
     };
     

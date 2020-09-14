@@ -1,27 +1,46 @@
 #pragma once
+#include <Layers/Player.h>
 
 namespace iKan {
-    
-    class Player;
+
+    static const int X = 0;
+    static const int Y = 1;
     
     class PlayerMove : public ScriptableEntity
     {
     public:
+
         void OnUpdate(TimeStep timestep)
         {
-            auto& x = Player::Get()->GetPositionX();
-            float speed = Player::Get()->m_Speed;
+            auto player       = Player::Get();
+            auto [posX, posY] = player->GetPosition();
+            float speed       = player->m_Speed;
+                
+            if (m_Entity.GetScene()->CollisionDetection(m_Entity))
+            {
+                player->m_bIsLanded = true;
+            }
+            else
+            {
+                player->m_bIsLanded = false;
+            }
             
             if (Input::IsKeyPressed(Key::Right))
             {
                 PlayerRunTexture(timestep);
-                x += speed * timestep;
+                // TODO: Add end limit of player move
+                posX += speed * timestep;
             }
             if(Input::IsKeyPressed(Key::Left))
             {
                 PlayerRunTexture(timestep);
-                if (x >= 0)
-                    x -= speed * timestep;
+                if (posX >= 0)
+                    posX -= speed * timestep;
+            }
+            
+            if (!player->m_bIsLanded)
+            {
+                posY -= speed * timestep;
             }
         }
         

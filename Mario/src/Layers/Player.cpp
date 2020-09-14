@@ -15,7 +15,9 @@ namespace iKan {
 
         m_Entity = scene->CreateEntity("Player");
         m_Entity.AddComponent<SpriteRendererComponent>(m_StandSubtexture);
-        m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerMove>();
+        
+        m_Entity.AddComponent<NativeScriptComponent>();
+        m_Entity.GetComponent<NativeScriptComponent>().Bind<PlayerMove>();
     }
     
     bool Player::OnKeyPressed(KeyPressedEvent& event)

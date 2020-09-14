@@ -16,11 +16,12 @@ namespace iKan {
         }
         
     protected:
-        virtual void OnCreate() {}
+        virtual void OnCreate() { m_Created = true; }
         virtual void OnUpdate(TimeStep ts) {}
         virtual void OnDestroy() {}
         
-    private:
+    protected:
+        bool m_Created = false;
         Entity m_Entity;
         
         friend class Scene;

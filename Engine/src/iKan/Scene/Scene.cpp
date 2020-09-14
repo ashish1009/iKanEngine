@@ -21,14 +21,15 @@ namespace iKan {
     {
         m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
         {
-            if (!nsc.Instance)
+            for (auto script : nsc.Scripts)
             {
-                nsc.Instance = nsc.InstantiateScript();
-                nsc.Instance->m_Entity = { entity, this };
-                nsc.Instance->OnCreate();
+                if (!script->m_Created)
+                {
+                    script->m_Entity = { entity, this };
+                    script->OnCreate();
+                }
+                script->OnUpdate(ts);
             }
-            
-            nsc.Instance->OnUpdate(ts);
         });
         
         // Render 2D Sprites
@@ -77,6 +78,26 @@ namespace iKan {
                 cameraComponent.Camera.SetViewportSize(width, height);
         }
         
+    }
+    
+    bool Scene::CollisionDetection(Entity& currEntity)
+    {
+        auto currEntityTag = currEntity.GetComponent<TagComponent>().Tag;
+        auto currEntityPos = currEntity.GetComponent<TransformComponent>().Transform[3];
+        auto view = m_Registry.view<TransformComponent>();
+        for (auto& entity : view)
+        {
+            auto [transform, tag] = m_Registry.get<TransformComponent, TagComponent>(entity);
+            auto entityPos = transform.Transform[3];
+            if (currEntityTag != tag.Tag)
+            {
+                if(int32_t(currEntityPos[1]  - 1.5) == int32_t(entityPos[1]) && int32_t(currEntityPos[0]) == int32_t(entityPos[0]))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
 }
