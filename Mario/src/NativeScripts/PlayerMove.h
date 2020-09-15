@@ -9,12 +9,16 @@ namespace iKan {
 
         void OnUpdate(TimeStep timestep)
         {
-            auto player       = Player::Get();
-            auto [posX, posY] = player->GetPosition();
-            float speed       = player->m_Speed;
-            float fallSpeed   = 15.0f;
+            auto  player       = Player::Get();
+            auto  [posX, posY] = player->GetPosition();
+            float speed        = player->m_Speed;
+            float fallSpeed    = 15.0f;
+            bool  moveFlag     = true;
             
-            if (m_Entity.GetScene()->CollisionDetection(m_Entity, fallSpeed * timestep))
+            // TODO: argument both Transational speed and fall speed
+            Collisions collisionFlags = m_Entity.GetScene()->CollisionDetection(m_Entity, timestep);
+            
+            if (collisionFlags & CollisionBit::Down)
             {
                 player->m_bIsLanded = true;
             }
@@ -22,23 +26,34 @@ namespace iKan {
             {
                 player->m_bIsLanded = false;
             }
+            if (collisionFlags & CollisionBit::Right)
+            {
+                moveFlag = false;
+            }
+            else
+            {
+                moveFlag = true;
+            }
             
             if (Input::IsKeyPressed(Key::Right))
             {
                 PlayerRunTexture(timestep);
                 // TODO: Add end limit of player move
-                posX += speed * timestep;
+                if (moveFlag)
+                    posX += speed * timestep;
             }
             if(Input::IsKeyPressed(Key::Left))
             {
                 PlayerRunTexture(timestep);
                 if (posX >= 0)
-                    posX -= speed * timestep;
+//                    if (moveFlag)
+                        posX -= speed * timestep;
             }
             
             if (!player->m_bIsLanded)
             {
-                posY -= fallSpeed * timestep;
+//                IK_CORE_INFO("{0}", posY);
+//                posY -= fallSpeed * timestep;
             }
         }
         

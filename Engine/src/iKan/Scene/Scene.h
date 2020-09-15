@@ -3,11 +3,22 @@
 #include <entt.hpp>
 
 #include <iKan/Core/TimeStep.h>
+#include <iKan/Core/Core.h>
 
 #include <iKan/Renderer/Renderer2D.h>
 
 namespace iKan {
     
+    typedef int Collisions;
+    enum CollisionBit
+    {
+        NoCollision = 0,
+        Up          = BIT(0),
+        Down        = BIT(1),
+        Right       = BIT(2),
+        Left        = BIT(3)
+    };
+
     class Entity;
     
     class Scene
@@ -20,7 +31,7 @@ namespace iKan {
         void OnViewportResize(uint32_t width, uint32_t height);
 
         void OnUpdate(TimeStep ts);
-        bool CollisionDetection(Entity& entity, float speed);
+        Collisions CollisionDetection(Entity& entity, float speed);
         
     private:
         /* Container that contain all the entities */

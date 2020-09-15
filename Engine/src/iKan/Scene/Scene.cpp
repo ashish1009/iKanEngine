@@ -79,26 +79,39 @@ namespace iKan {
         }
         
     }
-    
-    bool Scene::CollisionDetection(Entity& currEntity, float speed)
+        
+    Collisions Scene::CollisionDetection(Entity& currEntity, float speed)
     {
+        Collisions result = CollisionBit::NoCollision;
         auto currEntityTag = currEntity.GetComponent<TagComponent>().Tag;
         auto currEntityPos = currEntity.GetComponent<TransformComponent>().Transform[3];
-        auto view = m_Registry.view<TransformComponent>();
+        auto view = m_Registry.view<TransformComponent, SpriteRendererComponent>();
         for (auto& entity : view)
         {
-            auto [transform, tag] = m_Registry.get<TransformComponent, TagComponent>(entity);
+            auto [transform, tag, sprite] = m_Registry.get<TransformComponent, TagComponent, SpriteRendererComponent>(entity);
             auto entityPos = transform.Transform[3];
             if (currEntityTag != tag.Tag)
             {
                 // Using floor here as y Position can be negative too
-                if(IK_FLOOR(currEntityPos[1]  - speed) == IK_FLOOR(entityPos[1]) && int32_t(currEntityPos[0]) == int32_t(entityPos[0]))
+                /* Up Down Collision*/
+                if (int32_t(currEntityPos[0]) == int32_t(entityPos[0]))
                 {
-                    return true;
+                    if(IK_FLOOR(currEntityPos[1] - (speed * 15.0f)) == IK_FLOOR(entityPos[1]))
+                        result |= CollisionBit::Down;
                 }
+                
+                /* Right Left Collision */
+                if (IK_FLOOR(currEntityPos[1]) == IK_FLOOR(entityPos[1]))
+                {
+                    auto spriteSize      = sprite.SubTexComp->GetSpriteSize();
+                    float nextEntityDiff = (spriteSize.x == 1.0f) ? 1.0f : 1.5f;
+                    if (int32_t(currEntityPos[0] + nextEntityDiff + (10.0f * speed)) == int32_t(entityPos[0]))
+                        result |= CollisionBit::Right;
+                }
+
             }
         }
-        return false;
+        return result;
     }
     
 }
