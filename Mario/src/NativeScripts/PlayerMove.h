@@ -2,9 +2,6 @@
 #include <Layers/Player.h>
 
 namespace iKan {
-
-    static const int X = 0;
-    static const int Y = 1;
     
     class PlayerMove : public ScriptableEntity
     {
@@ -15,8 +12,9 @@ namespace iKan {
             auto player       = Player::Get();
             auto [posX, posY] = player->GetPosition();
             float speed       = player->m_Speed;
-                
-            if (m_Entity.GetScene()->CollisionDetection(m_Entity))
+            float fallSpeed   = 15.0f;
+            
+            if (m_Entity.GetScene()->CollisionDetection(m_Entity, fallSpeed * timestep))
             {
                 player->m_bIsLanded = true;
             }
@@ -40,7 +38,7 @@ namespace iKan {
             
             if (!player->m_bIsLanded)
             {
-                posY -= speed * timestep;
+                posY -= fallSpeed * timestep;
             }
         }
         

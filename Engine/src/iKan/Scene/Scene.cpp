@@ -80,7 +80,7 @@ namespace iKan {
         
     }
     
-    bool Scene::CollisionDetection(Entity& currEntity)
+    bool Scene::CollisionDetection(Entity& currEntity, float speed)
     {
         auto currEntityTag = currEntity.GetComponent<TagComponent>().Tag;
         auto currEntityPos = currEntity.GetComponent<TransformComponent>().Transform[3];
@@ -91,7 +91,8 @@ namespace iKan {
             auto entityPos = transform.Transform[3];
             if (currEntityTag != tag.Tag)
             {
-                if(int32_t(currEntityPos[1]  - 1.5) == int32_t(entityPos[1]) && int32_t(currEntityPos[0]) == int32_t(entityPos[0]))
+                // Using floor here as y Position can be negative too
+                if(IK_FLOOR(currEntityPos[1]  - speed) == IK_FLOOR(entityPos[1]) && int32_t(currEntityPos[0]) == int32_t(entityPos[0]))
                 {
                     return true;
                 }
