@@ -17,7 +17,7 @@ namespace iKan {
             
             auto player  = Player::Get();
             auto playerX = player->GetPositionX();
-            float speed  = player->GetSpeed();
+            float speed  = player->GetTranslationSpeed();
             
             if (Input::IsKeyPressed(Key::Left) && x > CAMERA_START)
                 x -= speed * ts;

@@ -26,7 +26,9 @@ namespace iKan {
         
         void ImGuiRender();
         
-        float GetSpeed() const { return m_Speed; }
+        float GetTranslationSpeed() const { return m_TranslationSpeed; }
+        float GetLandingSpeed() const { return m_LandingSpeed; }
+        
         std::pair<float&, float&> GetPosition()
         {
             auto& position = m_Entity.GetComponent<TransformComponent>().Transform[3];
@@ -55,12 +57,14 @@ namespace iKan {
         std::shared_ptr<SubTexture> m_StandSubtexture;
         std::shared_ptr<Texture> m_SpriteSheet;
         
-        bool m_bIsLanded = false;
-        bool m_bIsSideCollision = false;
+        bool m_bIsLanded         = false;
+        bool m_bIsRightCollision = false;
+        bool m_bIsLeftCollision  = false;
         
-        float m_Color   = static_cast<float>(PlayerColor::BlueOrange);
-        float m_MoveIdx = 0.0f;
-        float m_Speed   = 10.0f;
+        float m_Color            = static_cast<float>(PlayerColor::BlueOrange);
+        float m_MoveIdx          = 0.0f;
+        float m_TranslationSpeed = 1.0f;
+        float m_LandingSpeed     = 15.0f;
         
         friend class PlayerMove;
     };

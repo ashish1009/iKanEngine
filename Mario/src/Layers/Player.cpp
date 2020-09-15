@@ -14,7 +14,10 @@ namespace iKan {
         m_StandSubtexture = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, m_Color });
 
         m_Entity = scene->CreateEntity("Player");
+        
         m_Entity.GetComponent<TransformComponent>().Transform[3][1] = 10.0f;
+        m_Entity.GetComponent<TransformComponent>().Transform[3][0] = 3.0f;
+        
         m_Entity.AddComponent<SpriteRendererComponent>(m_StandSubtexture);
         
         m_Entity.AddComponent<NativeScriptComponent>();
@@ -47,13 +50,14 @@ namespace iKan {
     
     void Player::ImGuiRender()
     {
-        ImGuiAPI::Counter("Player Speed", m_Speed);
+        ImGuiAPI::Counter("Player Speed", m_TranslationSpeed);
         
         if (ImGui::Button("Button"))
         {
             auto& pos = m_Entity.GetComponent<TransformComponent>().Transform[3];
-            pos[0] = 0.0f;
-            pos[1] = 10.0f;
+            // TODO: FIX THIS Debugging only
+            pos[0] = 3.0f;
+            pos[1] = 15.0f;
         }
     }
     

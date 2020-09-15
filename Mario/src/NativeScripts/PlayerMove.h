@@ -11,49 +11,30 @@ namespace iKan {
         {
             auto  player       = Player::Get();
             auto  [posX, posY] = player->GetPosition();
-            float speed        = player->m_Speed;
-            float fallSpeed    = 15.0f;
-            bool  moveFlag     = true;
             
             // TODO: argument both Transational speed and fall speed
             Collisions collisionFlags = m_Entity.GetScene()->CollisionDetection(m_Entity, timestep);
             
-            if (collisionFlags & CollisionBit::Down)
-            {
-                player->m_bIsLanded = true;
-            }
-            else
-            {
-                player->m_bIsLanded = false;
-            }
-            if (collisionFlags & CollisionBit::Right)
-            {
-                moveFlag = false;
-            }
-            else
-            {
-                moveFlag = true;
-            }
+            player->m_bIsLanded         = (collisionFlags & CollisionBit::Down);
+            player->m_bIsRightCollision = (collisionFlags & CollisionBit::Right);
             
             if (Input::IsKeyPressed(Key::Right))
             {
                 PlayerRunTexture(timestep);
                 // TODO: Add end limit of player move
-                if (moveFlag)
-                    posX += speed * timestep;
+                if (!player->m_bIsRightCollision)
+                    posX += player->m_TranslationSpeed * timestep;
             }
             if(Input::IsKeyPressed(Key::Left))
             {
                 PlayerRunTexture(timestep);
-                if (posX >= 0)
-//                    if (moveFlag)
-                        posX -= speed * timestep;
+                if (posX >= 0 && !player->m_bIsLeftCollision)
+                    posX -= player->m_TranslationSpeed * timestep;
             }
             
             if (!player->m_bIsLanded)
             {
-//                IK_CORE_INFO("{0}", posY);
-//                posY -= fallSpeed * timestep;
+                posY -= player->m_LandingSpeed * timestep;
             }
         }
         

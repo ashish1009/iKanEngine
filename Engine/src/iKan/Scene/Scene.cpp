@@ -83,31 +83,32 @@ namespace iKan {
     Collisions Scene::CollisionDetection(Entity& currEntity, float speed)
     {
         Collisions result = CollisionBit::NoCollision;
+        
         auto currEntityTag = currEntity.GetComponent<TagComponent>().Tag;
         auto currEntityPos = currEntity.GetComponent<TransformComponent>().Transform[3];
+        glm::vec2 position = { currEntityPos[0], currEntityPos[1] };
+    
         auto view = m_Registry.view<TransformComponent, SpriteRendererComponent>();
         for (auto& entity : view)
         {
             auto [transform, tag, sprite] = m_Registry.get<TransformComponent, TagComponent, SpriteRendererComponent>(entity);
-            auto entityPos = transform.Transform[3];
+            glm::vec2 entitySpriteSize    = sprite.SubTexComp->GetSpriteSize();
+            glm::vec2 entityPos           = { transform.Transform[3][0], transform.Transform[3][1] };
+            
             if (currEntityTag != tag.Tag)
             {
-                // Using floor here as y Position can be negative too
                 /* Up Down Collision*/
-                if (int32_t(currEntityPos[0]) == int32_t(entityPos[0]))
-                {
-                    if(IK_FLOOR(currEntityPos[1] - (speed * 15.0f)) == IK_FLOOR(entityPos[1]))
+                float xCollDiff = 13.0f/16.0f + ((entitySpriteSize.x == 1.0f) ? 0.0f : 0.5f);
+                if ((position.x + xCollDiff) >= entityPos.x && (position.x - xCollDiff) <= entityPos.x)
+                    if((position.y - speed * 15.0f <= entityPos.y + 1) && (position.y - speed * 15.0f > entityPos.y))
                         result |= CollisionBit::Down;
-                }
                 
                 /* Right Left Collision */
-                if (IK_FLOOR(currEntityPos[1]) == IK_FLOOR(entityPos[1]))
-                {
-                    auto spriteSize      = sprite.SubTexComp->GetSpriteSize();
-                    float nextEntityDiff = (spriteSize.x == 1.0f) ? 1.0f : 1.5f;
-                    if (int32_t(currEntityPos[0] + nextEntityDiff + (10.0f * speed)) == int32_t(entityPos[0]))
+                float yCollDiff  = 13.0f/16.0f;
+                float nextEntityDiff = (entitySpriteSize.x == 1.0f) ? 1.0f : 1.5f;
+                if ((position.y + yCollDiff) >= entityPos.y && (position.y - yCollDiff) <= entityPos.y)
+                    if ((position.x + speed * 10.0f <= entityPos.x) && (position.x + speed * 10.0f > entityPos.x - nextEntityDiff))
                         result |= CollisionBit::Right;
-                }
 
             }
         }
