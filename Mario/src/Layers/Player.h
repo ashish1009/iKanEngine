@@ -63,8 +63,9 @@ namespace iKan {
         
         float m_Color            = static_cast<float>(PlayerColor::BlueOrange);
         float m_MoveIdx          = 0.0f;
-        float m_TranslationSpeed = 1.0f;
+        float m_TranslationSpeed = 10.0f;
         float m_LandingSpeed     = 15.0f;
+        float m_JumpingSpeed     = 10.0f;
         
         friend class PlayerMove;
     };

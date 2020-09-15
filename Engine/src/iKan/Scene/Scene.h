@@ -24,6 +24,15 @@ namespace iKan {
     class Scene
     {
     public:
+        struct Speeds
+        {
+            float Up = 0.0f, Down = 0.0f, Right = 0.0f, Left = 0.0f;
+            
+            Speeds(float up, float down, float right, float left)
+            : Up(up), Down(down), Right(right), Left(left) {}
+        };
+        
+    public:
         Scene() = default;
         ~Scene() = default;
         
@@ -31,7 +40,7 @@ namespace iKan {
         void OnViewportResize(uint32_t width, uint32_t height);
 
         void OnUpdate(TimeStep ts);
-        Collisions CollisionDetection(Entity& entity, float speed);
+        Collisions CollisionDetection(Entity& entity, Speeds speeds);
         
     private:
         /* Container that contain all the entities */

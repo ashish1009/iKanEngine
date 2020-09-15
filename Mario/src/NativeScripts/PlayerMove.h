@@ -12,29 +12,32 @@ namespace iKan {
             auto  player       = Player::Get();
             auto  [posX, posY] = player->GetPosition();
             
+            float translationSpeed = player->m_TranslationSpeed * timestep;
+            float landingSpeed = player->m_LandingSpeed * timestep;
+            float jumpingSpeed = player->m_JumpingSpeed * timestep;
+            
             // TODO: argument both Transational speed and fall speed
-            Collisions collisionFlags = m_Entity.GetScene()->CollisionDetection(m_Entity, timestep);
+            Collisions collisionFlags = m_Entity.GetScene()->CollisionDetection(m_Entity, Scene::Speeds(jumpingSpeed, landingSpeed, translationSpeed, translationSpeed));
             
             player->m_bIsLanded         = (collisionFlags & CollisionBit::Down);
             player->m_bIsRightCollision = (collisionFlags & CollisionBit::Right);
+            player->m_bIsLeftCollision  = (collisionFlags & CollisionBit::Left);
             
+            if (!player->m_bIsLanded)
+                posY -= landingSpeed;
+
             if (Input::IsKeyPressed(Key::Right))
             {
                 PlayerRunTexture(timestep);
                 // TODO: Add end limit of player move
                 if (!player->m_bIsRightCollision)
-                    posX += player->m_TranslationSpeed * timestep;
+                    posX += translationSpeed;
             }
             if(Input::IsKeyPressed(Key::Left))
             {
                 PlayerRunTexture(timestep);
                 if (posX >= 0 && !player->m_bIsLeftCollision)
-                    posX -= player->m_TranslationSpeed * timestep;
-            }
-            
-            if (!player->m_bIsLanded)
-            {
-                posY -= player->m_LandingSpeed * timestep;
+                    posX -= translationSpeed;
             }
         }
         

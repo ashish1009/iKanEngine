@@ -80,14 +80,31 @@ namespace iKan {
         
     }
         
-    Collisions Scene::CollisionDetection(Entity& currEntity, float speed)
+    Collisions Scene::CollisionDetection(Entity& ce, Speeds speeds)
     {
+        /* ce: Current Entity is cosidered as the bock which is moving and in respect of which collision needs to be detected*/
+        
+        // to store the Results of Collision types in Bits
         Collisions result = CollisionBit::NoCollision;
         
-        auto currEntityTag = currEntity.GetComponent<TagComponent>().Tag;
-        auto currEntityPos = currEntity.GetComponent<TransformComponent>().Transform[3];
-        glm::vec2 position = { currEntityPos[0], currEntityPos[1] };
+        // pixel of current Entity that should be colloided with the Entity to consider valid Collision
+        constexpr float pixelCollision = 3.0f;
+
+        // Extracting Tag and Position of Current Enitity
+        std::string ceTag = ce.GetComponent<TagComponent>().Tag;
+        glm::vec2   cePos = { ce.GetComponent<TransformComponent>().Transform[3][0], ce.GetComponent<TransformComponent>().Transform[3][1] };
     
+        // Extracting the cell size of Current Entity
+        auto ceSprite        = ce.GetComponent<SpriteRendererComponent>();
+        glm::vec2 ceCellSize = { 16.0f, 16.0f };
+        
+        if (auto subTexComp = ceSprite.SubTexComp)
+            ceCellSize = subTexComp->GetCellSize();
+        
+        // fraction of block(in decimal) that should be considered as valid collision : ex. 0.1875 part of block should be colloided for now
+        // this fraction is depending on the current entity Cell size which is 16.0 x 16.0 by default
+        glm::vec2 fractionCollision = { (ceCellSize.x - pixelCollision) / ceCellSize.x, (ceCellSize.y - pixelCollision) / ceCellSize.y };
+        
         auto view = m_Registry.view<TransformComponent, SpriteRendererComponent>();
         for (auto& entity : view)
         {
@@ -95,20 +112,40 @@ namespace iKan {
             glm::vec2 entitySpriteSize    = sprite.SubTexComp->GetSpriteSize();
             glm::vec2 entityPos           = { transform.Transform[3][0], transform.Transform[3][1] };
             
-            if (currEntityTag != tag.Tag)
+            if (ceTag != tag.Tag)
             {
                 /* Up Down Collision*/
-                float xCollDiff = 13.0f/16.0f + ((entitySpriteSize.x == 1.0f) ? 0.0f : 0.5f);
-                if ((position.x + xCollDiff) >= entityPos.x && (position.x - xCollDiff) <= entityPos.x)
-                    if((position.y - speed * 15.0f <= entityPos.y + 1) && (position.y - speed * 15.0f > entityPos.y))
+                // if Entity sprite size is 2 (taking are of 2 block and cosider as one entity) then add 0.5 on both side of collision fraction
+                // TODO: for other size i.e. 3, 4, ... changes are required to be done
+                if (float xCollDiff = fractionCollision.x + ((entitySpriteSize.x == 2.0f) ? 0.5f : 0.0f);
+                    (cePos.x + xCollDiff) >= entityPos.x && (cePos.x - xCollDiff) <= entityPos.x)
+                {
+                    // if the next Y position of current entity is coilloiding with the entity which is just bellow the curr entity
+                    if((cePos.y - speeds.Down <= entityPos.y + 1) && (cePos.y - speeds.Down > entityPos.y))
                         result |= CollisionBit::Down;
+                }
                 
                 /* Right Left Collision */
-                float yCollDiff  = 13.0f/16.0f;
-                float nextEntityDiff = (entitySpriteSize.x == 1.0f) ? 1.0f : 1.5f;
-                if ((position.y + yCollDiff) >= entityPos.y && (position.y - yCollDiff) <= entityPos.y)
-                    if ((position.x + speed * 10.0f <= entityPos.x) && (position.x + speed * 10.0f > entityPos.x - nextEntityDiff))
+                if (float yCollDiff = fractionCollision.y;
+                    (cePos.y + yCollDiff) >= entityPos.y && (cePos.y - yCollDiff) <= entityPos.y)
+                {
+                    /* Right Collision */
+                    // if the next X position of current entity is coilloiding with the entity which is just Right of the curr entity
+                    if (float nextEntityDiff = (entitySpriteSize.x == 1.0f) ? 1.0f : 1.5f;
+                        (cePos.x + speeds.Right <= entityPos.x) && (cePos.x + speeds.Right > entityPos.x - nextEntityDiff))
+                    {
                         result |= CollisionBit::Right;
+                    }
+                    
+                    /* Right Collision */
+                    // if the next X position of current entity is coilloiding with the entity which is just Left of the curr entity
+                    if (float nextEntityDiff = (entitySpriteSize.x == 1.0f) ? 1.0f : 1.5f;
+                        (cePos.x - speeds.Right <= entityPos.x + nextEntityDiff) && (cePos.x - speeds.Right > entityPos.x))
+                    {
+                        result |= CollisionBit::Left;
+                    }
+
+                }
 
             }
         }

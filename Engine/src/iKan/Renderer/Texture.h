@@ -24,11 +24,12 @@ namespace iKan {
     class SubTexture
     {
     public:
-        SubTexture(const std::shared_ptr<Texture>& texture, const glm::vec2& min, const glm::vec2& max, const glm::vec2& spriteSize);
+        SubTexture(const std::shared_ptr<Texture>& texture, const glm::vec2& min, const glm::vec2& max, const glm::vec2& spriteSize = {1.0f, 1.0f}, const glm::vec2& cellSize = {16.0f, 16.0f});
         
         const std::shared_ptr<Texture> GetTeture() const { return m_Texture; }
         const glm::vec2* GetTexCoord() const { return m_TexCoord; }
         const glm::vec2& GetSpriteSize() const { return m_SpriteSize; }
+        const glm::vec2& GetCellSize() const { return m_CellSize; }
         
         /* By Default Tile size is 16 x 16 */
         static std::shared_ptr<SubTexture> CreateFromCoords(const std::shared_ptr<Texture>& texture, const glm::vec2& coords, const glm::vec2& spriteSize = {1.0f, 1.0f}, const glm::vec2& cellSize = {16.0f, 16.0f});
@@ -37,6 +38,7 @@ namespace iKan {
         std::shared_ptr<Texture> m_Texture;
         glm::vec2                m_TexCoord[4];
         glm::vec2                m_SpriteSize;
+        glm::vec2                m_CellSize;
     };
 
     
