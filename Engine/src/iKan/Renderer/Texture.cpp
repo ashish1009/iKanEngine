@@ -30,8 +30,8 @@ namespace iKan {
         return nullptr;
     }
     
-    SubTexture::SubTexture(const std::shared_ptr<Texture>& texture, const glm::vec2& min, const glm::vec2& max, const glm::vec2& spriteSize, const glm::vec2& cellSize)
-    : m_Texture(texture), m_SpriteSize(spriteSize), m_CellSize(cellSize)
+    SubTexture::SubTexture(const std::shared_ptr<Texture>& texture, const glm::vec2& min, const glm::vec2& max, const glm::vec2& spriteSize, const glm::vec2& cellSize, const glm::vec2& coords)
+    : m_Texture(texture), m_SpriteSize(spriteSize), m_CellSize(cellSize), m_Coords(coords)
     {
         m_TexCoord[0] = {min.x, min.y};
         m_TexCoord[1] = {max.x, min.y};
@@ -43,7 +43,7 @@ namespace iKan {
     {
         glm::vec2 min = { (coords.x * cellSize.x) / texture->GetWidth(), (coords.y * cellSize.y) / texture->GetHeight() };
         glm::vec2 max = { ((coords.x + spriteSize.x) * cellSize.x) / texture->GetWidth(), ((coords.y + spriteSize.y) * cellSize.y) / texture->GetHeight() };
-        return std::make_shared<SubTexture>(texture, min, max, spriteSize, cellSize);
+        return std::make_shared<SubTexture>(texture, min, max, spriteSize, cellSize, coords);
     }
     
 }
