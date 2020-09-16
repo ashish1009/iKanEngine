@@ -15,7 +15,7 @@ namespace iKan {
     void EntityLayer::OnAttach()
     {
         // TODO: Set the position of Shader later
-        Renderer2D::AddShader("../../Mario/assets/shaders/Shader.glsl");
+        Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
         
         FramebufferSpecification fbSpec;
         fbSpec.Width  = 1280;

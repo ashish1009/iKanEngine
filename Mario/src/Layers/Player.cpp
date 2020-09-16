@@ -50,15 +50,23 @@ namespace iKan {
     
     void Player::ImGuiRender()
     {
-        ImGuiAPI::Counter("Player Speed", m_TranslationSpeed);
-        
-        if (ImGui::Button("Button"))
+        if (ImGui::CollapsingHeader("Player"))
         {
-            auto& pos = m_Entity.GetComponent<TransformComponent>().Transform[3];
-            // TODO: FIX THIS Debugging only
-            pos[0] = 3.0f;
-            pos[1] = 15.0f;
+            if (ImGui::TreeNode("Speed"))
+            {
+                ImGuiAPI::Counter("Player Speed", m_TranslationSpeed);
+                ImGui::TreePop();
+            }
+            // TODO: Move it outside as it should reset the Game
+            if (ImGui::Button("Reset"))
+            {
+                auto& pos = m_Entity.GetComponent<TransformComponent>().Transform[3];
+                // TODO: FIX THIS Debugging only
+                pos[0] = 3.0f;
+                pos[1] = 15.0f;
+            }
         }
+        
     }
     
 }

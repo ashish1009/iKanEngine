@@ -71,7 +71,6 @@ namespace iKan {
             miscFlags |= ImGuiColorEditFlags_NoSidePreview;
         
         ImGui::ColorPicker4("Back Ground##4", (float*)&color, miscFlags, refColor ? &refColorValue.x : NULL);
-        ImGui::TreePop();
         
         colorRef = { color.x, color.y, color.z, color.w };
     }
