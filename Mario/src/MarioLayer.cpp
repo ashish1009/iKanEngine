@@ -32,6 +32,7 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
         
+        // Creating all the entities
         m_Player = Player::Create(m_Scene);
         Background::Init(m_Scene);
         MarioCamera::Init(m_Scene);
@@ -61,6 +62,7 @@ namespace iKan {
                                  
     void MarioLayer::OnUpdate(TimeStep timeStep)
     {
+        // If resize the window call the update the Scene View port and Frame buffer should be resized
         if (FramebufferSpecification spec = m_FrameBuffer->GetSpecification();
             m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
             (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))

@@ -68,8 +68,8 @@ namespace iKan {
         {
             for (uint32_t x = 0; x < mapWidth; x++)
             {
-                char tileType = s_MapTiles[x + y * mapWidth];
-                if (s_TextureMap.find(tileType) != s_TextureMap.end())
+                if (char tileType = s_MapTiles[x + y * mapWidth];
+                    s_TextureMap.find(tileType) != s_TextureMap.end())
                 {
                     std::shared_ptr<SubTexture> subTexture = s_TextureMap[tileType];
                     

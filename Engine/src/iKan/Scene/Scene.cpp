@@ -8,6 +8,7 @@ namespace iKan {
     
     Entity Scene::CreateEntity(const std::string& name)
     {
+        // Creating the Entity
         Entity entity = { m_Registry.create(), this };
         entity.AddComponent<TransformComponent>();
         
@@ -19,10 +20,13 @@ namespace iKan {
     
     void Scene::OnUpdate(TimeStep ts)
     {
+        // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
         m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
         {
+            // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
             for (auto script : nsc.Scripts)
             {
+                // If a script is not created before then create the script and update the function
                 if (!script->m_Created)
                 {
                     script->m_Entity = { entity, this };
@@ -36,9 +40,11 @@ namespace iKan {
         Camera* mainCamera         = nullptr;
         glm::mat4* cameraTransform = nullptr;
         
+        // Get the camera component and its transform matrix to Beine the Scene
         auto view = m_Registry.view<TransformComponent, CameraComponent>();
         for (auto entity : view)
         {
+            // As we can have multiple cameras so pic the first camera that is set to primary and rendere acc to its properties
             const auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
             if (camera.Primary)
             {
@@ -61,6 +67,10 @@ namespace iKan {
                     Renderer2D::DrawQuad(transform, sprite.Color);
             }
             Renderer2D::EndScene();
+        }
+        else
+        {
+            IK_CORE_WARN("No Camera is Binded to the Scene or any one of themis not set to primary !!! ");
         }
     }
     
@@ -137,7 +147,7 @@ namespace iKan {
                         result |= CollisionBit::Right;
                     }
                     
-                    /* Right Collision */
+                    /* Left Collision */
                     // if the next X position of current entity is coilloiding with the entity which is just Left of the curr entity
                     if (float nextEntityDiff = (entitySpriteSize.x == 1.0f) ? 1.0f : 1.5f;
                         (cePos.x - speeds.Right <= entityPos.x + nextEntityDiff) && (cePos.x - speeds.Right > entityPos.x))

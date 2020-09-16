@@ -14,9 +14,11 @@ namespace iKan {
         IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         s_Instance = this;
         
+        // Creating Window from Applicaition
         m_Window = std::make_unique<Window>(WindowProp(title, widht, height));
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
+        // Initialising the Renderer
         RenderCommand::Depth(State::Enable);
         RenderCommand::Blend(State::Enable);
         Renderer2D::Init();
@@ -53,14 +55,17 @@ namespace iKan {
             float deltaTime     = currentFrame - m_LastFrame;
             m_LastFrame         = currentFrame;
             
+            // Updating all the attached layer
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate(deltaTime);
             
+            // Rendering ImGui for all the layers
             m_ImguiLayer->Begin();
             for (Layer* layer : m_LayerStack)
                 layer->OnImguiRender();
             m_ImguiLayer->End();
                 
+            // Window Update to refresh
             m_Window->OnUpdate();
         }
     }
@@ -84,6 +89,7 @@ namespace iKan {
         dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(Application::OnWindowResize));
         dispatcher.Dispatch<WindowCloseEvent>(IK_BIND_EVENT_FN(Application::OnWindowClose));
 
+        // Event callpacks for all layers
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); it++)
         {
             if (event.Handled)

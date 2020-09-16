@@ -81,7 +81,7 @@ namespace iKan {
     
     void OpenGlTexture::Unbind() const
     {
-        
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
 
 }
