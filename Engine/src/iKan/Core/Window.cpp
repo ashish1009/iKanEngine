@@ -3,11 +3,18 @@
 #include <iKan/Core/KeyCode.h>
 #include <iKan/Core/MouseCode.h>
 
-#include <iKan/Events/ApplicationEvents.h>
-#include <iKan/Events/KeyEvents.h>
-#include <iKan/Events/MouseEvents.h>
+#include <iKan/Core/Events/ApplicationEvents.h>
+#include <iKan/Core/Events/KeyEvents.h>
+#include <iKan/Core/Events/MouseEvents.h>
 
 namespace iKan {
+    
+    static void GLFWErrorCallback(int error, const char* description)
+    {
+        IK_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
+    }
+    
+    static bool s_GLFWInitialized = false;
     
     Window::Window(const WindowProp& prop)
     {
@@ -20,10 +27,16 @@ namespace iKan {
         m_Data.Height = prop.Height;
         m_Data.Title  = prop.Title;
         
-        // Initialize the GLFW
-        bool success = glfwInit();
-        IK_CORE_ASSERT(success, "Can not initialize the GLFW");
-        
+        if (!s_GLFWInitialized)
+        {
+            // TODO: glfwTerminate on system shutdown
+            int success = glfwInit();
+            IK_CORE_ASSERT(success, "Could not intialize GLFW!");
+            glfwSetErrorCallback(GLFWErrorCallback);
+            
+            s_GLFWInitialized = true;
+        }
+
         // Configure GLFW
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -149,6 +162,23 @@ namespace iKan {
             data.EventFunc(event);
 
         });
+        
+        m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow]      = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_TextInput]  = glfwCreateStandardCursor(GLFW_IBEAM_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeAll]  = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);   // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNS]   = glfwCreateStandardCursor(GLFW_VRESIZE_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeEW]   = glfwCreateStandardCursor(GLFW_HRESIZE_CURSOR);
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNESW] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_ResizeNWSE] = glfwCreateStandardCursor(GLFW_ARROW_CURSOR);  // FIXME: GLFW doesn't have this.
+        m_ImGuiMouseCursors[ImGuiMouseCursor_Hand]       = glfwCreateStandardCursor(GLFW_HAND_CURSOR);
+        
+        // Update window size to actual size
+        {
+            int width, height;
+            glfwGetWindowSize(m_Window, &width, &height);
+            m_Data.Width = width;
+            m_Data.Height= height;
+        }
     }
     
     Window::~Window()
@@ -160,6 +190,14 @@ namespace iKan {
     {
         m_Context->SwapBuffers();
         glfwPollEvents();
+        
+        ImGuiMouseCursor imgui_cursor = ImGui::GetMouseCursor();
+        glfwSetCursor(m_Window, m_ImGuiMouseCursors[imgui_cursor] ? m_ImGuiMouseCursors[imgui_cursor] : m_ImGuiMouseCursors[ImGuiMouseCursor_Arrow]);
+        glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        
+        float time      = glfwGetTime();
+//        float delta     = time - m_LastFrameTime;
+        m_LastFrameTime = time;
     }
     
     void Window::Shutdown()
@@ -169,5 +207,28 @@ namespace iKan {
         IK_CORE_INFO("Window : {0} Destroyed", m_Data.Title);
         glfwTerminate();
     }
+    
+    inline std::pair<float, float> Window::GetWindowPos() const
+    {
+        int x, y;
+        glfwGetWindowPos(m_Window, &x, &y);
+        return { x, y };
+    }
+    
+    void Window::SetVSync(bool enabled)
+    {
+        if (enabled)
+            glfwSwapInterval(1);
+        else
+            glfwSwapInterval(0);
+        
+        m_Data.VSync = enabled;
+    }
+    
+    bool Window::IsVSync() const
+    {
+        return m_Data.VSync;
+    }
+
     
 }

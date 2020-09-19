@@ -1,8 +1,8 @@
 #pragma once
 
-#include <iKan/Events/KeyEvents.h>
-#include <iKan/Events/MouseEvents.h>
-#include <iKan/Events/ApplicationEvents.h>
+#include <iKan/Core/Events/KeyEvents.h>
+#include <iKan/Core/Events/MouseEvents.h>
+#include <iKan/Core/Events/ApplicationEvents.h>
 
 #include <iKan/Core/Window.h>
 #include <iKan/Core/LayerStack.h>

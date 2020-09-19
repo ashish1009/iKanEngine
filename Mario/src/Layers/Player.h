@@ -55,13 +55,13 @@ namespace iKan {
         
         Entity m_Entity;
         std::shared_ptr<SubTexture> m_StandSubtexture;
-        std::shared_ptr<Texture> m_SpriteSheet;
+        std::shared_ptr<Texture>    m_SpriteSheet;
         
         bool m_bIsLanded         = false;
         bool m_bIsRightCollision = false;
         bool m_bIsLeftCollision  = false;
         
-        float m_Color            = static_cast<float>(PlayerColor::BlueOrange);
+        float m_ColorIndex       = static_cast<float>(PlayerColor::Basic) + 1.0f;
         float m_MoveIdx          = 0.0f;
         float m_TranslationSpeed = 10.0f;
         float m_LandingSpeed     = 15.0f;

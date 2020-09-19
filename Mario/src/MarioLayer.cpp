@@ -51,6 +51,7 @@ namespace iKan {
     
     bool MarioLayer::OnKeyPressed(KeyPressedEvent& event)
     {
+        m_Player->OnKeyPressed(event);
         return false;
     }
     

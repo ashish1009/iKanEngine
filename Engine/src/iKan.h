@@ -9,10 +9,10 @@
 #include <iKan/Core/Layer.h>
 #include <iKan/Core/TimeStep.h>
 
-#include <iKan/Events/Events.h>
-#include <iKan/Events/ApplicationEvents.h>
-#include <iKan/Events/KeyEvents.h>
-#include <iKan/Events/MouseEvents.h>
+#include <iKan/Core/Events/Events.h>
+#include <iKan/Core/Events/ApplicationEvents.h>
+#include <iKan/Core/Events/KeyEvents.h>
+#include <iKan/Core/Events/MouseEvents.h>
 
 #include <iKan/Renderer/RenderCommand.h>
 #include <iKan/Renderer/VertexArray.h>
