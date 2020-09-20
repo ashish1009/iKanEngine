@@ -15,7 +15,7 @@ namespace iKan {
         static void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count = 0) { s_RenderAPI->DrawIndexed(vertexArray, count); }
         
     private:
-        static std::unique_ptr<RenderAPI> s_RenderAPI;
+        static Scope<RenderAPI> s_RenderAPI;
     };
     
 }

@@ -15,7 +15,7 @@ namespace iKan {
         s_Instance = this;
         
         // Creating Window from Applicaition
-        m_Window = std::make_unique<Window>(WindowProp(title, widht, height));
+        m_Window = CreateScope<Window>(WindowProp(title, widht, height));
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
         // Initialising the Renderer

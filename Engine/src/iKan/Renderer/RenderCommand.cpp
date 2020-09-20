@@ -2,6 +2,6 @@
 
 namespace iKan {
     
-    std::unique_ptr<RenderAPI> RenderCommand::s_RenderAPI = RenderAPI::Create();
+    Scope<RenderAPI> RenderCommand::s_RenderAPI = RenderAPI::Create();
     
 }

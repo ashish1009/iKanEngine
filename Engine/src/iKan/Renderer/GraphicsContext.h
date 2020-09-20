@@ -10,7 +10,7 @@ namespace iKan {
         virtual void Init() = 0;
         virtual void SwapBuffers() = 0;
         
-        static std::unique_ptr<GraphicsContext> CreateContext(GLFWwindow* window);
+        static Scope<GraphicsContext> CreateContext(GLFWwindow* window);
     };
     
 }

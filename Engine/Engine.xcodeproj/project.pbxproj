@@ -271,7 +271,6 @@
 				B24FF88E24ED1A7900884EDA /* src */,
 				B213761C24ED4E6000A14055 /* vendor */,
 				B213760C24ED286C00A14055 /* Dependencies */,
-				B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */,
 				B24FF88824ED1A3C00884EDA /* Products */,
 				B21375ED24ED274A00A14055 /* Frameworks */,
 			);
@@ -288,9 +287,10 @@
 		B24FF88E24ED1A7900884EDA /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B213761924ED2AA700A14055 /* iKan.h */,
+				B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */,
 				B24FF88F24ED1A8000884EDA /* iKan */,
 				B2F0FBF924F80AE60004443A /* Platform */,
-				B213761924ED2AA700A14055 /* iKan.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -298,10 +298,11 @@
 		B24FF88F24ED1A8000884EDA /* iKan */ = {
 			isa = PBXGroup;
 			children = (
-				B2CDABE02501008D008C6BDF /* Camera */,
-				B2CDABD52500ED96008C6BDF /* Scene */,
+				B2752D1524FAC1AF005EF655 /* EntryPoint.h */,
 				B2F0FC0124F80E870004443A /* Renderer */,
 				B24FF89024ED1A9E00884EDA /* Core */,
+				B2CDABE02501008D008C6BDF /* Camera */,
+				B2CDABD52500ED96008C6BDF /* Scene */,
 				B23D4E7724F829740049238A /* Events */,
 				B2137A5124ED78FA00A14055 /* ImGui */,
 			);
@@ -313,7 +314,6 @@
 			children = (
 				B2752D1724FAC201005EF655 /* Application.cpp */,
 				B2752D1824FAC201005EF655 /* Application.h */,
-				B2752D1524FAC1AF005EF655 /* EntryPoint.h */,
 				B24FF89124ED1AAB00884EDA /* Log.cpp */,
 				B24FF89224ED1AAB00884EDA /* Log.h */,
 				B213761724ED29DF00A14055 /* Core.h */,
@@ -711,7 +711,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${PROJECT_DIR}/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/src/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -743,7 +743,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${PROJECT_DIR}/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/src/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,

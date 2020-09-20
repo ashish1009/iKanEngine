@@ -40,7 +40,7 @@ namespace iKan {
          we are TERMINATING the GLFW Window which might have an GLFW Error which detaching (In case we
          Detaching layer will happen after Terminating the Window)
          */
-        std::unique_ptr<Window> m_Window;
+        Scope<Window> m_Window;
         
         LayerStack  m_LayerStack;
         ImguiLayer* m_ImguiLayer; // Not using smart pounter because we are deleting all the layers

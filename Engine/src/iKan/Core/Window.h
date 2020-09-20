@@ -40,7 +40,7 @@ namespace iKan {
         void SetCallBacks();
         
     private:
-        std::unique_ptr<GraphicsContext> m_Context;
+        Scope<GraphicsContext> m_Context;
         GLFWwindow* m_Window = nullptr;
                 
         // Encapsulate the Data that needs to be sent to glfw as pointer

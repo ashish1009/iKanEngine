@@ -13,7 +13,7 @@ namespace iKan {
         virtual ~RenderAPI() = default;
 
         static API GetAPI() { return s_API; }
-        static std::unique_ptr<RenderAPI> Create();
+        static Scope<RenderAPI> Create();
         
         virtual void SetClearColor(const glm::vec4& color) = 0;
         virtual void Clear() = 0;
