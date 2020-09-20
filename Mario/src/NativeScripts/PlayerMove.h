@@ -22,8 +22,6 @@ namespace iKan {
             player->m_bIsLanded         = (collisionFlags & CollisionBit::Down);
             player->m_bIsRightCollision = (collisionFlags & CollisionBit::Right);
             player->m_bIsLeftCollision  = (collisionFlags & CollisionBit::Left);
-
-            IK_CORE_INFO("{0}, {1}, {2}", posX, posY, timestep);
             
             if (!player->m_bIsLanded)
                 posY -= landingSpeed;
@@ -41,14 +39,13 @@ namespace iKan {
                 if (posX >= 0 && !player->m_bIsLeftCollision)
                     posX -= translationSpeed;
             }
-            posX = (float)((int32_t(posX * 10.0f)) / 10.0f);
         }
         
     private:
         void PlayerRunTexture(TimeStep timestep)
         {
             auto player = Player::Get();
-            auto playerTexture = SubTexture::CreateFromCoords(player->m_SpriteSheet, { (float)((uint32_t)player->m_MoveIdx), player->m_ColorIndex }, {1.0f, 2.0f});
+            auto playerTexture = SubTexture::CreateFromCoords(player->m_SpriteSheet, { (float)((uint32_t)player->m_MoveIdx), player->m_Color });
             player->m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = playerTexture;
             player->m_MoveIdx += (timestep * 15);
             if (player->m_MoveIdx > 3.0f)

@@ -2,7 +2,7 @@
 
 #include <iKan/Core/Layer.h>
 
-#include <iKan/Core/Events/Events.h>
+#include <iKan/Events/Events.h>
 
 namespace iKan {
     

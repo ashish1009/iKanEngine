@@ -4,13 +4,12 @@ extern iKan::Application* iKan::CreateApplication();
 
 int main(int argc, const char * argv[])
 {
-    iKan::InitializeCore();
+    iKan::Log::Init();
     IK_CORE_INFO("Initialized spd logger");
     
     iKan::Application* app = iKan::CreateApplication();
     app->OnUpdate();
     delete app;
-    iKan::ShutdownCore();
-
+    
     return 0;
 }

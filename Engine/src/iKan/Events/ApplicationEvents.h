@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Core/Events/Events.h>
+#include <iKan/Events/Events.h>
 
 namespace iKan {
     

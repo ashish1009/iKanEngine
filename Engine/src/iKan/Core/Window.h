@@ -2,7 +2,7 @@
 
 #include <iKan/Renderer/GraphicsContext.h>
 
-#include <iKan/Core/Events/Events.h>
+#include <iKan/Events/Events.h>
 
 namespace iKan {
     
@@ -25,44 +25,34 @@ namespace iKan {
         Window(const WindowProp& prop = WindowProp());
         ~Window();
         
+        void Init(const WindowProp& prop);
         void OnUpdate();
         void Shutdown();
         
         uint32_t GetWidth() const { return m_Data.Width; }
         uint32_t GetHeight() const { return m_Data.Height; }
         
-        std::pair<uint32_t, uint32_t> GetSize() const { return { m_Data.Width, m_Data.Height }; }
-        std::pair<float, float> GetWindowPos() const;
-
         const std::string& GetTitle() const { return m_Data.Title; }
-        
         GLFWwindow* GetNativeWindow() const { return m_Window; }
-        
         void SetEventCallBack(std::function<void(Event&)> func) { m_Data.EventFunc = func; }
-        void SetVSync(bool vSyncg);
-        bool IsVSync() const;
         
     private:
-        void Init(const WindowProp& prop);
         void SetCallBacks();
         
     private:
         std::unique_ptr<GraphicsContext> m_Context;
         GLFWwindow* m_Window = nullptr;
-        GLFWcursor* m_ImGuiMouseCursors[9] = { 0 };
                 
         // Encapsulate the Data that needs to be sent to glfw as pointer
         struct WindowData
         {
             uint32_t    Width = 0, Height = 0;
             std::string Title = "";
-            bool VSync;
-
+            
             std::function<void(Event&)> EventFunc;
         };
         
         WindowData m_Data;
-        float m_LastFrameTime = 0.0f;
     };
     
 }

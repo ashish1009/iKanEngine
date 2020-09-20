@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Core/Events/Events.h>
+#include <iKan/Events/Events.h>
 #include <iKan/Core/KeyCode.h>
 
 namespace iKan {
@@ -9,12 +9,11 @@ namespace iKan {
     {
     public:
         KeyPressedEvent(KeyCode keyCode, int repeat)
-        : m_KeyCode(keyCode), m_Count(repeat) {}
+        : m_KeyCode(keyCode) {}
         
         virtual ~KeyPressedEvent() = default;
         
         KeyCode GetKeyCode() const { return m_KeyCode; }
-        uint32_t GetKeyRepeat() const { return m_Count; }
         
         virtual EventType GetType() const override { return EventType::KeyPressed; }
         virtual int GetCategoryBit() const override { return EventCategory::KeyCategory; }
@@ -22,8 +21,7 @@ namespace iKan {
         static EventType GetStaticType() { return EventType::KeyPressed; }
         
     private:
-        KeyCode  m_KeyCode;
-        uint32_t m_Count;
+        KeyCode m_KeyCode;
     };
     
     class KeyReleasedEvent : public Event

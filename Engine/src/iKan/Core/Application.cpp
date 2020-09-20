@@ -17,7 +17,6 @@ namespace iKan {
         // Creating Window from Applicaition
         m_Window = std::make_unique<Window>(WindowProp(title, widht, height));
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
-        m_Window->SetVSync(true);
         
         // Initialising the Renderer
         RenderCommand::Depth(State::Enable);

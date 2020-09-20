@@ -1,5 +1,5 @@
 #include <iKan.h>
-#include <iKan/EntryPoint.h>
+#include <iKan/Core/EntryPoint.h>
 
 #include <MarioLayer.h>
 

@@ -8,7 +8,7 @@ namespace iKan {
     static std::unordered_map<char, std::vector<Entity>> s_EntityVector;
     static std::unordered_map<char, std::vector<std::shared_ptr<SubTexture>>> s_SubTextureVectorMap;
     
-    glm::vec4 Background::s_BgColor = { 0.25f, 0.48f, 0.90f, 1.0f };
+    glm::vec4 Background::s_BgColor = { 0.3f, 0.1f, 0.6f, 1.0f };
     
     static std::string GetEntityNameFromChar(char type)
     {
@@ -78,7 +78,7 @@ namespace iKan {
             s_SubTextureVectorMap['G'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 23.0f })); // Grey
             s_SubTextureVectorMap['G'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 21.0f })); // Green
             
-            s_TextureMap['G'] = s_SubTextureVectorMap['G'][0];
+            s_TextureMap['G'] = s_SubTextureVectorMap['G'][3];
         }
         
         // Bricks SubTextures
@@ -88,7 +88,7 @@ namespace iKan {
             s_SubTextureVectorMap['X'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17.0f, 23.0f })); // Grey;
             s_SubTextureVectorMap['X'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17.0f, 21.0f })); // green;
             
-            s_TextureMap['X'] = s_SubTextureVectorMap['X'][0];
+            s_TextureMap['X'] = s_SubTextureVectorMap['X'][1];
         }
         
         // Bomus SubTextures
@@ -98,7 +98,7 @@ namespace iKan {
             s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 23.0f })); // Grey
             s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 21.0f })); // Green
             
-            s_TextureMap['B'] = s_SubTextureVectorMap['B'][0];
+            s_TextureMap['B'] = s_SubTextureVectorMap['B'][3];
         }
         
         // Steos SubTextures
@@ -108,7 +108,7 @@ namespace iKan {
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 22.0f })); // Grey
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 20.0f })); // Green
             
-            s_TextureMap['S'] = s_SubTextureVectorMap['S'][0];
+            s_TextureMap['S'] = s_SubTextureVectorMap['S'][2];
         }
         
         // Bridge SubTexture
@@ -133,8 +133,8 @@ namespace iKan {
             s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 12.0f }, { 2.0f, 1.0f })); // Grey
             s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 8.0f }, { 2.0f, 1.0f }));  // Pink
             
-            s_TextureMap['Y'] = s_SubTextureVectorMap['Y'][0];
-            s_TextureMap['!'] = s_SubTextureVectorMap['!'][0];
+            s_TextureMap['Y'] = s_SubTextureVectorMap['Y'][3];
+            s_TextureMap['!'] = s_SubTextureVectorMap['!'][3];
         }
         
         // Adding Texture maps

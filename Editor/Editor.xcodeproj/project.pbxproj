@@ -315,7 +315,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/src/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -343,7 +343,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/src/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
