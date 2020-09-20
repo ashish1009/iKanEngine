@@ -3,7 +3,7 @@
 
 #include <iKan/Core/Core.h>
 
-#include <Platform/OpenGL/OpenGlShader.h>
+#include <iKan/Platform/OpenGL/OpenGlShader.h>
 
 namespace iKan {
     

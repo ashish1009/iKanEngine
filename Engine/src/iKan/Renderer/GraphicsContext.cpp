@@ -1,7 +1,7 @@
 #include <iKan/Renderer/GraphicsContext.h>
 #include <iKan/Renderer/RenderAPI.h>
 
-#include <Platform/OpenGL/OpenGlGraphicsContext.h>
+#include <iKan/Platform/OpenGL/OpenGlGraphicsContext.h>
 
 #include <iKan/Core/Core.h>
 

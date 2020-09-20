@@ -1,4 +1,4 @@
-#include <Platform/OpenGL/OpenGlGraphicsContext.h>
+#include <iKan/Platform/OpenGL/OpenGlGraphicsContext.h>
 #include <iKan/Core/Core.h>
 
 namespace iKan {

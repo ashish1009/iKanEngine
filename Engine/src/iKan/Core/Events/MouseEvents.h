@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Events/Events.h>
+#include <iKan/Core/Events/Events.h>
 #include <iKan/Core/MouseCode.h>
 
 namespace iKan {

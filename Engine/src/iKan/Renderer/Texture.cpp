@@ -3,7 +3,7 @@
 
 #include <iKan/Core/Core.h>
 
-#include <Platform/OpenGL/OpenGlTexture.h>
+#include <iKan/Platform/OpenGL/OpenGlTexture.h>
 
 namespace iKan {
     

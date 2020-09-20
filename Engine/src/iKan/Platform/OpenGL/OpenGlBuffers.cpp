@@ -1,4 +1,4 @@
-#include <Platform/OpenGL/OpenGlBuffers.h>
+#include <iKan/Platform/OpenGL/OpenGlBuffers.h>
 
 namespace iKan {
 

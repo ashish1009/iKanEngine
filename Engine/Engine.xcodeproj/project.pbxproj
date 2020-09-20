@@ -290,7 +290,6 @@
 				B213761924ED2AA700A14055 /* iKan.h */,
 				B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */,
 				B24FF88F24ED1A8000884EDA /* iKan */,
-				B2F0FBF924F80AE60004443A /* Platform */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -299,11 +298,11 @@
 			isa = PBXGroup;
 			children = (
 				B2752D1524FAC1AF005EF655 /* EntryPoint.h */,
-				B2F0FC0124F80E870004443A /* Renderer */,
 				B24FF89024ED1A9E00884EDA /* Core */,
+				B2F0FC0124F80E870004443A /* Renderer */,
+				B2F0FBF924F80AE60004443A /* Platform */,
 				B2CDABE02501008D008C6BDF /* Camera */,
 				B2CDABD52500ED96008C6BDF /* Scene */,
-				B23D4E7724F829740049238A /* Events */,
 				B2137A5124ED78FA00A14055 /* ImGui */,
 			);
 			path = iKan;
@@ -312,6 +311,7 @@
 		B24FF89024ED1A9E00884EDA /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				B23D4E7724F829740049238A /* Events */,
 				B2752D1724FAC201005EF655 /* Application.cpp */,
 				B2752D1824FAC201005EF655 /* Application.h */,
 				B24FF89124ED1AAB00884EDA /* Log.cpp */,

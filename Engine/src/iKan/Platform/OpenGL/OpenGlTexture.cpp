@@ -1,4 +1,4 @@
-#include <Platform/OpenGL/OpenGlTexture.h>
+#include <iKan/Platform/OpenGL/OpenGlTexture.h>
 
 #include <iKan/Core/Core.h>
 

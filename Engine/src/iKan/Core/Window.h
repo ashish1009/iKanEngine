@@ -2,7 +2,7 @@
 
 #include <iKan/Renderer/GraphicsContext.h>
 
-#include <iKan/Events/Events.h>
+#include <iKan/Core/Events/Events.h>
 
 namespace iKan {
     

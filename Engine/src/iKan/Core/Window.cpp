@@ -3,9 +3,9 @@
 #include <iKan/Core/KeyCode.h>
 #include <iKan/Core/MouseCode.h>
 
-#include <iKan/Events/ApplicationEvents.h>
-#include <iKan/Events/KeyEvents.h>
-#include <iKan/Events/MouseEvents.h>
+#include <iKan/Core/Events/ApplicationEvents.h>
+#include <iKan/Core/Events/KeyEvents.h>
+#include <iKan/Core/Events/MouseEvents.h>
 
 namespace iKan {
     

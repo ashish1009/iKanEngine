@@ -3,7 +3,7 @@
 
 #include <iKan/Core/Core.h>
 
-#include <Platform/OpenGL/OpenGlVertexArray.h>
+#include <iKan/Platform/OpenGL/OpenGlVertexArray.h>
 
 namespace iKan {
     

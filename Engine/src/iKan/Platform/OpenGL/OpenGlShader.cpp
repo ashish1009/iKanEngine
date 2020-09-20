@@ -1,4 +1,4 @@
-#include <Platform/OpenGL/OpenGlShader.h>
+#include <iKan/Platform/OpenGL/OpenGlShader.h>
 
 #include <iKan/Core/Core.h>
 

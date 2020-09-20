@@ -4,7 +4,7 @@
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/RenderCommand.h>
 
-#include <Platform/OpenGL/OpenGlShader.h>
+#include <iKan/Platform/OpenGL/OpenGlShader.h>
 
 namespace iKan {
     

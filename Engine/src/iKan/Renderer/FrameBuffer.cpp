@@ -1,7 +1,7 @@
 #include <iKan/Renderer/FrameBuffer.h>
 #include <iKan/Renderer/RenderAPI.h>
 
-#include <Platform/OpenGL/OpenGLFrameBuffer.h>
+#include <iKan/Platform/OpenGL/OpenGLFrameBuffer.h>
 
 namespace iKan {
     

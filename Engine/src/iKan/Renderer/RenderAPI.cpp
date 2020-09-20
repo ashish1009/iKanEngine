@@ -1,7 +1,7 @@
 #include <iKan/Renderer/RenderAPI.h>
 #include <iKan/Core/Core.h>
 
-#include <Platform/OpenGL/OpenGlRenderAPI.h>
+#include <iKan/Platform/OpenGL/OpenGlRenderAPI.h>
 
 namespace iKan {
     
