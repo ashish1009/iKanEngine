@@ -9,7 +9,7 @@ namespace iKan {
     class MarioCamera
     {
     public:
-        static void Init(const std::shared_ptr<Scene>& scene);
+        static void Init(Ref<Scene>& scene);
         
         static std::pair<float&, float&> GetPosition()
         {

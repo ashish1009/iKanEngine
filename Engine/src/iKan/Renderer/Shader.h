@@ -2,7 +2,7 @@
 
 namespace iKan {
     
-    class Shader
+    class Shader : public RefCounted
     {
     public:
         virtual ~Shader() = default;
@@ -23,8 +23,8 @@ namespace iKan {
         virtual void SetUniformFloat3(const std::string& name, const glm::vec3& value) = 0;
         virtual void SetUniformFloat4(const std::string& name, const glm::vec4& value) = 0;
         
-        static std::shared_ptr<Shader> Create(const std::string& vertexSrc, const std::string& fragmentSrc);
-        static std::shared_ptr<Shader> Create(const std::string& path);
+        static Ref<Shader> Create(const std::string& vertexSrc, const std::string& fragmentSrc);
+        static Ref<Shader> Create(const std::string& path);
     };
     
     class ShaderLibrary
@@ -33,16 +33,16 @@ namespace iKan {
         ShaderLibrary() = default;
         ~ShaderLibrary() = default;
         
-        std::shared_ptr<Shader> Get(const std::string& name);
+        Ref<Shader> Get(const std::string& name);
         
-        std::shared_ptr<Shader> Load(const std::string& path);
-        std::shared_ptr<Shader> Load(const std::string& name, const std::string& filepath);
+        Ref<Shader> Load(const std::string& path);
+        Ref<Shader> Load(const std::string& name, const std::string& filepath);
         
     private:
         bool Exists(const std::string& name) const;
         
     private:
-        std::unordered_map<std::string, std::shared_ptr<Shader>> m_Shaders;
+        std::unordered_map<std::string, Ref<Shader>> m_Shaders;
     };
     
 }

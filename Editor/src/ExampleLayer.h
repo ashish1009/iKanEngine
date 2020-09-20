@@ -19,11 +19,11 @@ namespace iKan {
         bool OnMouseScroll(MouseScrollEvent& event);
         
     private:
-        std::shared_ptr<VertexArray> m_VAO, m_LightVAO;
+        Ref<VertexArray> m_VAO, m_LightVAO;
         
         ShaderLibrary m_ShaderLibrary;
         
-        std::shared_ptr<Texture> m_WhiteTexture, m_CheckboardTexture, m_GridTexture, m_GrassTexture;
+        Ref<Texture> m_WhiteTexture, m_CheckboardTexture, m_GridTexture, m_GrassTexture;
     };
     
 }

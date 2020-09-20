@@ -7,7 +7,7 @@ namespace iKan {
     
     Entity MarioCamera::m_Entity;
     
-    void MarioCamera::Init(const std::shared_ptr<Scene>& scene)
+    void MarioCamera::Init(Ref<Scene>& scene)
     {
         m_Entity = scene->CreateEntity("Camera");
         m_Entity.AddComponent<CameraComponent>();

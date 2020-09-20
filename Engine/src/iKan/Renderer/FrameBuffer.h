@@ -12,9 +12,11 @@ namespace iKan {
         bool SwapChainTarget = false;
     };
     
-    class Framebuffer
+    class Framebuffer : public RefCounted
     {
     public:
+        virtual ~Framebuffer() = default;
+        
         virtual void Bind() = 0;
         virtual void Unbind() = 0;
         
@@ -24,7 +26,7 @@ namespace iKan {
         
         virtual const FramebufferSpecification& GetSpecification() const = 0;
         
-        static std::shared_ptr<Framebuffer> Create(const FramebufferSpecification& spec);
+        static Ref<Framebuffer> Create(const FramebufferSpecification& spec);
     };
     
     

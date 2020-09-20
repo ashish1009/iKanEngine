@@ -21,7 +21,7 @@ namespace iKan {
 
     class Entity;
     
-    class Scene
+    class Scene : public RefCounted
     {
     public:
         struct Speeds

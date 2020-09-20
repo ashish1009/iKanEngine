@@ -102,7 +102,7 @@ namespace iKan {
     };
     
     // ------------------------- Vertex Buffer --------------------------------------------
-    class VertexBuffer
+    class VertexBuffer : public RefCounted
     {
     public:
         virtual ~VertexBuffer() = default;
@@ -115,12 +115,12 @@ namespace iKan {
         virtual void AddLayout(const BufferLayout& layout) = 0;
         virtual const BufferLayout& GetLayout() const = 0;
         
-        static std::shared_ptr<VertexBuffer> Create(uint32_t size);
-        static std::shared_ptr<VertexBuffer> Create(uint32_t size, float* data);
+        static Ref<VertexBuffer> Create(uint32_t size);
+        static Ref<VertexBuffer> Create(uint32_t size, float* data);
     };
     
     // ------------------------- Index Buffer --------------------------------------------
-    class IndexBuffer
+    class IndexBuffer : public RefCounted
     {
     public:
         virtual ~IndexBuffer() = default;
@@ -130,7 +130,7 @@ namespace iKan {
         
         virtual uint32_t GetCount() const = 0;
         
-        static std::shared_ptr<IndexBuffer> Create(uint32_t count, uint32_t* data);
+        static Ref<IndexBuffer> Create(uint32_t count, uint32_t* data);
     };
     
 }

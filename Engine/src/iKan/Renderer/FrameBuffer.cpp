@@ -5,12 +5,12 @@
 
 namespace iKan {
     
-    std::shared_ptr<Framebuffer> Framebuffer::Create(const FramebufferSpecification& spec)
+    Ref<Framebuffer> Framebuffer::Create(const FramebufferSpecification& spec)
     {
         switch (RenderAPI::GetAPI())
         {
             case API::None:    IK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-            case API::OpenGL:  return std::make_shared<OpenGLFrameBuffer>(spec);
+            case API::OpenGL:  return Ref<OpenGLFrameBuffer>::Create(spec);
         }
         
         IK_CORE_ASSERT(false, "Unknown RendererAPI!");

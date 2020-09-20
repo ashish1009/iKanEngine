@@ -63,7 +63,7 @@ namespace iKan {
         
         m_VAO = VertexArray::Create();
         
-        std::shared_ptr<VertexBuffer> VBO = VertexBuffer::Create(sizeof(vertices), vertices);
+        Ref<VertexBuffer> VBO = VertexBuffer::Create(sizeof(vertices), vertices);
         
         VBO->AddLayout({
             { ShaderDataType::Float3, "a_Position" },
@@ -82,7 +82,7 @@ namespace iKan {
         };
         
         // Creating Vertex Array
-        std::shared_ptr<IndexBuffer> EBO  = IndexBuffer::Create(sizeof(indices) / sizeof(uint32_t), indices);
+        Ref<IndexBuffer> EBO  = IndexBuffer::Create(sizeof(indices) / sizeof(uint32_t), indices);
         m_VAO->SetIndexBuffer(EBO);
         
         m_ShaderLibrary.Load("../../Editor/assets/shaders/Texture.glsl");
@@ -104,8 +104,8 @@ namespace iKan {
         
         // Creating Vertex Array
         m_LightVAO = VertexArray::Create();
-        std::shared_ptr<VertexBuffer> lightVBO = VertexBuffer::Create(sizeof(lightVertices), lightVertices);
-        std::shared_ptr<IndexBuffer> lightEBO  = IndexBuffer::Create(sizeof(lightIndices) / sizeof(uint32_t), lightIndices);
+        Ref<VertexBuffer> lightVBO = VertexBuffer::Create(sizeof(lightVertices), lightVertices);
+        Ref<IndexBuffer> lightEBO  = IndexBuffer::Create(sizeof(lightIndices) / sizeof(uint32_t), lightIndices);
         
         lightVBO->AddLayout({
             { ShaderDataType::Float3, "a_Position" },

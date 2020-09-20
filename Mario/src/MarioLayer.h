@@ -23,8 +23,8 @@ namespace iKan {
     private:
         bool m_ViewportFocused = false, m_ViewportHovered = false;
 
-        std::shared_ptr<Framebuffer> m_FrameBuffer;
-        std::shared_ptr<Scene> m_Scene;
+        Ref<Framebuffer> m_FrameBuffer;
+        Ref<Scene> m_Scene;
 
         glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
         

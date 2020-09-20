@@ -43,7 +43,7 @@ namespace iKan {
     struct SpriteRendererComponent
     {
         glm::vec4 Color = glm::vec4(1.0f);
-        std::shared_ptr<SubTexture> SubTexComp = nullptr;
+        Ref<SubTexture> SubTexComp = nullptr;
         
         SpriteRendererComponent() = default;
         SpriteRendererComponent(const SpriteRendererComponent&) = default;
@@ -51,7 +51,7 @@ namespace iKan {
         SpriteRendererComponent(const glm::vec4& color)
         : Color(color) {}
         
-        SpriteRendererComponent(const std::shared_ptr<SubTexture>& subtexture)
+        SpriteRendererComponent(const Ref<SubTexture>& subtexture)
         : SubTexComp(subtexture) {}
     };
     

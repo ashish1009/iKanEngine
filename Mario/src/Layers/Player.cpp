@@ -6,7 +6,7 @@ namespace iKan {
 
     Player* Player::s_Instance = nullptr;
     
-    Player::Player(const std::shared_ptr<Scene>& scene)
+    Player::Player(Ref<Scene>& scene)
     {
         IK_INFO("Player Instance Created");
 
@@ -39,7 +39,7 @@ namespace iKan {
         return false;
     }
     
-    Player* Player::Create(const std::shared_ptr<Scene>& scene)
+    Player* Player::Create(Ref<Scene>& scene)
     {
         if (s_Instance)
             IK_WARN("Player already created");

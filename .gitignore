@@ -2,5 +2,8 @@
 bin/
 bin-int/
 
+#Engine Files
+.log
+
 # Mac Files
 .DS_Store

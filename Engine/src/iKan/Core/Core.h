@@ -15,6 +15,8 @@
 #define IK_FLOOR(x) std::floor((double)(x))
 #define IK_CEIL(x)  std::ceil((double)(x))
 
+#include <iKan/Core/Ref.h>
+
 namespace iKan {
     
     template<typename T>

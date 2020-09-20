@@ -38,7 +38,7 @@ namespace iKan {
         glViewport(0, 0, widht, height);
     }
     
-    void OpenGlRenderAPI::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t count)
+    void OpenGlRenderAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count)
     {
         vertexArray->Bind();
         uint32_t numIndices = count == 0 ? vertexArray->GetIndexBuffer()->GetCount() : count;

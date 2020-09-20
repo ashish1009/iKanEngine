@@ -45,7 +45,7 @@ namespace iKan {
         glBindVertexArray(0);
     }
     
-    void OpenGlVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
+    void OpenGlVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
     {
         glBindVertexArray(m_RendererId);
         m_VertexBuffers.push_back(vertexBuffer);
@@ -100,7 +100,7 @@ namespace iKan {
         }
     }
     
-    void OpenGlVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
+    void OpenGlVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
     {
         glBindVertexArray(m_RendererId);
         indexBuffer->Bind();

@@ -17,7 +17,7 @@ namespace iKan {
     public:
         ~Player();
         
-        static Player* Create(const std::shared_ptr<Scene>& scene);
+        static Player* Create(Ref<Scene>& scene);
         static Player* Get() { IK_ASSERT(s_Instance, "Player didnt existed !!!"); return s_Instance; }
         static void Destroy() { if (s_Instance) delete s_Instance; }
         
@@ -48,14 +48,14 @@ namespace iKan {
         }
         
     private:
-        Player(const std::shared_ptr<Scene>& scene);
+        Player(Ref<Scene>& scene);
                 
     private:
         static Player* s_Instance;
         
         Entity m_Entity;
-        std::shared_ptr<SubTexture> m_StandSubtexture;
-        std::shared_ptr<Texture> m_SpriteSheet;
+        Ref<SubTexture> m_StandSubtexture;
+        Ref<Texture> m_SpriteSheet;
         
         bool m_bIsLanded         = false;
         bool m_bIsRightCollision = false;

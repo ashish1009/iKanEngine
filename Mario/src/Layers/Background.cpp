@@ -3,10 +3,10 @@
 
 namespace iKan {
 
-    static std::shared_ptr<Texture> s_TileSpriteSheet;
-    static std::unordered_map<char, std::shared_ptr<SubTexture>> s_TextureMap;
+    static Ref<Texture> s_TileSpriteSheet;
+    static std::unordered_map<char, Ref<SubTexture>> s_TextureMap;
     static std::unordered_map<char, std::vector<Entity>> s_EntityVector;
-    static std::unordered_map<char, std::vector<std::shared_ptr<SubTexture>>> s_SubTextureVectorMap;
+    static std::unordered_map<char, std::vector<Ref<SubTexture>>> s_SubTextureVectorMap;
     
     glm::vec4 Background::s_BgColor = { 0.3f, 0.1f, 0.6f, 1.0f };
     
@@ -63,7 +63,7 @@ namespace iKan {
         }
     }
     
-    void Background::Init(const std::shared_ptr<Scene>& scene)
+    void Background::Init(Ref<Scene>& scene)
     {
         // Texture tile
         s_TileSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
@@ -155,7 +155,7 @@ namespace iKan {
                 if (char tileType = s_MapTiles[x + y * mapWidth];
                     s_TextureMap.find(tileType) != s_TextureMap.end())
                 {
-                    std::shared_ptr<SubTexture> subTexture = s_TextureMap[tileType];
+                    Ref<SubTexture> subTexture = s_TextureMap[tileType];
                     
                     auto entity = s_EntityVector[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
                     auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);

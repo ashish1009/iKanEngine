@@ -27,10 +27,10 @@ namespace iKan {
         static const uint32_t MaxTextureSlots = 16;
         
         // Data storage for Rendering
-        std::shared_ptr<VertexArray>    QuadVertexArray;
-        std::shared_ptr<VertexBuffer>   QuadVertexBuffer;
-        std::shared_ptr<Shader>         TextureShader;
-        std::shared_ptr<Texture>        WhiteTexture;
+        Ref<VertexArray>    QuadVertexArray;
+        Ref<VertexBuffer>   QuadVertexBuffer;
+        Ref<Shader>         TextureShader;
+        Ref<Texture>        WhiteTexture;
         
         uint32_t    QuadIndexCount = 0;
         
@@ -39,7 +39,7 @@ namespace iKan {
         QuadVertex* QuadVertexBufferPtr     = nullptr;
         
         // array of textures for now 16 slots are possible
-        std::array<std::shared_ptr<Texture>, MaxTextureSlots> TextureSlots;
+        std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
         uint32_t TextureSlotIndex = 1; /* 0 = white texture */
         
         // Basic vertex of quad
@@ -87,7 +87,7 @@ namespace iKan {
             offset += 4;
         }
         
-        std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(s_Data.MaxIndices, quadIndices);
+        Ref<IndexBuffer> quadIB = IndexBuffer::Create(s_Data.MaxIndices, quadIndices);
         s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
         delete[] quadIndices;
         
@@ -231,7 +231,7 @@ namespace iKan {
     
     /* ---------------------------------------- Rendering Texture ---------------------------------------------------------------------*/
     
-    void Renderer2D::DrawQuad(const glm::mat4& transform, const std::shared_ptr<Texture >& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
         constexpr size_t    quadVertexCount = 4;
         constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -242,7 +242,7 @@ namespace iKan {
         float textureIndex = 0.0f;
         for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
         {
-            if (*s_Data.TextureSlots[i].get() == *texture.get())
+            if (*s_Data.TextureSlots[i] == *texture)
             {
                 textureIndex = (float)i;
                 break;
@@ -274,12 +274,12 @@ namespace iKan {
         s_Data.Stats.QuadCount++;
     }
     
-    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
         DrawQuad({ position.x, position.y, 0.0f }, size, texture, tilingFactor, tintColor);
     }
     
-    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
         * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
@@ -287,12 +287,12 @@ namespace iKan {
         DrawQuad(transform, texture, tilingFactor, tintColor);
     }
     
-    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
         DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, texture, tilingFactor, tintColor);
     }
     
-    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const std::shared_ptr<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
         * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
@@ -303,7 +303,7 @@ namespace iKan {
     
     /* ---------------------------------------- Rendering SubTexture from Sprite ---------------------------------------------------------------------*/
     
-    void Renderer2D::DrawQuad(const glm::mat4& transform, const std::shared_ptr<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
     {
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
             FlushAndReset();
@@ -317,7 +317,7 @@ namespace iKan {
         
         for (int i = 1; i < s_Data.TextureSlotIndex; i++)
         {
-            if (*s_Data.TextureSlots[i].get() == *(subTexture->GetTeture()).get()) // if (s_Data.TextureSlots[i] == texture) will compare the shared pointer only
+            if (*s_Data.TextureSlots[i] == *(subTexture->GetTeture())) // if (s_Data.TextureSlots[i] == texture) will compare the shared pointer only
             {
                 textureIndex = (float)i;
                 break;
@@ -345,12 +345,12 @@ namespace iKan {
         s_Data.Stats.QuadCount++;
     }
     
-    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
     {
         DrawQuad({ position.x, position.y, 0.0f }, size, subTexture, tilingFactor, tintColor);
     }
     
-    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const std::shared_ptr<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
         * glm::scale(glm::mat4(1.0f), {size.x, size.y, 0.0f});
@@ -358,12 +358,12 @@ namespace iKan {
         DrawQuad(transform, subTexture, tilingFactor, tintColor);
     }
     
-    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const std::shared_ptr<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
     {
         DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, subTexture, tilingFactor, tintColor);
     }
     
-    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const std::shared_ptr<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
+    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
         * glm::rotate(glm::mat4(1.0f), rotation, {0.0f, 0.0f, 1.0f})

@@ -21,11 +21,11 @@
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/Camera.h>
 
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Components.h>
 #include <iKan/Scene/Scene.h>
 
-#include <iKan/Camera/Camera.h>
 
 #include <iKan/ImGui/ImGuiAPI.h>

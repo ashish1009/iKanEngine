@@ -23,7 +23,7 @@ namespace iKan {
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
  
         // Adding Scene
-        m_Scene = std::make_shared<Scene>();
+        m_Scene = Ref<Scene>::Create();
         
         // Frame Buffers
         FramebufferSpecification fbSpec;

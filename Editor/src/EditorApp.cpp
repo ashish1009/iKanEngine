@@ -1,5 +1,5 @@
 #include <iKan.h>
-#include <iKan/Core/EntryPoint.h>
+#include <iKan/EntryPoint.h>
 
 #include "ExampleLayer.h"
 #include "EntityLayer.h"

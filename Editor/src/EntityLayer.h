@@ -15,7 +15,7 @@ namespace iKan {
         virtual void OnImguiRender() override;
         
     private:
-        std::shared_ptr<Framebuffer> m_Framebuffer;
+        Ref<Framebuffer> m_Framebuffer;
         
         bool m_ViewportFocused = false, m_ViewportHovered = false;
         bool m_PrimaryCamera = true;
