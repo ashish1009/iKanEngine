@@ -6,8 +6,8 @@
 class MarioApp : public iKan::Application
 {
 public:
-    MarioApp()
-    : Application("iKan Mario")
+    MarioApp(const iKan::ApplicationProps& props)
+    : Application(props)
     {
         PushLayer(new iKan::MarioLayer());
     }
@@ -22,5 +22,5 @@ public:
  */
 iKan::Application* iKan::CreateApplication()
 {
-    return new MarioApp();
+    return new MarioApp({ "Mario", 1600, 800 });
 }

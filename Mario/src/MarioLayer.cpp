@@ -116,7 +116,7 @@ namespace iKan {
         ImGui::End();
         ImGui::PopStyleVar();
             
-        ImGuiAPI::StatsAnfFrameRate();
+//        ImGuiAPI::StatsAnfFrameRate();
         
         // Only for Demo
 //        ImGui::ShowDemoWindow();

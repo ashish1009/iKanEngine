@@ -7,6 +7,12 @@ namespace iKan {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+        auto& caps = RenderAPI::GetCapabilities();
+        
+        caps.Vendor   = (const char*)glGetString(GL_VENDOR);
+        caps.Renderer = (const char*)glGetString(GL_RENDERER);
+        caps.Version  = (const char*)glGetString(GL_VERSION);
     }
     
     void OpenGlRenderAPI::SetClearColor(const glm::vec4& color)

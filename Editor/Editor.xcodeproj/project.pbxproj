@@ -13,7 +13,6 @@
 		B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF87724ED197300884EDA /* EditorApp.cpp */; };
 		B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B24FF89824ED1BF900884EDA /* libEngine.a */; };
 		B2CDABED25013E1D008C6BDF /* EntityLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CDABEB25013E1D008C6BDF /* EntityLayer.cpp */; };
-		B2FEC92D24FC1D2800388451 /* ExampleLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2FEC92B24FC1D2800388451 /* ExampleLayer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,19 +31,12 @@
 		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		B22B32CD24FF6B7A0002D428 /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
-		B22B32CE24FF6B7A0002D428 /* grid.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grid.png; sourceTree = "<group>"; };
-		B22B32CF24FF6B7A0002D428 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
-		B22B32D024FF6B7A0002D428 /* window.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = window.png; sourceTree = "<group>"; };
-		B22B32D124FF6B7A0002D428 /* Checkerboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkerboard.png; sourceTree = "<group>"; };
 		B22B32D324FF6B7A0002D428 /* Texture.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Texture.glsl; sourceTree = "<group>"; };
 		B24FF87424ED197300884EDA /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF87724ED197300884EDA /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
 		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2CDABEB25013E1D008C6BDF /* EntityLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EntityLayer.cpp; sourceTree = "<group>"; };
 		B2CDABEC25013E1D008C6BDF /* EntityLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EntityLayer.h; sourceTree = "<group>"; };
-		B2FEC92B24FC1D2800388451 /* ExampleLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ExampleLayer.cpp; sourceTree = "<group>"; };
-		B2FEC92C24FC1D2800388451 /* ExampleLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExampleLayer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,21 +58,8 @@
 			isa = PBXGroup;
 			children = (
 				B22B32D224FF6B7A0002D428 /* shaders */,
-				B22B32CC24FF6B7A0002D428 /* textures */,
 			);
 			path = assets;
-			sourceTree = "<group>";
-		};
-		B22B32CC24FF6B7A0002D428 /* textures */ = {
-			isa = PBXGroup;
-			children = (
-				B22B32CD24FF6B7A0002D428 /* metal.png */,
-				B22B32CE24FF6B7A0002D428 /* grid.png */,
-				B22B32CF24FF6B7A0002D428 /* grass.png */,
-				B22B32D024FF6B7A0002D428 /* window.png */,
-				B22B32D124FF6B7A0002D428 /* Checkerboard.png */,
-			);
-			path = textures;
 			sourceTree = "<group>";
 		};
 		B22B32D224FF6B7A0002D428 /* shaders */ = {
@@ -113,8 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				B24FF87724ED197300884EDA /* EditorApp.cpp */,
-				B2FEC92B24FC1D2800388451 /* ExampleLayer.cpp */,
-				B2FEC92C24FC1D2800388451 /* ExampleLayer.h */,
 				B2CDABEB25013E1D008C6BDF /* EntityLayer.cpp */,
 				B2CDABEC25013E1D008C6BDF /* EntityLayer.h */,
 			);
@@ -190,7 +167,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2FEC92D24FC1D2800388451 /* ExampleLayer.cpp in Sources */,
 				B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */,
 				B2CDABED25013E1D008C6BDF /* EntityLayer.cpp in Sources */,
 			);

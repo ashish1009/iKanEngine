@@ -1,19 +1,21 @@
 #include <iKan.h>
 #include <iKan/EntryPoint.h>
 
+#include "ExampleLayer.h"
 #include "EntityLayer.h"
 
 class EditorApp : public iKan::Application
 {
 public:
-    EditorApp(const iKan::ApplicationProps& props)
-    : iKan::Application(props)
+    EditorApp()
     {
+//        PushLayer(new iKan::ExampleLayer());
         PushLayer(new iKan::EntityLayer());
     }
     
     virtual ~EditorApp()
-    {        
+    {
+        
     }
 };
 
@@ -22,5 +24,5 @@ public:
  */
 iKan::Application* iKan::CreateApplication()
 {
-    return new EditorApp({ "Editor", 1600, 800 });
+    return new EditorApp();
 }

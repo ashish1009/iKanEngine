@@ -1,13 +1,30 @@
 #include <iKan/ImGui/ImGuiAPI.h>
 #include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/RenderAPI.h>
+
 namespace iKan {
     
-    void ImGuiAPI::StatsAnfFrameRate()
+    void ImGuiAPI::RendererVersion()
+    {
+        ImGui::Begin("Renderer");
+        auto& caps = RenderAPI::GetCapabilities();
+
+        ImGui::Text("Vendor   : %s", caps.Vendor.c_str());
+        ImGui::Text("Renderer : %s", caps.Renderer.c_str());
+        ImGui::Text("Version  : %s", caps.Version.c_str());
+
+        ImGui::End();
+    }
+    
+    void ImGuiAPI::StatsAndFrameRate()
     {
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
         const auto& stats = Renderer2D::GetStats();
-        ImGui::Text("Draw Calls : %d, Quad Counts : %d, VertexCounts : %d, Index Counts : %d", stats.DrawCalls, stats.QuadCount, stats.GetTotalVertexCount(), stats.GetTotalIndexCount());
+        ImGui::Text("Draw Calls   : %d", stats.DrawCalls);
+        ImGui::Text("Quad Counts  : %d", stats.QuadCount);
+        ImGui::Text("VertexCounts : %d", stats.GetTotalVertexCount());
+        ImGui::Text("Index Counts : %d", stats.GetTotalIndexCount());
         ImGui::End();
         
         //------------------------ Frame Rates -------------------------------------------------------------

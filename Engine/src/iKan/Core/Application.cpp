@@ -3,18 +3,19 @@
 #include <iKan/Core/Input.h>
 
 #include <iKan/Renderer/Renderer.h>
+#include <iKan/ImGui/ImGuiAPI.h>
 
 namespace iKan {
     
     Application* Application::s_Instance = nullptr;
     
-    Application::Application(const std::string& title, uint32_t widht, uint32_t height)
+    Application::Application(const ApplicationProps& props)
     {
         IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         s_Instance = this;
         
         // Creating Window from Applicaition
-        m_Window = CreateScope<Window>(WindowProp(title, widht, height));
+        m_Window = CreateScope<Window>(WindowProp(props.Title, props.Width, props.Height));
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
         // Initialising the Renderer
@@ -43,27 +44,37 @@ namespace iKan {
         layer->OnAttach();
     }
     
-    void Application::OnUpdate()
+    void Application::ImGuiRenderer()
+    {
+        m_ImguiLayer->Begin();
+
+        ImGuiAPI::StatsAndFrameRate();
+        ImGuiAPI::RendererVersion();
+        
+        // Rendering ImGui for all the layers
+        for (Layer* layer : m_LayerStack)
+            layer->OnImguiRender();
+        
+        m_ImguiLayer->End();
+    }
+    
+    void Application::Run()
     {
         // Game Loop
         while (m_IsRunning)
         {
-            float currentFrame  = glfwGetTime();
-            float deltaTime     = currentFrame - m_LastFrame;
-            m_LastFrame         = currentFrame;
-            
             // Updating all the attached layer
             for (Layer* layer : m_LayerStack)
-                layer->OnUpdate(deltaTime);
+                layer->OnUpdate(m_TimeStep);
             
-            // Rendering ImGui for all the layers
-            m_ImguiLayer->Begin();
-            for (Layer* layer : m_LayerStack)
-                layer->OnImguiRender();
-            m_ImguiLayer->End();
-                
+            ImGuiRenderer();
+            
             // Window Update to refresh
             m_Window->OnUpdate();
+            
+            float currentFrame = glfwGetTime();
+            m_TimeStep         = currentFrame - m_LastFrame;
+            m_LastFrame        = currentFrame;
         }
     }
     

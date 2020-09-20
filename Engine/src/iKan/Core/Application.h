@@ -11,14 +11,25 @@
 
 namespace iKan {
     
+    struct ApplicationProps
+    {
+        std::string Title = "iKan Engine";
+        uint32_t Width    = s_WindowWidth;
+        uint32_t Height   = s_WindowHeight;
+        
+        ApplicationProps() = default;
+    };
+    
     class Application
     {
     public:
-        Application(const std::string& title = "iKan Engine", uint32_t widht = s_WindowWidth, uint32_t height = s_WindowHeight);
+        Application(const ApplicationProps& props = ApplicationProps());
         virtual ~Application();
         
         void OnEvent(Event& event);
-        void OnUpdate();
+        void Run();
+        
+        void ImGuiRenderer();
         
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
@@ -44,6 +55,7 @@ namespace iKan {
         
         LayerStack  m_LayerStack;
         ImguiLayer* m_ImguiLayer; // Not using smart pounter because we are deleting all the layers
+        TimeStep    m_TimeStep;
         
         bool  m_IsRunning = true;
         float m_LastFrame = 0.0f;

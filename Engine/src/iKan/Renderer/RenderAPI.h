@@ -7,6 +7,13 @@ namespace iKan {
     enum class API { None = 0, OpenGL = 1 };
     enum class State { Disable = 0, Enable = 1 };
     
+    struct RenderAPICapabilities
+    {
+        std::string Vendor;
+        std::string Renderer;
+        std::string Version;
+    };
+    
     class RenderAPI
     {
     public:
@@ -22,6 +29,12 @@ namespace iKan {
         virtual void Blend(State state) = 0;
         virtual void SetViewPort(uint32_t widht, uint32_t height) = 0;
         virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0) = 0;
+        
+        static RenderAPICapabilities& GetCapabilities()
+        {
+            static RenderAPICapabilities capabilities;
+            return capabilities;
+        }
         
     private:
         static API s_API;

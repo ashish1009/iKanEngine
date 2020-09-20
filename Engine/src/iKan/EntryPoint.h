@@ -8,7 +8,7 @@ int main(int argc, const char * argv[])
     IK_CORE_INFO("Initialized spd logger");
     
     iKan::Application* app = iKan::CreateApplication();
-    app->OnUpdate();
+    app->Run();
     delete app;
     
     return 0;
