@@ -92,8 +92,7 @@ namespace iKan {
         
         m_Framebuffer->Bind();
         
-        RenderCommand::Clear();
-        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+        Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
         
         m_ActiveScene->OnUpdate(timeStep);
         

@@ -7,6 +7,7 @@ namespace iKan {
     class OpenGlRenderAPI : public RenderAPI
     {
     public:
+        virtual void Init() override;
         virtual void SetClearColor(const glm::vec4& color) override;
         virtual void Clear() override;
         virtual void Depth(State state) override;

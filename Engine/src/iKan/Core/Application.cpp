@@ -2,8 +2,7 @@
 #include <iKan/Core/Core.h>
 #include <iKan/Core/Input.h>
 
-#include <iKan/Renderer/RenderCommand.h>
-#include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/Renderer.h>
 
 namespace iKan {
     
@@ -19,17 +18,15 @@ namespace iKan {
         m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
         
         // Initialising the Renderer
-        RenderCommand::Depth(State::Enable);
-        RenderCommand::Blend(State::Enable);
-        Renderer2D::Init();
-        
+        Renderer::Init();
+
         m_ImguiLayer = new ImguiLayer();
         PushOverlay(m_ImguiLayer);
     }
     
     Application::~Application()
     {
-        Renderer2D::Shutdown();
+        Renderer::Shutdown();
     }
     
     void Application::PushLayer(Layer* layer)
@@ -72,7 +69,7 @@ namespace iKan {
     
     bool Application::OnWindowResize(WindowResizeEvent& event)
     {
-        RenderCommand::SetViewPort(event.GetWidth(), event.GetHeight());
+        Renderer::SetViewport(event.GetWidth(), event.GetHeight());
         return false;
     }
 

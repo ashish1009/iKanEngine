@@ -214,8 +214,7 @@ namespace iKan {
         else
             projection = glm::ortho(-s_AspectRatio * s_OrthoZoom, s_AspectRatio * s_OrthoZoom, -s_OrthoZoom, s_OrthoZoom, -100.0f, 100.0f);
         
-        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-        RenderCommand::Clear();
+        Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
         
         // Bind Shader
         auto textureShader = m_ShaderLibrary.Get("Texture");
@@ -290,7 +289,7 @@ namespace iKan {
         m_GrassTexture->Bind(2);
         m_GrassTexture->Bind(3);
         // Draw Element
-        RenderCommand::DrawIndexed(m_VAO);
+        Renderer::DrawIndexed(m_VAO);
         
         /// Light
         // Bind Shader
@@ -308,7 +307,7 @@ namespace iKan {
         m_LightVAO->Bind();
         
         // Draw Element
-        RenderCommand::DrawIndexed(m_LightVAO);
+        Renderer::DrawIndexed(m_LightVAO);
     }
 
     void ExampleLayer::OnImguiRender()

@@ -74,9 +74,8 @@ namespace iKan {
         Renderer2D::ResetStats();
         m_FrameBuffer->Bind();
         
-        RenderCommand::Clear();
-        RenderCommand::SetClearColor(Background::GetColor());
-                
+        Renderer::Clear(Background::GetColor());
+                    
         m_Scene->OnUpdate(timeStep);
         
         m_FrameBuffer->Unbind();

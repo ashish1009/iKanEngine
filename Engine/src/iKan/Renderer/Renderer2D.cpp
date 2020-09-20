@@ -2,7 +2,7 @@
 
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/Shader.h>
-#include <iKan/Renderer/RenderCommand.h>
+#include <iKan/Renderer/Renderer.h>
 
 #include <iKan/Platform/OpenGL/OpenGlShader.h>
 
@@ -159,7 +159,7 @@ namespace iKan {
             s_Data.TextureSlots[i]->Bind(i);
         
         // Render the Scene
-        RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
+        Renderer::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
         s_Data.Stats.DrawCalls++;
     }
     
