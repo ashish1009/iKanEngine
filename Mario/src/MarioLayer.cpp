@@ -83,7 +83,7 @@ namespace iKan {
                     
     void MarioLayer::OnImguiRender()
     {
-        ImGuiAPI::Dcocking();
+        ImGuiAPI::EnableDcocking();
         // ----------------------- Menu Bar ---------------------------------------------------------------
         if (ImGui::BeginMenuBar())
         {

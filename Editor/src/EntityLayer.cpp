@@ -29,6 +29,7 @@ namespace iKan {
     
     void EntityLayer::OnImguiRender()
     {
+        ImGuiAPI::EnableDcocking();
     }
     
 }
