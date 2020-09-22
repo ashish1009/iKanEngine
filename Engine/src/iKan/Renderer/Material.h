@@ -22,7 +22,7 @@ namespace iKan {
 
     };
     
-    class MaterialInstance
+    class MaterialInstance : public RefCounted
     {
     public:
         MaterialInstance();

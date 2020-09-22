@@ -31,7 +31,7 @@ namespace iKan {
         static Ref<Shader> Create(const std::string& path);
     };
     
-    class ShaderLibrary
+    class ShaderLibrary : public RefCounted
     {
     public:
         ShaderLibrary() = default;

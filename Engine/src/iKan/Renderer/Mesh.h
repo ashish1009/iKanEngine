@@ -5,6 +5,7 @@
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/Buffers.h>
 #include <iKan/Renderer/Shader.h>
+#include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/Material.h>
 
 struct aiNode;
@@ -162,8 +163,8 @@ namespace iKan {
         // Materials
         Ref<Shader>                         m_MeshShader;
         Ref<Material>                       m_BaseMaterial;
-        std::vector<Ref<Texture2D>>         m_Textures;
-        std::vector<Ref<Texture2D>>         m_NormalMaps;
+        std::vector<Ref<Texture>>         m_Textures;
+        std::vector<Ref<Texture>>         m_NormalMaps;
         std::vector<Ref<MaterialInstance>>  m_Materials;
         
         std::unordered_map<uint32_t, std::vector<Triangle>> m_TriangleCache;
