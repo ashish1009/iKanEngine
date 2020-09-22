@@ -3,10 +3,21 @@
 
 namespace iKan {
     
+    struct RendererData
+    {
+        Ref<ShaderLibrary> m_ShaderLibrary;
+    };
+    static RendererData s_Data;
+
     void Renderer::Init()
     {
         RenderCommand::Init();
         Renderer2D::Init();
+        
+        s_Data.m_ShaderLibrary = Ref<ShaderLibrary>::Create();
+        
+        Renderer::GetShaderLibrary()->Load("../../Mario/assets/shaders/iKanPBR_Static.glsl");
+        Renderer::GetShaderLibrary()->Load("../../Mario/assets/shaders/iKanPBR_Anim.glsl");
     }
     
     void Renderer::Clear(glm::vec4 color)
@@ -28,6 +39,11 @@ namespace iKan {
     void Renderer::Shutdown()
     {
         Renderer2D::Shutdown();
+    }
+    
+    Ref<ShaderLibrary> Renderer::GetShaderLibrary()
+    {
+        return s_Data.m_ShaderLibrary;
     }
     
 }

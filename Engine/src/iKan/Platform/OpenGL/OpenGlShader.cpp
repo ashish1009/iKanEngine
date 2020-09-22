@@ -176,6 +176,11 @@ namespace iKan {
         glUseProgram(0);
     }
     
+    void OpenGlShader::AddShaderReloadedCallback(const ShaderReloadedCallback& callback)
+    {
+        m_ShaderReloadedCallbacks.push_back(callback);
+    }
+    
     //-------------------------------- Uniforms --------------------------------
     void OpenGlShader::SetUniformInt1(const std::string& name, int value)
     {

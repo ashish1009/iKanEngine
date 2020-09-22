@@ -133,7 +133,10 @@ namespace iKan {
             ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
         }
+    }
+    
+    void ImGuiAPI::EndDocking()
+    {
         ImGui::End();
     }
-
 }

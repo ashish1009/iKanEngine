@@ -47,6 +47,7 @@
 		B26D9D11250022CF003291C4 /* FrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D0F250022CF003291C4 /* FrameBuffer.cpp */; };
 		B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D12250022F5003291C4 /* OpenGLFrameBuffer.cpp */; };
 		B26D9D15250022F5003291C4 /* OpenGLFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B26D9D13250022F5003291C4 /* OpenGLFrameBuffer.h */; };
+		B27417492519E98E003CA8E9 /* libassimp.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B27417462519E98E003CA8E9 /* libassimp.5.0.0.dylib */; };
 		B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0724FA7E5C005EF655 /* KeyEvents.h */; };
 		B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0B24FAB248005EF655 /* MouseEvents.h */; };
 		B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0D24FABB8D005EF655 /* KeyCode.h */; };
@@ -60,6 +61,10 @@
 		B2752D1E24FACD64005EF655 /* RenderCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D1C24FACD64005EF655 /* RenderCommand.h */; };
 		B28083FE25052642003D0684 /* ImGuiAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28083FC25052642003D0684 /* ImGuiAPI.cpp */; };
 		B28083FF25052642003D0684 /* ImGuiAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B28083FD25052642003D0684 /* ImGuiAPI.h */; };
+		B2BCC41D2519150600BB0577 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BCC41B2519150600BB0577 /* Material.cpp */; };
+		B2BCC41E2519150600BB0577 /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = B2BCC41C2519150600BB0577 /* Material.h */; };
+		B2BCC421251915A600BB0577 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2BCC41F251915A600BB0577 /* Mesh.cpp */; };
+		B2BCC422251915A600BB0577 /* Mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B2BCC420251915A600BB0577 /* Mesh.h */; };
 		B2CDABD42500E885008C6BDF /* entt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABD12500E885008C6BDF /* entt.hpp */; };
 		B2CDABDB2500EF2C008C6BDF /* Components.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABD62500EF2C008C6BDF /* Components.h */; };
 		B2CDABDC2500EF2C008C6BDF /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CDABD72500EF2C008C6BDF /* Scene.cpp */; };
@@ -144,6 +149,7 @@
 		B26D9D0F250022CF003291C4 /* FrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameBuffer.cpp; sourceTree = "<group>"; };
 		B26D9D12250022F5003291C4 /* OpenGLFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLFrameBuffer.cpp; sourceTree = "<group>"; };
 		B26D9D13250022F5003291C4 /* OpenGLFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLFrameBuffer.h; sourceTree = "<group>"; };
+		B27417462519E98E003CA8E9 /* libassimp.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.0.0.dylib; path = vendor/Assimp/lib/libassimp.5.0.0.dylib; sourceTree = "<group>"; };
 		B2752D0724FA7E5C005EF655 /* KeyEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvents.h; sourceTree = "<group>"; };
 		B2752D0B24FAB248005EF655 /* MouseEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvents.h; sourceTree = "<group>"; };
 		B2752D0D24FABB8D005EF655 /* KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
@@ -157,6 +163,10 @@
 		B2752D1C24FACD64005EF655 /* RenderCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderCommand.h; sourceTree = "<group>"; };
 		B28083FC25052642003D0684 /* ImGuiAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiAPI.cpp; sourceTree = "<group>"; };
 		B28083FD25052642003D0684 /* ImGuiAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImGuiAPI.h; sourceTree = "<group>"; };
+		B2BCC41B2519150600BB0577 /* Material.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Material.cpp; sourceTree = "<group>"; };
+		B2BCC41C2519150600BB0577 /* Material.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
+		B2BCC41F251915A600BB0577 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		B2BCC420251915A600BB0577 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		B2CDABCF2500E885008C6BDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B2CDABD12500E885008C6BDF /* entt.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = entt.hpp; sourceTree = "<group>"; };
 		B2CDABD62500EF2C008C6BDF /* Components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Components.h; sourceTree = "<group>"; };
@@ -188,6 +198,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B27417492519E98E003CA8E9 /* libassimp.5.0.0.dylib in Frameworks */,
 				B2137A5824ED7A8700A14055 /* libImgui.a in Frameworks */,
 				B213761B24ED35AC00A14055 /* libGlad.a in Frameworks */,
 				B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */,
@@ -200,6 +211,7 @@
 		B21375ED24ED274A00A14055 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B27417462519E98E003CA8E9 /* libassimp.5.0.0.dylib */,
 				B21375EE24ED274A00A14055 /* libglfw3.a */,
 			);
 			name = Frameworks;
@@ -421,6 +433,10 @@
 				B2CDABE12501009D008C6BDF /* Camera.h */,
 				B2F0FC0224F80E960004443A /* GraphicsContext.cpp */,
 				B2F0FC0324F80E960004443A /* GraphicsContext.h */,
+				B2BCC41B2519150600BB0577 /* Material.cpp */,
+				B2BCC41C2519150600BB0577 /* Material.h */,
+				B2BCC41F251915A600BB0577 /* Mesh.cpp */,
+				B2BCC420251915A600BB0577 /* Mesh.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -447,7 +463,9 @@
 				B2752D1E24FACD64005EF655 /* RenderCommand.h in Headers */,
 				B213761824ED29DF00A14055 /* Core.h in Headers */,
 				B21F821E24F6D1D20040B427 /* Window.h in Headers */,
+				B2BCC41E2519150600BB0577 /* Material.h in Headers */,
 				B2F0FC0A24F816F70004443A /* RenderAPI.h in Headers */,
+				B2BCC422251915A600BB0577 /* Mesh.h in Headers */,
 				B22A8A572517C8A600D2B9C8 /* Renderer.h in Headers */,
 				B213795324ED4E6400A14055 /* stb_image.h in Headers */,
 				B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */,
@@ -572,6 +590,7 @@
 				B22A8A562517C8A600D2B9C8 /* Renderer.cpp in Sources */,
 				B2FEC92924FC0A1900388451 /* ImguiLayer.cpp in Sources */,
 				B2FEC92524FBB5F800388451 /* LayerStack.cpp in Sources */,
+				B2BCC41D2519150600BB0577 /* Material.cpp in Sources */,
 				B2752D1924FAC201005EF655 /* Application.cpp in Sources */,
 				B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */,
 				B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */,
@@ -588,6 +607,7 @@
 				B2752D1D24FACD64005EF655 /* RenderCommand.cpp in Sources */,
 				B28083FE25052642003D0684 /* ImGuiAPI.cpp in Sources */,
 				B266521A24FEBB000032AF99 /* OpenGlShader.cpp in Sources */,
+				B2BCC421251915A600BB0577 /* Mesh.cpp in Sources */,
 				B2CDABE525010F9A008C6BDF /* SceneCamera.cpp in Sources */,
 				B2F0FC0924F816F70004443A /* RenderAPI.cpp in Sources */,
 				B213795424ED4E6400A14055 /* stb_image.cpp in Sources */,
@@ -730,10 +750,12 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/glm",
 					"${PROJECT_DIR}/vendor/Imgui/Imgui",
+					"${PROJECT_DIR}/vendor/Assimp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendor/GLFW/lib",
+					"$(PROJECT_DIR)/vendor/Assimp/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -760,10 +782,12 @@
 					"${PROJECT_DIR}/vendor/stbimage",
 					"${PROJECT_DIR}/vendor/glm",
 					"${PROJECT_DIR}/vendor/Imgui/Imgui",
+					"${PROJECT_DIR}/vendor/Assimp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/vendor/GLFW/lib",
+					"$(PROJECT_DIR)/vendor/Assimp/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iKan/Renderer/RenderCommand.h>
+#include <iKan/Renderer/Shader.h>
 
 namespace iKan {
     
@@ -12,6 +13,8 @@ namespace iKan {
         static void SetViewport(float width, float height);
         static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0);
         static void Shutdown();
+
+        static Ref<ShaderLibrary> GetShaderLibrary();
     };
     
 }

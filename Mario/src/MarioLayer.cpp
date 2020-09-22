@@ -122,7 +122,7 @@ namespace iKan {
 //        ImGui::ShowDemoWindow();
         
         // Ending of Docking egining
-        ImGui::End();
+        ImGuiAPI::EndDocking();
     }
                                     
 }
