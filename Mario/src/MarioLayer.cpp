@@ -94,6 +94,11 @@ namespace iKan {
             }
             ImGui::EndMenuBar();
         }
+        
+        // Stats 
+        ImGuiAPI::StatsAndFrameRate();
+        ImGuiAPI::RendererVersion();
+        
         // ----------------------- Setings ----------------------------------------------------------------
         ImGui::Begin("Setting");
         Background::ImGuiRender();
@@ -116,11 +121,6 @@ namespace iKan {
         ImGui::End();
         ImGui::PopStyleVar();
             
-//        ImGuiAPI::StatsAnfFrameRate();
-        
-        // Only for Demo
-//        ImGui::ShowDemoWindow();
-        
         // Ending of Docking egining
         ImGuiAPI::EndDocking();
     }
