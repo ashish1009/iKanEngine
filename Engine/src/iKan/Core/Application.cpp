@@ -48,9 +48,6 @@ namespace iKan {
     {
         m_ImguiLayer->Begin();
 
-        ImGuiAPI::StatsAndFrameRate();
-        ImGuiAPI::RendererVersion();
-        
         // Rendering ImGui for all the layers
         for (Layer* layer : m_LayerStack)
             layer->OnImguiRender();
