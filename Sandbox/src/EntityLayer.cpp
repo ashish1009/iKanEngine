@@ -20,16 +20,23 @@ namespace iKan {
         FramebufferSpecification fbSpec;
         fbSpec.Width  = 1280;
         fbSpec.Height = 720;
-        m_Framebuffer = Framebuffer::Create(fbSpec);
         
-        m_ActiveScene = std::make_shared<Scene>();
+        m_Framebuffer = Framebuffer::Create(fbSpec);
+        m_ActiveScene = Ref<Scene>::Create();
         
         m_SquareEntity = m_ActiveScene->CreateEntity("Green Square");
         m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
         
+        auto redSquare = m_ActiveScene->CreateEntity("Red Square");
+        redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
+        
         m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
         m_CameraEntity.AddComponent<CameraComponent>();
         
+        m_SecondCamera = m_ActiveScene->CreateEntity("Clip Space Entity");
+        auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
+        cc.Primary = false;
+
         class CameraController : public ScriptableEntity
         {
         public:
@@ -59,6 +66,9 @@ namespace iKan {
             // OnAwake(), CollisionCallbacks()
         };
         m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     
     void EntityLayer::OnDetach()
@@ -151,8 +161,21 @@ namespace iKan {
             ImGui::EndMenuBar();
         }
         
-        // --------------------------- Settings ------------------------------------------------
+        ImGui::Begin("Stats");
+        
+        auto stats = Renderer2D::GetStats();
+        ImGui::Text("Draw Calls   : %d", stats.DrawCalls);
+        ImGui::Text("Quad Counts  : %d", stats.QuadCount);
+        ImGui::Text("Vertex Count : %d", stats.GetTotalVertexCount());
+        ImGui::Text("Index Cound  : %d", stats.GetTotalIndexCount());
+        ImGui::Separator();
+        
+        ImGui::End();
+        
+        m_SceneHierarchyPannel.OnImguiender();
+        
         ImGui::Begin("Settings");
+        
         if (m_SquareEntity)
         {
             auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
@@ -166,29 +189,30 @@ namespace iKan {
         ImGui::Separator();
         ImGui::DragFloat3("Camera", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
         
-        auto& camera     = m_CameraEntity.GetComponent<CameraComponent>().Camera;
-        float orthoSize  = camera.GetOrthographicSize();
-        if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
-            camera.SetOrthographicSize(orthoSize);
+        ImGui::Separator();
+        if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
+        {
+            m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+            m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+        }
+        
+        {
+            auto& camera    = m_SecondCamera.GetComponent<CameraComponent>().Camera;
+            float orthoSize = camera.GetOrthographicSize();
+            if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
+                camera.SetOrthographicSize(orthoSize);
+        }
+        
         ImGui::End();
         
-        //------------------------ Statistics -------------------------------------------------------------
-        ImGui::Begin("Stats");
-        auto stats = Renderer2D::GetStats();
-        ImGui::Text("Draw Calls   : %d", stats.DrawCalls);
-        ImGui::Text("Quad Counts  : %d", stats.QuadCount);
-        ImGui::Text("Vertex Count : %d", stats.GetTotalVertexCount());
-        ImGui::Text("Index Cound  : %d", stats.GetTotalIndexCount());
-        ImGui::End();
-        
-        //------------------------ Frame Rates -------------------------------------------------------------
         ImGui::Begin("Frame Rate");
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::Separator();
         ImGui::End();
         
-        //------------------------ View Port ---------------------------------------------------------------
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport");
+        
         m_ViewportFocused = ImGui::IsWindowFocused();
         m_ViewportHovered = ImGui::IsWindowHovered();
         Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);

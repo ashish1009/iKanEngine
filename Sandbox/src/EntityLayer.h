@@ -22,10 +22,14 @@ namespace iKan {
         
         glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
         
-        std::shared_ptr<Scene> m_ActiveScene;
+        Ref<Scene> m_ActiveScene;
         
         Entity m_SquareEntity;
         Entity m_CameraEntity;
+        Entity m_SecondCamera;
+
+        // pannels
+        SceneHeirarchyPannel m_SceneHierarchyPannel;
     };
     
 }

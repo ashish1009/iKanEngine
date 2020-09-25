@@ -28,5 +28,6 @@
 #include <iKan/Scene/Components.h>
 #include <iKan/Scene/Scene.h>
 
+#include <iKan/Editor/SceneHierarchyPannel.h>
 
 #include <iKan/ImGui/ImGuiAPI.h>

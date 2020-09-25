@@ -126,9 +126,9 @@
 			isa = PBXGroup;
 			children = (
 				B23EF0442517CF6E003630D6 /* EntityLayer.cpp */,
-				B23EF0452517CF6E003630D6 /* ExampleLayer.h */,
 				B23EF0462517CF6E003630D6 /* EntityLayer.h */,
 				B23EF0472517CF6E003630D6 /* ExampleLayer.cpp */,
+				B23EF0452517CF6E003630D6 /* ExampleLayer.h */,
 				B23EF0482517CF6E003630D6 /* EditorApp.cpp */,
 			);
 			path = src;

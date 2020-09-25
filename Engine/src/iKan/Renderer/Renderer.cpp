@@ -15,9 +15,6 @@ namespace iKan {
         Renderer2D::Init();
         
         s_Data.m_ShaderLibrary = Ref<ShaderLibrary>::Create();
-        
-        Renderer::GetShaderLibrary()->Load("../../Mario/assets/shaders/iKanPBR_Static.glsl");
-        Renderer::GetShaderLibrary()->Load("../../Mario/assets/shaders/iKanPBR_Anim.glsl");
     }
     
     void Renderer::Clear(glm::vec4 color)
