@@ -36,6 +36,8 @@ namespace iKan {
         m_Player = Player::Create(m_Scene);
         Background::Init(m_Scene);
         MarioCamera::Init(m_Scene);
+        
+        m_SceneHierarchyPannel.SetContext(m_Scene);
     }
     
     void MarioLayer::OnDetach()
@@ -98,6 +100,8 @@ namespace iKan {
         // Stats 
         ImGuiAPI::StatsAndFrameRate();
         ImGuiAPI::RendererVersion();
+        
+        m_SceneHierarchyPannel.OnImguiender();
         
         // ----------------------- Setings ----------------------------------------------------------------
         ImGui::Begin("Setting");
