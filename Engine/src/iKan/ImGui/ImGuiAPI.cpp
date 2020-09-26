@@ -9,9 +9,9 @@ namespace iKan {
         ImGui::Begin("Renderer");
         auto& caps = RenderAPI::GetCapabilities();
 
-        ImGui::Text("Vendor   : %s", caps.Vendor.c_str());
+        ImGui::Text("Vendor : %s", caps.Vendor.c_str());
         ImGui::Text("Renderer : %s", caps.Renderer.c_str());
-        ImGui::Text("Version  : %s", caps.Version.c_str());
+        ImGui::Text("Version : %s", caps.Version.c_str());
 
         ImGui::End();
     }
@@ -21,8 +21,8 @@ namespace iKan {
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
         const auto& stats = Renderer2D::GetStats();
-        ImGui::Text("Draw Calls   : %d", stats.DrawCalls);
-        ImGui::Text("Quad Counts  : %d", stats.QuadCount);
+        ImGui::Text("Draw Calls : %d", stats.DrawCalls);
+        ImGui::Text("Quad Counts : %d", stats.QuadCount);
         ImGui::Text("VertexCounts : %d", stats.GetTotalVertexCount());
         ImGui::Text("Index Counts : %d", stats.GetTotalIndexCount());
         ImGui::End();

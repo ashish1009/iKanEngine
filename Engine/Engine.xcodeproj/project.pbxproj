@@ -33,6 +33,8 @@
 		B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF89124ED1AAB00884EDA /* Log.cpp */; };
 		B24FF89424ED1AAB00884EDA /* Log.h in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89224ED1AAB00884EDA /* Log.h */; };
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
+		B2528750251F207C0065826D /* ImGuizmo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B252874C251F207C0065826D /* ImGuizmo.cpp */; };
+		B2528751251F207C0065826D /* ImGuizmo.h in Headers */ = {isa = PBXBuildFile; fileRef = B252874F251F207C0065826D /* ImGuizmo.h */; };
 		B25639DA251E6A9F00BF0F33 /* SceneHierarchyPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = B25639D8251E6A9F00BF0F33 /* SceneHierarchyPannel.h */; };
 		B25639DB251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25639D9251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp */; };
 		B266521424FEBA1A0032AF99 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B266521224FEBA1A0032AF99 /* Shader.cpp */; };
@@ -133,6 +135,8 @@
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
 		B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		B252874C251F207C0065826D /* ImGuizmo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuizmo.cpp; sourceTree = "<group>"; };
+		B252874F251F207C0065826D /* ImGuizmo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImGuizmo.h; sourceTree = "<group>"; };
 		B25639D8251E6A9F00BF0F33 /* SceneHierarchyPannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneHierarchyPannel.h; sourceTree = "<group>"; };
 		B25639D9251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneHierarchyPannel.cpp; sourceTree = "<group>"; };
 		B266521224FEBA1A0032AF99 /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
@@ -259,6 +263,8 @@
 		B2137A5124ED78FA00A14055 /* ImGui */ = {
 			isa = PBXGroup;
 			children = (
+				B252874C251F207C0065826D /* ImGuizmo.cpp */,
+				B252874F251F207C0065826D /* ImGuizmo.h */,
 				B2137A5424ED78FA00A14055 /* ImGuiBuild.cpp */,
 				B2FEC92724FC0A1900388451 /* ImguiLayer.cpp */,
 				B2FEC92824FC0A1900388451 /* ImguiLayer.h */,
@@ -484,6 +490,7 @@
 				B2FEC92A24FC0A1900388451 /* ImguiLayer.h in Headers */,
 				B2CDABE625010F9A008C6BDF /* SceneCamera.h in Headers */,
 				B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */,
+				B2528751251F207C0065826D /* ImGuizmo.h in Headers */,
 				B2752D1624FAC1AF005EF655 /* EntryPoint.h in Headers */,
 				B2CDABE22501009D008C6BDF /* Camera.h in Headers */,
 				B2473FD824FD1E350099535D /* OpenGlVertexArray.h in Headers */,
@@ -604,6 +611,7 @@
 				B266521424FEBA1A0032AF99 /* Shader.cpp in Sources */,
 				B2473FDB24FD22380099535D /* Buffers.cpp in Sources */,
 				B2473FD724FD1E350099535D /* OpenGlVertexArray.cpp in Sources */,
+				B2528750251F207C0065826D /* ImGuizmo.cpp in Sources */,
 				B2473FD124FD1DB40099535D /* VertexArray.cpp in Sources */,
 				B2752D1D24FACD64005EF655 /* RenderCommand.cpp in Sources */,
 				B28083FE25052642003D0684 /* ImGuiAPI.cpp in Sources */,
