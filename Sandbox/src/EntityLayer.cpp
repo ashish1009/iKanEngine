@@ -100,7 +100,7 @@ namespace iKan {
             m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         }
         
-        Renderer2D::ResetStats();
+        RendererStatistics::Reset();
         
         m_Framebuffer->Bind();
         
@@ -165,11 +165,10 @@ namespace iKan {
         
         ImGui::Begin("Stats");
         
-        auto stats = Renderer2D::GetStats();
-        ImGui::Text("Draw Calls   : %d", stats.DrawCalls);
-        ImGui::Text("Quad Counts  : %d", stats.QuadCount);
-        ImGui::Text("Vertex Count : %d", stats.GetTotalVertexCount());
-        ImGui::Text("Index Cound  : %d", stats.GetTotalIndexCount());
+        ImGui::Text("Draw Calls   : %d", RendererStatistics::DrawCalls);
+        ImGui::Text("Quad Counts  : %d", RendererStatistics::QuadCount);
+        ImGui::Text("Vertex Count : %d", RendererStatistics::GetTotalVertexCount());
+        ImGui::Text("Index Cound  : %d", RendererStatistics::GetTotalIndexCount());
         ImGui::Separator();
         
         ImGui::End();

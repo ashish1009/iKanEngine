@@ -13,6 +13,8 @@ namespace iKan {
     
     void EntityLayer::OnAttach()
     {
+        SceneRenderer::SetShaader("../../Editor/assets/shaders/CommonShader.glsl");
+        
         ImGuiAPI::LightGreyBackground();
         
         FramebufferSpecification specs;
@@ -25,6 +27,9 @@ namespace iKan {
         
         m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
         m_CameraEntity.AddComponent<CameraComponent>();
+        
+        Entity cubeEntity = m_ActiveScene->CreateEntity("Cube");
+        cubeEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
@@ -45,9 +50,10 @@ namespace iKan {
             (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
         {
             m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         }
         
-        Renderer2D::ResetStats();
+        RendererStatistics::Reset();
         m_FrameBuffer->Bind();
 
         Renderer::Clear({ 0.15f, 0.15f, 0.15f, 1.0f });

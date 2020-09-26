@@ -3,6 +3,7 @@
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Renderer.h>
+#include <iKan/Renderer/RenderStats.h>
 
 #include <iKan/Platform/OpenGL/OpenGlShader.h>
 
@@ -44,9 +45,6 @@ namespace iKan {
         
         // Basic vertex of quad
         glm::vec4 QuadVertexPositions[4];
-        
-        // To store the stats
-        Renderer2D::Statistics Stats;
     };
     
     static Renderer2DData s_Data;
@@ -160,7 +158,7 @@ namespace iKan {
         
         // Render the Scene
         Renderer::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
-        s_Data.Stats.DrawCalls++;
+        RendererStatistics::DrawCalls++;
     }
     
     void Renderer2D::FlushAndReset()
@@ -198,7 +196,7 @@ namespace iKan {
         
         s_Data.QuadIndexCount += 6;
         
-        s_Data.Stats.QuadCount++;
+        RendererStatistics::QuadCount++;
         
     }
     
@@ -271,7 +269,7 @@ namespace iKan {
         
         s_Data.QuadIndexCount += 6;
         
-        s_Data.Stats.QuadCount++;
+        RendererStatistics::QuadCount++;
     }
     
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -342,7 +340,7 @@ namespace iKan {
         }
         s_Data.QuadIndexCount += 6;
         
-        s_Data.Stats.QuadCount++;
+        RendererStatistics::QuadCount++;
     }
     
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
@@ -370,18 +368,6 @@ namespace iKan {
         * glm::scale(glm::mat4(1.0f), {size.x, size.y, 0.0f});
         
         DrawQuad(transform, subTexture, tilingFactor, tintColor);
-    }
-    
-    /* --------------------------------- Statistics ------------------------------------------------------- */
-    
-    void Renderer2D::ResetStats()
-    {
-        memset(&s_Data.Stats, 0, sizeof(Statistics));
-    }
-    
-    Renderer2D::Statistics Renderer2D::GetStats()
-    {
-        return s_Data.Stats;
     }
     
 }

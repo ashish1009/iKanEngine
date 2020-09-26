@@ -118,7 +118,12 @@ namespace iKan {
     void Scene::Renderer3D()
     {
         SceneRenderer::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
-        SceneRenderer::DrawCube();
+        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+        for (auto entity : group)
+        {
+            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+            SceneRenderer::DrawQuad(transform, sprite.Color);
+        }
         SceneRenderer::EndScene();
     }
     

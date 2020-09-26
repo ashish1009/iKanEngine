@@ -1,6 +1,6 @@
 #include <iKan/ImGui/ImGuiAPI.h>
-#include <iKan/Renderer/Renderer2D.h>
 #include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/RenderStats.h>
 
 namespace iKan {
     
@@ -20,11 +20,11 @@ namespace iKan {
     {
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
-        const auto& stats = Renderer2D::GetStats();
-        ImGui::Text("Draw Calls : %d", stats.DrawCalls);
-        ImGui::Text("Quad Counts : %d", stats.QuadCount);
-        ImGui::Text("VertexCounts : %d", stats.GetTotalVertexCount());
-        ImGui::Text("Index Counts : %d", stats.GetTotalIndexCount());
+
+        ImGui::Text("Draw Calls : %d", RendererStatistics::DrawCalls);
+        ImGui::Text("Quad Counts : %d", RendererStatistics::QuadCount);
+        ImGui::Text("VertexCounts : %d", RendererStatistics::GetTotalVertexCount());
+        ImGui::Text("Index Counts : %d", RendererStatistics::GetTotalIndexCount());
         ImGui::End();
         
         //------------------------ Frame Rates -------------------------------------------------------------
