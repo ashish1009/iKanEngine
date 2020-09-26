@@ -47,7 +47,7 @@ namespace iKan {
         
         float m_AspectRatio = 0.0f;
         
-        ProjectionType m_ProjectionType = ProjectionType::Orthographic;
+        ProjectionType m_ProjectionType = ProjectionType::Perspective;
     };
     
 }

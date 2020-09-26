@@ -24,7 +24,7 @@ namespace iKan {
         fbSpec.Height = 720;
         
         m_Framebuffer = Framebuffer::Create(fbSpec);
-        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRenderer::_2D);
+        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_2D);
         
         m_SquareEntity = m_ActiveScene->CreateEntity("Green Square");
         m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
@@ -173,6 +173,8 @@ namespace iKan {
         ImGui::Separator();
         
         ImGui::End();
+        
+        ImGuiAPI::RendererVersion();
         
         m_SceneHierarchyPannel.OnImguiender();
         

@@ -3,10 +3,11 @@
 #include <iKan/Scene/Entity.h>
 
 #include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/SceneRenderer.h>
 
 namespace iKan {
     
-    Scene::Scene(SceneRenderer sceneRenderer)
+    Scene::Scene(SceneRendererType sceneRenderer)
     : m_ScceneRenderer(sceneRenderer)
     {
         
@@ -41,8 +42,8 @@ namespace iKan {
         {
             switch (m_ScceneRenderer)
             {
-                case SceneRenderer::_2D: Renderer2D(); break;
-                case SceneRenderer::_3D: Renderer3D(); break;
+                case SceneRendererType::_2D: Renderer2D(); break;
+                case SceneRendererType::_3D: Renderer3D(); break;
                 default: IK_CORE_ASSERT(false, "Invalid Scene Renderer");
             }
         }
@@ -116,7 +117,9 @@ namespace iKan {
     
     void Scene::Renderer3D()
     {
-        
+        SceneRenderer::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
+        SceneRenderer::DrawCube();
+        SceneRenderer::EndScene();
     }
     
     // TODO: For now only for Mario Branch Need to be fix later

@@ -31,7 +31,7 @@
 		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		B22B32D324FF6B7A0002D428 /* Texture.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Texture.glsl; sourceTree = "<group>"; };
+		B22B32D324FF6B7A0002D428 /* CommonShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CommonShader.glsl; sourceTree = "<group>"; };
 		B24FF87424ED197300884EDA /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF87724ED197300884EDA /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
 		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +65,7 @@
 		B22B32D224FF6B7A0002D428 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				B22B32D324FF6B7A0002D428 /* Texture.glsl */,
+				B22B32D324FF6B7A0002D428 /* CommonShader.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

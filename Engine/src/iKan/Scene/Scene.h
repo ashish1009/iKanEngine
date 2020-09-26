@@ -24,7 +24,7 @@ namespace iKan {
     class Scene : public RefCounted
     {
     public:
-        enum class SceneRenderer { _2D, _3D };
+        enum class SceneRendererType { _2D, _3D };
         
         struct Speeds
         {
@@ -35,7 +35,7 @@ namespace iKan {
         };
         
     public:
-        Scene(SceneRenderer sceneRenderer);
+        Scene(SceneRendererType sceneRenderer);
         ~Scene() = default;
         
         Entity CreateEntity(const std::string& name = std::string());
@@ -59,7 +59,7 @@ namespace iKan {
         Camera* m_MainCamera         = nullptr;
         glm::mat4* m_CameraTransform = nullptr;
         
-        SceneRenderer m_ScceneRenderer;
+        SceneRendererType m_ScceneRenderer;
 
         friend class Entity;
         friend class SceneHeirarchyPannel;

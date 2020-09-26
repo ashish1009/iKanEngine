@@ -1,9 +1,10 @@
 #include "EntityLayer.h"
 
 namespace iKan {
-    
+        
     EntityLayer::EntityLayer()
     {
+        
     }
     
     EntityLayer::~EntityLayer()
@@ -20,7 +21,7 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(specs);
         
-        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRenderer::_3D);
+        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
         m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
         m_CameraEntity.AddComponent<CameraComponent>();
@@ -49,9 +50,9 @@ namespace iKan {
         Renderer2D::ResetStats();
         m_FrameBuffer->Bind();
 
-        Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
+        Renderer::Clear({ 0.15f, 0.15f, 0.15f, 1.0f });
         m_ActiveScene->OnUpdate(timeStep);
-
+        
         m_FrameBuffer->Unbind();
     }
     
