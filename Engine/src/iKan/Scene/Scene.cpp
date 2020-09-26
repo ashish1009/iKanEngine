@@ -6,6 +6,12 @@
 
 namespace iKan {
     
+    Scene::Scene(SceneRenderer sceneRenderer)
+    : m_ScceneRenderer(sceneRenderer)
+    {
+        
+    }
+    
     Entity Scene::CreateEntity(const std::string& name)
     {
         // Creating the Entity
@@ -21,52 +27,24 @@ namespace iKan {
     void Scene::OnUpdate(TimeStep ts)
     {
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
-        m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
-        {
-            // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
-            for (auto script : nsc.Scripts)
-            {
-                // If a script is not created before then create the script and update the function
-                if (!script->m_Created)
-                {
-                    script->m_Entity = { entity, this };
-                    script->OnCreate();
-                }
-                script->OnUpdate(ts);
-            }
-        });
+        InstantiateScripts(ts);
         
-        // Render 2D Sprites
-        Camera* mainCamera         = nullptr;
-        glm::mat4* cameraTransform = nullptr;
-        
-        // Get the camera component and its transform matrix to Beine the Scene
-        auto view = m_Registry.view<TransformComponent, CameraComponent>();
-        for (auto entity : view)
+        if (Entity cameraEntity = GetMainCameraEntity();
+            cameraEntity!= Entity(entt::null, this))
         {
-            // As we can have multiple cameras so pic the first camera that is set to primary and rendere acc to its properties
-            const auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
-            if (camera.Primary)
-            {
-                mainCamera      = &camera.Camera;
-                cameraTransform = &transform.Transform;
-                break;
-            }
+            m_MainCamera      = &cameraEntity.GetComponent<CameraComponent>().Camera;
+            m_CameraTransform = &cameraEntity.GetComponent<TransformComponent>().Transform;
         }
         
-        if (mainCamera)
+        // Renderer
+        if (m_MainCamera)
         {
-            Renderer2D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
-            auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-            for (auto entity : group)
+            switch (m_ScceneRenderer)
             {
-                const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-                if (sprite.SubTexComp)
-                    Renderer2D::DrawQuad(transform, sprite.SubTexComp);
-                else
-                    Renderer2D::DrawQuad(transform, sprite.Color);
+                case SceneRenderer::_2D: Renderer2D(); break;
+                case SceneRenderer::_3D: Renderer3D(); break;
+                default: IK_CORE_ASSERT(false, "Invalid Scene Renderer");
             }
-            Renderer2D::EndScene();
         }
         else
         {
@@ -89,7 +67,59 @@ namespace iKan {
         }
         
     }
+     
+    Entity Scene::GetMainCameraEntity()
+    {
+        auto view = m_Registry.view<CameraComponent>();
+        for (auto entity : view)
+        {
+            auto& comp = view.get<CameraComponent>(entity);
+            if (comp.Primary)
+                return { entity, this };
+        }
+        return {};
+    }
+    
+    void Scene::InstantiateScripts(TimeStep ts)
+    {
+        m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+                                                      {
+            // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
+            for (auto script : nsc.Scripts)
+            {
+                // If a script is not created before then create the script and update the function
+                if (!script->m_Created)
+                {
+                    script->m_Entity = { entity, this };
+                    script->OnCreate();
+                }
+                script->OnUpdate(ts);
+            }
+        });
+
+    }
+    
+    void Scene::Renderer2D()
+    {
+        Renderer2D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
+        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+        for (auto entity : group)
+        {
+            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+            if (sprite.SubTexComp)
+                Renderer2D::DrawQuad(transform, sprite.SubTexComp);
+            else
+                Renderer2D::DrawQuad(transform, sprite.Color);
+        }
+        Renderer2D::EndScene();
+    }
+    
+    void Scene::Renderer3D()
+    {
         
+    }
+    
+    // TODO: For now only for Mario Branch Need to be fix later
     Collisions Scene::CollisionDetection(Entity& ce, Speeds speeds)
     {
         /* ce: Current Entity is cosidered as the bock which is moving and in respect of which collision needs to be detected*/

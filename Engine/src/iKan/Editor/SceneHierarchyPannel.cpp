@@ -22,7 +22,7 @@ namespace iKan {
             DrawEntityNode(entity);
         });
         
-        if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
+        if (ImGui::IsMouseDown((int)MouseCode::Button0) && ImGui::IsWindowHovered())
             m_SelectionContext = {};
         
         ImGui::End();
@@ -54,7 +54,6 @@ namespace iKan {
                 ImGui::TreePop();
             ImGui::TreePop();
         }
-        ImGui::ShowDemoWindow();
     }
     
     void SceneHeirarchyPannel::DrawComponents(Entity entity)
@@ -66,10 +65,22 @@ namespace iKan {
             char buffer[256];
             memset(buffer, 0, sizeof(buffer));
             strcpy(buffer, tag.c_str());
-            if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
+            
+            ImGui::Columns(2);
+            ImGui::Text("Tag");
+            ImGui::NextColumn();
+            ImGui::PushItemWidth(-1);
+
+            if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
             {
                 tag = std::string(buffer);
             }
+            
+            ImGui::PopItemWidth();
+            ImGui::NextColumn();
+            ImGui::Columns(1);
+            
+            ImGui::Separator();
         }
         
         if (entity.HasComponent<TransformComponent>())
@@ -77,10 +88,21 @@ namespace iKan {
             if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
             {
                 auto& transform = entity.GetComponent<TransformComponent>().Transform;
-                ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.1f);
+                
+                ImGui::Columns(2);
+                ImGui::Text("Translation");
+                ImGui::NextColumn();
+                ImGui::PushItemWidth(-1);
+                
+                ImGui::DragFloat3("##Position", glm::value_ptr(transform[3]), 0.1f);
+                
+                ImGui::PopItemWidth();
+                ImGui::NextColumn();
+                ImGui::Columns(1);
                 
                 ImGui::TreePop();
             }
+            ImGui::Separator();
         }
         
         if (entity.HasComponent<CameraComponent>())
@@ -90,11 +112,16 @@ namespace iKan {
                 auto& cameraComponent = entity.GetComponent<CameraComponent>();
                 auto& camera = cameraComponent.Camera;
                 
-                ImGui::Checkbox("Primary", &cameraComponent.Primary);
+                ImGui::Columns(2);
                 
+                ImGui::Text("Primary"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
+                ImGui::Checkbox("##Primary", &cameraComponent.Primary);
+                ImGui::PopItemWidth(); ImGui::NextColumn();
+                
+                ImGui::Text("Projection Type"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
                 const char* projectionTypeSTring[] = { "Projection", "Orthographic" };
                 const char* currentProjectionType = projectionTypeSTring[(int32_t)camera.GetProjectionType()];
-                if (ImGui::BeginCombo("Projection", currentProjectionType))
+                if (ImGui::BeginCombo("##Projection", currentProjectionType))
                 {
                     for (int i = 0; i < 2; i++)
                     {
@@ -112,42 +139,58 @@ namespace iKan {
                     }
                     ImGui::EndCombo();
                 }
+                ImGui::PopItemWidth(); ImGui::NextColumn();
                 
                 if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orthographic)
                 {
+                    ImGui::Text("Size"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
                     float orthoSize = glm::degrees(camera.GetOrthographicSize());
-                    if (ImGui::DragFloat("Size", &orthoSize))
+                    if (ImGui::DragFloat("##Size", &orthoSize))
                         camera.SetOrthographicSize(glm::radians(orthoSize));
+                    ImGui::PopItemWidth(); ImGui::NextColumn();
                     
+                    ImGui::Text("Near"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
                     float nearClip = camera.GetOrthographicNearClip();
-                    if (ImGui::DragFloat("Near", &nearClip))
+                    if (ImGui::DragFloat("##Near", &nearClip))
                         camera.SetOrthographicNearClip(nearClip);
+                    ImGui::PopItemWidth(); ImGui::NextColumn();
                     
+                    ImGui::Text("Far"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
                     float farClip = camera.GetOrthographicFarClip();
-                    if (ImGui::DragFloat("Far", &farClip))
+                    if (ImGui::DragFloat("##Far", &farClip))
                         camera.SetOrthographicFarClip(farClip);
-                    
-                    ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+                    ImGui::PopItemWidth(); ImGui::NextColumn();
+                                        
+                    ImGui::Text("Fixed Aspect Ratio"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
+                    ImGui::Checkbox("##Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+                    ImGui::PopItemWidth(); ImGui::NextColumn();
                 }
 
                 if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perspective)
                 {
+                    ImGui::Text("FOV"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
                     float verticalFOV = camera.GetPerspectiveFOV();
-                    if (ImGui::DragFloat("verticalFOV", &verticalFOV))
+                    if (ImGui::DragFloat("##verticalFOV", &verticalFOV))
                         camera.SetPerspectiveFOV(verticalFOV);
-                    
+                    ImGui::PopItemWidth(); ImGui::NextColumn();
+
+                    ImGui::Text("Near"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
                     float nearClip = camera.GetPerspectiveNearClip();
-                    if (ImGui::DragFloat("Near", &nearClip))
+                    if (ImGui::DragFloat("##Near", &nearClip))
                         camera.SetPerspectiveNearClip(nearClip);
-                    
+                    ImGui::PopItemWidth(); ImGui::NextColumn();
+
+                    ImGui::Text("Far"); ImGui::NextColumn(); ImGui::PushItemWidth(-1);
                     float farClip = camera.GetPerspectiveFarClip();
-                    if (ImGui::DragFloat("Far", &farClip))
+                    if (ImGui::DragFloat("##Far", &farClip))
                         camera.SetPerspectiveFarClip(farClip);
+                    ImGui::PopItemWidth(); ImGui::NextColumn();
 
                 }
 
                 ImGui::TreePop();
             }
+            ImGui::Separator();
         }
     }
 }

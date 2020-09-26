@@ -117,18 +117,18 @@ namespace iKan {
         m_LightVAO->AddVertexBuffer(lightVBO);
         m_LightVAO->SetIndexBuffer(lightEBO);
         
-        m_ShaderLibrary.Load("../../Editor/assets/shaders/Texture.glsl");
+        m_ShaderLibrary.Load("../../Sandbox/assets/shaders/Texture.glsl");
         
         auto textureShader = m_ShaderLibrary.Get("Texture");
         textureShader->Bind();
         // Texture
-        m_CheckboardTexture = Texture::Create("../../Editor/assets/textures/Checkerboard.png");
+        m_CheckboardTexture = Texture::Create("../../Sandbox/assets/textures/Checkerboard.png");
         textureShader->SetUniformInt1("u_Texture[1]", 1);
         
-        m_GridTexture       = Texture::Create("../../Editor/assets/textures/metal.png");
+        m_GridTexture       = Texture::Create("../../Sandbox/assets/textures/metal.png");
         textureShader->SetUniformInt1("u_Texture[2]", 2);
 
-        m_GrassTexture      = Texture::Create("../../Editor/assets/textures/grass.png");
+        m_GrassTexture      = Texture::Create("../../Sandbox/assets/textures/grass.png");
         textureShader->SetUniformInt1("u_Texture[3]", 3);
         
         // White Texture

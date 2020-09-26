@@ -1,4 +1,5 @@
 #include <iKan/ImGui/ImguiLayer.h>
+#include <iKan/ImGui/ImGuizmo.h>
 
 #include <iKan/Core/Application.h>
 
@@ -15,6 +16,9 @@ namespace iKan {
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+        
+        ImFont* pFont = io.Fonts->AddFontFromFileTTF("../../Engine/src/iKan/Editor/Fonts/FallingSkyLightOblique-2q3o.otf", 15.0f);
+        io.FontDefault = pFont;
         
         /* Setup Dear ImGui style */
         ImGui::StyleColorsDark();
@@ -58,6 +62,7 @@ namespace iKan {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        ImGuizmo::BeginFrame();
     }
     
     void ImguiLayer::End()
