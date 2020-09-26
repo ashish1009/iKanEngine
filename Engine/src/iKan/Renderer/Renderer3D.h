@@ -4,7 +4,7 @@
 
 namespace iKan {
     
-    class SceneRenderer
+    class Renderer3D
     {
     public:
         static void Init();
@@ -16,7 +16,10 @@ namespace iKan {
         static void Flush();
         
         static void SetShaader(const std::string& path);
-            
+        
+        /* Primitives */
+        static void DrawCube(const glm::mat4& transform, const glm::vec4& color);
+        
     private:
         static void FlushAndReset();
     };

@@ -13,7 +13,7 @@ namespace iKan {
     
     void EntityLayer::OnAttach()
     {
-        SceneRenderer::SetShaader("../../Editor/assets/shaders/CommonShader.glsl");
+        Renderer3D::SetShaader("../../Editor/assets/shaders/CommonShader.glsl");
         
         ImGuiAPI::LightGreyBackground();
         

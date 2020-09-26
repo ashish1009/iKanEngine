@@ -23,7 +23,7 @@ namespace iKan {
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
  
         // Adding Scene
-        m_Scene = Ref<Scene>::Create();
+        m_Scene = Ref<Scene>::Create(Scene::SceneRendererType::_2D);
         
         // Frame Buffers
         FramebufferSpecification fbSpec;
@@ -73,7 +73,7 @@ namespace iKan {
             m_Scene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         }
 
-        Renderer2D::ResetStats();
+        RendererStatistics::Reset();
         m_FrameBuffer->Bind();
         
         Renderer::Clear(Background::GetColor());

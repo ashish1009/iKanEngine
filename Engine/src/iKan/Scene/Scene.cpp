@@ -3,6 +3,7 @@
 #include <iKan/Scene/Entity.h>
 
 #include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/Renderer3D.h>
 #include <iKan/Renderer/SceneRenderer.h>
 
 namespace iKan {
@@ -117,14 +118,14 @@ namespace iKan {
     
     void Scene::Renderer3D()
     {
-        SceneRenderer::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
+        Renderer3D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
         auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
         for (auto entity : group)
         {
             const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-            SceneRenderer::DrawQuad(transform, sprite.Color);
+            Renderer3D::DrawCube(transform, sprite.Color);
         }
-        SceneRenderer::EndScene();
+        Renderer3D::EndScene();
     }
     
     // TODO: For now only for Mario Branch Need to be fix later
