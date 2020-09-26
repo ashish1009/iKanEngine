@@ -24,6 +24,8 @@ namespace iKan {
     class Scene : public RefCounted
     {
     public:
+        enum class SceneRenderer { _2D, _3D };
+        
         struct Speeds
         {
             float Up = 0.0f, Down = 0.0f, Right = 0.0f, Left = 0.0f;
@@ -33,7 +35,7 @@ namespace iKan {
         };
         
     public:
-        Scene() = default;
+        Scene(SceneRenderer sceneRenderer);
         ~Scene() = default;
         
         Entity CreateEntity(const std::string& name = std::string());
@@ -43,9 +45,21 @@ namespace iKan {
         Collisions CollisionDetection(Entity& entity, Speeds speeds);
         
     private:
+        Entity GetMainCameraEntity();
+        void InstantiateScripts(TimeStep ts);
+        
+        void Renderer2D();
+        void Renderer3D();
+        
+    private:
         /* Container that contain all the entities */
         entt::registry m_Registry;
         uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
+        
+        Camera* m_MainCamera         = nullptr;
+        glm::mat4* m_CameraTransform = nullptr;
+        
+        SceneRenderer m_ScceneRenderer;
 
         friend class Entity;
         friend class SceneHeirarchyPannel;

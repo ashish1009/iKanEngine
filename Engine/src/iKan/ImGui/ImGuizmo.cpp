@@ -853,12 +853,14 @@ namespace ImGuizmo
         }
     }
     
+#if 0
     static float GetUniform(const vec_t& position, const matrix_t& mat)
     {
         vec_t trf = makeVect(position.x, position.y, position.z, 1.f);
         trf.Transform(mat);
         return trf.w;
     }
+#endif
     
     static void ComputeContext(const float *view, const float *projection, float *matrix, MODE mode)
     {
@@ -1102,6 +1104,7 @@ namespace ImGuizmo
         }
     }
     
+#if 0
     static void DrawHatchedAxis(const vec_t& axis)
     {
         for (int j = 1; j < 10; j++)
@@ -1111,6 +1114,7 @@ namespace ImGuizmo
             gContext.mDrawList->AddLine(baseSSpace2, worldDirSSpace2, 0x80000000, 6.f);
         }
     }
+#endif
     
     static void DrawScaleGizmo(int type)
     {
@@ -2152,10 +2156,10 @@ namespace ImGuizmo
                 const vec_t indexVectorX = directionUnary[perpXIndex] * invert;
                 const vec_t indexVectorY = directionUnary[perpYIndex] * invert;
                 const vec_t boxOrigin = directionUnary[normalIndex] * -invert - indexVectorX - indexVectorY;
-                const vec_t faceCoords[4] = { directionUnary[normalIndex] + directionUnary[perpXIndex] + directionUnary[perpYIndex],
-                    directionUnary[normalIndex] + directionUnary[perpXIndex] - directionUnary[perpYIndex],
-                    directionUnary[normalIndex] - directionUnary[perpXIndex] - directionUnary[perpYIndex],
-                    directionUnary[normalIndex] - directionUnary[perpXIndex] + directionUnary[perpYIndex] };
+//                const vec_t faceCoords[4] = { directionUnary[normalIndex] + directionUnary[perpXIndex] + directionUnary[perpYIndex],
+//                    directionUnary[normalIndex] + directionUnary[perpXIndex] - directionUnary[perpYIndex],
+//                    directionUnary[normalIndex] - directionUnary[perpXIndex] - directionUnary[perpYIndex],
+//                    directionUnary[normalIndex] - directionUnary[perpXIndex] + directionUnary[perpYIndex] };
                 
                 // plan local space
                 const vec_t n = directionUnary[normalIndex] * invert;

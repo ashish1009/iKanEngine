@@ -23,6 +23,11 @@ namespace iKan {
         glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
 
         Ref<Framebuffer> m_FrameBuffer;
+        Ref<Scene>       m_ActiveScene;
+        
+        Entity m_CameraEntity;
+        
+        SceneHeirarchyPannel m_SceneHierarchyPannel;
     };
     
 }

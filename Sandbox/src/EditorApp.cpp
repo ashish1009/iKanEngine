@@ -9,8 +9,8 @@ class EditorApp : public iKan::Application
 public:
     EditorApp()
     {
-        PushLayer(new iKan::ExampleLayer());
-//        PushLayer(new iKan::EntityLayer());
+//        PushLayer(new iKan::ExampleLayer());
+        PushLayer(new iKan::EntityLayer());
     }
     
     virtual ~EditorApp()

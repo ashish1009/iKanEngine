@@ -51,7 +51,6 @@
 		B26D9D11250022CF003291C4 /* FrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D0F250022CF003291C4 /* FrameBuffer.cpp */; };
 		B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D12250022F5003291C4 /* OpenGLFrameBuffer.cpp */; };
 		B26D9D15250022F5003291C4 /* OpenGLFrameBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = B26D9D13250022F5003291C4 /* OpenGLFrameBuffer.h */; };
-		B27417492519E98E003CA8E9 /* libassimp.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B27417462519E98E003CA8E9 /* libassimp.5.0.0.dylib */; };
 		B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0724FA7E5C005EF655 /* KeyEvents.h */; };
 		B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0B24FAB248005EF655 /* MouseEvents.h */; };
 		B2752D0E24FABB8D005EF655 /* KeyCode.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D0D24FABB8D005EF655 /* KeyCode.h */; };
@@ -198,7 +197,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B27417492519E98E003CA8E9 /* libassimp.5.0.0.dylib in Frameworks */,
 				B2137A5824ED7A8700A14055 /* libImgui.a in Frameworks */,
 				B213761B24ED35AC00A14055 /* libGlad.a in Frameworks */,
 				B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */,

@@ -14,6 +14,8 @@ namespace iKan {
     
     void EntityLayer::OnAttach()
     {
+        ImGuiAPI::LightGreyBackground();
+        
         // TODO: Set the position of Shader later
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
         
@@ -22,7 +24,7 @@ namespace iKan {
         fbSpec.Height = 720;
         
         m_Framebuffer = Framebuffer::Create(fbSpec);
-        m_ActiveScene = Ref<Scene>::Create();
+        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRenderer::_2D);
         
         m_SquareEntity = m_ActiveScene->CreateEntity("Green Square");
         m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});

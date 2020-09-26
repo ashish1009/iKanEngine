@@ -12,11 +12,20 @@ namespace iKan {
     
     void EntityLayer::OnAttach()
     {
+        ImGuiAPI::LightGreyBackground();
+        
         FramebufferSpecification specs;
         specs.Width  = s_WindowWidth;
         specs.Height = s_WindowWidth;
         
         m_FrameBuffer = Framebuffer::Create(specs);
+        
+        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRenderer::_3D);
+        
+        m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
+        m_CameraEntity.AddComponent<CameraComponent>();
+        
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     
     void EntityLayer::OnDetach()
@@ -41,7 +50,8 @@ namespace iKan {
         m_FrameBuffer->Bind();
 
         Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
-        
+        m_ActiveScene->OnUpdate(timeStep);
+
         m_FrameBuffer->Unbind();
     }
     
@@ -52,6 +62,9 @@ namespace iKan {
         //------------------------ Stats and Version  ------------------------------------------------------
         ImGuiAPI::StatsAndFrameRate();
         ImGuiAPI::RendererVersion();
+        
+        //------------------------ SceneHierarchy Pannel  --------------------------------------------------
+        m_SceneHierarchyPannel.OnImguiender();
         
         //------------------------ View Port ---------------------------------------------------------------
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
