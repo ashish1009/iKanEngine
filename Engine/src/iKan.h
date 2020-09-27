@@ -26,6 +26,7 @@
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/Renderer/Camera.h>
 #include <iKan/Renderer/RenderStats.h>
+#include <iKan/Renderer/Model.h>
 
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Components.h>

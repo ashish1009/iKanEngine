@@ -118,14 +118,18 @@ namespace iKan {
     
     void Scene::Renderer3D()
     {
-        Renderer3D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
-        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-        for (auto entity : group)
-        {
-            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-            Renderer3D::DrawCube(transform, sprite.Color);
-        }
-        Renderer3D::EndScene();
+        // TODO: Fix
+        SceneRenderer::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
+        SceneRenderer::Draw();
+        
+//        Renderer3D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
+//        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+//        for (auto entity : group)
+//        {
+//            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+//            Renderer3D::DrawCube(transform, sprite.Color);
+//        }
+//        Renderer3D::EndScene();
     }
     
     // TODO: For now only for Mario Branch Need to be fix later

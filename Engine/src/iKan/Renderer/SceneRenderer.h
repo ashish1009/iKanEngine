@@ -12,6 +12,8 @@ namespace iKan {
         
         static void BeginScene(const Camera& camera, const glm::mat4& transform);
         
+        static void Draw();
+        
         static void EndScene();
         static void Flush();
         
