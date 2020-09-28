@@ -5,20 +5,20 @@
 #include <iKan/Renderer/Buffers.h>
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/RenderStats.h>
-#include <iKan/Renderer/Model.h>
+#include <iKan/Renderer/Mesh.h>
 
 namespace iKan {
     
     struct SceneRendererData
     {
-        Scope<Model> Model;
+        Scope<Mesh> Model;
         Ref<Shader>  Shader;
     };
     static SceneRendererData s_Data;
     
     void SceneRenderer::Init()
     {
-        s_Data.Model = CreateScope<Model>("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
+        s_Data.Model = CreateScope<Mesh>("../../Editor/assets/resources/objects/Sphare/sphere.obj");
         s_Data.Shader = Shader::Create("../../Editor/assets/shaders/CommonShader.glsl");
     }
     

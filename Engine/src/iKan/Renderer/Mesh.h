@@ -1,29 +1,33 @@
 #pragma once
+
 #include <iKan/Renderer/VertexArray.h>
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
 
 namespace iKan {
     
-    class Mesh
+    struct MeshVertex
+    {
+        glm::vec3 Position;
+        glm::vec3 Normal;
+        glm::vec2 TexCoords;
+        glm::vec3 Tangent;
+        glm::vec3 Bitangent;
+    };
+    
+    struct MeshTexture
+    {
+        Ref<Texture> Texture;
+        std::string  Type;
+        std::string  Path;
+    };
+    
+    class SubMesh
     {
     public:
-        struct MeshVertex {
-            glm::vec3 Position;
-            glm::vec3 Normal;
-            glm::vec2 TexCoords;
-            glm::vec3 Tangent;
-            glm::vec3 Bitangent;
-        };
-        
-        struct MeshTexture {
-            Ref<Texture> Texture;
-            std::string  Type;
-            std::string  Path;
-        };
         
     public:
-        Mesh(std::vector<MeshVertex> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture> textures);
+        SubMesh(std::vector<MeshVertex> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture> textures);
         
         void Draw(Shader &shader);
         
@@ -31,11 +35,30 @@ namespace iKan {
         std::vector<MeshVertex>     m_Vertices;
         std::vector<uint32_t>       m_Indices;
         std::vector<MeshTexture>    m_Textures;
-        //        uint32_t                    VAO;
         Ref<VertexArray>            m_VAO;
         
     private:
         void setupMesh();
+    };
+    
+    class Mesh
+    {
+    public:
+        Mesh(const std::string& path);
+        ~Mesh() = default;
+        
+        void Draw(Shader &shader);
+        
+    private:
+        void LoadModel(const std::string& path);
+        void ProcessNode(aiNode* node, const aiScene* scene);
+        SubMesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
+        std::vector<MeshTexture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+        
+    private:
+        std::vector<SubMesh>           m_Meshes;
+        std::string                 m_Directory;
+        std::vector<MeshTexture>  m_TexturesLoaded;
     };
     
 }

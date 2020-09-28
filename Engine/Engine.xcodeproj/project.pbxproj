@@ -79,10 +79,8 @@
 		B2CDABE525010F9A008C6BDF /* SceneCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CDABE325010F9A008C6BDF /* SceneCamera.cpp */; };
 		B2CDABE625010F9A008C6BDF /* SceneCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABE425010F9A008C6BDF /* SceneCamera.h */; };
 		B2CDABEA25012438008C6BDF /* ScriptableEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABE825012438008C6BDF /* ScriptableEntity.h */; };
-		B2E734FA2520FCEA00BD41D3 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E734F82520FCEA00BD41D3 /* Model.cpp */; };
-		B2E734FB2520FCEA00BD41D3 /* Model.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E734F92520FCEA00BD41D3 /* Model.h */; };
-		B2E735002520FCF500BD41D3 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E734FE2520FCF500BD41D3 /* Mesh.cpp */; };
-		B2E735012520FCF500BD41D3 /* Mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E734FF2520FCF500BD41D3 /* Mesh.h */; };
+		B2E734FA2520FCEA00BD41D3 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2E734F82520FCEA00BD41D3 /* Mesh.cpp */; };
+		B2E734FB2520FCEA00BD41D3 /* Mesh.h in Headers */ = {isa = PBXBuildFile; fileRef = B2E734F92520FCEA00BD41D3 /* Mesh.h */; };
 		B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */; };
 		B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */ = {isa = PBXBuildFile; fileRef = B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */; };
 		B2F0FC0424F80E960004443A /* GraphicsContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2F0FC0224F80E960004443A /* GraphicsContext.cpp */; };
@@ -192,10 +190,8 @@
 		B2CDABE325010F9A008C6BDF /* SceneCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneCamera.cpp; sourceTree = "<group>"; };
 		B2CDABE425010F9A008C6BDF /* SceneCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneCamera.h; sourceTree = "<group>"; };
 		B2CDABE825012438008C6BDF /* ScriptableEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScriptableEntity.h; sourceTree = "<group>"; };
-		B2E734F82520FCEA00BD41D3 /* Model.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Model.cpp; sourceTree = "<group>"; };
-		B2E734F92520FCEA00BD41D3 /* Model.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
-		B2E734FE2520FCF500BD41D3 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
-		B2E734FF2520FCF500BD41D3 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
+		B2E734F82520FCEA00BD41D3 /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		B2E734F92520FCEA00BD41D3 /* Mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Mesh.h; sourceTree = "<group>"; };
 		B2F0FBFD24F80DF90004443A /* OpenGlGraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlGraphicsContext.cpp; sourceTree = "<group>"; };
 		B2F0FBFE24F80DF90004443A /* OpenGlGraphicsContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlGraphicsContext.h; sourceTree = "<group>"; };
 		B2F0FC0224F80E960004443A /* GraphicsContext.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GraphicsContext.cpp; sourceTree = "<group>"; };
@@ -442,10 +438,8 @@
 		B2F0FC0124F80E870004443A /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
-				B2E734F82520FCEA00BD41D3 /* Model.cpp */,
-				B2E734F92520FCEA00BD41D3 /* Model.h */,
-				B2E734FE2520FCF500BD41D3 /* Mesh.cpp */,
-				B2E734FF2520FCF500BD41D3 /* Mesh.h */,
+				B2E734F82520FCEA00BD41D3 /* Mesh.cpp */,
+				B2E734F92520FCEA00BD41D3 /* Mesh.h */,
 				B264E226251F914A008C781A /* SceneRenderer.cpp */,
 				B264E227251F914A008C781A /* SceneRenderer.h */,
 				B22A8A542517C8A600D2B9C8 /* Renderer.cpp */,
@@ -502,7 +496,7 @@
 				B21F821E24F6D1D20040B427 /* Window.h in Headers */,
 				B2F0FC0A24F816F70004443A /* RenderAPI.h in Headers */,
 				B22A8A572517C8A600D2B9C8 /* Renderer.h in Headers */,
-				B2E734FB2520FCEA00BD41D3 /* Model.h in Headers */,
+				B2E734FB2520FCEA00BD41D3 /* Mesh.h in Headers */,
 				B213795324ED4E6400A14055 /* stb_image.h in Headers */,
 				B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */,
 				B24FF89424ED1AAB00884EDA /* Log.h in Headers */,
@@ -535,7 +529,6 @@
 				B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */,
 				B2752D1424FABDF3005EF655 /* Input.h in Headers */,
 				B25639DA251E6A9F00BF0F33 /* SceneHierarchyPannel.h in Headers */,
-				B2E735012520FCF500BD41D3 /* Mesh.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,7 +626,7 @@
 				B2FEC92924FC0A1900388451 /* ImguiLayer.cpp in Sources */,
 				B2FEC92524FBB5F800388451 /* LayerStack.cpp in Sources */,
 				B2752D1924FAC201005EF655 /* Application.cpp in Sources */,
-				B2E734FA2520FCEA00BD41D3 /* Model.cpp in Sources */,
+				B2E734FA2520FCEA00BD41D3 /* Mesh.cpp in Sources */,
 				B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */,
 				B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */,
 				B266521E24FECADF0032AF99 /* Texture.cpp in Sources */,
@@ -648,7 +641,6 @@
 				B266521424FEBA1A0032AF99 /* Shader.cpp in Sources */,
 				B2473FDB24FD22380099535D /* Buffers.cpp in Sources */,
 				B2473FD724FD1E350099535D /* OpenGlVertexArray.cpp in Sources */,
-				B2E735002520FCF500BD41D3 /* Mesh.cpp in Sources */,
 				B2528750251F207C0065826D /* ImGuizmo.cpp in Sources */,
 				B2473FD124FD1DB40099535D /* VertexArray.cpp in Sources */,
 				B2752D1D24FACD64005EF655 /* RenderCommand.cpp in Sources */,
