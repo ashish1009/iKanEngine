@@ -154,11 +154,13 @@ namespace iKan {
         
         // Bind textures
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+        {
+            RendererStatistics::TextureCount++;
             s_Data.TextureSlots[i]->Bind(i);
+        }
         
         // Render the Scene
         Renderer::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
-        RendererStatistics::DrawCalls++;
     }
     
     void Renderer2D::FlushAndReset()
@@ -197,7 +199,8 @@ namespace iKan {
         s_Data.QuadIndexCount += 6;
         
         RendererStatistics::QuadCount++;
-        
+        RendererStatistics::VertexCount += 4;
+        RendererStatistics::IndexCount += 6;
     }
     
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -270,6 +273,8 @@ namespace iKan {
         s_Data.QuadIndexCount += 6;
         
         RendererStatistics::QuadCount++;
+        RendererStatistics::VertexCount += 4;
+        RendererStatistics::IndexCount += 6;
     }
     
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -341,6 +346,8 @@ namespace iKan {
         s_Data.QuadIndexCount += 6;
         
         RendererStatistics::QuadCount++;
+        RendererStatistics::VertexCount += 4;
+        RendererStatistics::IndexCount += 6;
     }
     
     void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)

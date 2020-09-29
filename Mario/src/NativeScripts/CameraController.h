@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Layers/Player.h>
-#include <Layers/MarioCamera.h>
+#include <Entity/Player.h>
+#include <Entity/MarioCamera.h>
 
 #define CAMERA_START 15
 #define PLAYER_CENTER 15

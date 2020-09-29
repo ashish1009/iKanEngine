@@ -45,7 +45,7 @@ namespace iKan {
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
         uint32_t TextureSlotIndex = 1; /* 0 = white texture */
         
-        // Basic vertex of quad
+        // Basic vertex of
         glm::vec4 CubeVertexPositions[8];
     };
     static Renderer3DData s_Data;
@@ -171,7 +171,6 @@ namespace iKan {
         
         // Render the Scene
         Renderer::DrawIndexed(s_Data.CubeVertexArray, s_Data.CubeIndexCount);
-        RendererStatistics::DrawCalls++;
     }
     
     void Renderer3D::FlushAndReset()
@@ -211,7 +210,8 @@ namespace iKan {
         
         // TODO: Fix
         RendererStatistics::QuadCount += NumCubeVertices;
-        
+        RendererStatistics::VertexCount += 4;
+        RendererStatistics::IndexCount  += 6;
     }
     
 }

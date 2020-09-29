@@ -1,5 +1,5 @@
-#include <Layers/MarioCamera.h>
-#include <Layers/SceneMap.h>
+#include <Entity/MarioCamera.h>
+#include <Entity/SceneMap.h>
 
 #include <NativeScripts/CameraController.h>
 

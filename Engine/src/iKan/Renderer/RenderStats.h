@@ -7,10 +7,11 @@ namespace iKan {
     public:
         static uint32_t DrawCalls;
         static uint32_t QuadCount;
+        static uint32_t VertexCount;
+        static uint32_t IndexCount;
+        static uint32_t TextureCount;
         
         static void Reset();
-        static uint32_t GetTotalVertexCount() { return QuadCount * 4; }
-        static uint32_t GetTotalIndexCount() { return QuadCount * 6; }
     };
 
     

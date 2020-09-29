@@ -1,7 +1,7 @@
 #include "MarioLayer.h"
 
-#include <Layers/Background.h>
-#include <Layers/MarioCamera.h>
+#include <Entity/Background.h>
+#include <Entity/MarioCamera.h>
 
 namespace iKan {
         
@@ -16,6 +16,8 @@ namespace iKan {
 
     void MarioLayer::OnAttach()
     {
+        ImGuiAPI::LightGreyBackground();
+        
         /*
          Upload the Shader
          NOTE: Upload the shader before calling Renderer2D::Begin Scene
@@ -98,7 +100,7 @@ namespace iKan {
         }
         
         // Stats 
-        ImGuiAPI::StatsAndFrameRate();
+        ImGuiAPI::StatsAndFrameRate((ImGuiRendererType)m_Scene->GetRendererType());
         ImGuiAPI::RendererVersion();
         
         m_SceneHierarchyPannel.OnImguiender();

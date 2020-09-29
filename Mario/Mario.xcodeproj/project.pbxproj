@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2031C9925223E92004F12CC /* libassimp.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2031C9825223E91004F12CC /* libassimp.5.0.0.dylib */; };
 		B22B330D24FFAAE00002D428 /* MarioApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22B330C24FFAAE00002D428 /* MarioApp.cpp */; };
 		B22B331524FFB02D0002D428 /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331424FFB02D0002D428 /* libEngine.a */; };
 		B22B331724FFB0330002D428 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331624FFB0330002D428 /* Cocoa.framework */; };
@@ -31,6 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B2031C9825223E91004F12CC /* libassimp.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.0.0.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.0.0.dylib; sourceTree = "<group>"; };
 		B22B330924FFAAE00002D428 /* Mario */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Mario; sourceTree = BUILT_PRODUCTS_DIR; };
 		B22B330C24FFAAE00002D428 /* MarioApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioApp.cpp; sourceTree = "<group>"; };
 		B22B331424FFB02D0002D428 /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2031C9925223E92004F12CC /* libassimp.5.0.0.dylib in Frameworks */,
 				B22B331B24FFB0460002D428 /* IOKit.framework in Frameworks */,
 				B22B331924FFB0390002D428 /* OpenGL.framework in Frameworks */,
 				B22B331724FFB0330002D428 /* Cocoa.framework in Frameworks */,
@@ -88,7 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				B235BAD82507FB65001A0197 /* NativeScripts */,
-				B2C881F92504ECD100254B98 /* Layers */,
+				B2C881F92504ECD100254B98 /* Entity */,
 				B22B330C24FFAAE00002D428 /* MarioApp.cpp */,
 				B26D9D022500072E003291C4 /* MarioLayer.cpp */,
 				B26D9D032500072E003291C4 /* MarioLayer.h */,
@@ -99,6 +102,7 @@
 		B22B331324FFB02D0002D428 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2031C9825223E91004F12CC /* libassimp.5.0.0.dylib */,
 				B22B331A24FFB0460002D428 /* IOKit.framework */,
 				B22B331824FFB0390002D428 /* OpenGL.framework */,
 				B22B331624FFB0330002D428 /* Cocoa.framework */,
@@ -132,7 +136,7 @@
 			path = shaders;
 			sourceTree = "<group>";
 		};
-		B2C881F92504ECD100254B98 /* Layers */ = {
+		B2C881F92504ECD100254B98 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
 				B235F84C2504032600473DAF /* SceneMap.h */,
@@ -143,7 +147,7 @@
 				B235F84F25040B2F00473DAF /* Player.cpp */,
 				B235F85025040B2F00473DAF /* Player.h */,
 			);
-			path = Layers;
+			path = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,7 +358,9 @@
 					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 					"${PROJECT_DIR}/src",
+					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
 				);
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -381,7 +387,9 @@
 					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 					"${PROJECT_DIR}/src",
+					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
 				);
+				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

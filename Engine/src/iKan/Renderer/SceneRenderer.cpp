@@ -11,15 +11,26 @@ namespace iKan {
     
     struct SceneRendererData
     {
+        static const uint32_t MaxTextureSlots = 16;
         Scope<Mesh> Model;
-        Ref<Shader>  Shader;
+        Ref<Shader> Shader;
     };
     static SceneRendererData s_Data;
     
     void SceneRenderer::Init()
     {
-        s_Data.Model = CreateScope<Mesh>("../../Editor/assets/resources/objects/Sphare/sphere.obj");
+        s_Data.Model = CreateScope<Mesh>("../../Editor/assets/resources/objects/backpack/backpack.obj");
+        
+        // Creating array of Slots to store hem in shader
+        int32_t samplers[s_Data.MaxTextureSlots];
+        for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
+            samplers[i] = i;
+        
+        // Creating Shader and storing all the slots
         s_Data.Shader = Shader::Create("../../Editor/assets/shaders/CommonShader.glsl");
+        s_Data.Shader->Bind();
+        s_Data.Shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+
     }
     
     void SceneRenderer::SetShaader(const std::string &path)

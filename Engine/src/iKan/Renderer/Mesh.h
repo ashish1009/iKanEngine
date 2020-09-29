@@ -4,6 +4,11 @@
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
 
+// Assimp Library
+#include <assimp/Importer.hpp>      // C++ importer interface
+#include <assimp/scene.h>           // Output data structure
+#include <assimp/postprocess.h>     // Post processing flags
+
 namespace iKan {
     
     struct MeshVertex

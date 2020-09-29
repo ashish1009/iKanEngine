@@ -43,6 +43,7 @@ namespace iKan {
 
         void OnUpdate(TimeStep ts);
         Collisions CollisionDetection(Entity& entity, Speeds speeds);
+        SceneRendererType GetRendererType() const { return m_ScceneRenderer; }
         
     private:
         Entity GetMainCameraEntity();

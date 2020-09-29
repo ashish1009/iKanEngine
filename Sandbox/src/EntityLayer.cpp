@@ -163,16 +163,7 @@ namespace iKan {
             ImGui::EndMenuBar();
         }
         
-        ImGui::Begin("Stats");
-        
-        ImGui::Text("Draw Calls   : %d", RendererStatistics::DrawCalls);
-        ImGui::Text("Quad Counts  : %d", RendererStatistics::QuadCount);
-        ImGui::Text("Vertex Count : %d", RendererStatistics::GetTotalVertexCount());
-        ImGui::Text("Index Cound  : %d", RendererStatistics::GetTotalIndexCount());
-        ImGui::Separator();
-        
-        ImGui::End();
-        
+        ImGuiAPI::StatsAndFrameRate((ImGuiRendererType)m_ActiveScene->GetRendererType());
         ImGuiAPI::RendererVersion();
         
         m_SceneHierarchyPannel.OnImguiender();

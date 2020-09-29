@@ -21,11 +21,6 @@
 // ImGui
 #include <imgui.h>
 
-// Assimp Library 
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
-
 // Glm Match Library
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>

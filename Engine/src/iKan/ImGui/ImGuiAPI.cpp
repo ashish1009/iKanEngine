@@ -16,15 +16,17 @@ namespace iKan {
         ImGui::End();
     }
     
-    void ImGuiAPI::StatsAndFrameRate()
+    void ImGuiAPI::StatsAndFrameRate(ImGuiRendererType type)
     {
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
 
         ImGui::Text("Draw Calls : %d", RendererStatistics::DrawCalls);
-        ImGui::Text("Quad Counts : %d", RendererStatistics::QuadCount);
-        ImGui::Text("VertexCounts : %d", RendererStatistics::GetTotalVertexCount());
-        ImGui::Text("Index Counts : %d", RendererStatistics::GetTotalIndexCount());
+        ImGui::Text("Vertex Counts : %d", RendererStatistics::VertexCount);
+        ImGui::Text("Index Counts : %d", RendererStatistics::IndexCount);
+        ImGui::Text("Texture Counts : %d", RendererStatistics::TextureCount);
+        if (type == ImGuiRendererType::_2D)
+            ImGui::Text("Quad Counts : %d", RendererStatistics::QuadCount);
         ImGui::End();
         
         //------------------------ Frame Rates -------------------------------------------------------------

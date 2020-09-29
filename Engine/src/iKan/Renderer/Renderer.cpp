@@ -2,6 +2,7 @@
 #include <iKan/Renderer/Renderer2D.h>
 #include <iKan/Renderer/SceneRenderer.h>
 #include <iKan/Renderer/Renderer3D.h>
+#include <iKan/Renderer/RenderStats.h>
 
 namespace iKan {
     
@@ -34,6 +35,7 @@ namespace iKan {
     
     void Renderer::DrawIndexed(const Ref<VertexArray> &vertexArray, uint32_t count)
     {
+        RendererStatistics::DrawCalls++;
         RenderCommand::DrawIndexed(vertexArray, count);
     }
     

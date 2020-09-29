@@ -67,7 +67,7 @@ namespace iKan {
         ImGuiAPI::EnableDcocking();
         
         //------------------------ Stats and Version  ------------------------------------------------------
-        ImGuiAPI::StatsAndFrameRate();
+        ImGuiAPI::StatsAndFrameRate((ImGuiRendererType)m_ActiveScene->GetRendererType());
         ImGuiAPI::RendererVersion();
         
         //------------------------ SceneHierarchy Pannel  --------------------------------------------------

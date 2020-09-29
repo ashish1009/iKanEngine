@@ -1,5 +1,6 @@
 #include <iKan/Renderer/Mesh.h>
 #include <iKan/Renderer/Renderer.h>
+#include <iKan/Renderer/RenderStats.h>
 
 namespace iKan {
     
@@ -11,37 +12,23 @@ namespace iKan {
     
     void SubMesh::Draw(Shader &shader)
     {
-        uint32_t diffuseNr  = 1;
-        uint32_t specularNr = 1;
-        uint32_t normalNr   = 1;
-        uint32_t heightNr   = 1;
-        
         uint32_t slot = 0;
         for(auto texture : m_Textures)
         {
-            std::string number;
-            std::string name = texture.Type;
-            if(name == "texture_diffuse")
-                number = std::to_string(diffuseNr++);
-            else if(name == "texture_specular")
-                number = std::to_string(specularNr++);
-            else if(name == "texture_normal")
-                number = std::to_string(normalNr++);
-            else if(name == "texture_height")
-                number = std::to_string(heightNr++);
-            
-            // now set the sampler to the correct texture unit
-            shader.Bind();
-            shader.SetUniformInt1((name + number).c_str(), slot);
-            
-            // and finally bind the texture
             texture.Texture->Bind(slot);
             slot++;
+            RendererStatistics::TextureCount++;
         }
+        
+        shader.Bind();
+        shader.SetUniformFloat1("u_NumTexture", (float)slot);
         
         m_VAO->Bind();
         Renderer::DrawIndexed(m_VAO);
         m_VAO->Unbind();
+        
+        RendererStatistics::VertexCount += m_Vertices.size();
+        RendererStatistics::IndexCount  += m_Indices.size();
     }
     
     void SubMesh::setupMesh()
@@ -174,19 +161,19 @@ namespace iKan {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
         
         // 1. diffuse maps
-        std::vector<MeshTexture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+        std::vector<MeshTexture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "u_Texture.Diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         
         // 2. specular maps
-        std::vector<MeshTexture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+        std::vector<MeshTexture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "u_Texture.Specular");
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
         
         // 3. normal maps
-        std::vector<MeshTexture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+        std::vector<MeshTexture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "u_Texture.Height");
         textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
         
         // 4. height maps
-        std::vector<MeshTexture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+        std::vector<MeshTexture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "u_Texture.Ambient");
         textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
         
         return SubMesh(vertices, indices, textures);
