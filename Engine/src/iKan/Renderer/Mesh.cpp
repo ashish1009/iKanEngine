@@ -4,6 +4,33 @@
 
 namespace iKan {
     
+    static std::string GetStringFromAiTextureType(aiTextureType type)
+    {
+        switch (type)
+        {
+            case aiTextureType_NONE              : return "None";                   break;
+            case aiTextureType_DIFFUSE           : return "Diffuse";                break;
+            case aiTextureType_SPECULAR          : return "Specular";               break;
+            case aiTextureType_AMBIENT           : return "Ambient";                break;
+            case aiTextureType_EMISSIVE          : return "Emissive";               break;
+            case aiTextureType_HEIGHT            : return "Height";                 break;
+            case aiTextureType_NORMALS           : return "Normal";                 break;
+            case aiTextureType_SHININESS         : return "Shininess";              break;
+            case aiTextureType_OPACITY           : return "Opacity";                break;
+            case aiTextureType_DISPLACEMENT      : return "Dispacement";            break;
+            case aiTextureType_LIGHTMAP          : return "Lightmap";               break;
+            case aiTextureType_REFLECTION        : return "Reflection";             break;
+            case aiTextureType_BASE_COLOR        : return "BaseColor";              break;
+            case aiTextureType_NORMAL_CAMERA     : return "NormalCamera";           break;
+            case aiTextureType_EMISSION_COLOR    : return "EmissionColor";          break;
+            case aiTextureType_METALNESS         : return "Metalness";              break;
+            case aiTextureType_DIFFUSE_ROUGHNESS : return "DiffuseRoughness";       break;
+            case aiTextureType_AMBIENT_OCCLUSION : return "AmbientOcclusion";       break;
+            case aiTextureType_UNKNOWN           : return "Unknow";                 break;
+            case _aiTextureType_Force32Bit       : return "MAX";                    break;
+        }
+    }
+    
     SubMesh::SubMesh(std::vector<MeshVertex> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture> textures)
     : m_Vertices(vertices), m_Indices(indices), m_Textures(textures)
     {
@@ -160,21 +187,11 @@ namespace iKan {
         
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
         
-        // 1. diffuse maps
-        std::vector<MeshTexture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "u_Texture.Diffuse");
-        textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-        
-        // 2. specular maps
-        std::vector<MeshTexture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "u_Texture.Specular");
-        textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-        
-        // 3. normal maps
-        std::vector<MeshTexture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "u_Texture.Height");
-        textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-        
-        // 4. height maps
-        std::vector<MeshTexture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "u_Texture.Ambient");
-        textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+        for (uint32_t i = aiTextureType_DIFFUSE; i < aiTextureType_UNKNOWN; i++)
+        {
+            std::vector<MeshTexture> maps = LoadMaterialTextures(material, aiTextureType(i), GetStringFromAiTextureType(aiTextureType(i)));
+            textures.insert(textures.end(), maps.begin(), maps.end());
+        }
         
         return SubMesh(vertices, indices, textures);
     }
