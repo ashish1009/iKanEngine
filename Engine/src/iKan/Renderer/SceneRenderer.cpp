@@ -9,6 +9,8 @@
 
 namespace iKan {
     
+    static glm::vec3 s_LightPos = { 0.0f, 0.0f, 0.0f };
+    
     struct SceneRendererData
     {
         static const uint32_t MaxTextureSlots = 16;
@@ -67,6 +69,18 @@ namespace iKan {
     
     void SceneRenderer::Draw()
     {
+        s_Data.Shader->Bind();
+        s_Data.Shader->SetUniformFloat3("u_Light.Position", s_LightPos);
+        s_Data.Shader->SetUniformFloat3("u_ViewPos", s_Data.SceneCamera.ViewMatrix[3]);
+        
+        // light properties
+        s_Data.Shader->SetUniformFloat3("u_Light.Ambient", { 0.2f, 0.2f, 0.2f });
+        s_Data.Shader->SetUniformFloat3("u_Light.Diffuse", { 0.5f, 0.5f, 0.5f });
+        s_Data.Shader->SetUniformFloat3("u_Light.Specular", { 1.0f, 1.0f, 1.0f });
+        
+        // material properties
+        s_Data.Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
+        
         s_Data.Mesh->Draw(*s_Data.Shader.Raw());
     }
     
