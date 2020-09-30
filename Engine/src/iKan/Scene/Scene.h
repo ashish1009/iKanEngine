@@ -7,6 +7,8 @@
 
 #include <iKan/Renderer/Renderer2D.h>
 
+#include <iKan/Editor/EditorCamera.h>
+
 namespace iKan {
     
     typedef int Collisions;
@@ -42,6 +44,7 @@ namespace iKan {
         void OnViewportResize(uint32_t width, uint32_t height);
 
         void OnUpdate(TimeStep ts);
+        void OnEditorUpdate(TimeStep ts, const EditorCamera& camera);
         Collisions CollisionDetection(Entity& entity, Speeds speeds);
         SceneRendererType GetRendererType() const { return m_ScceneRenderer; }
         

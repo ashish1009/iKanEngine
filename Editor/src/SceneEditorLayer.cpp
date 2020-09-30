@@ -5,6 +5,7 @@ namespace iKan {
     SceneCamera camera;
 
     SceneEditor::SceneEditor()
+    : m_EditorCamera(glm::perspectiveFov(glm::radians(45.0f), 1280.0f, 720.0f, 0.1f, 10000.0f))
     {
     }
     
@@ -24,9 +25,6 @@ namespace iKan {
         
         m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
-        m_CameraEntity = m_ActiveScene->CreateEntity("Camera");
-        m_CameraEntity.AddComponent<CameraComponent>();
-        
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     
@@ -36,6 +34,7 @@ namespace iKan {
     
     void SceneEditor::OnEvent(Event& event)
     {
+        m_EditorCamera.OnEvent(event);
     }
     
     void SceneEditor::OnUpdate(TimeStep timeStep)
@@ -49,6 +48,8 @@ namespace iKan {
             m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         }
         
+        m_EditorCamera.OnUpdate(timeStep);
+        
         RendererStatistics::Reset();
         m_FrameBuffer->Bind();
         
@@ -56,7 +57,7 @@ namespace iKan {
         
         camera.SetViewportSize(1600.0f, 800.0f);
         
-        m_ActiveScene->OnUpdate(timeStep);
+        m_ActiveScene->OnEditorUpdate(timeStep, m_EditorCamera);
         
         m_FrameBuffer->Unbind();
     }
@@ -88,6 +89,7 @@ namespace iKan {
         ImGui::End();
         ImGui::PopStyleVar();
         
-        ImGuiAPI::EndDocking();    }
+        ImGuiAPI::EndDocking();
+    }
     
 }

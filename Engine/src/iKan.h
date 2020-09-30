@@ -33,5 +33,6 @@
 #include <iKan/Scene/Scene.h>
 
 #include <iKan/Editor/SceneHierarchyPannel.h>
+#include <iKan/Editor/EditorCamera.h>
 
 #include <iKan/ImGui/ImGuiAPI.h>

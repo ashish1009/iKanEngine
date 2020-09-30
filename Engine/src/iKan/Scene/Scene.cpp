@@ -26,6 +26,13 @@ namespace iKan {
         return entity;
     }
     
+    // Designed for 3D only
+    void Scene::OnEditorUpdate(TimeStep ts, const EditorCamera& camera)
+    {
+        SceneRenderer::BeginScene({ camera, camera.GetViewMatrix() });
+        SceneRenderer::Draw();
+    }
+    
     void Scene::OnUpdate(TimeStep ts)
     {
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
@@ -118,18 +125,14 @@ namespace iKan {
     
     void Scene::Renderer3D()
     {
-        // TODO: Fix
-        SceneRenderer::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
-        SceneRenderer::Draw();
-        
-//        Renderer3D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
-//        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-//        for (auto entity : group)
-//        {
-//            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-//            Renderer3D::DrawCube(transform, sprite.Color);
-//        }
-//        Renderer3D::EndScene();
+        Renderer3D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
+        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+        for (auto entity : group)
+        {
+            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+            Renderer3D::DrawCube(transform, sprite.Color);
+        }
+        Renderer3D::EndScene();
     }
     
     // TODO: For now only for Mario Branch Need to be fix later

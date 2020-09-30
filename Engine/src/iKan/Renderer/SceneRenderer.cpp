@@ -12,14 +12,17 @@ namespace iKan {
     struct SceneRendererData
     {
         static const uint32_t MaxTextureSlots = 16;
-        Scope<Mesh> Model;
+        
+        SceneRendererCamera SceneCamera;
+        
+        Ref<Mesh>   Mesh;
         Ref<Shader> Shader;
     };
     static SceneRendererData s_Data;
     
     void SceneRenderer::Init()
     {
-        s_Data.Model = CreateScope<Mesh>("../../Editor/assets/resources/objects/backpack/backpack.obj");
+        s_Data.Mesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
         
         // Creating array of Slots to store hem in shader
         int32_t samplers[s_Data.MaxTextureSlots];
@@ -41,10 +44,10 @@ namespace iKan {
     {
     }
     
-    void SceneRenderer::BeginScene(const Camera& camera, const glm::mat4& transform)
+    void SceneRenderer::BeginScene(const SceneRendererCamera& camera)
     {
         // Upload Camera View Projection Matris to shader
-        glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
+        glm::mat4 viewProj = camera.Camera.GetProjection() * camera.ViewMatrix;
         
         s_Data.Shader->Bind();
         s_Data.Shader->SetUniformMat4("u_ViewProjection", viewProj);
@@ -64,7 +67,7 @@ namespace iKan {
     
     void SceneRenderer::Draw()
     {
-        s_Data.Model->Draw(*s_Data.Shader.Raw());
+        s_Data.Mesh->Draw(*s_Data.Shader.Raw());
     }
     
 }

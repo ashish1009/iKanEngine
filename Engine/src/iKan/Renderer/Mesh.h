@@ -46,7 +46,7 @@ namespace iKan {
         void setupMesh();
     };
     
-    class Mesh
+    class Mesh : public RefCounted
     {
     public:
         Mesh(const std::string& path);
