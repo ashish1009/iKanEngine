@@ -67,6 +67,7 @@ uniform LightFlag u_LightFlag;
 
 void main()
 {
+    int slotBinded = 0;
     vec4 result = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
     vec3 norm      = normalize(v_Normal);
@@ -77,6 +78,7 @@ void main()
     {
         vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
         result += vec4(ambient, 1.0f);
+        slotBinded++;
     }
     
     // diffuse
@@ -85,6 +87,7 @@ void main()
         float diff   = max(dot(norm, lightDir), 0.0);
         vec3 diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
         result += vec4(diffuse, 1.0f);
+        slotBinded++;
     }
     
     // specular
@@ -95,6 +98,12 @@ void main()
         float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
         vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
         result += vec4(specular, 1.0f);
+        slotBinded++;
+    }
+    
+    for (int i = slotBinded; i < int(u_NumTexture); i++)
+    {
+        result *= texture(u_Textures[i], v_TexCoord);
     }
     
     color = result;

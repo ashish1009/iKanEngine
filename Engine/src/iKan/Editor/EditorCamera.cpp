@@ -3,8 +3,9 @@
 
 namespace iKan {
     
-    EditorCamera::EditorCamera(const glm::mat4& projectionMatrix)
-    : Camera(projectionMatrix)
+    EditorCamera::EditorCamera(float fov, float aspectRatio, float near, float far)
+    : m_PerspectiveFOV(fov), m_AspectRatio(aspectRatio), m_PerspectiveNear(near), m_PerspectiveFar(far)
+//    : Camera(projectionMatrix)
     {
         m_Rotation   = glm::vec3(90.0f, 0.0f, 0.0f);
         m_FocalPoint = glm::vec3(0.0f);
@@ -15,7 +16,16 @@ namespace iKan {
         m_Yaw = 3.0f * (float)M_PI / 4.0f;
         m_Pitch = M_PI / 4.0f;
         
+        UpdateProjectionMatrix();
         UpdateCameraView();
+    }
+    
+    void EditorCamera::SetViewportSize(uint32_t width, uint32_t height)
+    {
+        m_ViewportWidth  = width;
+        m_ViewportHeight = height;
+        m_AspectRatio    = (float)m_ViewportWidth / (float)m_ViewportHeight;
+        UpdateProjectionMatrix();
     }
     
     void EditorCamera::UpdateCameraView()

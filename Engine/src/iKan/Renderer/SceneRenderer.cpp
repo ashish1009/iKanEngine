@@ -16,14 +16,18 @@ namespace iKan {
         SceneRendererCamera SceneCamera;
         Light ActiveLight;
         
-        Ref<Mesh>   Mesh;
-        Ref<Shader> Shader;
+        Ref<Texture> WhiteTexture;
+        Ref<Mesh>    LightShere;
+        Ref<Mesh>    Mesh;
+        Ref<Shader>  Shader;
     };
     static SceneRendererData s_Data;
     
     void SceneRenderer::Init()
     {
-        s_Data.Mesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+        s_Data.Mesh         = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
+//        s_Data.Mesh         = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+//        s_Data.LightShere   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Sphare/sphere.obj");
         
         // Creating array of Slots to store hem in shader
         int32_t samplers[s_Data.MaxTextureSlots];
@@ -34,7 +38,10 @@ namespace iKan {
         s_Data.Shader = Shader::Create("../../Editor/assets/shaders/CommonShader.glsl");
         s_Data.Shader->Bind();
         s_Data.Shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
-
+        
+        // Creating whote texture for cololful quads witout any texture or sprite
+        uint32_t whiteTextureData = 0xffffffff;
+        s_Data.WhiteTexture       = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
     }
     
     void SceneRenderer::SetShaader(const std::string &path)
@@ -54,6 +61,8 @@ namespace iKan {
         
         s_Data.Shader->Bind();
         s_Data.Shader->SetUniformMat4("u_ViewProjection", viewProj);
+        
+        s_Data.WhiteTexture->Bind();
     }
     
     void SceneRenderer::EndScene()
@@ -91,6 +100,7 @@ namespace iKan {
         // material properties
         s_Data.Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
         
+//        s_Data.LightShere->Draw(*s_Data.Shader.Raw());
         s_Data.Mesh->Draw(*s_Data.Shader.Raw());
     }
     

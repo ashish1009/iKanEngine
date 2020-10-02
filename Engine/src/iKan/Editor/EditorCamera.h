@@ -12,7 +12,7 @@ namespace iKan {
         EditorCamera() = default;
         ~EditorCamera() = default;
         
-        EditorCamera(const glm::mat4& projectionMatrix);
+        EditorCamera(float fov, float aspectRatio, float near, float far);
         
         void OnUpdate(TimeStep ts);
         void OnEvent(Event& e);
@@ -20,7 +20,7 @@ namespace iKan {
         float GetDistance() const { return m_Distance; }
         void SetDistance(float distance) { m_Distance = distance; }
         
-        void SetViewportSize(uint32_t width, uint32_t height) { m_ViewportWidth = width; m_ViewportHeight = height; }
+        void SetViewportSize(uint32_t width, uint32_t height);
         
         const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
         const glm::vec3& GetPosition() const { return m_Position; }
@@ -39,6 +39,7 @@ namespace iKan {
         float GetYaw() const { return m_Yaw; }
         
     private:
+        void UpdateProjectionMatrix() { m_Projection = glm::perspective(m_PerspectiveFOV, m_AspectRatio, m_PerspectiveNear, m_PerspectiveFar); } 
         void UpdateCameraView();
         
         bool OnMouseScroll(MouseScrollEvent& e);
@@ -54,6 +55,11 @@ namespace iKan {
         float ZoomSpeed() const;
 
     private:
+        float m_PerspectiveFOV  = glm::radians(45.0f);
+        float m_PerspectiveNear = 0.01f, m_PerspectiveFar = 1000.0f;
+        
+        float m_AspectRatio = 0.0f;
+        
         glm::mat4 m_ViewMatrix;
         glm::vec3 m_Position, m_Rotation, m_FocalPoint;
         
