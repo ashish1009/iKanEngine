@@ -9,13 +9,12 @@
 
 namespace iKan {
     
-    static glm::vec3 s_LightPos = { 0.0f, 0.0f, 0.0f };
-    
     struct SceneRendererData
     {
         static const uint32_t MaxTextureSlots = 16;
         
         SceneRendererCamera SceneCamera;
+        Light ActiveLight;
         
         Ref<Mesh>   Mesh;
         Ref<Shader> Shader;
@@ -46,10 +45,12 @@ namespace iKan {
     {
     }
     
-    void SceneRenderer::BeginScene(const SceneRendererCamera& camera)
+    void SceneRenderer::BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera)
     {
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.Camera.GetProjection() * camera.ViewMatrix;
+        
+        s_Data.ActiveLight = scene->GetLight();
         
         s_Data.Shader->Bind();
         s_Data.Shader->SetUniformMat4("u_ViewProjection", viewProj);
@@ -69,15 +70,24 @@ namespace iKan {
     
     void SceneRenderer::Draw()
     {
+        auto& lightProp = s_Data.ActiveLight;
         s_Data.Shader->Bind();
-        s_Data.Shader->SetUniformFloat3("u_Light.Position", s_LightPos);
+        s_Data.Shader->SetUniformFloat3("u_Light.Position", lightProp.Position);
         s_Data.Shader->SetUniformFloat3("u_ViewPos", s_Data.SceneCamera.ViewMatrix[3]);
         
         // light properties
-        s_Data.Shader->SetUniformFloat3("u_Light.Ambient", { 0.2f, 0.2f, 0.2f });
-        s_Data.Shader->SetUniformFloat3("u_Light.Diffuse", { 0.5f, 0.5f, 0.5f });
-        s_Data.Shader->SetUniformFloat3("u_Light.Specular", { 1.0f, 1.0f, 1.0f });
+        s_Data.Shader->SetUniformInt1("u_LightFlag.IsAmbient", lightProp.LightFlag.IsAmbient);
+        if (lightProp.LightFlag.IsAmbient)
+            s_Data.Shader->SetUniformFloat3("u_Light.Ambient", lightProp.Ambient);
         
+        s_Data.Shader->SetUniformInt1("u_LightFlag.IsDiffuse", lightProp.LightFlag.IsDiffuse);
+        if (lightProp.LightFlag.IsAmbient)
+            s_Data.Shader->SetUniformFloat3("u_Light.Diffuse", lightProp.Diffuse);
+
+        s_Data.Shader->SetUniformInt1("u_LightFlag.IsSpecular", lightProp.LightFlag.IsSpecular);
+        if (lightProp.LightFlag.IsAmbient)
+            s_Data.Shader->SetUniformFloat3("u_Light.Specular", lightProp.Specular);
+
         // material properties
         s_Data.Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
         

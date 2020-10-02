@@ -23,6 +23,23 @@ namespace iKan {
 
     class Entity;
     
+    struct Light
+    {
+        struct Flag
+        {
+            bool IsAmbient  = false;
+            bool IsDiffuse  = false;
+            bool IsSpecular = false;
+        };
+        
+        Flag LightFlag;
+        
+        glm::vec3 Position = { 0.0f, 0.0f, -3.0f };
+        glm::vec3 Ambient  = { 0.2f, 0.2f, 0.2f };
+        glm::vec3 Diffuse  = { 0.5f, 0.5f, 0.5f };
+        glm::vec3 Specular = { 1.0f, 1.0f, 1.0f };
+    };
+    
     class Scene : public RefCounted
     {
     public:
@@ -47,6 +64,8 @@ namespace iKan {
         void OnEditorUpdate(TimeStep ts, const EditorCamera& camera);
         Collisions CollisionDetection(Entity& entity, Speeds speeds);
         SceneRendererType GetRendererType() const { return m_ScceneRenderer; }
+        Light& GetLight() { return m_Light; }
+        const Light& GetLight() const { return m_Light; }
         
     private:
         Entity GetMainCameraEntity();
@@ -64,6 +83,7 @@ namespace iKan {
         glm::mat4* m_CameraTransform = nullptr;
         
         SceneRendererType m_ScceneRenderer;
+        Light m_Light;
 
         friend class Entity;
         friend class SceneHeirarchyPannel;

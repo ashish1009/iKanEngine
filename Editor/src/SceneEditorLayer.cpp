@@ -66,6 +66,73 @@ namespace iKan {
     {
         ImGuiAPI::EnableDcocking();
         
+        {
+            ImGui::Begin("Setting");
+            if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Light"))
+            {
+                auto& light = m_ActiveScene->GetLight();
+                
+                ImGui::Columns(2);
+                ImGui::Text("Position");
+                ImGui::NextColumn();
+                ImGui::PushItemWidth(-1);
+
+                ImGui::DragFloat3("##Position", &light.Position.x);
+                
+                ImGui::PopItemWidth();
+                ImGui::NextColumn();
+                ImGui::Columns(1);
+
+                ImGui::Checkbox("IsAmbient", &light.LightFlag.IsAmbient);
+                if (light.LightFlag.IsAmbient)
+                {
+                    ImGui::Columns(2);
+                    ImGui::Text("Ambient");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat3("##Ambient", &light.Ambient.x);
+                    
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    ImGui::Columns(1);
+                }
+                
+                ImGui::Checkbox("IsDiffuse", &light.LightFlag.IsDiffuse);
+                if (light.LightFlag.IsDiffuse)
+                {
+                    ImGui::Columns(2);
+                    ImGui::Text("Diffuse");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat3("##Diffuse", &light.Diffuse.x);
+                    
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    ImGui::Columns(1);
+                }
+                
+                ImGui::Checkbox("IsSpecular", &light.LightFlag.IsSpecular);
+                if (light.LightFlag.IsSpecular)
+                {
+                    ImGui::Columns(2);
+                    ImGui::Text("Specular");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat3("##Specular", &light.Specular.x);
+                    
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    ImGui::Columns(1);
+                }
+                
+                ImGui::TreePop();
+            }
+            ImGui::End();
+        }
+        
         //------------------------ Stats and Version  ------------------------------------------------------
         ImGuiAPI::StatsAndFrameRate((ImGuiRendererType)m_ActiveScene->GetRendererType());
         ImGuiAPI::RendererVersion();

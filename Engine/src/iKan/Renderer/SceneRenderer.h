@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iKan/Renderer/Camera.h>
+#include <iKan/Scene/Scene.h>
 
 namespace iKan {
 
@@ -16,7 +17,7 @@ namespace iKan {
         static void Init();
         static void Shutdown();
         
-        static void BeginScene(const SceneRendererCamera& camera);
+        static void BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera);
         
         static void Draw();
         

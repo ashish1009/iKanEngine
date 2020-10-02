@@ -29,7 +29,7 @@ namespace iKan {
     // Designed for 3D only
     void Scene::OnEditorUpdate(TimeStep ts, const EditorCamera& camera)
     {
-        SceneRenderer::BeginScene({ camera, camera.GetViewMatrix() });
+        SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix() });
         SceneRenderer::Draw();
     }
     

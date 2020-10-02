@@ -33,9 +33,6 @@ layout(location = 0) out vec4 color;
 
 struct Material
 {
-//    sampler2D Diffuse;
-//    sampler2D Specular;
-    
     float Shininess;
 };
 
@@ -47,6 +44,13 @@ struct Light
     vec3 Specular;
 };
 
+struct LightFlag
+{
+    bool IsAmbient;
+    bool IsDiffuse;
+    bool IsSpecular;
+};
+
 in vec3 v_Position;
 in vec3 v_Normal;
 in vec2 v_TexCoord;
@@ -56,27 +60,42 @@ in vec3 v_Bitangent;
 uniform float       u_NumTexture;
 uniform sampler2D   u_Textures[16];
 
-uniform vec3     u_ViewPos;
-uniform Material u_Material;
-uniform Light    u_Light;
+uniform vec3      u_ViewPos;
+uniform Material  u_Material;
+uniform Light     u_Light;
+uniform LightFlag u_LightFlag;
 
 void main()
 {
+    vec4 result = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+
+    vec3 norm      = normalize(v_Normal);
+    vec3 lightDir  = normalize(u_Light.Position - v_Position);
+    
     // ambient
-    vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
+    if (bool(u_LightFlag.IsAmbient))
+    {
+        vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
+        result += vec4(ambient, 1.0f);
+    }
     
     // diffuse
-    vec3  norm      = normalize(v_Normal);
-    vec3  lightDir  = normalize(u_Light.Position - v_Position);
-    float diff      = max(dot(norm, lightDir), 0.0);
-    vec3  diffuse   = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
+    if (bool(u_LightFlag.IsDiffuse))
+    {
+        float diff   = max(dot(norm, lightDir), 0.0);
+        vec3 diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
+        result += vec4(diffuse, 1.0f);
+    }
     
     // specular
-    vec3  viewDir    = normalize(u_ViewPos - v_Position);
-    vec3  reflectDir = reflect(-lightDir, norm);
-    float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
-    vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
+    if (bool(u_LightFlag.IsSpecular))
+    {
+        vec3  viewDir    = normalize(u_ViewPos - v_Position);
+        vec3  reflectDir = reflect(-lightDir, norm);
+        float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
+        vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
+        result += vec4(specular, 1.0f);
+    }
     
-    vec3 result = ambient + diffuse + specular;
-    color = vec4(result, 1.0);
+    color = result;
 }
