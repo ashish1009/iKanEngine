@@ -59,6 +59,8 @@ namespace iKan {
         
         Entity CreateEntity(const std::string& name = std::string());
         void OnViewportResize(uint32_t width, uint32_t height);
+        
+        void SetLightPosition(const glm::mat4& lightTransform);
 
         void OnUpdate(TimeStep ts);
         void OnEditorUpdate(TimeStep ts, const EditorCamera& camera);

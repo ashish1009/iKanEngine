@@ -70,15 +70,10 @@ namespace iKan {
             ImGui::Columns(2);
             ImGui::Text("Tag");
             ImGui::NextColumn();
-            ImGui::PushItemWidth(-1);
-
             if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
             {
                 tag = std::string(buffer);
             }
-            
-            ImGui::PopItemWidth();
-            ImGui::NextColumn();
             ImGui::Columns(1);
             
             ImGui::Separator();

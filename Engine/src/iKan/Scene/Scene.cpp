@@ -141,6 +141,14 @@ namespace iKan {
         Renderer3D::EndScene();
     }
     
+    void Scene::SetLightPosition(const glm::mat4& lightTransform)
+    {
+        auto& lightPosition = lightTransform[3];
+        m_Light.Position.x = lightPosition[0];
+        m_Light.Position.y = lightPosition[1];
+        m_Light.Position.z = lightPosition[2];
+    }
+    
     // TODO: For now only for Mario Branch Need to be fix later
     Collisions Scene::CollisionDetection(Entity& ce, Speeds speeds)
     {
