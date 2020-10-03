@@ -30,7 +30,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B2031C7D2521F6A5004F12CC /* CommonShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CommonShader.glsl; sourceTree = "<group>"; };
+		B2031C7D2521F6A5004F12CC /* ADS_Shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ADS_Shader.glsl; sourceTree = "<group>"; };
 		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -39,6 +39,7 @@
 		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorLayer.cpp; sourceTree = "<group>"; };
 		B253892B251FBF8300E5FD98 /* SceneEditorLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneEditorLayer.h; sourceTree = "<group>"; };
+		B2C4842A25288C5200751771 /* LightSourceShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LightSourceShader.glsl; sourceTree = "<group>"; };
 		B2CDABEB25013E1D008C6BDF /* EntityLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EntityLayer.cpp; sourceTree = "<group>"; };
 		B2CDABEC25013E1D008C6BDF /* EntityLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EntityLayer.h; sourceTree = "<group>"; };
 		B2E735022520FE2500BD41D3 /* libassimp.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.0.0.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.0.0.dylib; sourceTree = "<group>"; };
@@ -71,7 +72,8 @@
 		B22B32D224FF6B7A0002D428 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
-				B2031C7D2521F6A5004F12CC /* CommonShader.glsl */,
+				B2C4842A25288C5200751771 /* LightSourceShader.glsl */,
+				B2031C7D2521F6A5004F12CC /* ADS_Shader.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

@@ -37,6 +37,8 @@ namespace iKan {
         ShaderLibrary() = default;
         ~ShaderLibrary() = default;
         
+        std::unordered_map<std::string, Ref<Shader>>& GetShaders() { return m_Shaders; }
+        
         Ref<Shader> Get(const std::string& name);
         
         Ref<Shader> Load(const std::string& path);

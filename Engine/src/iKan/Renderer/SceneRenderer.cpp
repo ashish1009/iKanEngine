@@ -18,7 +18,8 @@ namespace iKan {
         Light ActiveLight;
         
         Ref<Texture> WhiteTexture;
-        Ref<Shader>  Shader;
+        
+        ShaderLibrary Shaders;
     };
     static SceneRendererData s_Data;
     
@@ -30,9 +31,16 @@ namespace iKan {
             samplers[i] = i;
         
         // Creating Shader and storing all the slots
-        s_Data.Shader = Shader::Create("../../Editor/assets/shaders/CommonShader.glsl");
-        s_Data.Shader->Bind();
-        s_Data.Shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+        s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
+        s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
+        
+        for (auto kv : s_Data.Shaders.GetShaders())
+        {
+            auto shader = kv.second;
+            shader->Bind();
+            shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+            shader->Unbind();
+        }
         
         // Creating whote texture for cololful quads witout any texture or sprite
         uint32_t whiteTextureData = 0xffffffff;
@@ -54,35 +62,41 @@ namespace iKan {
         
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.Camera.GetProjection() * camera.ViewMatrix;
+        auto& lightProp = s_Data.ActiveLight;
                 
-        s_Data.Shader->Bind();
-        s_Data.Shader->SetUniformMat4("u_ViewProjection", viewProj);
+        for (auto kv : s_Data.Shaders.GetShaders())
+        {
+            auto shader = kv.second;
+            shader->Bind();
+            shader->SetUniformMat4("u_ViewProjection", viewProj);
+            shader->Unbind();
+        }
+        
+        auto ads_Shader = s_Data.Shaders.Get("ADS_Shader");
+        // Upload uniforms
+        ads_Shader->Bind();
+        ads_Shader->SetUniformFloat3("u_Light.Position", lightProp.Position);
+        ads_Shader->SetUniformFloat3("u_ViewPos", s_Data.SceneCamera.ViewMatrix[3]);
+        
+        // light properties
+        ads_Shader->SetUniformInt1("u_LightFlag.IsAmbient", lightProp.LightFlag.IsAmbient);
+        if (lightProp.LightFlag.IsAmbient)
+            ads_Shader->SetUniformFloat3("u_Light.Ambient", lightProp.Ambient);
+        
+        ads_Shader->SetUniformInt1("u_LightFlag.IsDiffuse", lightProp.LightFlag.IsDiffuse);
+        if (lightProp.LightFlag.IsAmbient)
+            ads_Shader->SetUniformFloat3("u_Light.Diffuse", lightProp.Diffuse);
+        
+        ads_Shader->SetUniformInt1("u_LightFlag.IsSpecular", lightProp.LightFlag.IsSpecular);
+        if (lightProp.LightFlag.IsAmbient)
+            ads_Shader->SetUniformFloat3("u_Light.Specular", lightProp.Specular);
+        
+        // material properties
+        ads_Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
+        ads_Shader->Unbind();
         
         // Binding White Texture
         s_Data.WhiteTexture->Bind();
-        
-        // Upload uniforms
-        auto& lightProp = s_Data.ActiveLight;
-        auto shader = s_Data.Shader;
-        shader->Bind();
-        shader->SetUniformFloat3("u_Light.Position", lightProp.Position);
-        shader->SetUniformFloat3("u_ViewPos", s_Data.SceneCamera.ViewMatrix[3]);
-        
-        // light properties
-        shader->SetUniformInt1("u_LightFlag.IsAmbient", lightProp.LightFlag.IsAmbient);
-        if (lightProp.LightFlag.IsAmbient)
-            shader->SetUniformFloat3("u_Light.Ambient", lightProp.Ambient);
-        
-        shader->SetUniformInt1("u_LightFlag.IsDiffuse", lightProp.LightFlag.IsDiffuse);
-        if (lightProp.LightFlag.IsAmbient)
-            shader->SetUniformFloat3("u_Light.Diffuse", lightProp.Diffuse);
-        
-        shader->SetUniformInt1("u_LightFlag.IsSpecular", lightProp.LightFlag.IsSpecular);
-        if (lightProp.LightFlag.IsAmbient)
-            shader->SetUniformFloat3("u_Light.Specular", lightProp.Specular);
-        
-        // material properties
-        shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
     }
     
     void SceneRenderer::EndScene()
@@ -106,10 +120,14 @@ namespace iKan {
                                  glm::toMat4(glm::quat(glm::radians(rotation))) *
                                  glm::scale(glm::mat4(1.0f), scale);
         
-        s_Data.Shader->Bind();
-        s_Data.Shader->SetUniformMat4("u_Transform", modTransform);
-
-        mesh->Draw(*s_Data.Shader.Raw());
+        for (auto kv : s_Data.Shaders.GetShaders())
+        {
+            auto shader = kv.second;
+            shader->Bind();
+            shader->SetUniformMat4("u_Transform", modTransform);
+            shader->Unbind();
+        }
+        mesh->Draw(*s_Data.Shaders.Get("LightSourceShader").Raw());
     }
     
 }

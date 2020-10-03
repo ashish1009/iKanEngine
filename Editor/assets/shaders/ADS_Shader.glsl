@@ -7,6 +7,7 @@ layout(location = 2) in vec2 a_TexCoord;
 layout(location = 3) in vec3 a_Tangent;
 layout(location = 4) in vec3 a_Bitangent;
 
+uniform mat4 u_Transform;
 uniform mat4 u_ViewProjection;
 
 out vec3 v_Position;
@@ -23,7 +24,7 @@ void main()
     v_Tangent   = a_Tangent;
     v_Bitangent = a_Bitangent;
     
-    gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+    gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 }
 
 #type fragment
