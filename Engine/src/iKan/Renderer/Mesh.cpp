@@ -48,6 +48,8 @@ namespace iKan {
         }
         
         shader.Bind();
+        shader.SetUniformInt1("u_NumTextureSlots", slot);
+        
         Renderer::DrawIndexed(m_VAO);
         
         m_VAO->Unbind();

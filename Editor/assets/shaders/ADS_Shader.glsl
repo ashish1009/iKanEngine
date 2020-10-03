@@ -58,7 +58,8 @@ in vec2 v_TexCoord;
 in vec3 v_Tangent;
 in vec3 v_Bitangent;
 
-uniform sampler2D   u_Textures[16];
+uniform int       u_NumTextureSlots;
+uniform sampler2D u_Textures[16];
 
 uniform vec3      u_ViewPos;
 uniform Material  u_Material;
@@ -67,34 +68,43 @@ uniform LightFlag u_LightFlag;
 
 void main()
 {
+    int slotBinded = 0;
     vec4 result = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
     vec3 norm      = normalize(v_Normal);
     vec3 lightDir  = normalize(u_Light.Position - v_Position);
 
-    // ambient
-    if (bool(u_LightFlag.IsAmbient))
+    if (slotBinded < u_NumTextureSlots)
     {
-        vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
-        result += vec4(ambient, 1.0f);
+        // ambient
+        if (bool(u_LightFlag.IsAmbient))
+        {
+            vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
+            result += vec4(ambient, 1.0f);
+        }
+
+        // diffuse
+        if (bool(u_LightFlag.IsDiffuse))
+        {
+            float diff   = max(dot(norm, lightDir), 0.0);
+            vec3 diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
+            result += vec4(diffuse, 1.0f);
+        }
+        slotBinded++;
     }
 
-    // diffuse
-    if (bool(u_LightFlag.IsDiffuse))
+    if (slotBinded < u_NumTextureSlots)
     {
-        float diff   = max(dot(norm, lightDir), 0.0);
-        vec3 diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
-        result += vec4(diffuse, 1.0f);
-    }
-
-    // specular
-    if (bool(u_LightFlag.IsSpecular))
-    {
-        vec3  viewDir    = normalize(u_ViewPos - v_Position);
-        vec3  reflectDir = reflect(-lightDir, norm);
-        float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
-        vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
-        result += vec4(specular, 1.0f);
+        // specular
+        if (bool(u_LightFlag.IsSpecular))
+        {
+            vec3  viewDir    = normalize(u_ViewPos - v_Position);
+            vec3  reflectDir = reflect(-lightDir, norm);
+            float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
+            vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
+            result += vec4(specular, 1.0f);
+        }
+        slotBinded++;
     }
     color = result;
 }

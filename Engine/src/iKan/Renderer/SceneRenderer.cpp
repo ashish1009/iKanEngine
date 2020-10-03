@@ -30,16 +30,16 @@ namespace iKan {
             samplers[i] = i;
         
         // Creating Shader and storing all the slots
-        s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
-        s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
+        auto lightSourceShader = s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
+        lightSourceShader->Bind();
+        lightSourceShader->SetUniformInt1("u_Texture", 0);
+        lightSourceShader->Unbind();
+
+        auto adsShader = s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
         
-        for (auto kv : s_Data.Shaders.GetShaders())
-        {
-            auto shader = kv.second;
-            shader->Bind();
-            shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
-            shader->Unbind();
-        }
+        adsShader->Bind();
+        adsShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+        adsShader->Unbind();
         
         // Creating whote texture for cololful quads witout any texture or sprite
         uint32_t whiteTextureData = 0xffffffff;

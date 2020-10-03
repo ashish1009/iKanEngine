@@ -10,19 +10,11 @@ layout(location = 4) in vec3 a_Bitangent;
 uniform mat4 u_Transform;
 uniform mat4 u_ViewProjection;
 
-out vec3 v_Position;
-out vec3 v_Normal;
 out vec2 v_TexCoord;
-out vec3 v_Tangent;
-out vec3 v_Bitangent;
 
 void main()
 {
-    v_Position  = a_Position;
-    v_Normal    = a_Normal;
     v_TexCoord  = a_TexCoord;
-    v_Tangent   = a_Tangent;
-    v_Bitangent = a_Bitangent;
     
     gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 }
@@ -32,22 +24,15 @@ void main()
 
 layout(location = 0) out vec4 color;
 
-in vec3 v_Position;
-in vec3 v_Normal;
 in vec2 v_TexCoord;
-in vec3 v_Tangent;
-in vec3 v_Bitangent;
 
-uniform float       u_NumTexture;
-uniform sampler2D   u_Textures[16];
+uniform int       u_NumTextureSlots;
+uniform sampler2D u_Texture;
 
 void main()
 {
-    int slotBinded = 0;
-    vec4 result = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-    
-    for (int i = slotBinded; i < int(u_NumTexture); i++)
-        result *= texture(u_Textures[i], v_TexCoord);
-    
-    color = result;
+    if (u_NumTextureSlots > 0)
+        color = vec4(texture(u_Texture, v_TexCoord).rgb, 1.0f);
+    else
+        color = vec4(1.0f, 11.0f, 1.0f, 1.0f);
 }
