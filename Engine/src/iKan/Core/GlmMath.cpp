@@ -1,8 +1,8 @@
-#include <iKan/Core/Math.h>
+#include <iKan/Core/GlmMath.h>
 
 namespace iKan {
     
-    std::tuple<glm::vec3, glm::quat, glm::vec3> Math::GetTransformDecomposition(const glm::mat4& transform)
+    std::tuple<glm::vec3, glm::quat, glm::vec3> GlmMath::GetTransformDecomposition(const glm::mat4& transform)
     {
         glm::vec3 scale, translation, skew;
         glm::vec4 perspective;

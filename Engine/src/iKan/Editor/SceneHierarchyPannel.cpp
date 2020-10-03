@@ -1,5 +1,5 @@
 #include <iKan/Editor/SceneHierarchyPannel.h>
-#include <iKan/Core/Math.h>
+#include <iKan/Core/GlmMath.h>
 
 namespace iKan {
         
@@ -89,7 +89,7 @@ namespace iKan {
             auto& tc = entity.GetComponent<TransformComponent>();
             if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
             {
-                auto [translation, rotationQuat, scale] = Math::GetTransformDecomposition(tc);
+                auto [translation, rotationQuat, scale] = GlmMath::GetTransformDecomposition(tc);
                 glm::vec3 rotation = glm::degrees(glm::eulerAngles(rotationQuat));
 
                 ImGui::Columns(2);

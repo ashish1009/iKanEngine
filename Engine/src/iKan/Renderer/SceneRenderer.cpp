@@ -6,7 +6,7 @@
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/RenderStats.h>
 #include <iKan/Renderer/Mesh.h>
-#include <iKan/Core/Math.h>
+#include <iKan/Core/GlmMath.h>
 
 namespace iKan {
     
@@ -18,7 +18,6 @@ namespace iKan {
         Light ActiveLight;
         
         Ref<Texture> WhiteTexture;
-        Ref<Mesh>    LightShere;
         Ref<Shader>  Shader;
     };
     static SceneRendererData s_Data;
@@ -100,12 +99,12 @@ namespace iKan {
     
     void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform)
     {
-        auto [translation, rotationQuat, scale] = Math::GetTransformDecomposition(transform);
+        auto [translation, rotationQuat, scale] = GlmMath::GetTransformDecomposition(transform);
         glm::vec3 rotation = glm::degrees(glm::eulerAngles(rotationQuat));
         
-        glm::mat4 modTransform = glm::translate(glm::mat4(1.0f), translation) *
-        glm::toMat4(glm::quat(glm::radians(rotation))) *
-        glm::scale(glm::mat4(1.0f), scale);
+        glm::mat4 modTransform = glm::translate(glm::mat4(1.0f), s_Data.ActiveLight.Position) *
+                                 glm::toMat4(glm::quat(glm::radians(rotation))) *
+                                 glm::scale(glm::mat4(1.0f), scale);
         
         s_Data.Shader->Bind();
         s_Data.Shader->SetUniformMat4("u_Transform", modTransform);

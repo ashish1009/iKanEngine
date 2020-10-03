@@ -2,7 +2,7 @@
 
 namespace iKan {
     
-    class Math
+    class GlmMath
     {
     public:
         static std::tuple<glm::vec3, glm::quat, glm::vec3> GetTransformDecomposition(const glm::mat4& transform);
