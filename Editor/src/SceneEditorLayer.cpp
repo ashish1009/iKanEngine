@@ -25,16 +25,32 @@ namespace iKan {
         
         m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
-        Ref<Mesh> lightMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
-        m_LightEntity       = m_ActiveScene->CreateEntity("Light Source");
-        m_LightEntity.AddComponent<MeshComponent>(lightMesh).ADS = false;
+//        Ref<Mesh> lightMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
+//        m_LightEntity       = m_ActiveScene->CreateEntity("Light Source");
+//        m_LightEntity.AddComponent<MeshComponent>(lightMesh).ADS = false;
+//
+//        auto& transform = m_LightEntity.GetComponent<TransformComponent>().Transform;
+//        transform       = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::toMat4(glm::quat(glm::radians(glm::vec3(0.0f)))) * glm::scale(glm::mat4(1.0f), glm::vec3(0.2));
         
-        auto& transform = m_LightEntity.GetComponent<TransformComponent>().Transform;
-        transform       = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::toMat4(glm::quat(glm::radians(glm::vec3(0.0f)))) * glm::scale(glm::mat4(1.0f), glm::vec3(0.2));
+//        Ref<Mesh> moonMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
+//        auto moonEntity    = m_ActiveScene->CreateEntity("Moon");
+//        moonEntity.AddComponent<MeshComponent>(moonMesh).ADS = false;
+
+        Ref<Mesh> bagMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+        auto bagEntity    = m_ActiveScene->CreateEntity("Bag");
+        bagEntity.AddComponent<MeshComponent>(bagMesh);
         
-        Ref<Mesh> bagMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
-        auto entity       = m_ActiveScene->CreateEntity("Bag");
-        entity.AddComponent<MeshComponent>(bagMesh);
+        bagEntity.GetComponent<TransformComponent>().Transform[3][0] = 3;
+
+//        Ref<Mesh> pokemonMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
+//        auto pokemonEntity    = m_ActiveScene->CreateEntity("Pokemon");
+//        pokemonEntity.AddComponent<MeshComponent>(pokemonMesh).ADS = false;
+//        
+//        pokemonEntity.GetComponent<TransformComponent>().Transform[3][0] = -3;
+//        
+//        Ref<Mesh> groundMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/GroundPlane/GroundPlane.obj");
+//        auto groundEntity    = m_ActiveScene->CreateEntity("Ground");
+//        groundEntity.AddComponent<MeshComponent>(groundMesh).ADS = false;
         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
@@ -91,10 +107,10 @@ namespace iKan {
 
                 ImGui::DragFloat3("##Position", &light.Position.x);
                 
-                auto& lightPosition = m_LightEntity.GetComponent<TransformComponent>().Transform[3];
-                lightPosition[0] = light.Position.x;
-                lightPosition[1] = light.Position.y;
-                lightPosition[2] = light.Position.z;
+//                auto& lightPosition = m_LightEntity.GetComponent<TransformComponent>().Transform[3];
+//                lightPosition[0] = light.Position.x;
+//                lightPosition[1] = light.Position.y;
+//                lightPosition[2] = light.Position.z;
                 
                 ImGui::PopItemWidth();
                 ImGui::NextColumn();

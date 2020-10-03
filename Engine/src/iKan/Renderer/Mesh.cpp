@@ -48,11 +48,10 @@ namespace iKan {
         }
         
         shader.Bind();
-        shader.SetUniformFloat1("u_NumTexture", (float)slot);
-        
-        m_VAO->Bind();
         Renderer::DrawIndexed(m_VAO);
+        
         m_VAO->Unbind();
+        shader.Unbind();
         
         RendererStatistics::VertexCount += m_Vertices.size();
         RendererStatistics::IndexCount  += m_Indices.size();

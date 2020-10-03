@@ -29,10 +29,11 @@ namespace iKan {
     void Scene::OnEditorUpdate(TimeStep ts, const EditorCamera& camera)
     {
         SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix() });
-        auto group = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
+        // TODO: Tag component for debug only
+        auto group = m_Registry.group<TagComponent, TransformComponent>(entt::get<MeshComponent>);
         for (auto entity : group)
         {
-            const auto [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
+            const auto [tag, transform, mesh] = group.get<TagComponent, TransformComponent, MeshComponent>(entity);
             SceneRenderer::DrawMesh(mesh, transform, mesh.ADS);
         }
         SceneRenderer::EndScene();

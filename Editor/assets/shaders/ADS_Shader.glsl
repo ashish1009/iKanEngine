@@ -18,7 +18,7 @@ out vec3 v_Bitangent;
 
 void main()
 {
-    v_Position  = vec3(u_Transform * vec4(a_Position, 1.0));;
+    v_Position  = a_Position;
     v_Normal    = a_Normal;
     v_TexCoord  = a_TexCoord;
     v_Tangent   = a_Tangent;
@@ -58,7 +58,6 @@ in vec2 v_TexCoord;
 in vec3 v_Tangent;
 in vec3 v_Bitangent;
 
-uniform float       u_NumTexture;
 uniform sampler2D   u_Textures[16];
 
 uniform vec3      u_ViewPos;
@@ -68,29 +67,26 @@ uniform LightFlag u_LightFlag;
 
 void main()
 {
-    int slotBinded = 0;
     vec4 result = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
     vec3 norm      = normalize(v_Normal);
-    vec3 lightDir  = normalize(v_Position - u_Light.Position);
-    
+    vec3 lightDir  = normalize(u_Light.Position - v_Position);
+
     // ambient
     if (bool(u_LightFlag.IsAmbient))
     {
         vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
         result += vec4(ambient, 1.0f);
-        slotBinded++;
     }
-    
+
     // diffuse
     if (bool(u_LightFlag.IsDiffuse))
     {
         float diff   = max(dot(norm, lightDir), 0.0);
         vec3 diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
         result += vec4(diffuse, 1.0f);
-        slotBinded++;
     }
-    
+
     // specular
     if (bool(u_LightFlag.IsSpecular))
     {
@@ -99,13 +95,6 @@ void main()
         float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
         vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
         result += vec4(specular, 1.0f);
-        slotBinded++;
     }
-    
-    for (int i = slotBinded; i < int(u_NumTexture); i++)
-    {
-        result *= texture(u_Textures[i], v_TexCoord);
-    }
-    
     color = result;
 }
