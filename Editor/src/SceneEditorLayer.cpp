@@ -25,6 +25,10 @@ namespace iKan {
         
         m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
+        Ref<Mesh> lightMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
+        auto lightEntity = m_ActiveScene->CreateEntity("Light Source");
+        lightEntity.AddComponent<MeshComponent>(lightMesh);
+        
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     

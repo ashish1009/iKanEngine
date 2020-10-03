@@ -30,7 +30,14 @@ namespace iKan {
     void Scene::OnEditorUpdate(TimeStep ts, const EditorCamera& camera)
     {
         SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix() });
-        SceneRenderer::Draw();
+        auto group = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
+        for (auto entity : group)
+        {
+            const auto [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
+
+            SceneRenderer::DrawMesh(mesh, transform);
+        }
+        SceneRenderer::EndScene();
     }
     
     void Scene::OnUpdate(TimeStep ts)

@@ -1,18 +1,8 @@
-#include "SceneHierarchyPannel.h"
+#include <iKan/Editor/SceneHierarchyPannel.h>
+#include <iKan/Core/Math.h>
 
 namespace iKan {
-    
-    static std::tuple<glm::vec3, glm::quat, glm::vec3> GetTransformDecomposition(const glm::mat4& transform)
-    {
-        glm::vec3 scale, translation, skew;
-        glm::vec4 perspective;
-        glm::quat orientation;
-        glm::decompose(transform, scale, orientation, translation, skew, perspective);
         
-        // TODO: improve api for perspective and skew
-        return { translation, orientation, scale };
-    }
-    
     SceneHeirarchyPannel::SceneHeirarchyPannel(const Ref<Scene>& context)
     {
         SetContext(context);
@@ -99,7 +89,7 @@ namespace iKan {
             auto& tc = entity.GetComponent<TransformComponent>();
             if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
             {
-                auto [translation, rotationQuat, scale] = GetTransformDecomposition(tc);
+                auto [translation, rotationQuat, scale] = Math::GetTransformDecomposition(tc);
                 glm::vec3 rotation = glm::degrees(glm::eulerAngles(rotationQuat));
 
                 ImGui::Columns(2);

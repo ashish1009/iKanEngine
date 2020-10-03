@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iKan/Renderer/Camera.h>
+#include <iKan/Renderer/Mesh.h>
+
 #include <iKan/Scene/Scene.h>
 
 namespace iKan {
@@ -19,7 +21,7 @@ namespace iKan {
         
         static void BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera);
         
-        static void Draw();
+        static void DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform);
         
         static void EndScene();
         static void Flush();

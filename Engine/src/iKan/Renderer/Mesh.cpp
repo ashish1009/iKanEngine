@@ -84,7 +84,7 @@ namespace iKan {
         LoadModel(path);
     }
     
-    void Mesh::Draw(Shader &shader)
+    void Mesh::Draw(Shader &shader) const 
     {
         for(auto mesh : m_Meshes)
             mesh.Draw(shader);

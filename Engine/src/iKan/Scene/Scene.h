@@ -27,9 +27,9 @@ namespace iKan {
     {
         struct Flag
         {
-            bool IsAmbient  = false;
-            bool IsDiffuse  = false;
-            bool IsSpecular = false;
+            bool IsAmbient  = true;
+            bool IsDiffuse  = true;
+            bool IsSpecular = true;
         };
         
         Flag LightFlag;

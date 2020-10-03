@@ -4,6 +4,7 @@
 #include <iKan/Scene/ScriptableEntity.h>
 
 #include <iKan/Renderer/Texture.h>
+#include <iKan/Renderer/Mesh.h>
 
 namespace iKan {
     
@@ -82,4 +83,16 @@ namespace iKan {
         ScriptableEntity* Instance = nullptr;
     };
     
+    struct MeshComponent
+    {
+        Ref<iKan::Mesh> Mesh;
+        
+        MeshComponent() = default;
+        MeshComponent(const MeshComponent& other) = default;
+        MeshComponent(const Ref<iKan::Mesh>& mesh)
+        : Mesh(mesh) {}
+        
+        operator Ref<iKan::Mesh> () { return Mesh; }
+    };
+
 }

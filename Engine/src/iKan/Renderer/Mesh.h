@@ -52,7 +52,7 @@ namespace iKan {
         Mesh(const std::string& path);
         ~Mesh() = default;
         
-        void Draw(Shader &shader);
+        void Draw(Shader &shader) const;
         
     private:
         void LoadModel(const std::string& path);

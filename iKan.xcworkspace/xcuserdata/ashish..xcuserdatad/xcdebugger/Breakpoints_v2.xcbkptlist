@@ -7,17 +7,79 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D2D734AE-7DDD-44D8-9163-9CEDDA5CD1A2"
+            uuid = "3F0BDE7C-4F1D-4D76-98BE-57B6069784B2"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Engine/src/iKan/Renderer/SceneRenderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "SceneRenderer::Draw()"
+            startingLineNumber = "117"
+            endingLineNumber = "117">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7D2F9468-8D06-48B8-AB24-416D352483B5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Engine/src/iKan/Scene/Scene.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "Scene::OnEditorUpdate(ts, camera)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7D2F9468-8D06-48B8-AB24-416D352483B5 - ba6bac75221750b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iKan::Scene::OnEditorUpdate(iKan::TimeStep, iKan::EditorCamera const&amp;)"
+                  moduleName = "Editor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ashish./iKan/GitHub/iKanEngine/Engine/src/iKan/Scene/Scene.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "251">
+               </Location>
+               <Location
+                  uuid = "7D2F9468-8D06-48B8-AB24-416D352483B5 - ba6bac75221750b3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "iKan::Scene::OnEditorUpdate(iKan::TimeStep, iKan::EditorCamera const&amp;)"
+                  moduleName = "Editor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ashish./iKan/GitHub/iKanEngine/Engine/src/iKan/Scene/Scene.cpp"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34"
+                  offsetFromSymbolStart = "349">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "23959164-2095-452E-9898-331B741640EE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Editor/src/SceneEditorLayer.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
