@@ -85,6 +85,8 @@ namespace iKan {
     
     struct MeshComponent
     {
+        bool ADS = true;
+        
         Ref<iKan::Mesh> Mesh;
         
         MeshComponent() = default;

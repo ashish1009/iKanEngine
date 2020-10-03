@@ -6,7 +6,6 @@
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/RenderStats.h>
 #include <iKan/Renderer/Mesh.h>
-#include <iKan/Core/GlmMath.h>
 
 namespace iKan {
     
@@ -111,23 +110,18 @@ namespace iKan {
     {
     }
     
-    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform)
+    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, bool isADS)
     {
-        auto [translation, rotationQuat, scale] = GlmMath::GetTransformDecomposition(transform);
-        glm::vec3 rotation = glm::degrees(glm::eulerAngles(rotationQuat));
-        
-        glm::mat4 modTransform = glm::translate(glm::mat4(1.0f), s_Data.ActiveLight.Position) *
-                                 glm::toMat4(glm::quat(glm::radians(rotation))) *
-                                 glm::scale(glm::mat4(1.0f), scale);
-        
         for (auto kv : s_Data.Shaders.GetShaders())
         {
             auto shader = kv.second;
             shader->Bind();
-            shader->SetUniformMat4("u_Transform", modTransform);
+            shader->SetUniformMat4("u_Transform", transform);
             shader->Unbind();
         }
-        mesh->Draw(*s_Data.Shaders.Get("LightSourceShader").Raw());
+        
+        auto renderShader = (isADS) ? s_Data.Shaders.Get("ADS_Shader") : s_Data.Shaders.Get("LightSourceShader");
+        mesh->Draw(*renderShader.Raw());
     }
     
 }

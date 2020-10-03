@@ -25,9 +25,16 @@ namespace iKan {
         
         m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
-        Ref<Mesh> lightMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
-        auto lightEntity = m_ActiveScene->CreateEntity("Light Source");
-        lightEntity.AddComponent<MeshComponent>(lightMesh);
+        Ref<Mesh> lightMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
+        m_LightEntity       = m_ActiveScene->CreateEntity("Light Source");
+        m_LightEntity.AddComponent<MeshComponent>(lightMesh).ADS = false;
+        
+        auto& transform = m_LightEntity.GetComponent<TransformComponent>().Transform;
+        transform       = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::toMat4(glm::quat(glm::radians(glm::vec3(0.0f)))) * glm::scale(glm::mat4(1.0f), glm::vec3(0.2));
+        
+        Ref<Mesh> bagMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
+        auto entity       = m_ActiveScene->CreateEntity("Bag");
+        entity.AddComponent<MeshComponent>(bagMesh);
         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
@@ -83,6 +90,11 @@ namespace iKan {
                 ImGui::PushItemWidth(-1);
 
                 ImGui::DragFloat3("##Position", &light.Position.x);
+                
+                auto& lightPosition = m_LightEntity.GetComponent<TransformComponent>().Transform[3];
+                lightPosition[0] = light.Position.x;
+                lightPosition[1] = light.Position.y;
+                lightPosition[2] = light.Position.z;
                 
                 ImGui::PopItemWidth();
                 ImGui::NextColumn();

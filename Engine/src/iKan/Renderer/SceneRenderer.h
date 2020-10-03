@@ -21,7 +21,7 @@ namespace iKan {
         
         static void BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera);
         
-        static void DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform);
+        static void DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, bool isADS = true);
         
         static void EndScene();
         static void Flush();

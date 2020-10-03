@@ -22,6 +22,8 @@ namespace iKan {
         Ref<Framebuffer> m_FrameBuffer;
         Ref<Scene>       m_ActiveScene;
         
+        Entity m_LightEntity;
+        
         SceneHeirarchyPannel m_SceneHierarchyPannel;
         EditorCamera         m_EditorCamera;
     };

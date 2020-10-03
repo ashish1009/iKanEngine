@@ -18,7 +18,7 @@ out vec3 v_Bitangent;
 
 void main()
 {
-    v_Position  = a_Position;
+    v_Position  = vec3(u_Transform * vec4(a_Position, 1.0));;
     v_Normal    = a_Normal;
     v_TexCoord  = a_TexCoord;
     v_Tangent   = a_Tangent;
@@ -72,7 +72,7 @@ void main()
     vec4 result = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
     vec3 norm      = normalize(v_Normal);
-    vec3 lightDir  = normalize(u_Light.Position - v_Position);
+    vec3 lightDir  = normalize(v_Position - u_Light.Position);
     
     // ambient
     if (bool(u_LightFlag.IsAmbient))

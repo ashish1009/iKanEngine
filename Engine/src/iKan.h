@@ -8,7 +8,7 @@
 #include <iKan/Core/Window.h>
 #include <iKan/Core/Layer.h>
 #include <iKan/Core/TimeStep.h>
-
+#include <iKan/Core/GlmMath.h>
 #include <iKan/Core/Events/Events.h>
 #include <iKan/Core/Events/ApplicationEvents.h>
 #include <iKan/Core/Events/KeyEvents.h>

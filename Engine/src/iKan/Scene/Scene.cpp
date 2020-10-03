@@ -11,7 +11,6 @@ namespace iKan {
     Scene::Scene(SceneRendererType sceneRenderer)
     : m_ScceneRenderer(sceneRenderer)
     {
-        
     }
     
     Entity Scene::CreateEntity(const std::string& name)
@@ -34,8 +33,7 @@ namespace iKan {
         for (auto entity : group)
         {
             const auto [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
-
-            SceneRenderer::DrawMesh(mesh, transform);
+            SceneRenderer::DrawMesh(mesh, transform, mesh.ADS);
         }
         SceneRenderer::EndScene();
     }

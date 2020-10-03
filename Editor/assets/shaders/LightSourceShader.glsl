@@ -32,26 +32,6 @@ void main()
 
 layout(location = 0) out vec4 color;
 
-struct Material
-{
-    float Shininess;
-};
-
-struct Light
-{
-    vec3 Position;
-    vec3 Ambient;
-    vec3 Diffuse;
-    vec3 Specular;
-};
-
-struct LightFlag
-{
-    bool IsAmbient;
-    bool IsDiffuse;
-    bool IsSpecular;
-};
-
 in vec3 v_Position;
 in vec3 v_Normal;
 in vec2 v_TexCoord;
@@ -60,11 +40,6 @@ in vec3 v_Bitangent;
 
 uniform float       u_NumTexture;
 uniform sampler2D   u_Textures[16];
-
-uniform vec3      u_ViewPos;
-uniform Material  u_Material;
-uniform Light     u_Light;
-uniform LightFlag u_LightFlag;
 
 void main()
 {
