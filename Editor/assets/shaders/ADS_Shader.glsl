@@ -18,8 +18,8 @@ out vec3 v_Bitangent;
 
 void main()
 {
-    v_Position  = a_Position;
-    v_Normal    = a_Normal;
+    v_Position  = vec3(u_Transform * vec4(a_Position, 1.0));
+    v_Normal    = mat3(transpose(inverse(u_Transform))) * a_Normal;
     v_TexCoord  = a_TexCoord;
     v_Tangent   = a_Tangent;
     v_Bitangent = a_Bitangent;
@@ -99,7 +99,7 @@ void main()
         if (bool(u_LightFlag.IsSpecular))
         {
             vec3  viewDir    = normalize(u_ViewPos - v_Position);
-            vec3  reflectDir = reflect(-lightDir, norm);
+            vec3  reflectDir = reflect(lightDir, norm);
             float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
             vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
             result += vec4(specular, 1.0f);

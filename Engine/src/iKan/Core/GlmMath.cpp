@@ -12,5 +12,10 @@ namespace iKan {
         // TODO: improve api for perspective and skew
         return { translation, orientation, scale };
     }
+    
+    glm::mat4 GlmMath::SetTransfrom(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale)
+    {
+        return glm::translate(glm::mat4(1.0f), position) * glm::toMat4(glm::quat(glm::radians(rotation))) * glm::scale(glm::mat4(1.0f), scale);
+    }
 
 }

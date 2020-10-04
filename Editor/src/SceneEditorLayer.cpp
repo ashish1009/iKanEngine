@@ -2,11 +2,6 @@
 
 namespace iKan {
     
-    static glm::mat4 SetTransfrom(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale)
-    {
-        return glm::translate(glm::mat4(1.0f), position) * glm::toMat4(glm::quat(glm::radians(rotation))) * glm::scale(glm::mat4(1.0f), scale);
-    }
-    
     SceneCamera camera;
 
     SceneEditor::SceneEditor()
@@ -31,11 +26,11 @@ namespace iKan {
         m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
         std::unordered_map<std::string, Ref<Mesh>> meshMap;
-        meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
         meshMap["Light"]    = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
+        meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
         meshMap["Moon"]     = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
         meshMap["Pokemon"]  = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
-        meshMap["Ground"]   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/GroundPlane/GroundPlane.obj");
+        meshMap["Ground"]   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Plane/GroundPlane.obj");
         
         for (auto kv : meshMap)
         {
@@ -49,8 +44,29 @@ namespace iKan {
             {
                 // Setting Light Source without ADS and making size 0.1
                 m_EntityMap[name].GetComponent<MeshComponent>().ADS = false;
-                m_EntityMap[name].GetComponent<TransformComponent>().Transform = SetTransfrom({ 0.0f, 0.0f, 10.0f }, glm::vec3(0.0f), glm::vec3(0.1f));
+                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 10.0f, 0.0f, 10.0f }, glm::vec3(0.0f), glm::vec3(0.2f));
             }
+            
+            if (name == "Bag")
+            {
+                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ -5.0f, 0.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(0.5f));
+            }
+            
+            if (name == "Moon")
+            {
+                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 0.0f, 0.0f, 10.0f }, glm::vec3(0.0f), glm::vec3(0.2f));
+            }
+            
+            if (name == "Pokemon")
+            {
+                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 5.0f, 0.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(0.5f));
+            }
+
+            if (name == "Ground")
+            {
+                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 0.0f, -1.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(50.0f));
+            }
+
         }
                         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);

@@ -79,6 +79,21 @@ namespace iKan {
             ImGui::Separator();
         }
         
+        if (entity.HasComponent<MeshComponent>())
+        {
+            if (ImGui::TreeNodeEx((void*)typeid(MeshComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Mesh"))
+            {
+                auto& mesh = entity.GetComponent<MeshComponent>();                
+                ImGui::Columns(2);
+                ImGui::Text("ADS");
+                ImGui::NextColumn();
+                ImGui::Checkbox("##ADS", &mesh.ADS);
+                ImGui::Columns(1);
+                ImGui::TreePop();
+            }
+            ImGui::Separator();
+        }
+        
         if (entity.HasComponent<TransformComponent>())
         {
             auto& tc = entity.GetComponent<TransformComponent>();
