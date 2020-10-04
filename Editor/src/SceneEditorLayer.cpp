@@ -151,6 +151,39 @@ namespace iKan {
                     ImGui::PopItemWidth();
                 }
                 
+                ImGui::Separator();
+                ImGui::Checkbox("IsAttenuation", &light.LightFlag.IsAttenuation);
+                if (light.LightFlag.IsAttenuation)
+                {
+                    ImGui::Columns(2);
+                    
+                    ImGui::Text("Constant");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##Constant", &light.Constant, 0.01f, 0.0f, 10.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+
+                    ImGui::Text("Linear");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##Linear", &light.Linear, 0.01f, 0.0f, 10.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+
+                    ImGui::Text("Quadratic");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##Quadratic", &light.Quadratic, 0.01f, 0.0f, 10.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+
+                    ImGui::Columns(1);
+                }
+                
                 ImGui::TreePop();
             }
             ImGui::End();

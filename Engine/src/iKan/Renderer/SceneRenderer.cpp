@@ -90,6 +90,14 @@ namespace iKan {
         if (lightProp.LightFlag.IsAmbient)
             ads_Shader->SetUniformFloat3("u_Light.Specular", lightProp.Specular);
         
+        ads_Shader->SetUniformInt1("u_LightFlag.IsAttenuation", lightProp.LightFlag.IsAttenuation);
+        if (lightProp.LightFlag.IsAttenuation)
+        {
+            ads_Shader->SetUniformFloat1("u_Light.Constant", lightProp.Constant);
+            ads_Shader->SetUniformFloat1("u_Light.Linear", lightProp.Linear);
+            ads_Shader->SetUniformFloat1("u_Light.Quadratic", lightProp.Quadratic);
+        }
+        
         // material properties
         ads_Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
         ads_Shader->Unbind();
