@@ -135,22 +135,22 @@ namespace iKan {
         }
     }
 
-    glm::vec3 EditorCamera::GetUpDirection()
+    glm::vec3 EditorCamera::GetUpDirection() const
     {
         return glm::rotate(GetOrientation(), glm::vec3(0.0f, 1.0f, 0.0f));
     }
     
-    glm::vec3 EditorCamera::GetRightDirection()
+    glm::vec3 EditorCamera::GetRightDirection() const
     {
         return glm::rotate(GetOrientation(), glm::vec3(1.0f, 0.0f, 0.0f));
     }
     
-    glm::vec3 EditorCamera::GetForwardDirection()
+    glm::vec3 EditorCamera::GetForwardDirection() const
     {
         return glm::rotate(GetOrientation(), glm::vec3(0.0f, 0.0f, -1.0f));
     }
 
-    glm::vec3 EditorCamera::CalculatePosition()
+    glm::vec3 EditorCamera::CalculatePosition() const
     {
         return m_FocalPoint - GetForwardDirection() * m_Distance;
     }

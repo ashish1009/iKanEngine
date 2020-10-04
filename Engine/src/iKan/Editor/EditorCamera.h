@@ -27,9 +27,9 @@ namespace iKan {
 
         glm::mat4 GetViewProjection() const { return m_Projection * m_ViewMatrix; }
         
-        glm::vec3 GetUpDirection();
-        glm::vec3 GetRightDirection();
-        glm::vec3 GetForwardDirection();
+        glm::vec3 GetUpDirection() const;
+        glm::vec3 GetRightDirection() const;
+        glm::vec3 GetForwardDirection() const;
         glm::quat GetOrientation() const;
         
         float GetExposure() const { return m_Exposure; }
@@ -48,7 +48,7 @@ namespace iKan {
         void MouseRotate(const glm::vec2& delta);
         void MouseZoom(float delta);
         
-        glm::vec3 CalculatePosition();
+        glm::vec3 CalculatePosition() const;
         
         std::pair<float, float> PanSpeed() const;
         float RotationSpeed() const;

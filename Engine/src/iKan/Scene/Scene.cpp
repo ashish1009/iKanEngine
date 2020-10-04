@@ -28,7 +28,7 @@ namespace iKan {
     // Designed for 3D only
     void Scene::OnEditorUpdate(TimeStep ts, const EditorCamera& camera)
     {
-        SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix() });
+        SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix(), camera.GetForwardDirection() });
         // TODO: Tag component for debug only
         auto group = m_Registry.group<TagComponent, TransformComponent>(entt::get<MeshComponent>);
         for (auto entity : group)
