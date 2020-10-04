@@ -184,6 +184,23 @@ namespace iKan {
                     ImGui::Columns(1);
                 }
                 
+                ImGui::Separator();
+                ImGui::Checkbox("IsSpotLight", &light.LightFlag.IsSpotLight);
+                if (light.LightFlag.IsSpotLight)
+                {
+                    ImGui::Columns(2);
+                    
+                    ImGui::Text("CutOff");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##CutOff", &light.CutOff, 1.0f, 0.0f, 360.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    
+                    ImGui::Columns(1);
+                }
+                
                 ImGui::TreePop();
             }
             ImGui::End();

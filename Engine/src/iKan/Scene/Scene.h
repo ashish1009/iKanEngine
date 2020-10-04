@@ -31,6 +31,7 @@ namespace iKan {
             bool IsDiffuse      = true;
             bool IsSpecular     = true;
             bool IsAttenuation  = true;
+            bool IsSpotLight    = true;
         };
         
         Flag LightFlag;
@@ -42,7 +43,8 @@ namespace iKan {
         
         float Constant  = 1.0f;
         float Linear    = 0.09f;
-        float Quadratic = 0.032f;;
+        float Quadratic = 0.032f;
+        float CutOff    = 12.5f; // radians
     };
     
     class Scene : public RefCounted

@@ -98,6 +98,13 @@ namespace iKan {
             ads_Shader->SetUniformFloat1("u_Light.Quadratic", lightProp.Quadratic);
         }
         
+        ads_Shader->SetUniformInt1("u_LightFlag.IsSpotLight", lightProp.LightFlag.IsSpotLight);
+        if (lightProp.LightFlag.IsSpotLight)
+        {
+            ads_Shader->SetUniformFloat3("u_Light.Direction", { 0.0f, 0.0f, -1.0f });
+            ads_Shader->SetUniformFloat1("u_Light.CutOff", glm::cos(glm::radians(lightProp.CutOff)));
+        }
+        
         // material properties
         ads_Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
         ads_Shader->Unbind();

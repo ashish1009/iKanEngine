@@ -40,6 +40,7 @@ struct Material
 struct Light
 {
     vec3 Position;
+    vec3 Direction;
     vec3 Ambient;
     vec3 Diffuse;
     vec3 Specular;
@@ -47,6 +48,7 @@ struct Light
     float Constant;
     float Linear;
     float Quadratic;
+    float CutOff;
 };
 
 struct LightFlag
@@ -55,6 +57,7 @@ struct LightFlag
     bool IsDiffuse;
     bool IsSpecular;
     bool IsAttenuation;
+    bool IsSpotLight;
 };
 
 in vec3 v_Position;
@@ -71,19 +74,16 @@ uniform Material  u_Material;
 uniform Light     u_Light;
 uniform LightFlag u_LightFlag;
 
-void main()
+vec4 LightContent(vec3 lightDir)
 {
     int slotBinded = 0;
+
     vec4 result = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+    vec3 norm   = normalize(v_Normal);
 
-    vec3 norm      = normalize(v_Normal);
-    vec3 lightDir  = normalize(u_Light.Position - v_Position);
-
-    vec3 ambient, diffuse, specular;
-    
     float distance, attenuation;
-    
-    if (bool(u_LightFlag.IsAttenuation))
+    vec3 ambient, diffuse, specular;
+    if (u_LightFlag.IsAttenuation)
     {
         // attenuation
         distance    = length(u_Light.Position - v_Position);
@@ -93,49 +93,61 @@ void main()
     if (slotBinded < u_NumTextureSlots)
     {
         // ambient
-        if (bool(u_LightFlag.IsAmbient))
+        if (u_LightFlag.IsAmbient)
         {
             ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
-
-            if (bool(u_LightFlag.IsAttenuation))
+            
+            if ((u_LightFlag.IsAttenuation) && (!u_LightFlag.IsSpotLight))
                 ambient  *= attenuation;
-
+            
             result += vec4(ambient, 1.0f);
         }
-
+        
         // diffuse
-        if (bool(u_LightFlag.IsDiffuse))
+        if (u_LightFlag.IsDiffuse)
         {
             float diff   = max(dot(norm, lightDir), 0.0);
             
             diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse
-
-            if (bool(u_LightFlag.IsAttenuation))
+            
+            if (u_LightFlag.IsAttenuation)
                 diffuse  *= attenuation;
-
+            
             result += vec4(diffuse, 1.0f);
         }
         slotBinded++;
     }
-
+    
     if (slotBinded < u_NumTextureSlots)
     {
         // specular
-        if (bool(u_LightFlag.IsSpecular))
+        if (u_LightFlag.IsSpecular)
         {
             vec3  viewDir    = normalize(u_ViewPos - v_Position);
-            vec3  reflectDir = reflect(lightDir, norm);
+            vec3  reflectDir = reflect(-lightDir, norm);
             float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
             
             specular = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb;
-
-            if (bool(u_LightFlag.IsAttenuation))
+            
+            if (u_LightFlag.IsAttenuation)
                 specular *= attenuation;
-
+            
             result  += vec4(specular, 1.0f);
         }
         slotBinded++;
     }
+    return result;
+}
+
+void main()
+{
+    vec3 lightDir = normalize(u_Light.Position - v_Position);
     
-    color = result;
+    // check if lighting is inside the spotlight cone
+    float theta = dot(lightDir, normalize(-u_Light.Direction));
+
+    if ((u_LightFlag.IsSpotLight) && (theta <= u_Light.CutOff))
+        color = vec4(u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb, 1.0);
+    else
+        color = LightContent(lightDir);
 }
