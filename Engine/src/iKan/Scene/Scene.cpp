@@ -34,7 +34,7 @@ namespace iKan {
         for (auto entity : group)
         {
             const auto [tag, transform, mesh] = group.get<TagComponent, TransformComponent, MeshComponent>(entity);
-            SceneRenderer::DrawMesh(mesh, transform, mesh.ADS);
+            SceneRenderer::DrawMesh(mesh, transform, mesh.ADS, mesh.LightSource);
         }
         SceneRenderer::EndScene();
     }

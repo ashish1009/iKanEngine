@@ -43,7 +43,8 @@ namespace iKan {
             if (name == "Light")
             {
                 // Setting Light Source without ADS and making size 0.1
-                m_EntityMap[name].GetComponent<MeshComponent>().ADS = false;
+                m_EntityMap[name].GetComponent<MeshComponent>().ADS         = false;
+                m_EntityMap[name].GetComponent<MeshComponent>().LightSource = true;
                 m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 10.0f, 0.0f, 10.0f }, glm::vec3(0.0f), glm::vec3(0.2f));
             }
             

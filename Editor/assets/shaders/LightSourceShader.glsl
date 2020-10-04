@@ -28,11 +28,11 @@ in vec2 v_TexCoord;
 
 uniform int       u_NumTextureSlots;
 uniform sampler2D u_Texture;
+uniform vec3      u_Color;
 
 void main()
 {
+    color = vec4(u_Color, 1.0f);
     if (u_NumTextureSlots > 0)
-        color = vec4(texture(u_Texture, v_TexCoord).rgb, 1.0f);
-    else
-        color = vec4(1.0f, 11.0f, 1.0f, 1.0f);
+        color *= vec4(texture(u_Texture, v_TexCoord).rgb, 1.0f);
 }

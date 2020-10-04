@@ -88,7 +88,18 @@ namespace iKan {
                 ImGui::Text("ADS");
                 ImGui::NextColumn();
                 ImGui::Checkbox("##ADS", &mesh.ADS);
+                if (mesh.ADS)
+                    mesh.LightSource = false;
+                ImGui::NextColumn();
+                
+                ImGui::Text("Light Source");
+                ImGui::NextColumn();
+                ImGui::Checkbox("##LightSource", &mesh.LightSource);
+                if (mesh.LightSource)
+                    mesh.ADS = false;
+                
                 ImGui::Columns(1);
+                
                 ImGui::TreePop();
             }
             ImGui::Separator();

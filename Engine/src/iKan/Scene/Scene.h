@@ -37,7 +37,7 @@ namespace iKan {
         Flag LightFlag;
         
         glm::vec3 Position = { 0.0f, 0.0f, -3.0f };
-        glm::vec3 Ambient  = { 0.2f, 0.2f, 0.2f };
+        glm::vec3 Ambient  = { 0.1f, 0.1f, 0.1f };
         glm::vec3 Diffuse  = { 0.8f, 0.8f, 0.8f };
         glm::vec3 Specular = { 1.0f, 1.0f, 1.0f };
         

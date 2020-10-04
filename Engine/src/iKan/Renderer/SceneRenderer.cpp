@@ -125,7 +125,8 @@ namespace iKan {
     {
     }
     
-    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, bool isADS)
+    // TODO: fix these flags , shouldnt be here
+    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, bool isADS, bool isLightSOurce)
     {
         for (auto kv : s_Data.Shaders.GetShaders())
         {
@@ -135,8 +136,27 @@ namespace iKan {
             shader->Unbind();
         }
         
-        auto renderShader = (isADS) ? s_Data.Shaders.Get("ADS_Shader") : s_Data.Shaders.Get("LightSourceShader");
-        mesh->Draw(*renderShader.Raw());
+        Ref<Shader> rendererShader;
+        if (isADS)
+        {
+            rendererShader = s_Data.Shaders.Get("ADS_Shader");
+        }
+        else
+        {
+            rendererShader = s_Data.Shaders.Get("LightSourceShader");
+            rendererShader->Bind();
+            
+            glm::vec3 color = {1.0f, 1.0f, 1.0f};
+            if (isLightSOurce)
+            {
+                auto light = s_Data.ActiveLight;
+                color = light.Ambient * light.Diffuse * light.Specular;
+            }
+            
+            rendererShader->SetUniformFloat3("u_Color", color);
+        }
+        
+        mesh->Draw(*rendererShader.Raw());
     }
     
 }

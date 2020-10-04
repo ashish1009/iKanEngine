@@ -146,7 +146,7 @@ void main()
     // check if lighting is inside the spotlight cone
     float theta = dot(lightDir, normalize(-u_Light.Direction));
 
-    if ((u_LightFlag.IsSpotLight) && (theta <= u_Light.CutOff))
+    if ((u_LightFlag.IsSpotLight) && (theta < u_Light.CutOff))
         color = vec4(u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb, 1.0);
     else
         color = LightContent(lightDir);

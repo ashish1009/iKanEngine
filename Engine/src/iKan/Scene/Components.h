@@ -86,6 +86,7 @@ namespace iKan {
     struct MeshComponent
     {
         bool ADS = true;
+        bool LightSource = false;
         
         Ref<iKan::Mesh> Mesh;
         
