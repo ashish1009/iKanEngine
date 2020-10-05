@@ -3,7 +3,6 @@
 #include <iKan/Scene/Entity.h>
 
 #include <iKan/Renderer/Renderer2D.h>
-#include <iKan/Renderer/Renderer3D.h>
 #include <iKan/Renderer/SceneRenderer.h>
 
 namespace iKan {
@@ -131,14 +130,6 @@ namespace iKan {
     
     void Scene::Renderer3D()
     {
-        Renderer3D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
-        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-        for (auto entity : group)
-        {
-            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-            Renderer3D::DrawCube(transform, sprite.Color);
-        }
-        Renderer3D::EndScene();
     }
     
     void Scene::SetLightPosition(const glm::mat4& lightTransform)

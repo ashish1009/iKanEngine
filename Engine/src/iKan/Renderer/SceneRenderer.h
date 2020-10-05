@@ -22,6 +22,7 @@ namespace iKan {
         static void Shutdown();
         
         static void BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera);
+        static void SetCubeMapTexture(const std::vector<std::string>& paths);
         
         static void DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, bool isADS = true, bool isLightSOurce = false);
         
@@ -29,6 +30,10 @@ namespace iKan {
         static void Flush();
         
         static void SetShaader(const std::string& path);
+        
+    private:
+        static void InitMeshData();
+        static void InitCubeMapData();
             
     private:
         static void FlushAndReset();

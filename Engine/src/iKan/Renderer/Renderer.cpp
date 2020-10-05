@@ -1,7 +1,6 @@
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/Renderer/Renderer2D.h>
 #include <iKan/Renderer/SceneRenderer.h>
-#include <iKan/Renderer/Renderer3D.h>
 #include <iKan/Renderer/RenderStats.h>
 
 namespace iKan {
@@ -17,7 +16,6 @@ namespace iKan {
         RenderCommand::Init();
         Renderer2D::Init();
         SceneRenderer::Init();
-        Renderer3D::Init();
         
         s_Data.m_ShaderLibrary = Ref<ShaderLibrary>::Create();
     }

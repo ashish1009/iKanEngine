@@ -97,6 +97,21 @@ namespace iKan {
         for (auto path : paths)
         {
             unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+            
+            GLenum internalFormat = GL_RGB8, dataFormat = GL_RGB;
+
+            if (4 == nrChannels)
+            {
+                internalFormat = GL_RGBA8;
+                dataFormat     = GL_RGBA;
+            }
+            else if (3 == nrChannels)
+            {
+                internalFormat = GL_RGB8;
+                dataFormat     = GL_RGB;
+            }
+            IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
+            
             if (data)
             {
                 glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);

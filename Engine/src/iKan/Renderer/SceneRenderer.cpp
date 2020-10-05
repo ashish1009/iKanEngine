@@ -12,6 +12,14 @@ namespace iKan {
     struct SceneRendererData
     {
         static const uint32_t MaxTextureSlots = 16;
+
+        struct CubeMapData
+        {
+            Ref<VertexArray>    VertexArray;
+            Ref<VertexBuffer>   VertexBuffer;
+            Ref<CubeMapTexture> Texture;
+        };
+        CubeMapData CubeMapData;
         
         SceneRendererCamera SceneCamera;
         Light ActiveLight;
@@ -22,21 +30,21 @@ namespace iKan {
     };
     static SceneRendererData s_Data;
     
-    void SceneRenderer::Init()
+    void SceneRenderer::InitMeshData()
     {
         // Creating array of Slots to store hem in shader
         int32_t samplers[s_Data.MaxTextureSlots];
         for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
             samplers[i] = i;
         
+        //TODO: Load Shader from outside or move the files inside Engine
         // Creating Shader and storing all the slots
         auto lightSourceShader = s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
         lightSourceShader->Bind();
         lightSourceShader->SetUniformInt1("u_Texture", 0);
         lightSourceShader->Unbind();
-
-        auto adsShader = s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
         
+        auto adsShader = s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
         adsShader->Bind();
         adsShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
         adsShader->Unbind();
@@ -44,6 +52,75 @@ namespace iKan {
         // Creating whote texture for cololful quads witout any texture or sprite
         uint32_t whiteTextureData = 0xffffffff;
         s_Data.WhiteTexture       = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
+    }
+    
+    void SceneRenderer::InitCubeMapData()
+    {
+        float skyboxVertices[] =
+        {
+            -5.0f,  5.0f, -5.0f,
+            -5.0f, -5.0f, -5.0f,
+             5.0f, -5.0f, -5.0f,
+             5.0f, -5.0f, -5.0f,
+             5.0f,  5.0f, -5.0f,
+            -5.0f,  5.0f, -5.0f,
+            
+            -5.0f, -5.0f,  5.0f,
+            -5.0f, -5.0f, -5.0f,
+            -5.0f,  5.0f, -5.0f,
+            -5.0f,  5.0f, -5.0f,
+            -5.0f,  5.0f,  5.0f,
+            -5.0f, -5.0f,  5.0f,
+            
+             5.0f, -5.0f, -5.0f,
+             5.0f, -5.0f,  5.0f,
+             5.0f,  5.0f,  5.0f,
+             5.0f,  5.0f,  5.0f,
+             5.0f,  5.0f, -5.0f,
+             5.0f, -5.0f, -5.0f,
+            
+            -5.0f, -5.0f,  5.0f,
+            -5.0f,  5.0f,  5.0f,
+             5.0f,  5.0f,  5.0f,
+             5.0f,  5.0f,  5.0f,
+             5.0f, -5.0f,  5.0f,
+            -5.0f, -5.0f,  5.0f,
+            
+            -5.0f,  5.0f, -5.0f,
+             5.0f,  5.0f, -5.0f,
+             5.0f,  5.0f,  5.0f,
+             5.0f,  5.0f,  5.0f,
+            -5.0f,  5.0f,  5.0f,
+            -5.0f,  5.0f, -5.0f,
+            
+            -5.0f, -5.0f, -5.0f,
+            -5.0f, -5.0f,  5.0f,
+             5.0f, -5.0f, -5.0f,
+             5.0f, -5.0f, -5.0f,
+             -5.0f, -5.0f,  5.0f,
+            5.0f, -5.0f,  5.0f
+        };
+        
+        /* Creating Vertex Array */
+        s_Data.CubeMapData.VertexArray = VertexArray::Create();
+        
+        /* Creating Vertex Buffer and adding Layout */
+        s_Data.CubeMapData.VertexBuffer = VertexBuffer::Create(sizeof(skyboxVertices), skyboxVertices);
+        s_Data.CubeMapData.VertexBuffer->AddLayout({
+            { ShaderDataType::Float3, "a_Position" }
+        });
+        s_Data.CubeMapData.VertexArray->AddVertexBuffer(s_Data.CubeMapData.VertexBuffer);
+        
+        /* Shader Bind and texture set*/
+        auto cubeMapShader = s_Data.Shaders.Load("../../Editor/assets/shaders/CubeMap.glsl");
+        cubeMapShader->Bind();
+        cubeMapShader->SetUniformInt1("u_Skybox", 0);
+    }
+    
+    void SceneRenderer::Init()
+    {
+        InitMeshData();
+        InitCubeMapData();
     }
     
     void SceneRenderer::SetShaader(const std::string &path)
@@ -58,11 +135,12 @@ namespace iKan {
     {
         // Copy light property
         s_Data.ActiveLight = scene->GetLight();
+        auto& lightProp = s_Data.ActiveLight;
         
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.Camera.GetProjection() * camera.ViewMatrix;
-        auto& lightProp = s_Data.ActiveLight;
-                
+        
+        // Mesh Shader Camera Bind
         for (auto kv : s_Data.Shaders.GetShaders())
         {
             auto shader = kv.second;
@@ -70,6 +148,12 @@ namespace iKan {
             shader->SetUniformMat4("u_ViewProjection", viewProj);
             shader->Unbind();
         }
+
+        // Cube Map shader bind the camera
+        auto cubeMapShader = s_Data.Shaders.Get("CubeMap");
+        cubeMapShader->Bind();
+        cubeMapShader->SetUniformMat4("u_ProjectionView", viewProj);
+
         
         // TODO: Try to move these somewhere else
         auto ads_Shader = s_Data.Shaders.Get("ADS_Shader");
@@ -126,6 +210,12 @@ namespace iKan {
     {
     }
     
+    void SceneRenderer::SetCubeMapTexture(const std::vector<std::string>& paths)
+    {
+        s_Data.CubeMapData.Texture = CubeMapTexture::Create(paths);
+        RendererStatistics::TextureCount += 6;
+    }
+    
     // TODO: fix these flags , shouldnt be here
     void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, bool isADS, bool isLightSOurce)
     {
@@ -158,6 +248,22 @@ namespace iKan {
         }
         
         mesh->Draw(*rendererShader.Raw());
+        
+        /* skybox cube */
+        auto cubeMapShader = s_Data.Shaders.Get("CubeMap");
+        cubeMapShader->Bind();
+        s_Data.CubeMapData.VertexArray->Bind();
+        s_Data.CubeMapData.Texture->Bind();
+        
+        glm::mat4 cubeMapTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f));
+        cubeMapShader->SetUniformMat4("u_Transform", cubeMapTransform);
+        
+        Renderer::DrawIndexed(36);
+        
+        s_Data.CubeMapData.VertexArray->Unbind();
+        cubeMapShader->Unbind();
+        
+        RendererStatistics::VertexCount += 36;
     }
     
 }

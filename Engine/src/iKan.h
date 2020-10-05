@@ -21,13 +21,11 @@
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/Renderer2D.h>
-#include <iKan/Renderer/Renderer3D.h>
 #include <iKan/Renderer/SceneRenderer.h>
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/Renderer/Camera.h>
 #include <iKan/Renderer/RenderStats.h>
 #include <iKan/Renderer/Mesh.h>
-#include <iKan/Renderer/RenderCubeMap.h>
 
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Components.h>

@@ -39,7 +39,7 @@
 		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorLayer.cpp; sourceTree = "<group>"; };
 		B253892B251FBF8300E5FD98 /* SceneEditorLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneEditorLayer.h; sourceTree = "<group>"; };
-		B28E00F1252AEBD000E55C0E /* SkyBox.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SkyBox.glsl; sourceTree = "<group>"; };
+		B28E00F1252AEBD000E55C0E /* CubeMap.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CubeMap.glsl; sourceTree = "<group>"; };
 		B2C4842A25288C5200751771 /* LightSourceShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LightSourceShader.glsl; sourceTree = "<group>"; };
 		B2CDABEB25013E1D008C6BDF /* EntityLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EntityLayer.cpp; sourceTree = "<group>"; };
 		B2CDABEC25013E1D008C6BDF /* EntityLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EntityLayer.h; sourceTree = "<group>"; };
@@ -75,7 +75,7 @@
 			children = (
 				B2C4842A25288C5200751771 /* LightSourceShader.glsl */,
 				B2031C7D2521F6A5004F12CC /* ADS_Shader.glsl */,
-				B28E00F1252AEBD000E55C0E /* SkyBox.glsl */,
+				B28E00F1252AEBD000E55C0E /* CubeMap.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";

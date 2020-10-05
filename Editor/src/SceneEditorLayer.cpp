@@ -26,12 +26,6 @@ namespace iKan {
         m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
         {
-            RenderCubeMap::SetShaader("../../Editor/assets/shaders/SkyBox.glsl");
-
-            //TODO: move to Renderer::Init() ?
-            RenderCubeMap::Init();
-            
-            // Cube map
             std::vector<std::string> faces =
             {
                 "../../Editor/assets/resources/textures/skybox/right.jpg",
@@ -41,8 +35,7 @@ namespace iKan {
                 "../../Editor/assets/resources/textures/skybox/front.jpg",
                 "../../Editor/assets/resources/textures/skybox/back.jpg"
             };
-            RenderCubeMap::SetCubeMapTexture(faces);
-            
+            SceneRenderer::SetCubeMapTexture(faces);
         }
         
         std::unordered_map<std::string, Ref<Mesh>> meshMap;
@@ -124,8 +117,8 @@ namespace iKan {
         camera.SetViewportSize(1600.0f, 800.0f);
         
         {
-            RenderCubeMap::BeginScene(m_EditorCamera, m_EditorCamera.GetViewMatrix());
-            RenderCubeMap::DrawCube();
+//            RenderCubeMap::BeginScene(m_EditorCamera, m_EditorCamera.GetViewMatrix());
+//            RenderCubeMap::DrawCube();
         }
         
         m_ActiveScene->SetLightPosition(m_EntityMap["Light"].GetComponent<TransformComponent>().Transform);

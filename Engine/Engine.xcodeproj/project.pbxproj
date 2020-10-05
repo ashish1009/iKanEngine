@@ -35,8 +35,6 @@
 		B24FF89624ED1AEC00884EDA /* PrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */; };
 		B2528750251F207C0065826D /* ImGuizmo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B252874C251F207C0065826D /* ImGuizmo.cpp */; };
 		B2528751251F207C0065826D /* ImGuizmo.h in Headers */ = {isa = PBXBuildFile; fileRef = B252874F251F207C0065826D /* ImGuizmo.h */; };
-		B2538926251FBDCF00E5FD98 /* Renderer3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2538924251FBDCF00E5FD98 /* Renderer3D.cpp */; };
-		B2538927251FBDCF00E5FD98 /* Renderer3D.h in Headers */ = {isa = PBXBuildFile; fileRef = B2538925251FBDCF00E5FD98 /* Renderer3D.h */; };
 		B25639DA251E6A9F00BF0F33 /* SceneHierarchyPannel.h in Headers */ = {isa = PBXBuildFile; fileRef = B25639D8251E6A9F00BF0F33 /* SceneHierarchyPannel.h */; };
 		B25639DB251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25639D9251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp */; };
 		B25718232524707200E30030 /* EditorCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B25718212524707200E30030 /* EditorCamera.cpp */; };
@@ -72,8 +70,6 @@
 		B2752D1E24FACD64005EF655 /* RenderCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D1C24FACD64005EF655 /* RenderCommand.h */; };
 		B28083FE25052642003D0684 /* ImGuiAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28083FC25052642003D0684 /* ImGuiAPI.cpp */; };
 		B28083FF25052642003D0684 /* ImGuiAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B28083FD25052642003D0684 /* ImGuiAPI.h */; };
-		B28E00EC252AE1C300E55C0E /* RenderCubeMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28E00EA252AE1C300E55C0E /* RenderCubeMap.cpp */; };
-		B28E00ED252AE1C300E55C0E /* RenderCubeMap.h in Headers */ = {isa = PBXBuildFile; fileRef = B28E00EB252AE1C300E55C0E /* RenderCubeMap.h */; };
 		B2C5BE7E25288130005E260D /* GlmMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C5BE7C25288130005E260D /* GlmMath.cpp */; };
 		B2C5BE7F25288130005E260D /* GlmMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C5BE7D25288130005E260D /* GlmMath.h */; };
 		B2CDABD42500E885008C6BDF /* entt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABD12500E885008C6BDF /* entt.hpp */; };
@@ -150,8 +146,6 @@
 		B24FF89524ED1AEC00884EDA /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		B252874C251F207C0065826D /* ImGuizmo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuizmo.cpp; sourceTree = "<group>"; };
 		B252874F251F207C0065826D /* ImGuizmo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImGuizmo.h; sourceTree = "<group>"; };
-		B2538924251FBDCF00E5FD98 /* Renderer3D.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer3D.cpp; sourceTree = "<group>"; };
-		B2538925251FBDCF00E5FD98 /* Renderer3D.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer3D.h; sourceTree = "<group>"; };
 		B25639D8251E6A9F00BF0F33 /* SceneHierarchyPannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneHierarchyPannel.h; sourceTree = "<group>"; };
 		B25639D9251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneHierarchyPannel.cpp; sourceTree = "<group>"; };
 		B25718212524707200E30030 /* EditorCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorCamera.cpp; sourceTree = "<group>"; };
@@ -188,8 +182,6 @@
 		B2752D1C24FACD64005EF655 /* RenderCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderCommand.h; sourceTree = "<group>"; };
 		B28083FC25052642003D0684 /* ImGuiAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiAPI.cpp; sourceTree = "<group>"; };
 		B28083FD25052642003D0684 /* ImGuiAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImGuiAPI.h; sourceTree = "<group>"; };
-		B28E00EA252AE1C300E55C0E /* RenderCubeMap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RenderCubeMap.cpp; sourceTree = "<group>"; };
-		B28E00EB252AE1C300E55C0E /* RenderCubeMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderCubeMap.h; sourceTree = "<group>"; };
 		B2C5BE7C25288130005E260D /* GlmMath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlmMath.cpp; sourceTree = "<group>"; };
 		B2C5BE7D25288130005E260D /* GlmMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlmMath.h; sourceTree = "<group>"; };
 		B2CDABCF2500E885008C6BDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -458,10 +450,6 @@
 				B2E734F92520FCEA00BD41D3 /* Mesh.h */,
 				B264E226251F914A008C781A /* SceneRenderer.cpp */,
 				B264E227251F914A008C781A /* SceneRenderer.h */,
-				B28E00EA252AE1C300E55C0E /* RenderCubeMap.cpp */,
-				B28E00EB252AE1C300E55C0E /* RenderCubeMap.h */,
-				B2538924251FBDCF00E5FD98 /* Renderer3D.cpp */,
-				B2538925251FBDCF00E5FD98 /* Renderer3D.h */,
 				B26D9D05250009A3003291C4 /* Renderer2D.cpp */,
 				B26D9D06250009A3003291C4 /* Renderer2D.h */,
 				B22A8A542517C8A600D2B9C8 /* Renderer.cpp */,
@@ -527,14 +515,12 @@
 				B2752D1A24FAC201005EF655 /* Application.h in Headers */,
 				B23D4E7B24F829880049238A /* Events.h in Headers */,
 				B266521F24FECADF0032AF99 /* Texture.h in Headers */,
-				B2538927251FBDCF00E5FD98 /* Renderer3D.h in Headers */,
 				B2473FD224FD1DB40099535D /* VertexArray.h in Headers */,
 				B2CDABDB2500EF2C008C6BDF /* Components.h in Headers */,
 				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
 				B26D9D08250009A3003291C4 /* Renderer2D.h in Headers */,
 				B2FEC92A24FC0A1900388451 /* ImguiLayer.h in Headers */,
 				B2CDABE625010F9A008C6BDF /* SceneCamera.h in Headers */,
-				B28E00ED252AE1C300E55C0E /* RenderCubeMap.h in Headers */,
 				B2F0FC0024F80DF90004443A /* OpenGlGraphicsContext.h in Headers */,
 				B2528751251F207C0065826D /* ImGuizmo.h in Headers */,
 				B2752D1624FAC1AF005EF655 /* EntryPoint.h in Headers */,
@@ -651,14 +637,12 @@
 				B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */,
 				B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */,
 				B266521E24FECADF0032AF99 /* Texture.cpp in Sources */,
-				B2538926251FBDCF00E5FD98 /* Renderer3D.cpp in Sources */,
 				B2752D1324FABDF3005EF655 /* Input.cpp in Sources */,
 				B2FEC91B24FB9AA500388451 /* OpenGlRenderAPI.cpp in Sources */,
 				B2F0FC0424F80E960004443A /* GraphicsContext.cpp in Sources */,
 				B264E234251FB45A008C781A /* RenderStats.cpp in Sources */,
 				B25639DB251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp in Sources */,
 				B2473FDF24FD232E0099535D /* OpenGlBuffers.cpp in Sources */,
-				B28E00EC252AE1C300E55C0E /* RenderCubeMap.cpp in Sources */,
 				B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */,
 				B266521424FEBA1A0032AF99 /* Shader.cpp in Sources */,
 				B2473FDB24FD22380099535D /* Buffers.cpp in Sources */,

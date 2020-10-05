@@ -10,7 +10,7 @@ out vec3 v_TexCoord;
 void main()
 {
     v_TexCoord = a_Position;
-    gl_Position = u_ProjectionView * vec4(a_Position, 1.0);
+    gl_Position = u_ProjectionView * u_Transform * vec4(a_Position, 1.0);
 }
 
 #type fragment
