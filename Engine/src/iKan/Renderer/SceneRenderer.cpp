@@ -6,27 +6,39 @@
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/RenderStats.h>
 #include <iKan/Renderer/Mesh.h>
+#include <iKan/Renderer/Vertices.h>
 
 namespace iKan {
     
     struct SceneRendererData
     {
         static const uint32_t MaxTextureSlots = 16;
+        
+        struct Vertex
+        {
+            glm::vec3 Position;
+        };
 
         struct CubeMapData
         {
             Ref<VertexArray>    VertexArray;
             Ref<VertexBuffer>   VertexBuffer;
-            Ref<CubeMapTexture> Texture;
+            Ref<CubeMapTexture> CubeMapTexture;
+            Ref<Shader>         CubeMapShader;
+            
+            Vertex* VertexBasePtr;
+            Vertex* VertexPtr;
         };
         CubeMapData CubeMapData;
         
         SceneRendererCamera SceneCamera;
         Light ActiveLight;
         
-        Ref<Texture> WhiteTexture;
-        
         ShaderLibrary Shaders;
+        Ref<Shader>   LightSourceShader;
+        Ref<Shader>   ADS_Shader;
+        
+        Ref<Texture> WhiteTexture;
     };
     static SceneRendererData s_Data;
     
@@ -37,17 +49,14 @@ namespace iKan {
         for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
             samplers[i] = i;
         
-        //TODO: Load Shader from outside or move the files inside Engine
         // Creating Shader and storing all the slots
-        auto lightSourceShader = s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
-        lightSourceShader->Bind();
-        lightSourceShader->SetUniformInt1("u_Texture", 0);
-        lightSourceShader->Unbind();
+        s_Data.LightSourceShader->Bind();
+        s_Data.LightSourceShader->SetUniformInt1("u_Texture", 0);
+        s_Data.LightSourceShader->Unbind();
         
-        auto adsShader = s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
-        adsShader->Bind();
-        adsShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
-        adsShader->Unbind();
+        s_Data.ADS_Shader->Bind();
+        s_Data.ADS_Shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+        s_Data.ADS_Shader->Unbind();
         
         // Creating whote texture for cololful quads witout any texture or sprite
         uint32_t whiteTextureData = 0xffffffff;
@@ -56,69 +65,31 @@ namespace iKan {
     
     void SceneRenderer::InitCubeMapData()
     {
-        float skyboxVertices[] =
-        {
-            -5.0f,  5.0f, -5.0f,
-            -5.0f, -5.0f, -5.0f,
-             5.0f, -5.0f, -5.0f,
-             5.0f, -5.0f, -5.0f,
-             5.0f,  5.0f, -5.0f,
-            -5.0f,  5.0f, -5.0f,
-            
-            -5.0f, -5.0f,  5.0f,
-            -5.0f, -5.0f, -5.0f,
-            -5.0f,  5.0f, -5.0f,
-            -5.0f,  5.0f, -5.0f,
-            -5.0f,  5.0f,  5.0f,
-            -5.0f, -5.0f,  5.0f,
-            
-             5.0f, -5.0f, -5.0f,
-             5.0f, -5.0f,  5.0f,
-             5.0f,  5.0f,  5.0f,
-             5.0f,  5.0f,  5.0f,
-             5.0f,  5.0f, -5.0f,
-             5.0f, -5.0f, -5.0f,
-            
-            -5.0f, -5.0f,  5.0f,
-            -5.0f,  5.0f,  5.0f,
-             5.0f,  5.0f,  5.0f,
-             5.0f,  5.0f,  5.0f,
-             5.0f, -5.0f,  5.0f,
-            -5.0f, -5.0f,  5.0f,
-            
-            -5.0f,  5.0f, -5.0f,
-             5.0f,  5.0f, -5.0f,
-             5.0f,  5.0f,  5.0f,
-             5.0f,  5.0f,  5.0f,
-            -5.0f,  5.0f,  5.0f,
-            -5.0f,  5.0f, -5.0f,
-            
-            -5.0f, -5.0f, -5.0f,
-            -5.0f, -5.0f,  5.0f,
-             5.0f, -5.0f, -5.0f,
-             5.0f, -5.0f, -5.0f,
-             -5.0f, -5.0f,  5.0f,
-            5.0f, -5.0f,  5.0f
-        };
-        
         /* Creating Vertex Array */
         s_Data.CubeMapData.VertexArray = VertexArray::Create();
         
         /* Creating Vertex Buffer and adding Layout */
-        s_Data.CubeMapData.VertexBuffer = VertexBuffer::Create(sizeof(skyboxVertices), skyboxVertices);
+        s_Data.CubeMapData.VertexBuffer = VertexBuffer::Create(1000 * sizeof(SceneRendererData::Vertex));//(Vertices::Cube::Size, Vertices::Cube::Data);
         s_Data.CubeMapData.VertexBuffer->AddLayout({
             { ShaderDataType::Float3, "a_Position" }
         });
         s_Data.CubeMapData.VertexArray->AddVertexBuffer(s_Data.CubeMapData.VertexBuffer);
         
+        // Allocating the memory for vertex Buffer Pointer
+        s_Data.CubeMapData.VertexBasePtr = new SceneRendererData::Vertex[1000];
+        
         /* Shader Bind and texture set*/
-        auto cubeMapShader = s_Data.Shaders.Load("../../Editor/assets/shaders/CubeMap.glsl");
-        cubeMapShader->Bind();
-        cubeMapShader->SetUniformInt1("u_Skybox", 0);
+        s_Data.CubeMapData.CubeMapShader->Bind();
+        s_Data.CubeMapData.CubeMapShader->SetUniformInt1("u_Skybox", 0);
     }
     
     void SceneRenderer::Init()
     {
+        //TODO: Load Shader from outside or move the files inside Engine
+        s_Data.ADS_Shader                = s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
+        s_Data.LightSourceShader         = s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
+        s_Data.CubeMapData.CubeMapShader = s_Data.Shaders.Load("../../Editor/assets/shaders/CubeMap.glsl");
+        
         InitMeshData();
         InitCubeMapData();
     }
@@ -149,50 +120,52 @@ namespace iKan {
             shader->Unbind();
         }
 
-        // Cube Map shader bind the camera
-        auto cubeMapShader = s_Data.Shaders.Get("CubeMap");
-        cubeMapShader->Bind();
-        cubeMapShader->SetUniformMat4("u_ProjectionView", viewProj);
+        {
+            // Cube Map shader bind the camera
+            s_Data.CubeMapData.CubeMapShader->Bind();
+            s_Data.CubeMapData.CubeMapShader->SetUniformMat4("u_ProjectionView", viewProj);
+            
+            s_Data.CubeMapData.VertexPtr = s_Data.CubeMapData.VertexBasePtr;
+        }
 
         
         // TODO: Try to move these somewhere else
-        auto ads_Shader = s_Data.Shaders.Get("ADS_Shader");
         // Upload uniforms
-        ads_Shader->Bind();
-        ads_Shader->SetUniformFloat3("u_Light.Position", lightProp.Position);
-        ads_Shader->SetUniformFloat3("u_ViewPos", s_Data.SceneCamera.ViewMatrix[3]);
+        s_Data.ADS_Shader->Bind();
+        s_Data.ADS_Shader->SetUniformFloat3("u_Light.Position", lightProp.Position);
+        s_Data.ADS_Shader->SetUniformFloat3("u_ViewPos", s_Data.SceneCamera.ViewMatrix[3]);
         
         // light properties
-        ads_Shader->SetUniformInt1("u_LightFlag.IsAmbient", lightProp.LightFlag.IsAmbient);
+        s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsAmbient", lightProp.LightFlag.IsAmbient);
         if (lightProp.LightFlag.IsAmbient)
-            ads_Shader->SetUniformFloat3("u_Light.Ambient", lightProp.Ambient);
+            s_Data.ADS_Shader->SetUniformFloat3("u_Light.Ambient", lightProp.Ambient);
         
-        ads_Shader->SetUniformInt1("u_LightFlag.IsDiffuse", lightProp.LightFlag.IsDiffuse);
+        s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsDiffuse", lightProp.LightFlag.IsDiffuse);
         if (lightProp.LightFlag.IsAmbient)
-            ads_Shader->SetUniformFloat3("u_Light.Diffuse", lightProp.Diffuse);
+            s_Data.ADS_Shader->SetUniformFloat3("u_Light.Diffuse", lightProp.Diffuse);
         
-        ads_Shader->SetUniformInt1("u_LightFlag.IsSpecular", lightProp.LightFlag.IsSpecular);
+        s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsSpecular", lightProp.LightFlag.IsSpecular);
         if (lightProp.LightFlag.IsAmbient)
-            ads_Shader->SetUniformFloat3("u_Light.Specular", lightProp.Specular);
+            s_Data.ADS_Shader->SetUniformFloat3("u_Light.Specular", lightProp.Specular);
         
-        ads_Shader->SetUniformInt1("u_LightFlag.IsAttenuation", lightProp.LightFlag.IsAttenuation);
+        s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsAttenuation", lightProp.LightFlag.IsAttenuation);
         if (lightProp.LightFlag.IsAttenuation)
         {
-            ads_Shader->SetUniformFloat1("u_Light.Constant", lightProp.Constant);
-            ads_Shader->SetUniformFloat1("u_Light.Linear", lightProp.Linear);
-            ads_Shader->SetUniformFloat1("u_Light.Quadratic", lightProp.Quadratic);
+            s_Data.ADS_Shader->SetUniformFloat1("u_Light.Constant", lightProp.Constant);
+            s_Data.ADS_Shader->SetUniformFloat1("u_Light.Linear", lightProp.Linear);
+            s_Data.ADS_Shader->SetUniformFloat1("u_Light.Quadratic", lightProp.Quadratic);
         }
         
-        ads_Shader->SetUniformInt1("u_LightFlag.IsSpotLight", lightProp.LightFlag.IsSpotLight);
+        s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsSpotLight", lightProp.LightFlag.IsSpotLight);
         if (lightProp.LightFlag.IsSpotLight)
         {
-            ads_Shader->SetUniformFloat3("u_Light.Direction", camera.Front);
-            ads_Shader->SetUniformFloat1("u_Light.CutOff", glm::cos(glm::radians(lightProp.CutOff)));
+            s_Data.ADS_Shader->SetUniformFloat3("u_Light.Direction", camera.Front);
+            s_Data.ADS_Shader->SetUniformFloat1("u_Light.CutOff", glm::cos(glm::radians(lightProp.CutOff)));
         }
         
         // material properties
-        ads_Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
-        ads_Shader->Unbind();
+        s_Data.ADS_Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
+        s_Data.ADS_Shader->Unbind();
         
         // Binding White Texture
         s_Data.WhiteTexture->Bind();
@@ -212,7 +185,7 @@ namespace iKan {
     
     void SceneRenderer::SetCubeMapTexture(const std::vector<std::string>& paths)
     {
-        s_Data.CubeMapData.Texture = CubeMapTexture::Create(paths);
+        s_Data.CubeMapData.CubeMapTexture = CubeMapTexture::Create(paths);
         RendererStatistics::TextureCount += 6;
     }
     
@@ -230,11 +203,11 @@ namespace iKan {
         Ref<Shader> rendererShader;
         if (isADS)
         {
-            rendererShader = s_Data.Shaders.Get("ADS_Shader");
+            rendererShader = s_Data.ADS_Shader;
         }
         else
         {
-            rendererShader = s_Data.Shaders.Get("LightSourceShader");
+            rendererShader = s_Data.LightSourceShader;
             rendererShader->Bind();
             
             glm::vec3 color = {1.0f, 1.0f, 1.0f};
@@ -250,18 +223,26 @@ namespace iKan {
         mesh->Draw(*rendererShader.Raw());
         
         /* skybox cube */
-        auto cubeMapShader = s_Data.Shaders.Get("CubeMap");
-        cubeMapShader->Bind();
+        s_Data.CubeMapData.CubeMapShader->Bind();
         s_Data.CubeMapData.VertexArray->Bind();
-        s_Data.CubeMapData.Texture->Bind();
+        s_Data.CubeMapData.CubeMapTexture->Bind();
         
-        glm::mat4 cubeMapTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(10.0f));
-        cubeMapShader->SetUniformMat4("u_Transform", cubeMapTransform);
+        glm::mat4 cubeMapTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(100.0f));
+        
+        for (uint32_t i = 0; i < 36; i++)
+        {
+            s_Data.CubeMapData.VertexPtr->Position = cubeMapTransform * Vertices::Cube::Data[i];
+            s_Data.CubeMapData.VertexPtr++;
+        }
+        
+        // getting the Number of vertex but subtracting the running and base pointers
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.CubeMapData.VertexPtr - (uint8_t*)s_Data.CubeMapData.VertexBasePtr);
+        s_Data.CubeMapData.VertexBuffer->SetData(s_Data.CubeMapData.VertexBasePtr, dataSize);
         
         Renderer::DrawIndexed(36);
         
         s_Data.CubeMapData.VertexArray->Unbind();
-        cubeMapShader->Unbind();
+        s_Data.CubeMapData.CubeMapShader->Unbind();
         
         RendererStatistics::VertexCount += 36;
     }

@@ -15,6 +15,7 @@
 		B213795424ED4E6400A14055 /* stb_image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B21376CF24ED4E6100A14055 /* stb_image.cpp */; };
 		B2137A5724ED78FA00A14055 /* ImGuiBuild.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2137A5424ED78FA00A14055 /* ImGuiBuild.cpp */; };
 		B2137A5824ED7A8700A14055 /* libImgui.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2137A5024ED784E00A14055 /* libImgui.a */; };
+		B21C699D252B56D600F55592 /* Vertices.h in Headers */ = {isa = PBXBuildFile; fileRef = B21C699C252B56D600F55592 /* Vertices.h */; };
 		B21F821D24F6D1D20040B427 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B21F821B24F6D1D20040B427 /* Window.cpp */; };
 		B21F821E24F6D1D20040B427 /* Window.h in Headers */ = {isa = PBXBuildFile; fileRef = B21F821C24F6D1D20040B427 /* Window.h */; };
 		B22A8A532517B81600D2B9C8 /* Ref.h in Headers */ = {isa = PBXBuildFile; fileRef = B22A8A522517B81600D2B9C8 /* Ref.h */; };
@@ -125,6 +126,7 @@
 		B21376CF24ED4E6100A14055 /* stb_image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb_image.cpp; sourceTree = "<group>"; };
 		B2137A4B24ED784D00A14055 /* Imgui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Imgui.xcodeproj; path = vendor/Imgui/Imgui.xcodeproj; sourceTree = "<group>"; };
 		B2137A5424ED78FA00A14055 /* ImGuiBuild.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiBuild.cpp; sourceTree = "<group>"; };
+		B21C699C252B56D600F55592 /* Vertices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertices.h; sourceTree = "<group>"; };
 		B21F821B24F6D1D20040B427 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		B21F821C24F6D1D20040B427 /* Window.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Window.h; sourceTree = "<group>"; };
 		B22A8A522517B81600D2B9C8 /* Ref.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ref.h; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				B2F0FC0324F80E960004443A /* GraphicsContext.h */,
 				B264E230251FB3BC008C781A /* RenderStats.h */,
 				B264E232251FB45A008C781A /* RenderStats.cpp */,
+				B21C699C252B56D600F55592 /* Vertices.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				B2CDABDE2500EF2C008C6BDF /* Scene.h in Headers */,
 				B266522324FECB2F0032AF99 /* OpenGlTexture.h in Headers */,
 				B2CDABD42500E885008C6BDF /* entt.hpp in Headers */,
+				B21C699D252B56D600F55592 /* Vertices.h in Headers */,
 				B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */,
 				B2752D1424FABDF3005EF655 /* Input.h in Headers */,
 				B25639DA251E6A9F00BF0F33 /* SceneHierarchyPannel.h in Headers */,
