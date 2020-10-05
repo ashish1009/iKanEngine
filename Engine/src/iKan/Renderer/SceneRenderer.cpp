@@ -71,6 +71,7 @@ namespace iKan {
             shader->Unbind();
         }
         
+        // TODO: Try to move these somewhere else
         auto ads_Shader = s_Data.Shaders.Get("ADS_Shader");
         // Upload uniforms
         ads_Shader->Bind();

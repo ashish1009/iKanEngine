@@ -33,6 +33,12 @@ namespace iKan {
         RenderCommand::SetViewPort(width, height);
     }
     
+    void Renderer::DrawIndexed(uint32_t count)
+    {
+        RendererStatistics::DrawCalls++;
+        RenderCommand::DrawIndexed(count);
+    }
+    
     void Renderer::DrawIndexed(const Ref<VertexArray> &vertexArray, uint32_t count)
     {
         RendererStatistics::DrawCalls++;

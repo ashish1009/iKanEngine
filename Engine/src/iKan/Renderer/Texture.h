@@ -43,5 +43,16 @@ namespace iKan {
         glm::vec2                m_Coords;
     };
 
-    
+    // --------------------------- Cube Maps ---------------------------------
+    class CubeMapTexture : public RefCounted
+    {
+    public:
+        virtual ~CubeMapTexture() = default;
+        virtual void Bind(uint32_t slot = 0) const = 0;
+        
+        static Ref<CubeMapTexture> Create(std::vector<std::string> paths);
+        
+    private:
+        uint32_t                 m_RendererId;
+    };
 }

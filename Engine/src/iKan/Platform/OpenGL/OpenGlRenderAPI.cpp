@@ -61,5 +61,11 @@ namespace iKan {
         
         vertexArray->Unbind();
     }
-    
+
+    void OpenGlRenderAPI::DrawIndexed(uint32_t count)
+    {
+        glDrawArrays(GL_TRIANGLES, 0, count);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
 }

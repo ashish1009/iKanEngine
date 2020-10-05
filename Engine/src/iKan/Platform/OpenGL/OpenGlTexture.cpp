@@ -83,6 +83,50 @@ namespace iKan {
     {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
+    
+    
+    OpenGlCubeMapTexture::OpenGlCubeMapTexture(std::vector<std::string> paths)
+    {
+        stbi_set_flip_vertically_on_load(0);
+        
+        glGenTextures(1, &m_RendererId);
+        glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId);
+        
+        int width, height, nrChannels;
+        int i = 0;
+        for (auto path : paths)
+        {
+            unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+            if (data)
+            {
+                glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+                stbi_image_free(data);
+            }
+            else
+            {
+                IK_CORE_ERROR("Cubemap texture failed to load at path: {0}",  path);
+                stbi_image_free(data);
+            }
+            i++;
+        }
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+    }
+    
+    OpenGlCubeMapTexture::~OpenGlCubeMapTexture()
+    {
+        glDeleteTextures(1, &m_RendererId);
+    }
+    
+    void OpenGlCubeMapTexture::Bind(uint32_t slot) const
+    {
+        glActiveTexture(GL_TEXTURE0 + slot);
+        glBindTexture(GL_TEXTURE_2D, m_RendererId);
+    }
+
 
 }
     

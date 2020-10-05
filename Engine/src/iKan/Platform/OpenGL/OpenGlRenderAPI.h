@@ -14,6 +14,7 @@ namespace iKan {
         virtual void Blend(State state) override;
         virtual void SetViewPort(uint32_t widht, uint32_t height) override;
         virtual void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count = 0) override;
+        virtual void DrawIndexed(uint32_t count) override;
     };
     
 }

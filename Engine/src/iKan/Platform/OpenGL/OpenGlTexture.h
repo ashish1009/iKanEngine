@@ -32,4 +32,15 @@ namespace iKan {
         
     };
     
+    class OpenGlCubeMapTexture : public CubeMapTexture
+    {
+    public:
+        OpenGlCubeMapTexture(std::vector<std::string> paths);
+        virtual ~OpenGlCubeMapTexture();
+        virtual void Bind(uint32_t slot = 0) const override;
+        
+    private:
+        uint32_t m_RendererId;
+    };
+    
 }

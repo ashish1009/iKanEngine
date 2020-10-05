@@ -25,6 +25,26 @@ namespace iKan {
         
         m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
         
+        {
+            RenderCubeMap::SetShaader("../../Editor/assets/shaders/SkyBox.glsl");
+
+            //TODO: move to Renderer::Init() ?
+            RenderCubeMap::Init();
+            
+            // Cube map
+            std::vector<std::string> faces =
+            {
+                "../../Editor/assets/resources/textures/skybox/right.jpg",
+                "../../Editor/assets/resources/textures/skybox/left.jpg",
+                "../../Editor/assets/resources/textures/skybox/top.jpg",
+                "../../Editor/assets/resources/textures/skybox/bottom.jpg",
+                "../../Editor/assets/resources/textures/skybox/front.jpg",
+                "../../Editor/assets/resources/textures/skybox/back.jpg"
+            };
+            RenderCubeMap::SetCubeMapTexture(faces);
+            
+        }
+        
         std::unordered_map<std::string, Ref<Mesh>> meshMap;
         meshMap["Light"]    = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
         meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
@@ -102,6 +122,11 @@ namespace iKan {
         Renderer::Clear({ 0.2, 0.2, 0.2, 1.0f });
         
         camera.SetViewportSize(1600.0f, 800.0f);
+        
+        {
+            RenderCubeMap::BeginScene(m_EditorCamera, m_EditorCamera.GetViewMatrix());
+            RenderCubeMap::DrawCube();
+        }
         
         m_ActiveScene->SetLightPosition(m_EntityMap["Light"].GetComponent<TransformComponent>().Transform);
         m_ActiveScene->OnEditorUpdate(timeStep, m_EditorCamera);
