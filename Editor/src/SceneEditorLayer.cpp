@@ -39,11 +39,11 @@ namespace iKan {
         }
         
         std::unordered_map<std::string, Ref<Mesh>> meshMap;
-        meshMap["Light"]    = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
-        meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+//        meshMap["Light"]    = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
+//        meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
         meshMap["Moon"]     = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
-        meshMap["Pokemon"]  = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
-        meshMap["Ground"]   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Plane/GroundPlane.obj");
+//        meshMap["Pokemon"]  = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
+//        meshMap["Ground"]   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Plane/GroundPlane.obj");
         
         for (auto kv : meshMap)
         {
@@ -121,7 +121,7 @@ namespace iKan {
 //            RenderCubeMap::DrawCube();
         }
         
-        m_ActiveScene->SetLightPosition(m_EntityMap["Light"].GetComponent<TransformComponent>().Transform);
+//        m_ActiveScene->SetLightPosition(m_EntityMap["Light"].GetComponent<TransformComponent>().Transform);
         m_ActiveScene->OnEditorUpdate(timeStep, m_EditorCamera);
         
         m_FrameBuffer->Unbind();

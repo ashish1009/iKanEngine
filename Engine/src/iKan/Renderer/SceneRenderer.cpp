@@ -21,6 +21,8 @@ namespace iKan {
 
         struct CubeMapData
         {
+            static const uint32_t MaxVertex = 20000;
+            
             Ref<VertexArray>    VertexArray;
             Ref<VertexBuffer>   VertexBuffer;
             Ref<CubeMapTexture> CubeMapTexture;
@@ -69,14 +71,14 @@ namespace iKan {
         s_Data.CubeMapData.VertexArray = VertexArray::Create();
         
         /* Creating Vertex Buffer and adding Layout */
-        s_Data.CubeMapData.VertexBuffer = VertexBuffer::Create(1000 * sizeof(SceneRendererData::Vertex));//(Vertices::Cube::Size, Vertices::Cube::Data);
+        s_Data.CubeMapData.VertexBuffer = VertexBuffer::Create( SceneRendererData::CubeMapData::MaxVertex * sizeof(SceneRendererData::Vertex));
         s_Data.CubeMapData.VertexBuffer->AddLayout({
             { ShaderDataType::Float3, "a_Position" }
         });
         s_Data.CubeMapData.VertexArray->AddVertexBuffer(s_Data.CubeMapData.VertexBuffer);
         
         // Allocating the memory for vertex Buffer Pointer
-        s_Data.CubeMapData.VertexBasePtr = new SceneRendererData::Vertex[1000];
+        s_Data.CubeMapData.VertexBasePtr = new SceneRendererData::Vertex[SceneRendererData::CubeMapData::MaxVertex];
         
         /* Shader Bind and texture set*/
         s_Data.CubeMapData.CubeMapShader->Bind();
@@ -88,7 +90,7 @@ namespace iKan {
         //TODO: Load Shader from outside or move the files inside Engine
         s_Data.ADS_Shader                = s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
         s_Data.LightSourceShader         = s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
-        s_Data.CubeMapData.CubeMapShader = s_Data.Shaders.Load("../../Editor/assets/shaders/CubeMap.glsl");
+        s_Data.CubeMapData.CubeMapShader = s_Data.Shaders.Load("../../Editor/assets/shaders/CubeMapShader.glsl");
         
         InitMeshData();
         InitCubeMapData();
@@ -121,10 +123,6 @@ namespace iKan {
         }
 
         {
-            // Cube Map shader bind the camera
-            s_Data.CubeMapData.CubeMapShader->Bind();
-            s_Data.CubeMapData.CubeMapShader->SetUniformMat4("u_ProjectionView", viewProj);
-            
             s_Data.CubeMapData.VertexPtr = s_Data.CubeMapData.VertexBasePtr;
         }
 
@@ -195,9 +193,12 @@ namespace iKan {
         for (auto kv : s_Data.Shaders.GetShaders())
         {
             auto shader = kv.second;
-            shader->Bind();
-            shader->SetUniformMat4("u_Transform", transform);
-            shader->Unbind();
+            if (shader->GetName() != "CubeMapShader")
+            {
+                shader->Bind();
+                shader->SetUniformMat4("u_Transform", transform);
+                shader->Unbind();
+            }
         }
         
         Ref<Shader> rendererShader;
@@ -227,7 +228,7 @@ namespace iKan {
         s_Data.CubeMapData.VertexArray->Bind();
         s_Data.CubeMapData.CubeMapTexture->Bind();
         
-        glm::mat4 cubeMapTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(100.0f));
+        glm::mat4 cubeMapTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(1000.0f));
         
         for (uint32_t i = 0; i < 36; i++)
         {
