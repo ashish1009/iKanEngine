@@ -91,10 +91,21 @@ namespace iKan {
             ADS,
             LightSource,
             Reflection,
+            Refraction,
+        };
+        
+        enum class MaterialType
+        {
+            Air,
+            Water,
+            Ice,
+            Glass,
+            Diamond,
         };
         
         Ref<iKan::Mesh> Mesh;
         Property Prop = Property::ADS;
+        MaterialType Material = MaterialType::Air;
         
         MeshComponent() = default;
         MeshComponent(const MeshComponent& other) = default;

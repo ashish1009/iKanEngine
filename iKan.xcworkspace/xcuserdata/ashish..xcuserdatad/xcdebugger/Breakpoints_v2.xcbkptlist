@@ -14,9 +14,9 @@
             filePath = "Engine/src/iKan/Renderer/SceneRenderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
-            landmarkName = "SceneRenderer::DrawMesh(mesh, transform, meshProp)"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "SceneRenderer::DrawMesh(mesh, transform, meshProp, meshMaterial)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

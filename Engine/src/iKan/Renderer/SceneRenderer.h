@@ -27,7 +27,7 @@ namespace iKan {
         static void BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera);
         static void SetCubeMapTexture(const std::vector<std::string>& paths);
         
-        static void DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const MeshComponent::Property& meshProp);
+        static void DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const MeshComponent::Property& meshProp, const MeshComponent::MaterialType& meshMaterial);
         
         static void EndScene();
         static void Flush();

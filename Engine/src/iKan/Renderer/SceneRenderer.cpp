@@ -195,7 +195,8 @@ namespace iKan {
         RendererStatistics::TextureCount += 6;
     }
     
-    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const MeshComponent::Property& meshProp)
+    // TODO: Fix the arguments
+    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const MeshComponent::Property& meshProp, const MeshComponent::MaterialType& meshMaterial)
     {
         for (auto kv : s_Data.Shaders.GetShaders())
         {
@@ -242,6 +243,19 @@ namespace iKan {
             case MeshComponent::Property::Reflection:
             {
                 rendererShader = s_Data.EnvironmentMapShader;
+                rendererShader->Bind();
+
+                rendererShader->SetUniformInt1("u_Refract", int(false));
+                break;
+            }
+            
+            case MeshComponent::Property::Refraction:
+            {
+                rendererShader = s_Data.EnvironmentMapShader;
+                rendererShader->Bind();
+                
+                rendererShader->SetUniformInt1("u_Refract", int(true));
+                rendererShader->SetUniformInt1("u_MaterialIndex", int(meshMaterial));
                 break;
             }
 

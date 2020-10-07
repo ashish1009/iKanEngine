@@ -39,9 +39,31 @@ uniform vec3      u_Color;
 uniform vec3        u_CameraPos;
 uniform samplerCube u_Skybox;
 
+uniform int u_Refract; // Note: if this is false then bydefault it will use reflection
+uniform int u_MaterialIndex;
+
 void main()
 {
+    float materialType[5] = float[5]( 1.00f, 1.33f, 1.309, 1.52, 2.42 );
+    /* -----------------------------------------
+      Index  |    Material   |  Refractive index
+     -------------------------------------------
+        0    |     Air       |      1.00
+        1    |     Water     |      1.33
+        2    |     Ice       |      1.309
+        3    |     Glass     |      1.52
+        4    |     Diamond   |      2.42
+     ------------------------------------------ */
+
+    float ratio = 1.00 / materialType[u_MaterialIndex];
+    
     vec3 I = normalize(v_Position - u_CameraPos);
-    vec3 R = reflect(I, normalize(v_Normal));
+    vec3 R;
+    
+    if (bool(u_Refract))
+        R = refract(I, normalize(v_Normal), ratio);
+    else
+        R = reflect(I, normalize(v_Normal));
+    
     color = vec4(texture(u_Skybox, R).rgb, 1.0);
 }

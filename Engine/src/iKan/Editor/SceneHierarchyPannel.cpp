@@ -83,18 +83,20 @@ namespace iKan {
         {
             if (ImGui::TreeNodeEx((void*)typeid(MeshComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Mesh"))
             {
-                auto& meshProp = entity.GetComponent<MeshComponent>().Prop;
+                auto& mesh = entity.GetComponent<MeshComponent>();
 
-                const char* mehPropString[] = {  "Basic", "ADS", "Light Source", "Reflection"};
-                const char* currMeshProp    = mehPropString[(int32_t)meshProp];
+                auto& meshProp = mesh.Prop;
+                
+                const char* meshPropString[] = {  "Basic", "ADS", "Light Source", "Reflection", "Refration"};
+                const char* currMeshProp     = meshPropString[(int32_t)meshProp];
                 if (ImGui::BeginCombo("##Propery", currMeshProp))
                 {
-                    for (int i = 0; i < 4; i++)
+                    for (int i = 0; i < 5; i++)
                     {
-                        bool bIsSelected = currMeshProp == mehPropString[i];
-                        if (ImGui::Selectable(mehPropString[i], bIsSelected))
+                        bool bIsSelected = currMeshProp == meshPropString[i];
+                        if (ImGui::Selectable(meshPropString[i], bIsSelected))
                         {
-                            currMeshProp = mehPropString[i];
+                            currMeshProp = meshPropString[i];
                             meshProp     = (MeshComponent::Property)i;
                         }
                         
@@ -106,7 +108,30 @@ namespace iKan {
                     ImGui::EndCombo();
                 }
                 
-                ImGui::Columns(1);
+                if (meshProp == MeshComponent::Property::Refraction)
+                {
+                    auto& meshMaterial = mesh.Material;
+                    const char* mehMaterialString[] = { "Air", "Water", "Ice", "Glass", "Diamond" };
+                    const char* currMaterial        = mehMaterialString[(int32_t)meshMaterial];
+                    if (ImGui::BeginCombo("##Material", currMaterial))
+                    {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            bool bIsSelected = currMaterial == mehMaterialString[i];
+                            if (ImGui::Selectable(mehMaterialString[i], bIsSelected))
+                            {
+                                currMaterial = mehMaterialString[i];
+                                meshMaterial = (MeshComponent::MaterialType)i;
+                            }
+                            
+                            if (bIsSelected)
+                            {
+                                ImGui::SetItemDefaultFocus();
+                            }
+                        }
+                        ImGui::EndCombo();
+                    }
+                }
                 
                 ImGui::TreePop();
             }
