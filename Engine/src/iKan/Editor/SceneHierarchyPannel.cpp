@@ -83,20 +83,28 @@ namespace iKan {
         {
             if (ImGui::TreeNodeEx((void*)typeid(MeshComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Mesh"))
             {
-                auto& mesh = entity.GetComponent<MeshComponent>();                
-                ImGui::Columns(2);
-                ImGui::Text("ADS");
-                ImGui::NextColumn();
-                ImGui::Checkbox("##ADS", &mesh.ADS);
-                if (mesh.ADS)
-                    mesh.LightSource = false;
-                ImGui::NextColumn();
-                
-                ImGui::Text("Light Source");
-                ImGui::NextColumn();
-                ImGui::Checkbox("##LightSource", &mesh.LightSource);
-                if (mesh.LightSource)
-                    mesh.ADS = false;
+                auto& meshProp = entity.GetComponent<MeshComponent>().Prop;
+
+                const char* mehPropString[] = {  "Basic", "ADS", "Light Source", "Reflection"};
+                const char* currMeshProp    = mehPropString[(int32_t)meshProp];
+                if (ImGui::BeginCombo("##Propery", currMeshProp))
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        bool bIsSelected = currMeshProp == mehPropString[i];
+                        if (ImGui::Selectable(mehPropString[i], bIsSelected))
+                        {
+                            currMeshProp = mehPropString[i];
+                            meshProp     = (MeshComponent::Property)i;
+                        }
+                        
+                        if (bIsSelected)
+                        {
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+                    ImGui::EndCombo();
+                }
                 
                 ImGui::Columns(1);
                 

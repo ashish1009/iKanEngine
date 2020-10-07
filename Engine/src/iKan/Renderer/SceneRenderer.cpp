@@ -39,6 +39,7 @@ namespace iKan {
         ShaderLibrary Shaders;
         Ref<Shader>   LightSourceShader;
         Ref<Shader>   ADS_Shader;
+        Ref<Shader>   EnvironmentMapShader;
         
         Ref<Texture> WhiteTexture;
     };
@@ -83,6 +84,9 @@ namespace iKan {
         /* Shader Bind and texture set*/
         s_Data.CubeMapData.CubeMapShader->Bind();
         s_Data.CubeMapData.CubeMapShader->SetUniformInt1("u_Skybox", 0);
+        
+        s_Data.EnvironmentMapShader->Bind();
+        s_Data.EnvironmentMapShader->SetUniformInt1("u_Skybox", 0);
     }
     
     void SceneRenderer::Init()
@@ -91,6 +95,7 @@ namespace iKan {
         s_Data.ADS_Shader                = s_Data.Shaders.Load("../../Editor/assets/shaders/ADS_Shader.glsl");
         s_Data.LightSourceShader         = s_Data.Shaders.Load("../../Editor/assets/shaders/LightSourceShader.glsl");
         s_Data.CubeMapData.CubeMapShader = s_Data.Shaders.Load("../../Editor/assets/shaders/CubeMapShader.glsl");
+        s_Data.EnvironmentMapShader      = s_Data.Shaders.Load("../../Editor/assets/shaders/EnvironmentMapShader.glsl");
         
         InitMeshData();
         InitCubeMapData();
@@ -121,6 +126,9 @@ namespace iKan {
             shader->SetUniformMat4("u_ViewProjection", viewProj);
             shader->Unbind();
         }
+        
+        s_Data.EnvironmentMapShader->Bind();
+        s_Data.EnvironmentMapShader->SetUniformFloat3("u_CameraPos", camera.Camera.GetProjection()[3]);
 
         {
             s_Data.CubeMapData.VertexPtr = s_Data.CubeMapData.VertexBasePtr;
@@ -187,8 +195,7 @@ namespace iKan {
         RendererStatistics::TextureCount += 6;
     }
     
-    // TODO: fix these flags , shouldnt be here
-    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, bool isADS, bool isLightSOurce)
+    void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const MeshComponent::Property& meshProp)
     {
         for (auto kv : s_Data.Shaders.GetShaders())
         {
@@ -202,23 +209,44 @@ namespace iKan {
         }
         
         Ref<Shader> rendererShader;
-        if (isADS)
+        switch (meshProp)
         {
-            rendererShader = s_Data.ADS_Shader;
-        }
-        else
-        {
-            rendererShader = s_Data.LightSourceShader;
-            rendererShader->Bind();
-            
-            glm::vec3 color = {1.0f, 1.0f, 1.0f};
-            if (isLightSOurce)
+            case MeshComponent::Property::Basic:
             {
-                auto light = s_Data.ActiveLight;
-                color = light.Ambient * light.Diffuse * light.Specular;
+                rendererShader = s_Data.LightSourceShader;
+                rendererShader->Bind();
+                
+                glm::vec3 color = {1.0f, 1.0f, 1.0f};
+                rendererShader->SetUniformFloat3("u_Color", color);
+                break;
             }
-            
-            rendererShader->SetUniformFloat3("u_Color", color);
+                
+            case MeshComponent::Property::ADS:
+            {
+                rendererShader = s_Data.ADS_Shader;
+                break;
+            }
+
+            case MeshComponent::Property::LightSource:
+            {
+                rendererShader = s_Data.LightSourceShader;
+                rendererShader->Bind();
+                
+                auto light = s_Data.ActiveLight;
+                glm::vec3 color = light.Ambient * light.Diffuse * light.Specular;
+        
+                rendererShader->SetUniformFloat3("u_Color", color);
+                break;
+            }
+
+            case MeshComponent::Property::Reflection:
+            {
+                rendererShader = s_Data.EnvironmentMapShader;
+                break;
+            }
+
+            default:
+                break;
         }
         
         mesh->Draw(*rendererShader.Raw());

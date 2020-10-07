@@ -85,10 +85,16 @@ namespace iKan {
     
     struct MeshComponent
     {
-        bool ADS = true;
-        bool LightSource = false;
+        enum class Property
+        {
+            Basic,
+            ADS,
+            LightSource,
+            Reflection,
+        };
         
         Ref<iKan::Mesh> Mesh;
+        Property Prop = Property::ADS;
         
         MeshComponent() = default;
         MeshComponent(const MeshComponent& other) = default;

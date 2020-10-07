@@ -39,9 +39,10 @@ namespace iKan {
         }
         
         std::unordered_map<std::string, Ref<Mesh>> meshMap;
-//        meshMap["Light"]    = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
-//        meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
-        meshMap["Moon"]     = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
+        meshMap["Light"]       = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Sphere/Sphere.obj");
+        meshMap["GlassShaper"] = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Sphere/Sphere.obj");
+        meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+//        meshMap["Moon"]     = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
 //        meshMap["Pokemon"]  = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
 //        meshMap["Ground"]   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Plane/GroundPlane.obj");
         
@@ -55,10 +56,14 @@ namespace iKan {
             
             if (name == "Light")
             {
-                // Setting Light Source without ADS and making size 0.1
-                m_EntityMap[name].GetComponent<MeshComponent>().ADS         = false;
-                m_EntityMap[name].GetComponent<MeshComponent>().LightSource = true;
-                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 10.0f, 0.0f, 10.0f }, glm::vec3(0.0f), glm::vec3(0.2f));
+                m_EntityMap[name].GetComponent<MeshComponent>().Prop = MeshComponent::Property::LightSource;
+                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ -5.0f, 0.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(0.2f));
+            }
+            
+            if (name == "GlassShaper")
+            {
+                m_EntityMap[name].GetComponent<MeshComponent>().Prop = MeshComponent::Property::Reflection;
+                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 5.0f, 0.0f, 5.0f }, glm::vec3(0.0f), glm::vec3(5.0f));
             }
             
             if (name == "Bag")
@@ -116,12 +121,7 @@ namespace iKan {
         
         camera.SetViewportSize(1600.0f, 800.0f);
         
-        {
-//            RenderCubeMap::BeginScene(m_EditorCamera, m_EditorCamera.GetViewMatrix());
-//            RenderCubeMap::DrawCube();
-        }
-        
-//        m_ActiveScene->SetLightPosition(m_EntityMap["Light"].GetComponent<TransformComponent>().Transform);
+        m_ActiveScene->SetLightPosition(m_EntityMap["Light"].GetComponent<TransformComponent>().Transform);
         m_ActiveScene->OnEditorUpdate(timeStep, m_EditorCamera);
         
         m_FrameBuffer->Unbind();
