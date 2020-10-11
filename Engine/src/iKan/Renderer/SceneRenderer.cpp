@@ -40,8 +40,6 @@ namespace iKan {
         Ref<Shader>   LightSourceShader;
         Ref<Shader>   ADS_Shader;
         Ref<Shader>   EnvironmentMapShader;
-        
-        Ref<Texture> WhiteTexture;
     };
     static SceneRendererData s_Data;
     
@@ -60,10 +58,6 @@ namespace iKan {
         s_Data.ADS_Shader->Bind();
         s_Data.ADS_Shader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
         s_Data.ADS_Shader->Unbind();
-        
-        // Creating whote texture for cololful quads witout any texture or sprite
-        uint32_t whiteTextureData = 0xffffffff;
-        s_Data.WhiteTexture       = Texture::Create(1, 1, &whiteTextureData, sizeof(uint32_t));
     }
     
     void SceneRenderer::InitCubeMapData()
@@ -84,7 +78,7 @@ namespace iKan {
         /* Shader Bind and texture set*/
         s_Data.CubeMapData.CubeMapShader->Bind();
         s_Data.CubeMapData.CubeMapShader->SetUniformInt1("u_Skybox", 0);
-        
+
         s_Data.EnvironmentMapShader->Bind();
         s_Data.EnvironmentMapShader->SetUniformInt1("u_Skybox", 0);
     }
@@ -172,9 +166,6 @@ namespace iKan {
         // material properties
         s_Data.ADS_Shader->SetUniformFloat1("u_Material.Shininess", 64.0f);
         s_Data.ADS_Shader->Unbind();
-        
-        // Binding White Texture
-        s_Data.WhiteTexture->Bind();
     }
     
     void SceneRenderer::EndScene()
@@ -194,7 +185,14 @@ namespace iKan {
         s_Data.CubeMapData.CubeMapTexture = CubeMapTexture::Create(paths);
         RendererStatistics::TextureCount += 6;
     }
-    
+
+    void SceneRenderer::SetCubeMapTexture(const std::string& paths)
+    {
+        s_Data.CubeMapData.CubeMapTexture = CubeMapTexture::Create(paths);
+        //TODO: Calling init time and reseting at runtime
+        RendererStatistics::TextureCount++;
+    }
+
     // TODO: Fix the arguments
     void SceneRenderer::DrawMesh(const Ref<Mesh>& mesh, const glm::mat4& transform, const MeshComponent::Property& meshProp, const MeshComponent::MaterialType& meshMaterial)
     {
@@ -216,7 +214,7 @@ namespace iKan {
             {
                 rendererShader = s_Data.LightSourceShader;
                 rendererShader->Bind();
-                
+
                 glm::vec3 color = {1.0f, 1.0f, 1.0f};
                 rendererShader->SetUniformFloat3("u_Color", color);
                 break;
@@ -255,7 +253,7 @@ namespace iKan {
                 rendererShader->Bind();
                 
                 rendererShader->SetUniformInt1("u_Refract", int(true));
-                rendererShader->SetUniformInt1("u_MaterialIndex", int(meshMaterial));
+                rendererShader->SetUniformFloat1("u_MaterialType", 1.0f / MaterialRefractiveIndex[(int)meshMaterial]);
                 break;
             }
 
@@ -266,9 +264,9 @@ namespace iKan {
         mesh->Draw(*rendererShader.Raw());
         
         /* skybox cube */
+        s_Data.CubeMapData.CubeMapTexture->Bind(1);
         s_Data.CubeMapData.CubeMapShader->Bind();
         s_Data.CubeMapData.VertexArray->Bind();
-        s_Data.CubeMapData.CubeMapTexture->Bind();
         
         glm::mat4 cubeMapTransform = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(1000.0f));
         

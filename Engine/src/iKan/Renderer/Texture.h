@@ -51,6 +51,7 @@ namespace iKan {
         virtual void Bind(uint32_t slot = 0) const = 0;
         
         static Ref<CubeMapTexture> Create(std::vector<std::string> paths);
+        static Ref<CubeMapTexture> Create(const std::string& paths);
         
     private:
         uint32_t                 m_RendererId;

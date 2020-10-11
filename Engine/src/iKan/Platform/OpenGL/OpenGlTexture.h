@@ -36,6 +36,8 @@ namespace iKan {
     {
     public:
         OpenGlCubeMapTexture(std::vector<std::string> paths);
+        OpenGlCubeMapTexture(const std::string& path);
+        
         virtual ~OpenGlCubeMapTexture();
         virtual void Bind(uint32_t slot = 0) const override;
         

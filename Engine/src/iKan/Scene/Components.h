@@ -8,6 +8,8 @@
 
 namespace iKan {
     
+    static constexpr float MaterialRefractiveIndex[] = { 1.00f, 1.33f, 1.309, 1.52, 2.42 };
+    
     struct TagComponent
     {
         std::string Tag;

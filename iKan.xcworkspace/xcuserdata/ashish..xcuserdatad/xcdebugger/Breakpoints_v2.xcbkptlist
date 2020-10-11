@@ -14,8 +14,8 @@
             filePath = "Engine/src/iKan/Renderer/SceneRenderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "SceneRenderer::DrawMesh(mesh, transform, meshProp, meshMaterial)"
             landmarkType = "7">
          </BreakpointContent>
@@ -50,38 +50,6 @@
             endingLineNumber = "44"
             landmarkName = "SubMesh::Draw(shader)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "3DA8EE1E-F494-4FB1-B933-E57E32C4A917 - a92fee9537ac024f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "iKan::SubMesh::Draw(iKan::Shader&amp;)"
-                  moduleName = "Editor"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ashish./iKan/GitHub/iKanEngine/Engine/src/iKan/Renderer/Mesh.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "30">
-               </Location>
-               <Location
-                  uuid = "3DA8EE1E-F494-4FB1-B933-E57E32C4A917 - a92fee9537ac024f"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "iKan::SubMesh::Draw(iKan::Shader&amp;)"
-                  moduleName = "Editor"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ashish./iKan/GitHub/iKanEngine/Engine/src/iKan/Renderer/Mesh.cpp"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "107">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -142,8 +110,8 @@
             filePath = "Engine/src/iKan/Renderer/SceneRenderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "SceneRenderer::InitCubeMapData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -193,6 +161,54 @@
             startingLineNumber = "44"
             endingLineNumber = "44"
             landmarkName = "Renderer::DrawIndexed(vertexArray, count)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E37BC1A4-2214-48D6-BEDF-99E009D40B56"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Engine/src/iKan/Platform/OpenGL/OpenGlTexture.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "OpenGlTexture::Bind(slot)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "69FB6916-DAA0-425D-8FD9-B048DC67F03B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Engine/src/iKan/Renderer/Renderer2D.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
+            landmarkName = "Renderer2D::Flush()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8A11AAA9-707E-4701-9754-70A0D663485E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Engine/src/iKan/Renderer/SceneRenderer.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
+            landmarkName = "SceneRenderer::SetCubeMapTexture(paths)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
