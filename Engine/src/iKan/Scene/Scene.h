@@ -53,9 +53,6 @@ namespace iKan {
         entt::registry m_Registry;
         uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
         
-        Camera* m_MainCamera         = nullptr;
-        glm::mat4* m_CameraTransform = nullptr;
-        
         friend class Entity;
         friend class SceneHeirarchyPannel;
 
