@@ -38,7 +38,6 @@ namespace iKan {
     
     void ImGuiAPI::Counter(const std::string& name, uint32_t& counter)
     {
-#pragma clang diagnostic ignored "-Wformat-security"
         ImGui::Text(name.c_str());
         ImGui::SameLine();
         

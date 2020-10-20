@@ -178,6 +178,7 @@
 		B2B1F7E2253F49E6008DD031 /* MacWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B2B1F7E3253F49E6008DD031 /* MacWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
 		B2B1F7E9253F4B3F008DD031 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		B2B1F7F1253F5D59008DD031 /* SceneProperyGrid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneProperyGrid.h; sourceTree = "<group>"; };
 		B2C5BE7C25288130005E260D /* GlmMath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlmMath.cpp; sourceTree = "<group>"; };
 		B2C5BE7D25288130005E260D /* GlmMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlmMath.h; sourceTree = "<group>"; };
 		B2CDABCF2500E885008C6BDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -372,6 +373,7 @@
 				B25639D9251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp */,
 				B25718212524707200E30030 /* EditorCamera.cpp */,
 				B25718222524707200E30030 /* EditorCamera.h */,
+				B2B1F7F1253F5D59008DD031 /* SceneProperyGrid.h */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
