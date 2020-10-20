@@ -25,7 +25,7 @@ namespace iKan {
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
  
         // Adding Scene
-        m_Scene = Ref<Scene>::Create(Scene::SceneRendererType::_2D);
+        m_Scene = Ref<Scene>::Create();
         
         // Frame Buffers
         FramebufferSpecification fbSpec;
@@ -100,9 +100,9 @@ namespace iKan {
         }
         
         // Stats 
-        ImGuiAPI::StatsAndFrameRate((ImGuiRendererType)m_Scene->GetRendererType());
+        ImGuiAPI::FrameRate();
+        ImGuiAPI::RendererStats();
         ImGuiAPI::RendererVersion();
-        
         m_SceneHierarchyPannel.OnImguiender();
         
         // ----------------------- Setings ----------------------------------------------------------------

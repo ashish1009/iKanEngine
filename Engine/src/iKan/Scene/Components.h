@@ -86,46 +86,4 @@ namespace iKan {
         ScriptableEntity* Instance = nullptr;
     };
     
-    struct MeshComponent
-    {
-        enum class Property
-        {
-            Basic,
-            ADS,
-            LightSource,
-            Reflection,
-            Refraction,
-        };
-        
-        enum class MaterialType
-        {
-            Air,
-            Water,
-            Ice,
-            Glass,
-            Diamond,
-        };
-        
-        Ref<iKan::Mesh> Mesh;
-        Property Prop = Property::ADS;
-        MaterialType Material = MaterialType::Air;
-        
-        MeshComponent() = default;
-        MeshComponent(const MeshComponent& other) = default;
-        MeshComponent(const Ref<iKan::Mesh>& mesh)
-        : Mesh(mesh) {}
-        
-        operator Ref<iKan::Mesh> () { return Mesh; }
-    };
-    
-    struct LightComponent
-    {
-        iKan::Light Light;
-        
-        bool Primary = true;
-        
-        LightComponent() = default;
-        LightComponent(const LightComponent&) = default;
-    };
-
 }

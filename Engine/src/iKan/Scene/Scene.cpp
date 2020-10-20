@@ -3,12 +3,10 @@
 #include <iKan/Scene/Entity.h>
 
 #include <iKan/Renderer/Renderer2D.h>
-#include <iKan/Renderer/SceneRenderer.h>
 
 namespace iKan {
     
-    Scene::Scene(SceneRendererType sceneRenderer)
-    : m_ScceneRenderer(sceneRenderer)
+    Scene::Scene()
     {
     }
     
@@ -24,37 +22,6 @@ namespace iKan {
         return entity;
     }
     
-    // Designed for 3D only
-    void Scene::OnEditorUpdate(TimeStep ts, const EditorCamera& camera)
-    {
-        Light* light = nullptr;
-        auto view = m_Registry.view<LightComponent>();
-        for (auto entity : view)
-        {
-            auto& comp = view.get<LightComponent>(entity);
-            if (comp.Primary)
-            {
-                light = &comp.Light;
-                break;
-            }
-        }
-        
-        if (!light)
-        {
-            // TODO: Add functionalitu for no light Scene
-            IK_CORE_WARN("No Light activated");
-        }
-        
-        SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix(), camera.GetForwardDirection() }, { light });
-        // TODO: Tag component for debug only
-        auto group = m_Registry.group<TagComponent, TransformComponent>(entt::get<MeshComponent>);
-        for (auto entity : group)
-        {
-            const auto [tag, transform, mesh] = group.get<TagComponent, TransformComponent, MeshComponent>(entity);
-            SceneRenderer::DrawMesh(mesh, transform, mesh.Prop, mesh.Material);
-        }
-        SceneRenderer::EndScene();
-    }
     
     void Scene::OnUpdate(TimeStep ts)
     {
@@ -71,12 +38,17 @@ namespace iKan {
         // Renderer
         if (m_MainCamera)
         {
-            switch (m_ScceneRenderer)
+            Renderer2D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
+            auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+            for (auto entity : group)
             {
-                case SceneRendererType::_2D: Renderer2D(); break;
-                case SceneRendererType::_3D: Renderer3D(); break;
-                default: IK_CORE_ASSERT(false, "Invalid Scene Renderer");
+                const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+                if (sprite.SubTexComp)
+                    Renderer2D::DrawQuad(transform, sprite.SubTexComp);
+                else
+                    Renderer2D::DrawQuad(transform, sprite.Color);
             }
+            Renderer2D::EndScene();
         }
         else
         {
@@ -97,7 +69,6 @@ namespace iKan {
             if (!cameraComponent.FixedAspectRatio)
                 cameraComponent.Camera.SetViewportSize(width, height);
         }
-        
     }
      
     Entity Scene::GetMainCameraEntity()
@@ -129,25 +100,6 @@ namespace iKan {
             }
         });
 
-    }
-    
-    void Scene::Renderer2D()
-    {
-        Renderer2D::BeginScene(m_MainCamera->GetProjection(), *m_CameraTransform);
-        auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-        for (auto entity : group)
-        {
-            const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-            if (sprite.SubTexComp)
-                Renderer2D::DrawQuad(transform, sprite.SubTexComp);
-            else
-                Renderer2D::DrawQuad(transform, sprite.Color);
-        }
-        Renderer2D::EndScene();
-    }
-    
-    void Scene::Renderer3D()
-    {
     }
     
     // TODO: For now only for Mario Branch Need to be fix later

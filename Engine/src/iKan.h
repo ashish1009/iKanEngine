@@ -21,7 +21,6 @@
 #include <iKan/Renderer/Shader.h>
 #include <iKan/Renderer/Texture.h>
 #include <iKan/Renderer/Renderer2D.h>
-#include <iKan/Renderer/SceneRenderer.h>
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/Renderer/Camera.h>
 #include <iKan/Renderer/RenderStats.h>

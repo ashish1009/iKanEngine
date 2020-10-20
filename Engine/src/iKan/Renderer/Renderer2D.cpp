@@ -198,7 +198,6 @@ namespace iKan {
         
         s_Data.QuadIndexCount += 6;
         
-        RendererStatistics::QuadCount++;
         RendererStatistics::VertexCount += 4;
         RendererStatistics::IndexCount += 6;
     }
@@ -272,7 +271,6 @@ namespace iKan {
         
         s_Data.QuadIndexCount += 6;
         
-        RendererStatistics::QuadCount++;
         RendererStatistics::VertexCount += 4;
         RendererStatistics::IndexCount += 6;
     }
@@ -345,7 +343,6 @@ namespace iKan {
         }
         s_Data.QuadIndexCount += 6;
         
-        RendererStatistics::QuadCount++;
         RendererStatistics::VertexCount += 4;
         RendererStatistics::IndexCount += 6;
     }

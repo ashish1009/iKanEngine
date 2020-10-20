@@ -23,71 +23,7 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(specs);
         
-        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_3D);
-        
-        {
-            std::vector<std::string> faces =
-            {
-                "../../Editor/assets/resources/textures/skybox/right.jpg",
-                "../../Editor/assets/resources/textures/skybox/left.jpg",
-                "../../Editor/assets/resources/textures/skybox/top.jpg",
-                "../../Editor/assets/resources/textures/skybox/bottom.jpg",
-                "../../Editor/assets/resources/textures/skybox/front.jpg",
-                "../../Editor/assets/resources/textures/skybox/back.jpg"
-            };
-            SceneRenderer::SetCubeMapTexture(faces);
-        }
-        
-        auto lightEntity = m_ActiveScene->CreateEntity("Light");
-        lightEntity.AddComponent<LightComponent>();
-        
-        Ref<Mesh> lightMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Sphere/Sphere.obj");
-        lightEntity.AddComponent<MeshComponent>(lightMesh);
-        lightEntity.GetComponent<MeshComponent>().Prop = MeshComponent::Property::LightSource;
-        lightEntity.GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ -5.0f, 0.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(0.2f));
-
-        std::unordered_map<std::string, Ref<Mesh>> meshMap;
-        meshMap["GlassShaper"] = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Sphere/Sphere.obj");
-        meshMap["Bag"]      = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
-//        meshMap["Moon"]     = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Moon/Moon.obj");
-//        meshMap["Pokemon"]  = Ref<Mesh>::Create("../../Editor/assets/resources/objects/pokemon/Pokemon.obj");
-//        meshMap["Ground"]   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Plane/GroundPlane.obj");
-        
-        for (auto kv : meshMap)
-        {
-            auto name = kv.first;
-            auto mesh = kv.second;
-            
-            m_EntityMap[name] = m_ActiveScene->CreateEntity(name);
-            m_EntityMap[name].AddComponent<MeshComponent>(mesh);
-            
-            if (name == "GlassShaper")
-            {
-                m_EntityMap[name].GetComponent<MeshComponent>().Prop = MeshComponent::Property::Reflection;
-                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 5.0f, 0.0f, 5.0f }, glm::vec3(0.0f), glm::vec3(5.0f));
-            }
-            
-            if (name == "Bag")
-            {
-                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ -5.0f, 0.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(0.5f));
-            }
-            
-            if (name == "Moon")
-            {
-                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 0.0f, 0.0f, 10.0f }, glm::vec3(0.0f), glm::vec3(0.2f));
-            }
-            
-            if (name == "Pokemon")
-            {
-                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 5.0f, 0.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(0.5f));
-            }
-
-            if (name == "Ground")
-            {
-                m_EntityMap[name].GetComponent<TransformComponent>().Transform = GlmMath::SetTransfrom({ 0.0f, -1.0f, 0.0f }, glm::vec3(0.0f), glm::vec3(50.0f));
-            }
-
-        }
+        m_ActiveScene = Ref<Scene>::Create();
                         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
@@ -122,9 +58,6 @@ namespace iKan {
         
         camera.SetViewportSize(1600.0f, 800.0f);
         
-//        m_ActiveScene->SetLightPosition(m_EntityMap["Light"].GetComponent<TransformComponent>().Transform);
-        m_ActiveScene->OnEditorUpdate(timeStep, m_EditorCamera);
-        
         m_FrameBuffer->Unbind();
     }
     
@@ -133,7 +66,8 @@ namespace iKan {
         ImGuiAPI::EnableDcocking();
         
         //------------------------ Stats and Version  ------------------------------------------------------
-        ImGuiAPI::StatsAndFrameRate((ImGuiRendererType)m_ActiveScene->GetRendererType());
+        ImGuiAPI::FrameRate();
+        ImGuiAPI::RendererStats();
         ImGuiAPI::RendererVersion();
         
         //------------------------ SceneHierarchy Pannel  --------------------------------------------------

@@ -22,8 +22,6 @@ namespace iKan {
         Ref<Framebuffer> m_FrameBuffer;
         Ref<Scene>       m_ActiveScene;
         
-        std::unordered_map<std::string, Entity> m_EntityMap;
-        
         SceneHeirarchyPannel m_SceneHierarchyPannel;
         EditorCamera         m_EditorCamera;
     };

@@ -16,22 +16,22 @@ namespace iKan {
         ImGui::End();
     }
     
-    void ImGuiAPI::StatsAndFrameRate(ImGuiRendererType type)
+    void ImGuiAPI::FrameRate()
+    {
+        ImGui::Begin("Frame Rate");
+        ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::End();
+    }
+    
+    void ImGuiAPI::RendererStats()
     {
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
-
+        
         ImGui::Text("Draw Calls : %d", RendererStatistics::DrawCalls);
         ImGui::Text("Vertex Counts : %d", RendererStatistics::VertexCount);
         ImGui::Text("Index Counts : %d", RendererStatistics::IndexCount);
         ImGui::Text("Texture Counts : %d", RendererStatistics::TextureCount);
-        if (type == ImGuiRendererType::_2D)
-            ImGui::Text("Quad Counts : %d", RendererStatistics::QuadCount);
-        ImGui::End();
-        
-        //------------------------ Frame Rates -------------------------------------------------------------
-        ImGui::Begin("Frame Rate");
-        ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
     }
     

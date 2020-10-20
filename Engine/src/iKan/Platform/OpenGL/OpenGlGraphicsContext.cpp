@@ -15,7 +15,6 @@ namespace iKan {
     {
         // make GLFW Window Context
         glfwMakeContextCurrent(m_Window);
-        glfwMaximizeWindow(m_Window);
 
         // Initialize OpenGl (Glad)
         /*
