@@ -1,5 +1,7 @@
 #include <OpenGlVertexArray.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)

@@ -103,10 +103,10 @@ namespace iKan {
     {
     }
     
-    void SceneRenderer::BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera)
+    void SceneRenderer::BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera, const SceneRendererLight& sceneRendererLight)
     {
         // Copy light property
-        s_Data.ActiveLight = scene->GetLight();
+        s_Data.ActiveLight = sceneRendererLight.Light;
         auto& lightProp = s_Data.ActiveLight;
         
         // Upload Camera View Projection Matris to shader
@@ -141,11 +141,11 @@ namespace iKan {
             s_Data.ADS_Shader->SetUniformFloat3("u_Light.Ambient", lightProp.Ambient);
         
         s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsDiffuse", lightProp.LightFlag.IsDiffuse);
-        if (lightProp.LightFlag.IsAmbient)
+        if (lightProp.LightFlag.IsDiffuse)
             s_Data.ADS_Shader->SetUniformFloat3("u_Light.Diffuse", lightProp.Diffuse);
         
         s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsSpecular", lightProp.LightFlag.IsSpecular);
-        if (lightProp.LightFlag.IsAmbient)
+        if (lightProp.LightFlag.IsSpecular)
             s_Data.ADS_Shader->SetUniformFloat3("u_Light.Specular", lightProp.Specular);
         
         s_Data.ADS_Shader->SetUniformInt1("u_LightFlag.IsAttenuation", lightProp.LightFlag.IsAttenuation);

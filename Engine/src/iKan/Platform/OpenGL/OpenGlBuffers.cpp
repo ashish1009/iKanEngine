@@ -1,5 +1,7 @@
 #include <iKan/Platform/OpenGL/OpenGlBuffers.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
 
     // -------------------------------------- Vertex Buffer -------------------------------------

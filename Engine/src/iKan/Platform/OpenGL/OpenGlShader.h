@@ -2,6 +2,8 @@
 
 #include <iKan/Renderer/Shader.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     class OpenGlShader : public Shader

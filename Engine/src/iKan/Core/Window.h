@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iKan/Renderer/GraphicsContext.h>
-
 #include <iKan/Core/Events/Events.h>
 
 namespace iKan {
@@ -12,47 +10,32 @@ namespace iKan {
     struct WindowProp
     {
         std::string Title;
-        uint32_t Width;
-        uint32_t Height;
+        uint32_t Height, Width;
         
-        WindowProp(const std::string& title = "ENGINE", uint32_t width = s_WindowWidth, uint32_t height = s_WindowHeight)
-        : Title(title), Width(width), Height(height) { }
+        WindowProp(std::string title = "iKan", uint32_t width = s_WindowWidth, uint32_t height = s_WindowHeight)
+        : Title(title), Height(height), Width(width) { }
     };
     
     class Window
     {
     public:
-        Window(const WindowProp& prop = WindowProp());
-        ~Window();
+        using EventCallbackFn = std::function<void(Event&)>;
         
-        void Init(const WindowProp& prop);
-        void OnUpdate();
-        void Shutdown();
+        virtual ~Window() = default;
         
-        uint32_t GetWidth() const { return m_Data.Width; }
-        uint32_t GetHeight() const { return m_Data.Height; }
+        virtual void Update() = 0;
+        virtual void Shutdown() = 0;
         
-        const std::string& GetTitle() const { return m_Data.Title; }
-        GLFWwindow* GetNativeWindow() const { return m_Window; }
-        void SetEventCallBack(std::function<void(Event&)> func) { m_Data.EventFunc = func; }
+        virtual uint32_t GetWidth() const = 0;
+        virtual uint32_t GetHeight() const = 0;
         
-    private:
-        void SetCallBacks();
+        /* Window Attributes */
+        virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+        virtual void SetVSync(bool enabled) = 0;
+        virtual bool IsVSync() const = 0;
+        virtual void* GetNativeWindow() = 0;
         
-    private:
-        Scope<GraphicsContext> m_Context;
-        GLFWwindow* m_Window = nullptr;
-                
-        // Encapsulate the Data that needs to be sent to glfw as pointer
-        struct WindowData
-        {
-            uint32_t    Width = 0, Height = 0;
-            std::string Title = "";
-            
-            std::function<void(Event&)> EventFunc;
-        };
-        
-        WindowData m_Data;
+        static Scope<Window> Create(const WindowProp& props = WindowProp());
     };
     
 }

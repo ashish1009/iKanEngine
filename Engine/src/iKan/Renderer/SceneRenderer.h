@@ -4,6 +4,7 @@
 #include <iKan/Scene/Components.h>
 
 #include <iKan/Renderer/Camera.h>
+#include <iKan/Renderer/Light.h>
 #include <iKan/Renderer/Mesh.h>
 
 #include <iKan/Scene/Scene.h>
@@ -12,10 +13,15 @@ namespace iKan {
 
     struct SceneRendererCamera
     {
-        Camera    Camera;
+        iKan::Camera Camera;
         
         glm::mat4 ViewMatrix;
         glm::vec3 Front;
+    };
+    
+    struct SceneRendererLight
+    {
+        iKan::Light Light;
     };
 
     class SceneRenderer
@@ -24,7 +30,7 @@ namespace iKan {
         static void Init();
         static void Shutdown();
         
-        static void BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera);
+        static void BeginScene(const Ref<Scene>& scene, const SceneRendererCamera& camera, const SceneRendererLight& sceneRendererLight);
         static void SetCubeMapTexture(const std::vector<std::string>& paths);
         static void SetCubeMapTexture(const std::string& paths);
         

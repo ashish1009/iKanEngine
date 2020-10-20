@@ -5,6 +5,8 @@
 #include <iKan/Renderer/Renderer.h>
 #include <iKan/ImGui/ImGuiAPI.h>
 
+#include <GLFW/glfw3.h>
+
 namespace iKan {
     
     Application* Application::s_Instance = nullptr;
@@ -15,8 +17,8 @@ namespace iKan {
         s_Instance = this;
         
         // Creating Window from Applicaition
-        m_Window = CreateScope<Window>(WindowProp(props.Title, props.Width, props.Height));
-        m_Window->SetEventCallBack(IK_BIND_EVENT_FN(Application::OnEvent));
+        m_Window = Window::Create(WindowProp(props.Title, props.Width, props.Height));
+        m_Window->SetEventCallback(IK_BIND_EVENT_FN(Application::OnEvent));
         
         // Initialising the Renderer
         Renderer::Init();
@@ -35,7 +37,7 @@ namespace iKan {
         IK_CORE_INFO("Pushing Layer: {0} at {1} ", layer->GetName(), m_LayerStack.GetNumInserted());
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
-    }
+    }	
     
     void Application::PushOverlay(Layer *layer)
     {
@@ -67,7 +69,7 @@ namespace iKan {
             ImGuiRenderer();
             
             // Window Update to refresh
-            m_Window->OnUpdate();
+            m_Window->Update();
             
             float currentFrame = glfwGetTime();
             m_TimeStep         = currentFrame - m_LastFrame;

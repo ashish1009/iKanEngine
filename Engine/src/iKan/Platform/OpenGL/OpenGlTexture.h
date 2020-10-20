@@ -2,6 +2,8 @@
 
 #include <iKan/Renderer/Texture.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     class OpenGlTexture : public Texture

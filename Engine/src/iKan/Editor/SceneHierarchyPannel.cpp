@@ -77,7 +77,7 @@ namespace iKan {
             ImGui::Columns(1);
             
             ImGui::Separator();
-        }
+        } // if (entity.HasComponent<TagComponent>())
         
         if (entity.HasComponent<MeshComponent>())
         {
@@ -136,7 +136,7 @@ namespace iKan {
                 ImGui::TreePop();
             }
             ImGui::Separator();
-        }
+        } // if (entity.HasComponent<MeshComponent>())
         
         if (entity.HasComponent<TransformComponent>())
         {
@@ -197,7 +197,7 @@ namespace iKan {
                 ImGui::TreePop();
             }
             ImGui::Separator();
-        }
+        } // if (entity.HasComponent<TransformComponent>())
         
         if (entity.HasComponent<CameraComponent>())
         {
@@ -326,7 +326,100 @@ namespace iKan {
                 ImGui::TreePop();
             }
             ImGui::Separator();
-        }
+        } // if (entity.HasComponent<CameraComponent>())
+        
+        if (entity.HasComponent<LightComponent>())
+        {
+            if (ImGui::TreeNodeEx((void*)typeid(LightComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Light"))
+            {
+                auto& light = entity.GetComponent<LightComponent>().Light;
+                
+                ImGui::Columns(2);
+                ImGui::Checkbox("IsAmbient", &light.LightFlag.IsAmbient);
+                if (light.LightFlag.IsAmbient)
+                {
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    ImGui::DragFloat3("##Ambient", &light.Ambient.x);
+                    ImGui::Columns(1);
+                    ImGui::PopItemWidth();
+                }
+                
+                ImGui::Columns(2);
+                ImGui::Checkbox("IsDiffuse", &light.LightFlag.IsDiffuse);
+                if (light.LightFlag.IsDiffuse)
+                {
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    ImGui::DragFloat3("##Diffuse", &light.Diffuse.x);
+                    ImGui::Columns(1);
+                    ImGui::PopItemWidth();
+                }
+                
+                ImGui::Columns(2);
+                ImGui::Checkbox("IsSpecular", &light.LightFlag.IsSpecular);
+                if (light.LightFlag.IsSpecular)
+                {
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    ImGui::DragFloat3("##Specular", &light.Specular.x);
+                    ImGui::Columns(1);
+                    ImGui::PopItemWidth();
+                }
+                
+                ImGui::Separator();
+                ImGui::Checkbox("IsAttenuation", &light.LightFlag.IsAttenuation);
+                if (light.LightFlag.IsAttenuation)
+                {
+                    ImGui::Columns(2);
+                    
+                    ImGui::Text("Constant");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##Constant", &light.Constant, 0.01f, 0.0f, 10.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    
+                    ImGui::Text("Linear");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##Linear", &light.Linear, 0.01f, 0.0f, 10.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    
+                    ImGui::Text("Quadratic");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##Quadratic", &light.Quadratic, 0.01f, 0.0f, 10.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    
+                    ImGui::Columns(1);
+                }
+                
+                ImGui::Separator();
+                ImGui::Checkbox("IsSpotLight", &light.LightFlag.IsSpotLight);
+                if (light.LightFlag.IsSpotLight)
+                {
+                    ImGui::Columns(2);
+                    
+                    ImGui::Text("CutOff");
+                    ImGui::NextColumn();
+                    ImGui::PushItemWidth(-1);
+                    
+                    ImGui::DragFloat("##CutOff", &light.CutOff, 1.0f, 0.0f, 360.0f);
+                    ImGui::PopItemWidth();
+                    ImGui::NextColumn();
+                    
+                    ImGui::Columns(1);
+                }
+                
+                ImGui::TreePop();
+            }
+        } // if (entity.HasComponent<LightComponent>())
     }
     
 }

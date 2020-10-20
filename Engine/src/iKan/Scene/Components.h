@@ -4,6 +4,7 @@
 #include <iKan/Scene/ScriptableEntity.h>
 
 #include <iKan/Renderer/Texture.h>
+#include <iKan/Renderer/Light.h>
 #include <iKan/Renderer/Mesh.h>
 
 namespace iKan {
@@ -115,6 +116,16 @@ namespace iKan {
         : Mesh(mesh) {}
         
         operator Ref<iKan::Mesh> () { return Mesh; }
+    };
+    
+    struct LightComponent
+    {
+        iKan::Light Light;
+        
+        bool Primary = true;
+        
+        LightComponent() = default;
+        LightComponent(const LightComponent&) = default;
     };
 
 }

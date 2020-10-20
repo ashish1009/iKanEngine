@@ -27,7 +27,25 @@ namespace iKan {
     // Designed for 3D only
     void Scene::OnEditorUpdate(TimeStep ts, const EditorCamera& camera)
     {
-        SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix(), camera.GetForwardDirection() });
+        Light* light = nullptr;
+        auto view = m_Registry.view<LightComponent>();
+        for (auto entity : view)
+        {
+            auto& comp = view.get<LightComponent>(entity);
+            if (comp.Primary)
+            {
+                light = &comp.Light;
+                break;
+            }
+        }
+        
+        if (!light)
+        {
+            // TODO: Add functionalitu for no light Scene
+            IK_CORE_WARN("No Light activated");
+        }
+        
+        SceneRenderer::BeginScene(this, { camera, camera.GetViewMatrix(), camera.GetForwardDirection() }, { light });
         // TODO: Tag component for debug only
         auto group = m_Registry.group<TagComponent, TransformComponent>(entt::get<MeshComponent>);
         for (auto entity : group)
@@ -130,14 +148,6 @@ namespace iKan {
     
     void Scene::Renderer3D()
     {
-    }
-    
-    void Scene::SetLightPosition(const glm::mat4& lightTransform)
-    {
-        auto& lightPosition = lightTransform[3];
-        m_Light.Position.x = lightPosition[0];
-        m_Light.Position.y = lightPosition[1];
-        m_Light.Position.z = lightPosition[2];
     }
     
     // TODO: For now only for Mario Branch Need to be fix later

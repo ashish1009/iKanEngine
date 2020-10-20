@@ -1,5 +1,7 @@
 #include <iKan/Platform/OpenGL/OpenGLFrameBuffer.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     OpenGLFrameBuffer::OpenGLFrameBuffer(const FramebufferSpecification& spec)

@@ -1,3 +1,5 @@
+#include <glad/glad.h>
+
 #include <iKan/Platform/OpenGL/OpenGlGraphicsContext.h>
 #include <iKan/Core/Core.h>
 

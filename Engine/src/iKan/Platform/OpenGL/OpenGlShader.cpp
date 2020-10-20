@@ -2,6 +2,8 @@
 
 #include <iKan/Core/Core.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     static GLenum ShaderTypeFromString(const std::string& type)
@@ -127,7 +129,7 @@ namespace iKan {
             }
             // Attach both shader and link them
             glAttachShader(program, shader);
-            shaderId[glShaderIDIndex] = shader;
+            shaderId[glShaderIDIndex++] = shader;
         }
         
         // Create Shader program to activate and linke the shader

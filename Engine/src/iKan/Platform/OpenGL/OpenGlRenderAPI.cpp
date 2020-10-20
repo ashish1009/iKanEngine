@@ -1,5 +1,7 @@
 #include <iKan/Platform/OpenGL/OpenGlRenderAPI.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     void OpenGlRenderAPI::Init()

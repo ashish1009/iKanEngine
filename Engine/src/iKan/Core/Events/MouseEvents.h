@@ -64,13 +64,13 @@ namespace iKan {
         MouseCode m_ButtonCode;
     };
     
-    class MouseReleasePressEvent : public Event
+    class MouseButtonReleaseEvent : public Event
     {
     public:
-        MouseReleasePressEvent(MouseCode buttonCode)
+        MouseButtonReleaseEvent(MouseCode buttonCode)
         : m_ButtonCode(buttonCode) {}
         
-        virtual ~MouseReleasePressEvent() = default;
+        virtual ~MouseButtonReleaseEvent() = default;
         
         MouseCode GetButtonCode() const { return m_ButtonCode; }
         

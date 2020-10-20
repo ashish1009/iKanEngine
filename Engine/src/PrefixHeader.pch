@@ -14,10 +14,6 @@
 #include <iKan/Core/Log.h>
 #include <iKan/Core/Core.h>
 
-// GLFW
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
 // ImGui
 #include <imgui.h>
 

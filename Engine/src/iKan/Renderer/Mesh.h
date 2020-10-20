@@ -61,8 +61,8 @@ namespace iKan {
         std::vector<MeshTexture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
         
     private:
-        std::vector<SubMesh>           m_Meshes;
-        std::string                 m_Directory;
+        std::vector<SubMesh>      m_Meshes;
+        std::string               m_Directory;
         std::vector<MeshTexture>  m_TexturesLoaded;
     };
     

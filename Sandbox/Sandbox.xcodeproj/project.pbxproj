@@ -330,11 +330,8 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../Engine/src",
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
-					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
-					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
-					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 					"${PROJECT_DIR}/../Engine/vendor/glm",
 					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
 				);
@@ -357,11 +354,8 @@
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../Engine/src",
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
-					"${PROJECT_DIR}/../Engine/vendor/Glad/include",
-					"${PROJECT_DIR}/../Engine/vendor/GLFW/include",
 					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
-					"${PROJECT_DIR}/../Engine/vendor/stbimage",
 					"${PROJECT_DIR}/../Engine/vendor/glm",
 					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
 				);
