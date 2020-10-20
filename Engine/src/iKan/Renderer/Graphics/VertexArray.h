@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Renderer/Buffers.h>
+#include <iKan/Renderer/Graphics/Buffers.h>
 
 namespace iKan {
     

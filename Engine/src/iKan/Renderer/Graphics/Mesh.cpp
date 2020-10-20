@@ -1,6 +1,7 @@
-#include <iKan/Renderer/Mesh.h>
-#include <iKan/Renderer/Renderer.h>
-#include <iKan/Renderer/RenderStats.h>
+#include <iKan/Renderer/Graphics/Mesh.h>
+
+#include <iKan/Renderer/API/Renderer.h>
+#include <iKan/Renderer/API/RendererStats.h>
 
 namespace iKan {
     

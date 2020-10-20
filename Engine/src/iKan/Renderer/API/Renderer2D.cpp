@@ -1,9 +1,9 @@
-#include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/API/Renderer2D.h>
+#include <iKan/Renderer/API/Renderer.h>
+#include <iKan/Renderer/API/RendererStats.h>
 
-#include <iKan/Renderer/VertexArray.h>
-#include <iKan/Renderer/Shader.h>
-#include <iKan/Renderer/Renderer.h>
-#include <iKan/Renderer/RenderStats.h>
+#include <iKan/Renderer/Graphics/VertexArray.h>
+#include <iKan/Renderer/Graphics/Shader.h>
 
 #include <iKan/Platform/OpenGL/OpenGlShader.h>
 

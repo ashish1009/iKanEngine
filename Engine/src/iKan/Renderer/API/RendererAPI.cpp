@@ -1,18 +1,19 @@
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/API/RendererAPI.h>
+
 #include <iKan/Core/Core.h>
 
-#include <iKan/Platform/OpenGL/OpenGlRenderAPI.h>
+#include <iKan/Platform/OpenGL/OpenGlRendererAPI.h>
 
 namespace iKan {
     
-    API RenderAPI::s_API = API::OpenGL;
+    API RendererAPI::s_API = API::OpenGL;
     
-    Scope<RenderAPI> RenderAPI::Create()
+    Scope<RendererAPI> RendererAPI::Create()
     {
         switch (s_API)
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
-            case API::OpenGL : return CreateScope<OpenGlRenderAPI>(); break;
+            case API::OpenGL : return CreateScope<OpenGlRendererAPI>(); break;
             default          : IK_CORE_ASSERT(false, "Invalid Render API ") break;
         }
         return nullptr;

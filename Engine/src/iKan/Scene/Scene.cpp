@@ -2,7 +2,7 @@
 #include <iKan/Scene/Components.h>
 #include <iKan/Scene/Entity.h>
 
-#include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/API/Renderer2D.h>
 
 namespace iKan {
     

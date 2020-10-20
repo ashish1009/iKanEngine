@@ -1,4 +1,4 @@
-#include <iKan/Renderer/RenderStats.h>
+#include <iKan/Renderer/API/RendererStats.h>
 
 namespace iKan {
 
@@ -14,4 +14,5 @@ namespace iKan {
         IndexCount   = 0;
         TextureCount = 0;
     }
+
 }

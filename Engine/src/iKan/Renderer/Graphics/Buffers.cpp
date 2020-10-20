@@ -1,5 +1,6 @@
-#include <iKan/Renderer/Buffers.h>
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/Graphics/Buffers.h>
+
+#include <iKan/Renderer/API/RendererAPI.h>
 
 #include <iKan/Core/Core.h>
 
@@ -10,7 +11,7 @@ namespace iKan {
     // ------------------------- Vertex Buffer --------------------------------------------
     Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, float* data)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlVertexBuffer>::Create(size, data); break;
@@ -21,7 +22,7 @@ namespace iKan {
     
     Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None:    IK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
             case API::OpenGL:  return Ref<OpenGlVertexBuffer>::Create(size);
@@ -34,7 +35,7 @@ namespace iKan {
     // ------------------------- Index Buffer --------------------------------------------
     Ref<IndexBuffer> IndexBuffer::Create(uint32_t size, uint32_t* data)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlIndexBuffer>::Create(size, data); break;

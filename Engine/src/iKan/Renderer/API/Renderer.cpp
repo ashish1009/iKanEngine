@@ -1,6 +1,6 @@
-#include <iKan/Renderer/Renderer.h>
-#include <iKan/Renderer/Renderer2D.h>
-#include <iKan/Renderer/RenderStats.h>
+#include <iKan/Renderer/API/Renderer.h>
+#include <iKan/Renderer/API/Renderer2D.h>
+#include <iKan/Renderer/API/RendererStats.h>
 
 namespace iKan {
     
@@ -12,7 +12,7 @@ namespace iKan {
 
     void Renderer::Init()
     {
-        RenderCommand::Init();
+        RendererCommand::Init();
         Renderer2D::Init();
         
         s_Data.m_ShaderLibrary = Ref<ShaderLibrary>::Create();
@@ -20,25 +20,25 @@ namespace iKan {
     
     void Renderer::Clear(glm::vec4 color)
     {
-        RenderCommand::Clear();
-        RenderCommand::SetClearColor(color);
+        RendererCommand::Clear();
+        RendererCommand::SetClearColor(color);
     }
     
     void Renderer::SetViewport(float width, float height)
     {
-        RenderCommand::SetViewPort(width, height);
+        RendererCommand::SetViewPort(width, height);
     }
     
     void Renderer::DrawIndexed(uint32_t count)
     {
         RendererStatistics::DrawCalls++;
-        RenderCommand::DrawIndexed(count);
+        RendererCommand::DrawIndexed(count);
     }
     
     void Renderer::DrawIndexed(const Ref<VertexArray> &vertexArray, uint32_t count)
     {
         RendererStatistics::DrawCalls++;
-        RenderCommand::DrawIndexed(vertexArray, count);
+        RendererCommand::DrawIndexed(vertexArray, count);
     }
     
     void Renderer::Shutdown()

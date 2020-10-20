@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Renderer/VertexArray.h>
+#include <iKan/Renderer/Graphics/VertexArray.h>
 
 namespace iKan {
     

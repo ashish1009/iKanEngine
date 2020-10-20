@@ -5,7 +5,7 @@
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Core/Core.h>
 
-#include <iKan/Renderer/Renderer2D.h>
+#include <iKan/Renderer/API/Renderer2D.h>
 
 #include <iKan/Editor/EditorCamera.h>
 

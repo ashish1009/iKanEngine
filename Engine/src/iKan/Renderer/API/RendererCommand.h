@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/API/RendererAPI.h>
 
 namespace iKan {
 
-    class RenderCommand
+    class RendererCommand
     {
     public:
         static void Init() { s_RenderAPI->Init(); }
@@ -17,7 +17,7 @@ namespace iKan {
         static void DrawIndexed(uint32_t count) { s_RenderAPI->DrawIndexed(count); }
         
     private:
-        static Scope<RenderAPI> s_RenderAPI;
+        static Scope<RendererAPI> s_RenderAPI;
     };
     
 }

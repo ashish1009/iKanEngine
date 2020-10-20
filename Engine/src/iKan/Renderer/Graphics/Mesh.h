@@ -1,8 +1,8 @@
 #pragma once
 
-#include <iKan/Renderer/VertexArray.h>
-#include <iKan/Renderer/Shader.h>
-#include <iKan/Renderer/Texture.h>
+#include <iKan/Renderer/Graphics/VertexArray.h>
+#include <iKan/Renderer/Graphics/Shader.h>
+#include <iKan/Renderer/Graphics/Texture.h>
 
 // Assimp Library
 #include <assimp/Importer.hpp>      // C++ importer interface

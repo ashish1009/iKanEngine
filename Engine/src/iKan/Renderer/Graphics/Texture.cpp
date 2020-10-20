@@ -1,5 +1,6 @@
-#include <iKan/Renderer/Texture.h>
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/Graphics/Texture.h>
+
+#include <iKan/Renderer/API/RendererAPI.h>
 
 #include <iKan/Core/Core.h>
 
@@ -10,7 +11,7 @@ namespace iKan {
     // ------------------------- Vertex Buffer --------------------------------------------
     Ref<Texture> Texture::Create(const std::string& path)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlTexture>::Create(path); break;
@@ -21,7 +22,7 @@ namespace iKan {
     
     Ref<Texture> Texture::Create(uint32_t width, uint32_t height, void* data, uint32_t size)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlTexture>::Create(width, height, data, size); break;
@@ -48,7 +49,7 @@ namespace iKan {
     
     Ref<CubeMapTexture> CubeMapTexture::Create(std::vector<std::string> paths)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlCubeMapTexture>::Create(paths); break;
@@ -59,7 +60,7 @@ namespace iKan {
     
     Ref<CubeMapTexture> CubeMapTexture::Create(const std::string& path)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlCubeMapTexture>::Create(path); break;

@@ -1,5 +1,6 @@
-#include <iKan/Renderer/VertexArray.h>
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/Graphics/VertexArray.h>
+
+#include <iKan/Renderer/API/RendererAPI.h>
 
 #include <iKan/Core/Core.h>
 
@@ -9,7 +10,7 @@ namespace iKan {
     
     Ref<VertexArray> VertexArray::Create()
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlVertexArray>::Create(); break;

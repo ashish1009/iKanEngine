@@ -1,13 +1,14 @@
 #include <iKan/ImGui/ImGuiAPI.h>
-#include <iKan/Renderer/RenderAPI.h>
-#include <iKan/Renderer/RenderStats.h>
+
+#include <iKan/Renderer/API/RendererAPI.h>
+#include <iKan/Renderer/API/RendererStats.h>
 
 namespace iKan {
     
     void ImGuiAPI::RendererVersion()
     {
         ImGui::Begin("Renderer");
-        auto& caps = RenderAPI::GetCapabilities();
+        auto& caps = RendererAPI::GetCapabilities();
 
         ImGui::Text("Vendor : %s", caps.Vendor.c_str());
         ImGui::Text("Renderer : %s", caps.Renderer.c_str());

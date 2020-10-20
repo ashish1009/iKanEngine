@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Renderer/VertexArray.h>
+#include <iKan/Renderer/Graphics/VertexArray.h>
 
 namespace iKan {
     
@@ -14,13 +14,13 @@ namespace iKan {
         std::string Version;
     };
     
-    class RenderAPI
+    class RendererAPI
     {
     public:
-        virtual ~RenderAPI() = default;
+        virtual ~RendererAPI() = default;
 
         static API GetAPI() { return s_API; }
-        static Scope<RenderAPI> Create();
+        static Scope<RendererAPI> Create();
         
         virtual void Init() = 0;
         virtual void SetClearColor(const glm::vec4& color) = 0;

@@ -14,17 +14,18 @@
 #include <iKan/Core/Events/KeyEvents.h>
 #include <iKan/Core/Events/MouseEvents.h>
 
-#include <iKan/Renderer/RenderCommand.h>
-#include <iKan/Renderer/VertexArray.h>
-#include <iKan/Renderer/Buffers.h>
-#include <iKan/Renderer/FrameBuffer.h>
-#include <iKan/Renderer/Shader.h>
-#include <iKan/Renderer/Texture.h>
-#include <iKan/Renderer/Renderer2D.h>
-#include <iKan/Renderer/Renderer.h>
-#include <iKan/Renderer/Camera.h>
-#include <iKan/Renderer/RenderStats.h>
-#include <iKan/Renderer/Mesh.h>
+#include <iKan/Renderer/Graphics/Camera.h>
+#include <iKan/Renderer/Graphics/VertexArray.h>
+#include <iKan/Renderer/Graphics/Buffers.h>
+#include <iKan/Renderer/Graphics/FrameBuffer.h>
+#include <iKan/Renderer/Graphics/Shader.h>
+#include <iKan/Renderer/Graphics/Texture.h>
+#include <iKan/Renderer/Graphics/Mesh.h>
+
+#include <iKan/Renderer/API/RendererCommand.h>
+#include <iKan/Renderer/API/Renderer2D.h>
+#include <iKan/Renderer/API/Renderer.h>
+#include <iKan/Renderer/API/RendererStats.h>
 
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Components.h>

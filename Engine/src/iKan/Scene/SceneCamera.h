@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Renderer/Camera.h>
+#include <iKan/Renderer/Graphics/Camera.h>
 
 namespace iKan {
     

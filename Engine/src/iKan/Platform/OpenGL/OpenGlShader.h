@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Renderer/Shader.h>
+#include <iKan/Renderer/Graphics/Shader.h>
 
 #include <glad/glad.h>
 

@@ -3,9 +3,8 @@
 #include <iKan/Scene/SceneCamera.h>
 #include <iKan/Scene/ScriptableEntity.h>
 
-#include <iKan/Renderer/Texture.h>
-#include <iKan/Renderer/Light.h>
-#include <iKan/Renderer/Mesh.h>
+#include <iKan/Renderer/Graphics/Texture.h>
+#include <iKan/Renderer/Graphics/Mesh.h>
 
 namespace iKan {
     

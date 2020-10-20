@@ -1,5 +1,6 @@
-#include <iKan/Renderer/GraphicsContext.h>
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/Graphics/GraphicsContext.h>
+
+#include <iKan/Renderer/API/RendererAPI.h>
 
 #include <iKan/Platform/OpenGL/OpenGlGraphicsContext.h>
 
@@ -9,7 +10,7 @@ namespace iKan {
     
     Scope<GraphicsContext> GraphicsContext::CreateContext(GLFWwindow* window)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return CreateScope<OpneGlGraphicsContext>(window); break;

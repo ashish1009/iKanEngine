@@ -1,6 +1,7 @@
 #pragma once
 
-#include <iKan/Renderer/Camera.h>
+#include <iKan/Renderer/Graphics/Camera.h>
+
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Core/Events/MouseEvents.h>
 

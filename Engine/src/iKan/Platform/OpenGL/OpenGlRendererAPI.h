@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/API/RendererAPI.h>
 
 namespace iKan {
 
-    class OpenGlRenderAPI : public RenderAPI
+    class OpenGlRendererAPI : public RendererAPI
     {
     public:
         virtual void Init() override;

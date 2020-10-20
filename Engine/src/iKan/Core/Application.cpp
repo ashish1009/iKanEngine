@@ -2,7 +2,7 @@
 #include <iKan/Core/Core.h>
 #include <iKan/Core/Input.h>
 
-#include <iKan/Renderer/Renderer.h>
+#include <iKan/Renderer/API/Renderer.h>
 #include <iKan/ImGui/ImGuiAPI.h>
 
 #include <GLFW/glfw3.h>

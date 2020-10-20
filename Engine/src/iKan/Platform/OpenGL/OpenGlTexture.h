@@ -1,6 +1,6 @@
 #pragma once
 
-#include <iKan/Renderer/Texture.h>
+#include <iKan/Renderer/Graphics/Texture.h>
 
 #include <glad/glad.h>
 

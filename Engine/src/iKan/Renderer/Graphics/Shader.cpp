@@ -1,5 +1,6 @@
-#include <iKan/Renderer/Shader.h>
-#include <iKan/Renderer/RenderAPI.h>
+#include <iKan/Renderer/Graphics/Shader.h>
+
+#include <iKan/Renderer/API/RendererAPI.h>
 
 #include <iKan/Core/Core.h>
 
@@ -9,7 +10,7 @@ namespace iKan {
     
     Ref<Shader> Shader::Create(const std::string& vertexShader, const std::string& fragmentSrc)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlShader>::Create(vertexShader, fragmentSrc); break;
@@ -20,7 +21,7 @@ namespace iKan {
     
     Ref<Shader> Shader::Create(const std::string& path)
     {
-        switch (RenderAPI::GetAPI())
+        switch (RendererAPI::GetAPI())
         {
             case API::None   : IK_CORE_ASSERT(false, "Render API not Supporting");
             case API::OpenGL : return Ref<OpenGlShader>::Create(path); break;

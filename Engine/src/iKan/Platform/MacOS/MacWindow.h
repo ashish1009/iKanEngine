@@ -2,7 +2,7 @@
 
 #include <iKan/Core/Window.h>
 
-#include <iKan/Renderer/GraphicsContext.h>
+#include <iKan/Renderer/Graphics/GraphicsContext.h>
 
 namespace iKan {
     
