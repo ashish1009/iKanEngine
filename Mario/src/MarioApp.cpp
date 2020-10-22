@@ -22,5 +22,5 @@ public:
  */
 iKan::Application* iKan::CreateApplication()
 {
-    return new MarioApp({ "iKan Mario", 1600, 800 });
+    return new MarioApp({ "iKan Mario", 1280, 720 });
 }

@@ -1,7 +1,7 @@
 #include <iKan.h>
 #include <iKan/EntryPoint.h>
 
-#include "ExampleLayer.h"
+//#include "ExampleLayer.h"
 #include "EntityLayer.h"
 
 class EditorApp : public iKan::Application

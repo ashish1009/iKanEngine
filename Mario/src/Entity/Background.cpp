@@ -34,7 +34,6 @@ namespace iKan {
 
     static void ImgButtons(const char name)
     {
-#pragma clang diagnostic ignored "-Wformat-security"
         if (ImGui::TreeNode(GetEntityNameFromChar(name).c_str()))
         {
             ImTextureID myTexId = (ImTextureID)((size_t)s_TileSpriteSheet->GetRendererID());
@@ -157,7 +156,7 @@ namespace iKan {
                 {
                     Ref<SubTexture> subTexture = s_TextureMap[tileType];
                     
-                    auto entity = s_EntityVector[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
+                    auto entity       = s_EntityVector[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
                     auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);
                     auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
                     

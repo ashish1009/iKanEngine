@@ -1,6 +1,6 @@
 #include "ExampleLayer.h"
 
-#include <stb_image.h>
+//#include <stb_image.h>
 
 namespace iKan {
     

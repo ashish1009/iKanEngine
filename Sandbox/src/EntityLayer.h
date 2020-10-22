@@ -26,7 +26,6 @@ namespace iKan {
         
         Entity m_SquareEntity;
         Entity m_CameraEntity;
-        Entity m_SecondCamera;
 
         // pannels
         SceneHeirarchyPannel m_SceneHierarchyPannel;

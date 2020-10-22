@@ -24,21 +24,19 @@ namespace iKan {
         fbSpec.Height = 720;
         
         m_Framebuffer = Framebuffer::Create(fbSpec);
-        m_ActiveScene = Ref<Scene>::Create(Scene::SceneRendererType::_2D);
+        m_ActiveScene = Ref<Scene>::Create();
         
         m_SquareEntity = m_ActiveScene->CreateEntity("Green Square");
         m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
+        m_SquareEntity.GetComponent<TransformComponent>().Transform[3][0] = 2;
         
         auto redSquare = m_ActiveScene->CreateEntity("Red Square");
         redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
+        redSquare.GetComponent<TransformComponent>().Transform[3][0] = -2;
         
         m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
         m_CameraEntity.AddComponent<CameraComponent>();
         
-        m_SecondCamera = m_ActiveScene->CreateEntity("Clip Space Entity");
-        auto& cc = m_SecondCamera.AddComponent<CameraComponent>();
-        cc.Primary = false;
-
         class CameraController : public ScriptableEntity
         {
         public:
@@ -68,7 +66,6 @@ namespace iKan {
             // OnAwake(), CollisionCallbacks()
         };
         m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-        m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
@@ -163,7 +160,8 @@ namespace iKan {
             ImGui::EndMenuBar();
         }
         
-        ImGuiAPI::StatsAndFrameRate((ImGuiRendererType)m_ActiveScene->GetRendererType());
+        ImGuiAPI::FrameRate();
+        ImGuiAPI::RendererStats();
         ImGuiAPI::RendererVersion();
         
         m_SceneHierarchyPannel.OnImguiender();
@@ -187,14 +185,6 @@ namespace iKan {
         if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
         {
             m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
-            m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
-        }
-        
-        {
-            auto& camera    = m_SecondCamera.GetComponent<CameraComponent>().Camera;
-            float orthoSize = camera.GetOrthographicSize();
-            if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
-                camera.SetOrthographicSize(orthoSize);
         }
         
         ImGui::End();

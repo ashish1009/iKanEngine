@@ -2,8 +2,8 @@
 #include <iKan/Editor/SceneProperyGrid.h>
 #include <iKan/Core/GlmMath.h>
 
-namespace iKan {    
-        
+namespace iKan {
+    
     SceneHeirarchyPannel::SceneHeirarchyPannel(const Ref<Scene>& context)
     {
         SetContext(context);
@@ -39,7 +39,7 @@ namespace iKan {
     void SceneHeirarchyPannel::DrawEntityNode(Entity entity)
     {
         auto& tag = entity.GetComponent<TagComponent>().Tag;
-        
+                
         ImGuiTreeNodeFlags flags = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
         bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
         if (ImGui::IsItemClicked())
