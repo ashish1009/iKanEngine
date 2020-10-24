@@ -14,6 +14,7 @@ namespace iKan {
         static void EnableDcocking();
         static void EndDocking();
         static void LightGreyBackground();
+        static void SetDarkThemeColors();
     };
     
 }

@@ -18,9 +18,12 @@ namespace iKan {
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
         
-        ImFont* pFont = io.Fonts->AddFontFromFileTTF("../../Engine/src/iKan/Editor/Fonts/FallingSkyLightOblique-2q3o.otf", 15.0f);
-        io.FontDefault = pFont;
+        // Store the Bold font as well
+        io.Fonts->AddFontFromFileTTF("../../Engine/src/iKan/Editor/Fonts/OpenSans/OpenSans-ExtraBold.ttf", 15.0f);
         
+        // Default font is Regular
+        io.FontDefault = io.Fonts->AddFontFromFileTTF("../../Engine/src/iKan/Editor/Fonts/OpenSans/OpenSans-Regular.ttf", 15.0f);
+                
         /* Setup Dear ImGui style */
         ImGui::StyleColorsDark();
         

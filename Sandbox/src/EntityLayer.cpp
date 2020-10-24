@@ -14,7 +14,7 @@ namespace iKan {
     
     void EntityLayer::OnAttach()
     {
-        ImGuiAPI::LightGreyBackground();
+        ImGuiAPI::SetDarkThemeColors();
         
         // TODO: Set the position of Shader later
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
@@ -43,17 +43,20 @@ namespace iKan {
             
             void OnUpdate(TimeStep ts)
             {
-                auto& translation = GetComponent<TransformComponent>().Translation;
-                float speed = 2.5f;
-                
-                if(Input::IsKeyPressed(Key::Left))
-                    translation.x -= speed * ts;
-                if(Input::IsKeyPressed(Key::Right))
-                    translation.x += speed * ts;
-                if(Input::IsKeyPressed(Key::Down))
-                    translation.y += speed * ts;
-                if(Input::IsKeyPressed(Key::Up))
-                    translation.y -= speed * ts;
+                if (HasComponent<TransformComponent>())
+                {
+                    auto& translation = GetComponent<TransformComponent>().Translation;
+                    float speed = 2.5f;
+                    
+                    if(Input::IsKeyPressed(Key::Left))
+                        translation.x -= speed * ts;
+                    if(Input::IsKeyPressed(Key::Right))
+                        translation.x += speed * ts;
+                    if(Input::IsKeyPressed(Key::Down))
+                        translation.y += speed * ts;
+                    if(Input::IsKeyPressed(Key::Up))
+                        translation.y -= speed * ts;
+                }
             }
             
             void OnDestroy()
@@ -76,17 +79,20 @@ namespace iKan {
             
             void OnUpdate(TimeStep ts)
             {
-                auto& translation = GetComponent<TransformComponent>().Translation;
-                float speed = 0.5f;
-                
-                if(Input::IsKeyPressed(Key::D))
-                    translation.x -= speed * ts;
-                if(Input::IsKeyPressed(Key::A))
-                    translation.x += speed * ts;
-                if(Input::IsKeyPressed(Key::S))
-                    translation.y += speed * ts;
-                if(Input::IsKeyPressed(Key::W))
-                    translation.y -= speed * ts;
+                if (HasComponent<TransformComponent>())
+                {
+                    auto& translation = GetComponent<TransformComponent>().Translation;
+                    float speed = 0.5f;
+                    
+                    if(Input::IsKeyPressed(Key::D))
+                        translation.x -= speed * ts;
+                    if(Input::IsKeyPressed(Key::A))
+                        translation.x += speed * ts;
+                    if(Input::IsKeyPressed(Key::S))
+                        translation.y += speed * ts;
+                    if(Input::IsKeyPressed(Key::W))
+                        translation.y -= speed * ts;
+                }
             }
             
             void OnDestroy()
@@ -174,12 +180,18 @@ namespace iKan {
         
         // ----------------------- DockSpace --------------------------------------------------------------
         ImGuiIO& io = ImGui::GetIO();
+        
+        ImGuiStyle& style = ImGui::GetStyle();
+        float minWinSizeX = style.WindowMinSize.x;
+        style.WindowMinSize.x = 370.0f;
+        
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
         {
             ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
             ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
         }
-        
+        style.WindowMinSize.x = minWinSizeX;
+
         if (ImGui::BeginMenuBar())
         {
             if (ImGui::BeginMenu("File"))
