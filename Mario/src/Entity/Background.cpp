@@ -160,7 +160,10 @@ namespace iKan {
                     auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);
                     auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
                     
-                    entity.GetComponent<TransformComponent>().SetTransform({ x, (mapHeight / 2.0f) - y }, { spriteSize.x, spriteSize.y });
+                    auto& tc = entity.GetComponent<TransformComponent>();
+                    
+                    tc.Translation = { x, (mapHeight / 2.0f) - y, 0.0f };
+                    tc.Scale       = { spriteSize.x, spriteSize.y , 0.0f};
                 }
             }
         }

@@ -28,28 +28,27 @@ namespace iKan {
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
         InstantiateScripts(ts);
         
-        Camera* mainCamera         = nullptr;
-        glm::mat4* cameraTransform = nullptr;
-        
+        Camera* mainCamera = nullptr;
+        glm::mat4 cameraTransform;
         if (Entity cameraEntity = GetMainCameraEntity();
             cameraEntity!= Entity(entt::null, this))
         {
             mainCamera      = &cameraEntity.GetComponent<CameraComponent>().Camera;
-            cameraTransform = &cameraEntity.GetComponent<TransformComponent>().Transform;
+            cameraTransform = cameraEntity.GetComponent<TransformComponent>().GetTransform();
         }
         
         // Renderer
         if (mainCamera)
         {
-            Renderer2D::BeginScene(*mainCamera, *cameraTransform);
+            Renderer2D::BeginScene(*mainCamera, cameraTransform);
             auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
             for (auto entity : group)
             {
                 const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
                 if (sprite.SubTexComp)
-                    Renderer2D::DrawQuad(transform, sprite.SubTexComp);
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp);
                 else
-                    Renderer2D::DrawQuad(transform, sprite.Color);
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
             }
             Renderer2D::EndScene();
         }

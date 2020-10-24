@@ -31,8 +31,8 @@ namespace iKan {
         
         std::pair<float&, float&> GetPosition()
         {
-            auto& position = m_Entity.GetComponent<TransformComponent>().Transform[3];
-            return { position[0], position[1] };
+            auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
+            return { position.x, position.y };
         }
         
         float& GetPositionX()

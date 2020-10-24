@@ -91,7 +91,7 @@ namespace iKan {
     }
 #endif
     
-    static bool Property(const char* label, float& value, float delta = 0.1f)
+    static bool Property(const char* label, float& value, float delta = 0.1f, float resetValue = 0.0f)
     {
         bool modified = false;
         
@@ -110,8 +110,8 @@ namespace iKan {
         return modified;
     }
     
-#ifdef NOT_IN_USE
-    static bool Property(const char* label, glm::vec2& value, float delta = 0.1f)
+#if 0
+    static bool Property(const char* label, glm::vec2& value, float delta = 0.1f, float resetValue = 0.0f)
     {
         bool modified = false;
         
@@ -131,7 +131,7 @@ namespace iKan {
     }
 #endif
     
-    static bool Property(const char* label, glm::vec3& value, float delta = 0.1f)
+    static bool Property(const char* label, glm::vec3& value, float delta = 0.1f, float resetValue = 0.0f )
     {
         bool modified = false;
         
@@ -150,7 +150,7 @@ namespace iKan {
         return modified;
     }
 
-#ifdef NOT_IN_USE
+#if 0
     static bool Property(const char* label, glm::vec4& value, float delta = 0.1f)
     {
         bool modified = false;

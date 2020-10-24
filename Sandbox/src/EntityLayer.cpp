@@ -28,11 +28,11 @@ namespace iKan {
         
         auto blueSquare = m_ActiveScene->CreateEntity("Green Square");
         blueSquare.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
-        blueSquare.GetComponent<TransformComponent>().Transform[3][0] = 2;
+        blueSquare.GetComponent<TransformComponent>().Translation.x= 2;
         
         auto redSquare = m_ActiveScene->CreateEntity("Red Square");
         redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
-        redSquare.GetComponent<TransformComponent>().Transform[3][0] = -2;
+        redSquare.GetComponent<TransformComponent>().Translation.x = -2;
         
         class BoxController : public ScriptableEntity
         {
@@ -43,17 +43,17 @@ namespace iKan {
             
             void OnUpdate(TimeStep ts)
             {
-                auto& transform = GetComponent<TransformComponent>().Transform;
+                auto& translation = GetComponent<TransformComponent>().Translation;
                 float speed = 2.5f;
                 
                 if(Input::IsKeyPressed(Key::Left))
-                    transform[3][0] -= speed * ts;
+                    translation.x -= speed * ts;
                 if(Input::IsKeyPressed(Key::Right))
-                    transform[3][0] += speed * ts;
+                    translation.x += speed * ts;
                 if(Input::IsKeyPressed(Key::Down))
-                    transform[3][1] += speed * ts;
+                    translation.y += speed * ts;
                 if(Input::IsKeyPressed(Key::Up))
-                    transform[3][1] -= speed * ts;
+                    translation.y -= speed * ts;
             }
             
             void OnDestroy()
@@ -76,17 +76,17 @@ namespace iKan {
             
             void OnUpdate(TimeStep ts)
             {
-                auto& transform = GetComponent<TransformComponent>().Transform;
+                auto& translation = GetComponent<TransformComponent>().Translation;
                 float speed = 0.5f;
                 
-                if(Input::IsKeyPressed(Key::A))
-                    transform[3][0] -= speed * ts;
                 if(Input::IsKeyPressed(Key::D))
-                    transform[3][0] += speed * ts;
-                if(Input::IsKeyPressed(Key::W))
-                    transform[3][1] += speed * ts;
+                    translation.x -= speed * ts;
+                if(Input::IsKeyPressed(Key::A))
+                    translation.x += speed * ts;
                 if(Input::IsKeyPressed(Key::S))
-                    transform[3][1] -= speed * ts;
+                    translation.y += speed * ts;
+                if(Input::IsKeyPressed(Key::W))
+                    translation.y -= speed * ts;
             }
             
             void OnDestroy()
@@ -195,24 +195,6 @@ namespace iKan {
         ImGuiAPI::RendererVersion();
         
         m_SceneHierarchyPannel.OnImguiender();
-        
-        ImGui::Begin("Settings");
-                
-        ImGui::Separator();
-        ImGui::DragFloat3("Camera", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
-        
-        ImGui::Separator();
-        if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
-        {
-            m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
-        }
-        
-        ImGui::End();
-        
-        ImGui::Begin("Frame Rate");
-        ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-        ImGui::Separator();
-        ImGui::End();
         
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport");

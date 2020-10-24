@@ -64,7 +64,9 @@ namespace iKan {
             auto& tag = entity.GetComponent<TagComponent>().Tag;
             
             BeginPropertyGrid();
+            
             Property("Tag", tag);
+            
             EndPropertyGrid();
 
             ImGui::Separator();
@@ -72,24 +74,18 @@ namespace iKan {
         
         if (entity.HasComponent<TransformComponent>())
         {
-            auto& tc = entity.GetComponent<TransformComponent>();
             if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
             {
-                auto [translation, rotationQuat, scale] = GlmMath::GetTransformDecomposition(tc);
-                glm::vec3 rotation = glm::degrees(glm::eulerAngles(rotationQuat));
-                bool updateTransform = false;
+                auto& tc = entity.GetComponent<TransformComponent>();
 
                 BeginPropertyGrid();
-                updateTransform = Property("Translation", translation, 0.25f) | Property("Rotation", rotation, 0.25f) | Property("Scale", scale, 0.25f);
+                
+                Property("Translation", tc.Translation, 0.25f);
+                Property("Rotation", tc.Rotation, 0.25f);
+                Property("Scale", tc.Scale, 0.25f);
+                
                 EndPropertyGrid();
-                
-                if (updateTransform)
-                {
-                    tc.Transform = glm::translate(glm::mat4(1.0f), translation) *
-                    glm::toMat4(glm::quat(glm::radians(rotation))) *
-                    glm::scale(glm::mat4(1.0f), scale);
-                }
-                
+
                 ImGui::TreePop();
             }
             ImGui::Separator();

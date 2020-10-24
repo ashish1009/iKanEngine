@@ -15,8 +15,8 @@ namespace iKan {
 
         m_Entity = scene->CreateEntity("Player");
         
-        m_Entity.GetComponent<TransformComponent>().Transform[3][1] = 10.0f;
-        m_Entity.GetComponent<TransformComponent>().Transform[3][0] = 3.0f;
+        m_Entity.GetComponent<TransformComponent>().Translation.y = 10.0f;
+        m_Entity.GetComponent<TransformComponent>().Translation.x = 3.0f;
         
         m_Entity.AddComponent<SpriteRendererComponent>(m_StandSubtexture);
         
@@ -60,10 +60,10 @@ namespace iKan {
             // TODO: Move it outside as it should reset the Game
             if (ImGui::Button("Reset"))
             {
-                auto& pos = m_Entity.GetComponent<TransformComponent>().Transform[3];
+                auto& pos = m_Entity.GetComponent<TransformComponent>().Translation;
                 // TODO: FIX THIS Debugging only
-                pos[0] = 3.0f;
-                pos[1] = 15.0f;
+                pos.x = 3.0f;
+                pos.y = 15.0f;
             }
         }
         
