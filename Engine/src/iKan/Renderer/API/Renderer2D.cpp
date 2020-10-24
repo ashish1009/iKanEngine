@@ -129,28 +129,30 @@ namespace iKan {
         s_Data.TextureShader->Bind();
         s_Data.TextureShader->SetUniformMat4("u_ViewProjection", viewProj);
         
-        // initialise the Vertex Array Attrib pointer adn Index count
-        s_Data.QuadIndexCount = 0;
-        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
-        
-        // Initialise the Texture Slot to 1 as 0 is set for white textute
-        s_Data.TextureSlotIndex = 1;
+        StartBatch();
     }
     
     void Renderer2D::EndScene()
     {
-        // getting the Number of vertex but subtracting the running and base pointers
-        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
-        s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
-        
         Flush();
     }
     
+    void Renderer2D::StartBatch()
+    {
+        s_Data.QuadIndexCount = 0;
+        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+        
+        s_Data.TextureSlotIndex = 1;
+    }
+
     void Renderer2D::Flush()
     {
         // Nothing to draw
         if (s_Data.QuadIndexCount == 0)
             return;
+        
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
+        s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
         
         // Bind textures
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
@@ -163,7 +165,7 @@ namespace iKan {
         Renderer::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
     }
     
-    void Renderer2D::FlushAndReset()
+    void Renderer2D::NextBatch()
     {
         // if num Quad per Batch exceeds then Render the Scene and reset all parameters
         EndScene();
@@ -184,8 +186,8 @@ namespace iKan {
         const float         tilingFactor    = 1.0f;
         
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-            FlushAndReset();
-        
+            NextBatch();
+
         for (size_t i = 0; i < quadVertexCount; i++)
         {
             s_Data.QuadVertexBufferPtr->Position        = transform * s_Data.QuadVertexPositions[i];
@@ -237,8 +239,8 @@ namespace iKan {
         constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
         
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-            FlushAndReset();
-        
+            NextBatch();
+
         float textureIndex = 0.0f;
         for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
         {
@@ -252,8 +254,8 @@ namespace iKan {
         if (textureIndex == 0.0f)
         {
             if (s_Data.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
-                FlushAndReset();
-            
+                NextBatch();
+
             textureIndex = (float)s_Data.TextureSlotIndex;
             s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
             s_Data.TextureSlotIndex++;
@@ -307,8 +309,8 @@ namespace iKan {
     void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
     {
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
-            FlushAndReset();
-        
+            NextBatch();
+
         constexpr size_t quadVertexCount = 4;
         constexpr glm::vec4 color = {1.0f, 1.0f, 1.0f, 1.0f};
         
