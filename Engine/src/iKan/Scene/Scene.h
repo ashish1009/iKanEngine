@@ -20,18 +20,22 @@ namespace iKan {
         ~Scene() = default;
         
         Entity CreateEntity(const std::string& name = std::string());
-        void OnViewportResize(uint32_t width, uint32_t height);
+        void DestroyEntity(Entity entity);
 
+        void OnViewportResize(uint32_t width, uint32_t height);
         void OnUpdate(TimeStep ts);
         
     private:
         Entity GetMainCameraEntity();
         void InstantiateScripts(TimeStep ts);
+
+        template<typename T>
+        void OnComponentAdded(Entity entity, T& component);
         
     private:
         /* Container that contain all the entities */
         entt::registry m_Registry;
-        uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
+        uint32_t m_ViewportWidth = 1280.0f, m_ViewportHeight = 720.0f;
         
         friend class Entity;
         friend class SceneHeirarchyPannel;

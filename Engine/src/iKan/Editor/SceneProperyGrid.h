@@ -1,14 +1,13 @@
 #pragma once
 
+#include <imgui_internal.h>
+
 namespace iKan {
     
-    static void BeginPropertyGrid()
-    {
-        ImGui::Columns(2);
-    }
-
     static bool Property(const char* label, std::string& value, bool error = false)
     {
+        ImGui::Columns(2);
+
         bool modified = false;
         
         ImGui::Text(label);
@@ -31,13 +30,16 @@ namespace iKan {
             ImGui::PopStyleColor();
         ImGui::PopItemWidth();
         ImGui::NextColumn();
-        
+        ImGui::Columns(1);
+
         return modified;
     }
 
 #ifdef NOT_IN_USE
     static void Property(const char* label, const char* value)
     {
+        ImGui::Columns(2);
+
         ImGui::Text(label);
         ImGui::NextColumn();
         ImGui::PushItemWidth(-1);
@@ -53,6 +55,8 @@ namespace iKan {
     
     static bool Property(const char* label, bool& value)
     {
+        ImGui::Columns(2);
+
         bool modified = false;
         
         ImGui::Text(label);
@@ -66,13 +70,16 @@ namespace iKan {
         
         ImGui::PopItemWidth();
         ImGui::NextColumn();
-        
+        ImGui::Columns(1);
+
         return modified;
     }
 
 #ifdef NOT_IN_USE
     static bool Property(const char* label, int& value)
     {
+        ImGui::Columns(2);
+
         bool modified = false;
         
         ImGui::Text(label);
@@ -86,13 +93,16 @@ namespace iKan {
         
         ImGui::PopItemWidth();
         ImGui::NextColumn();
-        
+        ImGui::Columns(1);
+
         return modified;
     }
 #endif
     
     static bool Property(const char* label, float& value, float delta = 0.1f, float resetValue = 0.0f)
     {
+        ImGui::Columns(2);
+
         bool modified = false;
         
         ImGui::Text(label);
@@ -106,13 +116,16 @@ namespace iKan {
         
         ImGui::PopItemWidth();
         ImGui::NextColumn();
-        
+        ImGui::Columns(1);
+
         return modified;
     }
     
 #if 0
     static bool Property(const char* label, glm::vec2& value, float delta = 0.1f, float resetValue = 0.0f)
     {
+        ImGui::Columns(2);
+
         bool modified = false;
         
         ImGui::Text(label);
@@ -126,26 +139,76 @@ namespace iKan {
         
         ImGui::PopItemWidth();
         ImGui::NextColumn();
-        
+        ImGui::Columns(1);
+
         return modified;
     }
 #endif
     
-    static bool Property(const char* label, glm::vec3& value, float delta = 0.1f, float resetValue = 0.0f )
+    static bool Property(const char* label, glm::vec3& value, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f )
     {
         bool modified = false;
         
+        ImGui::PushID(label);
+        
+        ImGui::Columns(2);
+        ImGui::SetColumnWidth(0, columnWidth);
         ImGui::Text(label);
         ImGui::NextColumn();
-        ImGui::PushItemWidth(-1);
         
-        std::string UIContextId = "##" + (std::string)label;
+        ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
         
-        if (ImGui::DragFloat3(UIContextId.c_str(), glm::value_ptr(value), delta))
+        float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+        ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+        
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.2f, 1.0f });
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+
+        if (ImGui::Button("X", buttonSize))
+            value.x = resetValue;
+        ImGui::PopStyleColor(3);
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##X", &value.x, 0.1f, 0.0f, 0.0f, "%.2f"))
             modified = true;
         
         ImGui::PopItemWidth();
-        ImGui::NextColumn();
+        ImGui::SameLine();
+        
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.2f, 1.0f });
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+        if (ImGui::Button("Y", buttonSize))
+            value.y = resetValue;
+        ImGui::PopStyleColor(3);
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##Y", &value.y, 0.1f, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+
+        ImGui::PopItemWidth();
+        ImGui::SameLine();
+        
+        ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.2f, 0.2f, 1.0f });
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
+        if (ImGui::Button("Z", buttonSize))
+            value.z = resetValue;
+        ImGui::PopStyleColor(3);
+        
+        ImGui::SameLine();
+        if (ImGui::DragFloat("##Z", &value.z, 0.1f, 0.0f, 0.0f, "%.2f"))
+            modified = true;
+
+        ImGui::PopItemWidth();
+        
+        ImGui::PopStyleVar();
+        
+        ImGui::Columns(1);
+        
+        ImGui::PopID();
         
         return modified;
     }
@@ -166,14 +229,10 @@ namespace iKan {
         
         ImGui::PopItemWidth();
         ImGui::NextColumn();
-        
+        ImGui::Columns(1);
+
         return modified;
     }
 #endif
-    
-    static void EndPropertyGrid()
-    {
-        ImGui::Columns(1);
-    }
 
 }

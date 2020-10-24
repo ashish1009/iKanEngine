@@ -79,7 +79,7 @@ namespace iKan {
     
     bool Application::OnWindowResize(WindowResizeEvent& event)
     {
-        Renderer::SetViewport(event.GetWidth(), event.GetHeight());
+        Renderer::SetViewport(event.GetWidth(),  event.GetHeight());
         return false;
     }
 

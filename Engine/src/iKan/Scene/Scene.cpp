@@ -21,7 +21,11 @@ namespace iKan {
         
         return entity;
     }
-    
+
+    void Scene::DestroyEntity(Entity entity)
+    {
+        m_Registry.destroy(entity);
+    }
     
     void Scene::OnUpdate(TimeStep ts)
     {
@@ -31,7 +35,7 @@ namespace iKan {
         Camera* mainCamera = nullptr;
         glm::mat4 cameraTransform;
         if (Entity cameraEntity = GetMainCameraEntity();
-            cameraEntity!= Entity(entt::null, this))
+            cameraEntity!= Entity(entt::null, nullptr))
         {
             mainCamera      = &cameraEntity.GetComponent<CameraComponent>().Camera;
             cameraTransform = cameraEntity.GetComponent<TransformComponent>().GetTransform();
@@ -103,5 +107,31 @@ namespace iKan {
         });
 
     }
+
+    template<>
+    void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)
+    {
+    }
     
+    template<>
+    void Scene::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component)
+    {
+        component.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);
+    }
+    
+    template<>
+    void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& component)
+    {
+    }
+
+    template<>
+    void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponent& component)
+    {
+    }
+
+    template<>
+    void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
+    {
+    }
+
 }
