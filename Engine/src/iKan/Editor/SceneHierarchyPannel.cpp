@@ -170,6 +170,16 @@ namespace iKan {
             }
             ImGui::Separator();
         } // if (entity.HasComponent<CameraComponent>())
+        
+        if (entity.HasComponent<SpriteRendererComponent>())
+        {
+            if (ImGui::TreeNodeEx((void*)typeid(SpriteRendererComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Sprite Renderer"))
+            {
+                auto& src = entity.GetComponent<SpriteRendererComponent>();
+                ImGui::ColorEdit4("Color", glm::value_ptr(src.Color));
+                ImGui::TreePop();
+            }
+        } // if (entity.HasComponent<SpriteRendererComponent>())
     }
     
 }
