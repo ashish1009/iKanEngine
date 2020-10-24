@@ -43,7 +43,7 @@ namespace iKan {
         void UpdateProjectionMatrix() { m_Projection = glm::perspective(m_PerspectiveFOV, m_AspectRatio, m_PerspectiveNear, m_PerspectiveFar); } 
         void UpdateCameraView();
         
-        bool OnMouseScroll(MouseScrollEvent& e);
+        bool OnMouseScroll(MouseScrolledEvent& e);
         
         void MousePan(const glm::vec2& delta);
         void MouseRotate(const glm::vec2& delta);

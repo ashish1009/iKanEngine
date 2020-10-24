@@ -16,7 +16,7 @@ namespace iKan {
         
     private:
         bool OnWindowResize(WindowResizeEvent& event);
-        bool OnMouseScroll(MouseScrollEvent& event);
+        bool OnMouseScroll(MouseScrolledEvent& event);
         
     private:
         Ref<VertexArray> m_VAO, m_LightVAO;

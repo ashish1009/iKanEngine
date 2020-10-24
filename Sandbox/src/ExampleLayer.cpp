@@ -153,7 +153,7 @@ namespace iKan {
         EventDispatcher dispatcher(event);
         
         dispatcher.Dispatch<WindowResizeEvent>(IK_BIND_EVENT_FN(ExampleLayer::OnWindowResize));
-        dispatcher.Dispatch<MouseScrollEvent> (IK_BIND_EVENT_FN(ExampleLayer::OnMouseScroll));
+        dispatcher.Dispatch<MouseScrolledEvent> (IK_BIND_EVENT_FN(ExampleLayer::OnMouseScroll));
     }
     
     bool ExampleLayer::OnWindowResize(WindowResizeEvent& event)
@@ -162,7 +162,7 @@ namespace iKan {
         return false;
     }
     
-    bool ExampleLayer::OnMouseScroll(MouseScrollEvent& event)
+    bool ExampleLayer::OnMouseScroll(MouseScrolledEvent& event)
     {
         s_CameraRotation.x += event.GetXOffset();
         s_CameraRotation.y += event.GetYOffset();

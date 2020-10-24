@@ -100,10 +100,10 @@ namespace iKan {
     void EditorCamera::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<MouseScrollEvent>(IK_BIND_EVENT_FN(EditorCamera::OnMouseScroll));
+        dispatcher.Dispatch<MouseScrolledEvent>(IK_BIND_EVENT_FN(EditorCamera::OnMouseScroll));
     }
     
-    bool EditorCamera::OnMouseScroll(MouseScrollEvent& e)
+    bool EditorCamera::OnMouseScroll(MouseScrolledEvent& e)
     {
         float delta = e.GetYOffset() * 0.1f;
         MouseZoom(delta);

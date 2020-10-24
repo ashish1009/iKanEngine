@@ -99,7 +99,7 @@ namespace iKan {
                             {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             
-            KeyTypeEvent event(static_cast<KeyCode>(keycode));
+            KeyTypedEvent event(static_cast<KeyCode>(keycode));
             data.EventCallback(event);
         });
         
@@ -111,13 +111,13 @@ namespace iKan {
             {
                 case GLFW_PRESS:
                 {
-                    MouseButtonPressEvent event(static_cast<MouseCode>(button));
+                    MouseButtonPressedEvent event(static_cast<MouseCode>(button));
                     data.EventCallback(event);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    MouseButtonReleaseEvent event(static_cast<MouseCode>(button));
+                    MouseButtonReleasedEvent event(static_cast<MouseCode>(button));
                     data.EventCallback(event);
                     break;
                 }
@@ -128,7 +128,7 @@ namespace iKan {
                               {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             
-            MouseScrollEvent event((float)xOffset, (float)yOffset);
+            MouseScrolledEvent event((float)xOffset, (float)yOffset);
             data.EventCallback(event);
         });
         
@@ -136,7 +136,7 @@ namespace iKan {
                                  {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
             
-            MouseMoveEvent event((float)xPos, (float)yPos);
+            MouseMovedEvent event((float)xPos, (float)yPos);
             data.EventCallback(event);
         });
     }

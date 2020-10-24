@@ -1,65 +1,72 @@
 #pragma once
 
 #include <iKan/Core/Events/Events.h>
-#include <iKan/Core/KeyCode.h>
+#include <iKan/Core/Input.h>
 
 namespace iKan {
     
-    class KeyPressedEvent : public Event
+    class KeyEvent : public Event
     {
     public:
-        KeyPressedEvent(KeyCode keyCode, int repeat)
-        : m_KeyCode(keyCode) {}
+        inline KeyCode GetKeyCode() const { return m_KeyCode; }
         
-        virtual ~KeyPressedEvent() = default;
+        EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
+    protected:
+        KeyEvent(KeyCode keycode)
+        : m_KeyCode(keycode) {}
         
-        KeyCode GetKeyCode() const { return m_KeyCode; }
-        
-        virtual EventType GetType() const override { return EventType::KeyPressed; }
-        virtual int GetCategoryBit() const override { return EventCategory::KeyCategory; }
-        
-        static EventType GetStaticType() { return EventType::KeyPressed; }
-        
-    private:
         KeyCode m_KeyCode;
     };
     
-    class KeyReleasedEvent : public Event
+    class KeyPressedEvent : public KeyEvent
     {
     public:
-        KeyReleasedEvent(KeyCode keyCode)
-        : m_KeyCode(keyCode) {}
+        KeyPressedEvent(KeyCode keycode, int repeatCount)
+        : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
         
-        virtual ~KeyReleasedEvent() = default;
-                
-        KeyCode GetKeyCode() const { return m_KeyCode; }
+        inline int GetRepeatCount() const { return m_RepeatCount; }
         
-        virtual EventType GetType() const override { return EventType::KeyReleased; }
-        virtual int GetCategoryBit() const override { return EventCategory::KeyCategory; }
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "KeyPressedEvent: " << m_KeyCode << " (" << m_RepeatCount << " repeats)";
+            return ss.str();
+        }
         
-        static EventType GetStaticType() { return EventType::KeyReleased; }
-
+        EVENT_CLASS_TYPE(KeyPressed)
     private:
-        KeyCode m_KeyCode;
+        int m_RepeatCount;
     };
     
-    class KeyTypeEvent : public Event
+    class KeyReleasedEvent : public KeyEvent
     {
     public:
-        KeyTypeEvent(KeyCode keyCode)
-        : m_KeyCode(keyCode) {}
+        KeyReleasedEvent(KeyCode keycode)
+        : KeyEvent(keycode) {}
         
-        virtual ~KeyTypeEvent() = default;
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "KeyReleasedEvent: " << m_KeyCode;
+            return ss.str();
+        }
         
-        KeyCode GetKeyCode() const { return m_KeyCode; }
-        
-        virtual EventType GetType() const override { return EventType::KeyType; }
-        virtual int GetCategoryBit() const override { return EventCategory::KeyCategory; }
-        
-        static EventType GetStaticType() { return EventType::KeyType; }
-
-    private:
-        KeyCode m_KeyCode;
+        EVENT_CLASS_TYPE(KeyReleased)
     };
     
+    class KeyTypedEvent : public KeyEvent
+    {
+    public:
+        KeyTypedEvent(KeyCode keycode)
+        : KeyEvent(keycode) {}
+        
+        std::string ToString() const override
+        {
+            std::stringstream ss;
+            ss << "KeyTypedEvent: " << m_KeyCode;
+            return ss.str();
+        }
+        
+        EVENT_CLASS_TYPE(KeyTyped)
+    };
 }

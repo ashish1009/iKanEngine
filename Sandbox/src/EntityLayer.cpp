@@ -26,14 +26,44 @@ namespace iKan {
         m_Framebuffer = Framebuffer::Create(fbSpec);
         m_ActiveScene = Ref<Scene>::Create();
         
-        m_SquareEntity = m_ActiveScene->CreateEntity("Green Square");
-        m_SquareEntity.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
-        m_SquareEntity.GetComponent<TransformComponent>().Transform[3][0] = 2;
+        auto blueSquare = m_ActiveScene->CreateEntity("Green Square");
+        blueSquare.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
+        blueSquare.GetComponent<TransformComponent>().Transform[3][0] = 2;
         
         auto redSquare = m_ActiveScene->CreateEntity("Red Square");
         redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
         redSquare.GetComponent<TransformComponent>().Transform[3][0] = -2;
         
+        class BoxController : public ScriptableEntity
+        {
+        public:
+            void OnCreate()
+            {
+            }
+            
+            void OnUpdate(TimeStep ts)
+            {
+                auto& transform = GetComponent<TransformComponent>().Transform;
+                float speed = 2.5f;
+                
+                if(Input::IsKeyPressed(Key::Left))
+                    transform[3][0] -= speed * ts;
+                if(Input::IsKeyPressed(Key::Right))
+                    transform[3][0] += speed * ts;
+                if(Input::IsKeyPressed(Key::Down))
+                    transform[3][1] += speed * ts;
+                if(Input::IsKeyPressed(Key::Up))
+                    transform[3][1] -= speed * ts;
+            }
+            
+            void OnDestroy()
+            {
+            }
+            
+            // OnAwake(), CollisionCallbacks()
+        };
+        redSquare.AddComponent<NativeScriptComponent>().Bind<BoxController>();
+	
         m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
         m_CameraEntity.AddComponent<CameraComponent>();
         
@@ -167,17 +197,7 @@ namespace iKan {
         m_SceneHierarchyPannel.OnImguiender();
         
         ImGui::Begin("Settings");
-        
-        if (m_SquareEntity)
-        {
-            auto& tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
-            ImGui::Text("%s", tag.c_str());
-            
-            ImGui::Separator();
-            auto& squareColor = m_SquareEntity.GetComponent<SpriteRendererComponent>().Color;
-            ImGui::ColorEdit4("Color", glm::value_ptr(squareColor));
-        }
-        
+                
         ImGui::Separator();
         ImGui::DragFloat3("Camera", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]));
         

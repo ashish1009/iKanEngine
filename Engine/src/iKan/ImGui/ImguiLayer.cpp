@@ -53,8 +53,8 @@ namespace iKan {
         {
             ImGuiIO& io = ImGui::GetIO();
 
-            event.Handled |= event.IsInCategory(MouseCategory) & io.WantCaptureMouse;
-            event.Handled |= event.IsInCategory(KeyCategory) & io.WantCaptureKeyboard;
+            event.Handled |= event.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+            event.Handled |= event.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
         }
     }
     
