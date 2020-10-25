@@ -1,5 +1,7 @@
 #include "EntityLayer.h"
 
+#include <iKan/Scene/SceneSerializer.h>
+
 namespace iKan {
     
     EntityLayer::EntityLayer()
@@ -26,6 +28,7 @@ namespace iKan {
         m_Framebuffer = Framebuffer::Create(fbSpec);
         m_ActiveScene = Ref<Scene>::Create();
         
+#if 0
         auto blueSquare = m_ActiveScene->CreateEntity("Green Square");
         blueSquare.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
         blueSquare.GetComponent<TransformComponent>().Translation.x= 2;
@@ -102,6 +105,8 @@ namespace iKan {
             // OnAwake(), CollisionCallbacks()
         };
         m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+        
+#endif
         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
@@ -196,7 +201,20 @@ namespace iKan {
         {
             if (ImGui::BeginMenu("File"))
             {
-                if (ImGui::MenuItem("Exit")) Application::Get().Close();
+                if (ImGui::MenuItem("Exit"))
+                {
+                    Application::Get().Close();
+                }
+                if (ImGui::MenuItem("Serialize"))
+                {
+                    SceneSerializer serializer(m_ActiveScene);
+                    serializer.Serialize("../../Sandbox/assets/Scene/Example.iKan");
+                }
+                if (ImGui::MenuItem("Deserialize"))
+                {
+                    SceneSerializer serializer(m_ActiveScene);
+                    serializer.Deserialize("../../Sandbox/assets/Scene/Example.iKan");
+                }
                 ImGui::EndMenu();
             }
             ImGui::EndMenuBar();

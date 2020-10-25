@@ -65,6 +65,17 @@ namespace iKan {
     {
         ImGuiAPI::EnableDcocking();
         
+        //------------------------ Menu Bar  ------------------------------------------------------
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Exit")) Application::Get().Close();
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
+        
         //------------------------ Stats and Version  ------------------------------------------------------
         ImGuiAPI::FrameRate();
         ImGuiAPI::RendererStats();

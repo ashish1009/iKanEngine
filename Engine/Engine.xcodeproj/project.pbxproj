@@ -19,6 +19,9 @@
 		B22A8A532517B81600D2B9C8 /* Ref.h in Headers */ = {isa = PBXBuildFile; fileRef = B22A8A522517B81600D2B9C8 /* Ref.h */; };
 		B22A8A562517C8A600D2B9C8 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22A8A542517C8A600D2B9C8 /* Renderer.cpp */; };
 		B22A8A572517C8A600D2B9C8 /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B22A8A552517C8A600D2B9C8 /* Renderer.h */; };
+		B2309B3B2544A47C001A4EE9 /* libyaml-cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2309A7D2544A3B7001A4EE9 /* libyaml-cpp.a */; };
+		B2309B3E2544A540001A4EE9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2309B3C2544A540001A4EE9 /* SceneSerializer.cpp */; };
+		B2309B3F2544A540001A4EE9 /* SceneSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2309B3D2544A540001A4EE9 /* SceneSerializer.h */; };
 		B23D4E7B24F829880049238A /* Events.h in Headers */ = {isa = PBXBuildFile; fileRef = B23D4E7A24F829880049238A /* Events.h */; };
 		B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */; };
 		B2473FD124FD1DB40099535D /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2473FCF24FD1DB40099535D /* VertexArray.cpp */; };
@@ -112,6 +115,13 @@
 			remoteGlobalIDString = B2137A4424ED784D00A14055;
 			remoteInfo = Imgui;
 		};
+		B2309A7C2544A3B7001A4EE9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B2309A762544A3B7001A4EE9 /* yaml-cpp.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B2309A6F2544A3B7001A4EE9;
+			remoteInfo = "yaml-cpp";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +137,9 @@
 		B22A8A522517B81600D2B9C8 /* Ref.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Ref.h; sourceTree = "<group>"; };
 		B22A8A542517C8A600D2B9C8 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		B22A8A552517C8A600D2B9C8 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
+		B2309A762544A3B7001A4EE9 /* yaml-cpp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "yaml-cpp.xcodeproj"; path = "vendor/yaml-cpp/yaml-cpp.xcodeproj"; sourceTree = "<group>"; };
+		B2309B3C2544A540001A4EE9 /* SceneSerializer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerializer.cpp; sourceTree = "<group>"; };
+		B2309B3D2544A540001A4EE9 /* SceneSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneSerializer.h; sourceTree = "<group>"; };
 		B23D4E7A24F829880049238A /* Events.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		B23D4E7C24F82F9D0049238A /* ApplicationEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationEvents.h; sourceTree = "<group>"; };
 		B2473FCF24FD1DB40099535D /* VertexArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexArray.cpp; sourceTree = "<group>"; };
@@ -214,6 +227,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2309B3B2544A47C001A4EE9 /* libyaml-cpp.a in Frameworks */,
 				B2137A5824ED7A8700A14055 /* libImgui.a in Frameworks */,
 				B213761B24ED35AC00A14055 /* libGlad.a in Frameworks */,
 				B21375EF24ED274A00A14055 /* libglfw3.a in Frameworks */,
@@ -243,6 +257,7 @@
 		B213760C24ED286C00A14055 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				B2309A762544A3B7001A4EE9 /* yaml-cpp.xcodeproj */,
 				B2137A4B24ED784D00A14055 /* Imgui.xcodeproj */,
 				B213760624ED286700A14055 /* Glad.xcodeproj */,
 			);
@@ -285,6 +300,14 @@
 				B28083FD25052642003D0684 /* ImGuiAPI.h */,
 			);
 			path = ImGui;
+			sourceTree = "<group>";
+		};
+		B2309A772544A3B7001A4EE9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B2309A7D2544A3B7001A4EE9 /* libyaml-cpp.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		B23D4E7724F829740049238A /* Events */ = {
@@ -454,6 +477,8 @@
 				B2CDABE325010F9A008C6BDF /* SceneCamera.cpp */,
 				B2CDABE425010F9A008C6BDF /* SceneCamera.h */,
 				B2CDABE825012438008C6BDF /* ScriptableEntity.h */,
+				B2309B3C2544A540001A4EE9 /* SceneSerializer.cpp */,
+				B2309B3D2544A540001A4EE9 /* SceneSerializer.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -529,6 +554,7 @@
 				B24FF89424ED1AAB00884EDA /* Log.h in Headers */,
 				B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */,
 				B2473FDC24FD22380099535D /* Buffers.h in Headers */,
+				B2309B3F2544A540001A4EE9 /* SceneSerializer.h in Headers */,
 				B2F0FC0524F80E960004443A /* GraphicsContext.h in Headers */,
 				B2752D1024FABBA1005EF655 /* MouseCode.h in Headers */,
 				B25718242524707200E30030 /* EditorCamera.h in Headers */,
@@ -613,6 +639,10 @@
 					ProductGroup = B2137A4C24ED784D00A14055 /* Products */;
 					ProjectRef = B2137A4B24ED784D00A14055 /* Imgui.xcodeproj */;
 				},
+				{
+					ProductGroup = B2309A772544A3B7001A4EE9 /* Products */;
+					ProjectRef = B2309A762544A3B7001A4EE9 /* yaml-cpp.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -636,6 +666,13 @@
 			remoteRef = B2137A4F24ED784E00A14055 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B2309A7D2544A3B7001A4EE9 /* libyaml-cpp.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libyaml-cpp.a";
+			remoteRef = B2309A7C2544A3B7001A4EE9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -653,6 +690,7 @@
 				B2752D1924FAC201005EF655 /* Application.cpp in Sources */,
 				B2E734FA2520FCEA00BD41D3 /* Mesh.cpp in Sources */,
 				B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */,
+				B2309B3E2544A540001A4EE9 /* SceneSerializer.cpp in Sources */,
 				B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */,
 				B266521E24FECADF0032AF99 /* Texture.cpp in Sources */,
 				B2FEC91B24FB9AA500388451 /* OpenGlRendererAPI.cpp in Sources */,
@@ -816,6 +854,7 @@
 					"${PROJECT_DIR}/vendor/glm",
 					"${PROJECT_DIR}/vendor/Imgui/Imgui",
 					"${PROJECT_DIR}/vendor/Assimp/include",
+					"${PROJECT_DIR}/vendor/yaml-cpp/yaml-cpp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -849,6 +888,7 @@
 					"${PROJECT_DIR}/vendor/glm",
 					"${PROJECT_DIR}/vendor/Imgui/Imgui",
 					"${PROJECT_DIR}/vendor/Assimp/include",
+					"${PROJECT_DIR}/vendor/yaml-cpp/yaml-cpp/include",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

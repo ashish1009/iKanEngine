@@ -10,3 +10,6 @@
 [submodule "Engine/vendor/Imgui/Imgui"]
 	path = Engine/vendor/Imgui/Imgui
 	url = https://github.com/ashish1009/imgui
+[submodule "Engine/vendor/yaml-cpp/yaml-cpp"]
+	path = Engine/vendor/yaml-cpp/yaml-cpp
+	url = https://github.com/ashish1009/yaml-cpp

@@ -39,6 +39,7 @@ namespace iKan {
         
         friend class Entity;
         friend class SceneHeirarchyPannel;
+        friend class SceneSerializer;
 
     };
     
