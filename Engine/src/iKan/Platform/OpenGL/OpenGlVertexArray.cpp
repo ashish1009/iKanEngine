@@ -28,27 +28,37 @@ namespace iKan {
     
     OpenGlVertexArray::OpenGlVertexArray()
     {
+        IK_PROFILE_FUNCTION();
+
         glGenVertexArrays(1, &m_RendererId);
         glBindVertexArray(m_RendererId);
     }
     
     OpenGlVertexArray::~OpenGlVertexArray()
     {
+        IK_PROFILE_FUNCTION();
+
         glDeleteVertexArrays(1, &m_RendererId);
     }
     
     void OpenGlVertexArray::Bind() const
     {
+        IK_PROFILE_FUNCTION();
+
         glBindVertexArray(m_RendererId);
     }
     
     void OpenGlVertexArray::Unbind() const
     {
+        IK_PROFILE_FUNCTION();
+
         glBindVertexArray(0);
     }
     
     void OpenGlVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
     {
+        IK_PROFILE_FUNCTION();
+
         glBindVertexArray(m_RendererId);
         m_VertexBuffers.push_back(vertexBuffer);
         
@@ -104,6 +114,8 @@ namespace iKan {
     
     void OpenGlVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
     {
+        IK_PROFILE_FUNCTION();
+
         glBindVertexArray(m_RendererId);
         indexBuffer->Bind();
         

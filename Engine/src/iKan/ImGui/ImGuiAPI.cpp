@@ -9,6 +9,8 @@ namespace iKan {
     
     void ImGuiAPI::RendererVersion()
     {
+        IK_PROFILE_FUNCTION();
+
         ImGui::Begin("Renderer");
         auto& caps = RendererAPI::GetCapabilities();
 
@@ -37,6 +39,8 @@ namespace iKan {
     
     void ImGuiAPI::FrameRate()
     {
+        IK_PROFILE_FUNCTION();
+
         ImGui::Begin("Frame Rate");
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
@@ -44,6 +48,8 @@ namespace iKan {
     
     void ImGuiAPI::RendererStats()
     {
+        IK_PROFILE_FUNCTION();
+
         //------------------------ Statistics -------------------------------------------------------------
         ImGui::Begin("Stats");
         
@@ -75,6 +81,8 @@ namespace iKan {
     
     void ImGuiAPI::Counter(const std::string& name, uint32_t& counter)
     {
+        IK_PROFILE_FUNCTION();
+
         ImGui::Text(name.c_str());
         ImGui::SameLine();
         
@@ -103,6 +111,8 @@ namespace iKan {
     
     void ImGuiAPI::ColorEdit(glm::vec4& colorRef)
     {
+        IK_PROFILE_FUNCTION();
+
         static ImVec4 color         = ImVec4(colorRef.r, colorRef.g, colorRef.b, colorRef.a);
         static ImVec4 refColorValue = color;
         
@@ -133,6 +143,8 @@ namespace iKan {
     
     void ImGuiAPI::EnableDcocking()
     {
+        IK_PROFILE_FUNCTION();
+
         // Note: Switch this to true to enable dockspace
         static bool               dockspaceOpen              = false;
         static bool               opt_fullscreen_persistant  = true;
@@ -186,11 +198,15 @@ namespace iKan {
     
     void ImGuiAPI::EndDocking()
     {
+        IK_PROFILE_FUNCTION();
+
         ImGui::End();
     }
     
     void ImGuiAPI::SetGreyThemeColors()
     {
+        IK_PROFILE_FUNCTION();
+
         ImVec4* colors = ImGui::GetStyle().Colors;
         // Text
         colors[ImGuiCol_Text]                   = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -269,6 +285,8 @@ namespace iKan {
     
     void ImGuiAPI::SetDarkThemeColors()
     {
+        IK_PROFILE_FUNCTION();
+
         auto& colors = ImGui::GetStyle().Colors;
         colors[ImGuiCol_WindowBg]               = ImVec4{ 0.05f, 0.05f, 0.05f, 1.0f };
                 
@@ -352,6 +370,8 @@ namespace iKan {
     
     void ImGuiAPI::SetLightThemeColors()
     {
+        IK_PROFILE_FUNCTION();
+
         auto& colors = ImGui::GetStyle().Colors;
         colors[ImGuiCol_WindowBg]           = ImVec4{ 0.7f, 0.7f, 0.7f, 1.0f };
         
@@ -407,6 +427,5 @@ namespace iKan {
         
         // Check
         colors[ImGuiCol_CheckMark]              = ImVec4(0.04f, 0.04f, 0.04f, 1.0f);
-        
     }
 }

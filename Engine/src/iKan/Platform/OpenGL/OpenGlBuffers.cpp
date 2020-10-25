@@ -8,6 +8,8 @@ namespace iKan {
     
     OpenGlVertexBuffer::OpenGlVertexBuffer(uint32_t size)
     {
+        IK_PROFILE_FUNCTION();
+
         glGenBuffers(1, &m_RendererId);
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
         glBufferData(GL_ARRAY_BUFFER, size, nullptr, GL_DYNAMIC_DRAW);
@@ -15,6 +17,8 @@ namespace iKan {
 
     OpenGlVertexBuffer::OpenGlVertexBuffer(uint32_t size, float* data)
     {
+        IK_PROFILE_FUNCTION();
+
         glGenBuffers(1, &m_RendererId);
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
         glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
@@ -22,21 +26,29 @@ namespace iKan {
     
     OpenGlVertexBuffer::~OpenGlVertexBuffer()
     {
+        IK_PROFILE_FUNCTION();
+
         glDeleteBuffers(1, &m_RendererId);
     }
     
     void OpenGlVertexBuffer::Bind() const
     {
+        IK_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
     }
     
     void OpenGlVertexBuffer::Unbind() const
     {
+        IK_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
     void OpenGlVertexBuffer::SetData(const void* data, uint32_t size)
     {
+        IK_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
         glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
     }
@@ -45,6 +57,8 @@ namespace iKan {
     OpenGlIndexBuffer::OpenGlIndexBuffer(uint32_t count, uint32_t* data)
     : m_Count(count)
     {
+        IK_PROFILE_FUNCTION();
+
         glGenBuffers(1, &m_RendererId);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(uint32_t) * count, data, GL_STATIC_DRAW);
@@ -52,16 +66,22 @@ namespace iKan {
     
     OpenGlIndexBuffer::~OpenGlIndexBuffer()
     {
+        IK_PROFILE_FUNCTION();
+
         glDeleteBuffers(1, &m_RendererId);
     }
     
     void OpenGlIndexBuffer::Bind() const
     {
+        IK_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererId);
     }
     
     void OpenGlIndexBuffer::Unbind() const
     {
+        IK_PROFILE_FUNCTION();
+
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
     

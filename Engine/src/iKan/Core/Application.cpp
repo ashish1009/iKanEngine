@@ -13,6 +13,8 @@ namespace iKan {
     
     Application::Application(const ApplicationProps& props)
     {
+        IK_PROFILE_FUNCTION();
+
         IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         s_Instance = this;
         
@@ -29,11 +31,15 @@ namespace iKan {
     
     Application::~Application()
     {
+        IK_PROFILE_FUNCTION();
+
         Renderer::Shutdown();
     }
     
     void Application::PushLayer(Layer* layer)
     {
+        IK_PROFILE_FUNCTION();
+
         IK_CORE_INFO("Pushing Layer: {0} at {1} ", layer->GetName(), m_LayerStack.GetNumInserted());
         m_LayerStack.PushLayer(layer);
         layer->OnAttach();
@@ -41,6 +47,8 @@ namespace iKan {
     
     void Application::PushOverlay(Layer *layer)
     {
+        IK_PROFILE_FUNCTION();
+
         IK_CORE_INFO("Pushing Layer: {0} at End ", layer->GetName());
         m_LayerStack.PushOverlay(layer);
         layer->OnAttach();
@@ -48,6 +56,8 @@ namespace iKan {
     
     void Application::ImGuiRenderer()
     {
+        IK_PROFILE_FUNCTION();
+
         m_ImguiLayer->Begin();
 
         // Rendering ImGui for all the layers
@@ -59,9 +69,13 @@ namespace iKan {
     
     void Application::Run()
     {
+        IK_PROFILE_FUNCTION();
+
         // Game Loop
         while (m_IsRunning)
         {
+            IK_PROFILE_SCOPE("RunLoop");
+
             // Updating all the attached layer
             for (Layer* layer : m_LayerStack)
                 layer->OnUpdate(m_TimeStep);

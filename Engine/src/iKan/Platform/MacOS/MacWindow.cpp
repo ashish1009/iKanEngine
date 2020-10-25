@@ -10,11 +10,15 @@ namespace iKan {
     
     MacWindow::MacWindow(const WindowProp& prop)
     {
+        IK_PROFILE_FUNCTION();
+
         Init(prop);
     }
     
     void MacWindow::Init(const WindowProp &prop)
     {
+        IK_PROFILE_FUNCTION();
+
         m_Data.Title  = prop.Title;
         m_Data.Width  = prop.Width;
         m_Data.Height = prop.Height;
@@ -50,6 +54,8 @@ namespace iKan {
     
     void MacWindow::SetCallBacks()
     {
+        IK_PROFILE_FUNCTION();
+
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
                                   {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -143,11 +149,15 @@ namespace iKan {
     
     MacWindow::~MacWindow()
     {
+        IK_PROFILE_FUNCTION();
+
         Shutdown();
     }
     
     void MacWindow::Shutdown()
     {
+        IK_PROFILE_FUNCTION();
+
         glfwDestroyWindow(m_Window);
         IK_CORE_INFO("Window : {0} Destroyed", m_Data.Title);
         glfwTerminate();
@@ -155,18 +165,24 @@ namespace iKan {
     
     void MacWindow::Update()
     {
+        IK_PROFILE_FUNCTION();
+
         m_Context->SwapBuffers();
         glfwPollEvents();
     }
     
     void MacWindow::SetVSync(bool enabled)
     {
+        IK_PROFILE_FUNCTION();
+
         (true == enabled) ? glfwSwapInterval(1) : glfwSwapInterval(0);
         m_Data.VSync = enabled;
     }
     
     bool MacWindow::IsVSync() const
     {
+        IK_PROFILE_FUNCTION();
+
         return m_Data.VSync;
     }
     

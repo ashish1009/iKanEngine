@@ -78,10 +78,13 @@ namespace iKan {
     SceneSerializer::SceneSerializer(const Ref<Scene>& scene)
     : m_Scene(scene)
     {
+        IK_PROFILE_FUNCTION();
     }
     
     static void SerializeEntity(YAML::Emitter& out, Entity entity)
     {
+        IK_PROFILE_FUNCTION();
+
         out << YAML::BeginMap; // Entity
         out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
         
@@ -150,6 +153,8 @@ namespace iKan {
     
     void SceneSerializer::Serialize(const std::string& filepath)
     {
+        IK_PROFILE_FUNCTION();
+
         YAML::Emitter out;
         out << YAML::BeginMap;
         out << YAML::Key << "Scene" << YAML::Value << "Untitled";
@@ -171,12 +176,16 @@ namespace iKan {
     
     void SceneSerializer::SerializeRuntime(const std::string& filepath)
     {
+        IK_PROFILE_FUNCTION();
+
         // Not implemented
         IK_CORE_ASSERT(false, "Not Implemented Yet");
     }
     
     bool SceneSerializer::Deserialize(const std::string& filepath)
     {
+        IK_PROFILE_FUNCTION();
+
         std::ifstream stream(filepath);
         std::stringstream strStream;
         strStream << stream.rdbuf();
@@ -248,6 +257,8 @@ namespace iKan {
     
     bool SceneSerializer::DeserializeRuntime(const std::string& filepath)
     {
+        IK_PROFILE_FUNCTION();
+
         // Not implemented
         IK_CORE_ASSERT(false, "Not Implemented Yet");
         return false;

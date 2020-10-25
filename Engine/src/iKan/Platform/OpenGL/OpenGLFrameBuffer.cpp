@@ -7,11 +7,15 @@ namespace iKan {
     OpenGLFrameBuffer::OpenGLFrameBuffer(const FramebufferSpecification& spec)
     : m_Specifications(spec)
     {
+        IK_PROFILE_FUNCTION();
+
         Invalidate();
     }
     
     OpenGLFrameBuffer::~OpenGLFrameBuffer()
     {
+        IK_PROFILE_FUNCTION();
+
         glDeleteFramebuffers(1, &m_RendererId);
         glDeleteTextures(1, &m_ColorAttachment);
         glDeleteTextures(1, &m_DepthAttachment);
@@ -19,6 +23,8 @@ namespace iKan {
     
     void OpenGLFrameBuffer::Invalidate()
     {
+        IK_PROFILE_FUNCTION();
+
         if (m_RendererId)
         {
             glDeleteFramebuffers(1, &m_RendererId);
@@ -49,17 +55,23 @@ namespace iKan {
     
     void OpenGLFrameBuffer::Bind()
     {
+        IK_PROFILE_FUNCTION();
+
         glBindFramebuffer(GL_FRAMEBUFFER, m_RendererId);
         glViewport(0, 0, m_Specifications.Width, m_Specifications.Height);
     }
     
     void OpenGLFrameBuffer::Unbind()
     {
+        IK_PROFILE_FUNCTION();
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
     
     void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
     {
+        IK_PROFILE_FUNCTION();
+
         m_Specifications.Width = width;
         m_Specifications.Height = height;
         

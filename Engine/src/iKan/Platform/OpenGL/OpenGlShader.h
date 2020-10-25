@@ -16,9 +16,7 @@ namespace iKan {
         
         virtual void Bind() const override;
         virtual void Unbind() const override;
-        
-        virtual void AddShaderReloadedCallback(const ShaderReloadedCallback& callback) override;
-        
+                
         virtual const std::string& GetName() override { return m_Name; }
         
         virtual void SetUniformInt1(const std::string& name, int value) override;
@@ -43,7 +41,6 @@ namespace iKan {
         std::string m_Name;
         std::unordered_map<std::string, int32_t> m_LocationMap;
         std::unordered_map<GLenum, std::string> m_Source;
-        std::vector<ShaderReloadedCallback> m_ShaderReloadedCallbacks;
     };
     
 }

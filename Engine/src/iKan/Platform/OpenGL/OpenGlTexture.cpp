@@ -8,6 +8,8 @@ namespace iKan {
  
     OpenGlTexture::OpenGlTexture(const std::string& path)
     {
+        IK_PROFILE_FUNCTION();
+
         // Texture
         stbi_set_flip_vertically_on_load(1);
         
@@ -49,6 +51,8 @@ namespace iKan {
     
     OpenGlTexture::OpenGlTexture(uint32_t width, uint32_t height, void* data, uint32_t size)
     {
+        IK_PROFILE_FUNCTION();
+
         m_Width  = width;
         m_Height = height;
         
@@ -70,23 +74,30 @@ namespace iKan {
     
     OpenGlTexture::~OpenGlTexture()
     {
+        IK_PROFILE_FUNCTION();
+
         glDeleteTextures(1, &m_RendererId);
     }
     
     void OpenGlTexture::Bind(uint32_t slot) const
     {
+        IK_PROFILE_FUNCTION();
+
         glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, m_RendererId);
     }
     
     void OpenGlTexture::Unbind() const
     {
+        IK_PROFILE_FUNCTION();
+
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-    
-    
+        
     OpenGlCubeMapTexture::OpenGlCubeMapTexture(std::vector<std::string> paths)
     {
+        IK_PROFILE_FUNCTION();
+
         stbi_set_flip_vertically_on_load(0);
         
         glGenTextures(1, &m_RendererId);
@@ -133,6 +144,8 @@ namespace iKan {
     
     OpenGlCubeMapTexture::OpenGlCubeMapTexture(const std::string& path)
     {
+        IK_PROFILE_FUNCTION();
+
         int width, height, channels;
         stbi_set_flip_vertically_on_load(false);
         uint8_t* imageData = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb);
@@ -198,8 +211,7 @@ namespace iKan {
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-//        glTextureParameterf(m_RendererId, GL_TEXTURE_MAX_ANISOTROPY, RendererAPI::GetCapabilities().MaxAnisotropy);
-            
+
         auto format = GL_RGB;
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[2]);
         glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[0]);
@@ -222,11 +234,15 @@ namespace iKan {
     
     OpenGlCubeMapTexture::~OpenGlCubeMapTexture()
     {
+        IK_PROFILE_FUNCTION();
+
         glDeleteTextures(1, &m_RendererId);
     }
     
     void OpenGlCubeMapTexture::Bind(uint32_t slot) const
     {
+        IK_PROFILE_FUNCTION();
+
         glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, m_RendererId);
     }

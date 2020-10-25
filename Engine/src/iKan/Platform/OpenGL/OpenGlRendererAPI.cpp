@@ -6,6 +6,8 @@ namespace iKan {
     
     void OpenGlRendererAPI::Init()
     {
+        IK_PROFILE_FUNCTION();
+
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -19,16 +21,22 @@ namespace iKan {
     
     void OpenGlRendererAPI::SetClearColor(const glm::vec4& color)
     {
+        IK_PROFILE_FUNCTION();
+
         glClearColor(color.r, color.g, color.b, color.a);
     }
     
     void OpenGlRendererAPI::Clear()
     {
+        IK_PROFILE_FUNCTION();
+
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
     
     void OpenGlRendererAPI::Depth(State state)
     {
+        IK_PROFILE_FUNCTION();
+
         if (State::Enable == state)
             glEnable(GL_DEPTH_TEST);
         else if (State::Disable == state)
@@ -37,6 +45,8 @@ namespace iKan {
     
     void OpenGlRendererAPI::Blend(State state)
     {
+        IK_PROFILE_FUNCTION();
+
         if (State::Enable == state)
         {
             glEnable(GL_BLEND);
@@ -50,11 +60,15 @@ namespace iKan {
     
     void OpenGlRendererAPI::SetViewPort(uint32_t widht, uint32_t height)
     {
+        IK_PROFILE_FUNCTION();
+
         glViewport(0, 0, widht, height);
     }
     
     void OpenGlRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t count)
     {
+        IK_PROFILE_FUNCTION();
+
         vertexArray->Bind();
         uint32_t numIndices = count == 0 ? vertexArray->GetIndexBuffer()->GetCount() : count;
         
@@ -66,6 +80,8 @@ namespace iKan {
 
     void OpenGlRendererAPI::DrawIndexed(uint32_t count)
     {
+        IK_PROFILE_FUNCTION();
+
         glDrawArrays(GL_TRIANGLES, 0, count);
         glBindTexture(GL_TEXTURE_2D, 0);
     }

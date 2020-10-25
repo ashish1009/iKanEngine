@@ -299,6 +299,7 @@
 					"$(inherited)",
 					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
+					IK_ENABLE_PROFILE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../Engine/src",
@@ -324,6 +325,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
+					IK_ENABLE_PROFILE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/../Engine/src",

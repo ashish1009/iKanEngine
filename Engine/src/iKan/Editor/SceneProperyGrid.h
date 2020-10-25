@@ -6,6 +6,8 @@ namespace iKan {
     
     static bool Property(const char* label, std::string& value, bool error = false)
     {
+        IK_PROFILE_FUNCTION();
+
         ImGui::Columns(2);
 
         bool modified = false;
@@ -38,6 +40,8 @@ namespace iKan {
 #ifdef NOT_IN_USE
     static void Property(const char* label, const char* value)
     {
+        IK_PROFILE_FUNCTION();
+
         ImGui::Columns(2);
 
         ImGui::Text(label);
@@ -55,6 +59,8 @@ namespace iKan {
     
     static bool Property(const char* label, bool& value)
     {
+        IK_PROFILE_FUNCTION();
+
         bool modified = false;
         
         ImGui::Columns(2);
@@ -78,6 +84,8 @@ namespace iKan {
 #ifdef NOT_IN_USE
     static bool Property(const char* label, int& value)
     {
+        IK_PROFILE_FUNCTION();
+
         bool modified = false;
         
         ImGui::Columns(2);
@@ -101,6 +109,8 @@ namespace iKan {
     
     static bool Property(const char* label, float& value, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f)
     {
+        IK_PROFILE_FUNCTION();
+
         bool modified = false;
         
         ImGuiIO& io     = ImGui::GetIO();
@@ -149,6 +159,8 @@ namespace iKan {
 #if 0
     static bool Property(const char* label, glm::vec2& value, float delta = 0.1f, float resetValue = 0.0f)
     {
+        IK_PROFILE_FUNCTION();
+
         bool modified = false;
         
         ImGuiIO& io     = ImGui::GetIO();
@@ -213,6 +225,8 @@ namespace iKan {
     
     static bool Property(const char* label, glm::vec3& value, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f )
     {
+        IK_PROFILE_FUNCTION();
+
         bool modified = false;
         
         ImGuiIO& io     = ImGui::GetIO();
@@ -293,6 +307,8 @@ namespace iKan {
 #if 0
     static bool Property(const char* label, glm::vec4& value, float delta = 0.1f)
     {
+        IK_PROFILE_FUNCTION();
+
         bool modified = false;
         
         ImGui::Text(label);

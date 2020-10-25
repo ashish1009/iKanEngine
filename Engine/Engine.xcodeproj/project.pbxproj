@@ -67,6 +67,8 @@
 		B2752D1E24FACD64005EF655 /* RendererCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D1C24FACD64005EF655 /* RendererCommand.h */; };
 		B28083FE25052642003D0684 /* ImGuiAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28083FC25052642003D0684 /* ImGuiAPI.cpp */; };
 		B28083FF25052642003D0684 /* ImGuiAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B28083FD25052642003D0684 /* ImGuiAPI.h */; };
+		B2993E182545B56100017D92 /* Instrumentor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2993E162545B56100017D92 /* Instrumentor.cpp */; };
+		B2993E192545B56100017D92 /* Instrumentor.h in Headers */ = {isa = PBXBuildFile; fileRef = B2993E172545B56100017D92 /* Instrumentor.h */; };
 		B2B1F7E6253F49E6008DD031 /* MacInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B1F7E1253F49E6008DD031 /* MacInput.cpp */; };
 		B2B1F7E7253F49E6008DD031 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B1F7E2253F49E6008DD031 /* MacWindow.cpp */; };
 		B2B1F7E8253F49E6008DD031 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B1F7E3253F49E6008DD031 /* MacWindow.h */; };
@@ -187,6 +189,8 @@
 		B2752D1C24FACD64005EF655 /* RendererCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererCommand.h; sourceTree = "<group>"; };
 		B28083FC25052642003D0684 /* ImGuiAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiAPI.cpp; sourceTree = "<group>"; };
 		B28083FD25052642003D0684 /* ImGuiAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImGuiAPI.h; sourceTree = "<group>"; };
+		B2993E162545B56100017D92 /* Instrumentor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Instrumentor.cpp; sourceTree = "<group>"; };
+		B2993E172545B56100017D92 /* Instrumentor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Instrumentor.h; sourceTree = "<group>"; };
 		B2B1F7E1253F49E6008DD031 /* MacInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MacInput.cpp; sourceTree = "<group>"; };
 		B2B1F7E2253F49E6008DD031 /* MacWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B2B1F7E3253F49E6008DD031 /* MacWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
@@ -358,8 +362,9 @@
 				B2CDABD52500ED96008C6BDF /* Scene */,
 				B2F0FC0124F80E870004443A /* Renderer */,
 				B24FF89024ED1A9E00884EDA /* Core */,
-				B2F0FBF924F80AE60004443A /* Platform */,
 				B2137A5124ED78FA00A14055 /* ImGui */,
+				B2993E122545B54500017D92 /* Debug */,
+				B2F0FBF924F80AE60004443A /* Platform */,
 			);
 			path = iKan;
 			sourceTree = "<group>";
@@ -399,6 +404,15 @@
 				B2B1F7F1253F5D59008DD031 /* SceneProperyGrid.h */,
 			);
 			path = Editor;
+			sourceTree = "<group>";
+		};
+		B2993E122545B54500017D92 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				B2993E162545B56100017D92 /* Instrumentor.cpp */,
+				B2993E172545B56100017D92 /* Instrumentor.h */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 		B2B1F7E0253F49E6008DD031 /* MacOS */ = {
@@ -553,6 +567,7 @@
 				B23D4E7D24F82F9D0049238A /* ApplicationEvents.h in Headers */,
 				B24FF89424ED1AAB00884EDA /* Log.h in Headers */,
 				B2752D0C24FAB248005EF655 /* MouseEvents.h in Headers */,
+				B2993E192545B56100017D92 /* Instrumentor.h in Headers */,
 				B2473FDC24FD22380099535D /* Buffers.h in Headers */,
 				B2309B3F2544A540001A4EE9 /* SceneSerializer.h in Headers */,
 				B2F0FC0524F80E960004443A /* GraphicsContext.h in Headers */,
@@ -691,6 +706,7 @@
 				B2E734FA2520FCEA00BD41D3 /* Mesh.cpp in Sources */,
 				B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */,
 				B2309B3E2544A540001A4EE9 /* SceneSerializer.cpp in Sources */,
+				B2993E182545B56100017D92 /* Instrumentor.cpp in Sources */,
 				B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */,
 				B266521E24FECADF0032AF99 /* Texture.cpp in Sources */,
 				B2FEC91B24FB9AA500388451 /* OpenGlRendererAPI.cpp in Sources */,
@@ -844,6 +860,7 @@
 					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
 					IK_PLATFORM_MAC,
+					IK_ENABLE_PROFILE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",
@@ -878,6 +895,7 @@
 					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
 					IK_PLATFORM_MAC,
+					IK_ENABLE_PROFILE,
 				);
 				HEADER_SEARCH_PATHS = (
 					"${PROJECT_DIR}/src",

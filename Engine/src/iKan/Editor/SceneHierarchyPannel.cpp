@@ -6,16 +6,22 @@ namespace iKan {
     
     SceneHeirarchyPannel::SceneHeirarchyPannel(const Ref<Scene>& context)
     {
+        IK_PROFILE_FUNCTION();
+
         SetContext(context);
     }
     
     void SceneHeirarchyPannel::SetContext(const Ref<Scene>& context)
     {
+        IK_PROFILE_FUNCTION();
+
         m_Context = context;
     }
     
     void SceneHeirarchyPannel::OnImguiender()
     {
+        IK_PROFILE_FUNCTION();
+
         ImGui::Begin("Scene Hierarchy");
         
         m_Context->m_Registry.each([&](auto entityID)
@@ -47,6 +53,8 @@ namespace iKan {
 
     void SceneHeirarchyPannel::DrawEntityNode(Entity entity)
     {
+        IK_PROFILE_FUNCTION();
+
         auto& tag = entity.GetComponent<TagComponent>().Tag;
                 
         ImGuiTreeNodeFlags flags = ((m_SelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
@@ -126,6 +134,8 @@ namespace iKan {
     
     void SceneHeirarchyPannel::DrawComponents(Entity entity)
     {
+        IK_PROFILE_FUNCTION();
+
         if (entity.HasComponent<TagComponent>())
         {
             auto& tag = entity.GetComponent<TagComponent>().Tag;

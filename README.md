@@ -49,8 +49,9 @@ ${PROJECT_DIR}/../iKan/vendor/assimp/lib
 - Add the path - `${PROJECT_DIR}/../iKan/src/PrecompiledHeader.pch`
 
 ### Preprocessors
-1. For eanbling Log : "IK_ENABLE_LOG"
-2. For eanbling Assert : "IK_ENABLE_ASSERT"
+1. For enabling Log : "IK_ENABLE_LOG"
+2. For enabling Assert : "IK_ENABLE_ASSERT"
+3. For enabling Profiler : "IK_ENABLE_PROFILE" : NOTE ` For Reading Profiler file drag and drop the file from "Engine/ProfileResults/*.json" to "chrome://tracing/"`
 
 ## How to create Application and Layers 
 ### Client Application
