@@ -235,6 +235,8 @@
 		B2309A7F2544A463001A4EE9 /* yaml-cpp */ = {
 			isa = PBXGroup;
 			children = (
+				B2309A922544A463001A4EE9 /* node */,
+				B2309A8E2544A463001A4EE9 /* contrib */,
 				B2309A802544A463001A4EE9 /* traits.h */,
 				B2309A812544A463001A4EE9 /* eventhandler.h */,
 				B2309A822544A463001A4EE9 /* emitter.h */,
@@ -249,9 +251,7 @@
 				B2309A8B2544A463001A4EE9 /* emittermanip.h */,
 				B2309A8C2544A463001A4EE9 /* emitfromevents.h */,
 				B2309A8D2544A463001A4EE9 /* dll.h */,
-				B2309A8E2544A463001A4EE9 /* contrib */,
 				B2309A912544A463001A4EE9 /* yaml.h */,
-				B2309A922544A463001A4EE9 /* node */,
 				B2309AA42544A463001A4EE9 /* ostream_wrapper.h */,
 				B2309AA52544A463001A4EE9 /* stlemitter.h */,
 				B2309AA62544A463001A4EE9 /* binary.h */,
@@ -272,10 +272,10 @@
 		B2309A922544A463001A4EE9 /* node */ = {
 			isa = PBXGroup;
 			children = (
+				B2309A962544A463001A4EE9 /* detail */,
 				B2309A932544A463001A4EE9 /* type.h */,
 				B2309A942544A463001A4EE9 /* parse.h */,
 				B2309A952544A463001A4EE9 /* node.h */,
-				B2309A962544A463001A4EE9 /* detail */,
 				B2309A9F2544A463001A4EE9 /* ptr.h */,
 				B2309AA02544A463001A4EE9 /* convert.h */,
 				B2309AA12544A463001A4EE9 /* impl.h */,
@@ -303,6 +303,7 @@
 		B2309AA82544A464001A4EE9 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B2309AC12544A464001A4EE9 /* contrib */,
 				B2309AA92544A464001A4EE9 /* scanscalar.h */,
 				B2309AAA2544A464001A4EE9 /* exceptions.cpp */,
 				B2309AAB2544A464001A4EE9 /* memory.cpp */,
@@ -327,7 +328,6 @@
 				B2309ABE2544A464001A4EE9 /* binary.cpp */,
 				B2309ABF2544A464001A4EE9 /* stream.h */,
 				B2309AC02544A464001A4EE9 /* nodeevents.cpp */,
-				B2309AC12544A464001A4EE9 /* contrib */,
 				B2309AC72544A464001A4EE9 /* nodebuilder.h */,
 				B2309AC82544A464001A4EE9 /* scanner.cpp */,
 				B2309AC92544A464001A4EE9 /* emit.cpp */,
