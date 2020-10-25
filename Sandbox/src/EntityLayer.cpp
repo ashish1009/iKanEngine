@@ -1,7 +1,5 @@
 #include "EntityLayer.h"
 
-#include <iKan/Scene/SceneSerializer.h>
-
 namespace iKan {
     
     EntityLayer::EntityLayer()
@@ -105,10 +103,7 @@ namespace iKan {
             // OnAwake(), CollisionCallbacks()
         };
         m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-        
 #endif
-        
-        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     
     void EntityLayer::OnDetach()

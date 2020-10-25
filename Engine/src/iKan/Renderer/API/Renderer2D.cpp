@@ -101,6 +101,8 @@ namespace iKan {
         s_Data.QuadVertexPositions[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
         s_Data.QuadVertexPositions[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
         s_Data.QuadVertexPositions[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+        
+        SetShaader("../../Engine/assets/shaders/BatchRenderer2DShader.glsl");
     }
     
     void Renderer2D::SetShaader(const std::string &path)

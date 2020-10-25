@@ -13,7 +13,8 @@ namespace iKan {
         static void ColorEdit(glm::vec4& colorRef);
         static void EnableDcocking();
         static void EndDocking();
-        static void LightGreyBackground();
+        static void SetGreyThemeColors();
+        static void SetLightThemeColors();
         static void SetDarkThemeColors();
     };
     

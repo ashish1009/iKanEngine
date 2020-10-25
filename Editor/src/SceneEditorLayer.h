@@ -5,6 +5,8 @@ namespace iKan {
     class SceneEditor : public Layer
     {
     public:
+        enum class Theme { Dark, Light, Grey };
+    public:
         SceneEditor();
         virtual ~SceneEditor();
         
@@ -13,6 +15,13 @@ namespace iKan {
         virtual void OnEvent(Event& event) override;
         virtual void OnUpdate(TimeStep timeStep) override;
         virtual void OnImguiRender() override;
+        
+    private:
+        bool OnKeyPressed(KeyPressedEvent& e);
+        
+        void NewScene();
+        void OpenScene();
+        void SaveSceneAs();
         
     private:
         bool m_ViewportFocused = false, m_ViewportHovered = false;
@@ -24,6 +33,8 @@ namespace iKan {
         
         SceneHeirarchyPannel m_SceneHierarchyPannel;
         EditorCamera         m_EditorCamera;
+        
+        Theme m_Theme = Theme::Dark;
     };
     
 }

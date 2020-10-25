@@ -8,6 +8,12 @@ namespace iKan {
     
     Scene::Scene()
     {
+        IK_CORE_INFO("Creating Scene !!");
+    }
+    
+    Scene::~Scene()
+    {
+        IK_CORE_INFO("Destroying Scene !!");
     }
     
     Entity Scene::CreateEntity(const std::string& name)
@@ -58,7 +64,8 @@ namespace iKan {
         }
         else
         {
-            IK_CORE_WARN("No Camera is Binded to the Scene or any one of themis not set to primary !!! ");
+            // TODO: Should it be assert or Warning
+//            IK_CORE_WARN("No Camera is Binded to the Scene or any one of themis not set to primary !!! ");
         }
     }
     

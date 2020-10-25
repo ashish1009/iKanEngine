@@ -59,6 +59,7 @@
 		B24FF86B24ED197300884EDA = {
 			isa = PBXGroup;
 			children = (
+				B2993E0E25459C8800017D92 /* assets */,
 				B24FF87624ED197300884EDA /* src */,
 				B24FF87524ED197300884EDA /* Products */,
 				B24FF89724ED1BF900884EDA /* Frameworks */,
@@ -93,6 +94,21 @@
 				B24FF89824ED1BF900884EDA /* libEngine.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2993E0E25459C8800017D92 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				B2993E0F25459C8800017D92 /* scene */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		B2993E0F25459C8800017D92 /* scene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = scene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

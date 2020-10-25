@@ -17,7 +17,7 @@ namespace iKan {
     {
     public:
         Scene();
-        ~Scene() = default;
+        ~Scene();
         
         Entity CreateEntity(const std::string& name = std::string());
         void DestroyEntity(Entity entity);

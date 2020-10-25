@@ -30,6 +30,7 @@
 #include <iKan/Scene/Entity.h>
 #include <iKan/Scene/Components.h>
 #include <iKan/Scene/Scene.h>
+#include <iKan/Scene/SceneSerializer.h>
 
 #include <iKan/Editor/SceneHierarchyPannel.h>
 #include <iKan/Editor/EditorCamera.h>

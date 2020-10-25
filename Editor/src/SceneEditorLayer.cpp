@@ -2,8 +2,6 @@
 
 namespace iKan {
     
-    SceneCamera camera;
-
     SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
     {
@@ -15,8 +13,6 @@ namespace iKan {
     
     void SceneEditor::OnAttach()
     {
-        ImGuiAPI::LightGreyBackground();
-        
         FramebufferSpecification specs;
         specs.Width  = s_WindowWidth;
         specs.Height = s_WindowWidth;
@@ -35,6 +31,75 @@ namespace iKan {
     void SceneEditor::OnEvent(Event& event)
     {
         m_EditorCamera.OnEvent(event);
+        
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(SceneEditor::OnKeyPressed));
+    }
+    
+    bool SceneEditor::OnKeyPressed(KeyPressedEvent& event)
+    {
+        // Shortcuts
+        if (event.GetRepeatCount() > 0)
+            return false;
+        
+        bool cmd   = Input::IsKeyPressed(Key::LeftSuper) || Input::IsKeyPressed(Key::RightSuper);
+        bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+        switch (event.GetKeyCode())
+        {
+            case Key::N:
+            {
+                if (cmd)
+                    NewScene();
+                
+                break;
+            }
+            case Key::O:
+            {
+                if (cmd)
+                    OpenScene();
+                
+                break;
+            }
+            case Key::S:
+            {
+                if (cmd && shift)
+                    SaveSceneAs();
+                
+                break;
+            }
+        }
+        return false;
+    }
+    
+    void SceneEditor::NewScene()
+    {
+        m_ActiveScene = Ref<Scene>::Create();
+        m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+    }
+    
+    void SceneEditor::OpenScene()
+    {
+        std::string filepath = "../../Editor/assets/scene/Example.iKan";
+        if (!filepath.empty())
+        {
+            m_ActiveScene = Ref<Scene>::Create();
+            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+            
+            SceneSerializer serializer(m_ActiveScene);
+            serializer.Deserialize(filepath);
+        }
+    }
+    
+    void SceneEditor::SaveSceneAs()
+    {
+        std::string filepath = "../../Editor/assets/scene/Example.iKan";
+        if (!filepath.empty())
+        {
+            SceneSerializer serializer(m_ActiveScene);
+            serializer.Serialize(filepath);
+        }
     }
     
     void SceneEditor::OnUpdate(TimeStep timeStep)
@@ -54,10 +119,31 @@ namespace iKan {
         RendererStatistics::Reset();
         m_FrameBuffer->Bind();
         
-        Renderer::Clear({ 0.2, 0.2, 0.2, 1.0f });
+        glm::vec4 bgColor;
+        switch (m_Theme)
+        {
+            case Theme::Dark:
+                ImGuiAPI::SetDarkThemeColors();
+                bgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+                break;
+
+            case Theme::Grey:
+                ImGuiAPI::SetGreyThemeColors();
+                bgColor = { 0.25f, 0.25f, 0.25f, 1.0f };
+                break;
+
+            case Theme::Light:
+                ImGuiAPI::SetLightThemeColors();
+                bgColor = { 0.8f, 0.8f, 0.8f, 1.0f };
+                break;
+
+            default:
+                break;
+        }
+        Renderer::Clear(bgColor);
         
-        camera.SetViewportSize(1600.0f, 800.0f);
-        
+        m_ActiveScene->OnUpdate(timeStep);
+
         m_FrameBuffer->Unbind();
     }
     
@@ -70,7 +156,33 @@ namespace iKan {
         {
             if (ImGui::BeginMenu("File"))
             {
-                if (ImGui::MenuItem("Exit")) Application::Get().Close();
+                if (ImGui::MenuItem("New", "Cmd+N"))
+                    NewScene();
+                
+                if (ImGui::MenuItem("Save", "Cmd+S"))
+                    SaveSceneAs();
+                    
+                if (ImGui::MenuItem("Open", "Cmd+S"))
+                    OpenScene();
+                
+                if (ImGui::MenuItem("Exit"))
+                    Application::Get().Close();
+                
+                ImGui::EndMenu();
+            }
+            
+            if (ImGui::BeginMenu("Properties"))
+            {
+                if (ImGui::BeginMenu("Theme"))
+                {
+                    if (ImGui::MenuItem("Light"))
+                        m_Theme = Theme::Light;
+                    if (ImGui::MenuItem("Dark"))
+                        m_Theme = Theme::Dark;
+                    if (ImGui::MenuItem("Grey"))
+                        m_Theme = Theme::Grey;
+                    ImGui::EndMenu();
+                }
                 ImGui::EndMenu();
             }
             ImGui::EndMenuBar();
