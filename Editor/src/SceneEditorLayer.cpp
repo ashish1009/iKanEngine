@@ -67,6 +67,9 @@ namespace iKan {
                 
                 break;
             }
+                
+            default:
+                break;
         }
         return false;
     }
@@ -119,28 +122,7 @@ namespace iKan {
         RendererStatistics::Reset();
         m_FrameBuffer->Bind();
         
-        glm::vec4 bgColor;
-        switch (m_Theme)
-        {
-            case Theme::Dark:
-                ImGuiAPI::SetDarkThemeColors();
-                bgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
-                break;
-
-            case Theme::Grey:
-                ImGuiAPI::SetGreyThemeColors();
-                bgColor = { 0.25f, 0.25f, 0.25f, 1.0f };
-                break;
-
-            case Theme::Light:
-                ImGuiAPI::SetLightThemeColors();
-                bgColor = { 0.8f, 0.8f, 0.8f, 1.0f };
-                break;
-
-            default:
-                break;
-        }
-        Renderer::Clear(bgColor);
+        Renderer::Clear(m_BgColor);
         
         m_ActiveScene->OnUpdate(timeStep);
 
@@ -176,11 +158,20 @@ namespace iKan {
                 if (ImGui::BeginMenu("Theme"))
                 {
                     if (ImGui::MenuItem("Light"))
-                        m_Theme = Theme::Light;
+                    {
+                        ImGuiAPI::SetLightThemeColors();
+                        m_BgColor = { 0.8f, 0.8f, 0.8f, 1.0f };
+                    }
                     if (ImGui::MenuItem("Dark"))
-                        m_Theme = Theme::Dark;
+                    {
+                        ImGuiAPI::SetLightThemeColors();
+                        m_BgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+                    }
                     if (ImGui::MenuItem("Grey"))
-                        m_Theme = Theme::Grey;
+                    {
+                        ImGuiAPI::SetLightThemeColors();
+                        m_BgColor = { 0.25f, 0.25f, 0.25f, 1.0f };
+                    }
                     ImGui::EndMenu();
                 }
                 ImGui::EndMenu();

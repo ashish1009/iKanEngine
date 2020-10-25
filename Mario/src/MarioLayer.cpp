@@ -16,7 +16,7 @@ namespace iKan {
 
     void MarioLayer::OnAttach()
     {
-        ImGuiAPI::LightGreyBackground();
+        ImGuiAPI::SetDarkThemeColors();
         
         /*
          Upload the Shader

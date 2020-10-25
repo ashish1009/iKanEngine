@@ -142,6 +142,9 @@ namespace iKan {
         m_ActiveScene->OnUpdate(timeStep);
         
         m_Framebuffer->Unbind();
+        
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+
     }
     
     void EntityLayer::OnImguiRender()

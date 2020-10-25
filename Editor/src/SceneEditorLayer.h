@@ -5,8 +5,6 @@ namespace iKan {
     class SceneEditor : public Layer
     {
     public:
-        enum class Theme { Dark, Light, Grey };
-    public:
         SceneEditor();
         virtual ~SceneEditor();
         
@@ -34,7 +32,7 @@ namespace iKan {
         SceneHeirarchyPannel m_SceneHierarchyPannel;
         EditorCamera         m_EditorCamera;
         
-        Theme m_Theme = Theme::Dark;
+        glm::vec4 m_BgColor = { 0.05f, 0.05f, 0.05f, 1.0f };
     };
     
 }

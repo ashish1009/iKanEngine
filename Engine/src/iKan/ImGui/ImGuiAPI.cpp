@@ -172,7 +172,7 @@ namespace iKan {
         float minWinSizeX = style.WindowMinSize.x;
         float minWinSizeY = style.WindowMinSize.y;
         style.WindowMinSize.x = 150.0f;
-        style.WindowMinSize.y = 50.0f;
+        style.WindowMinSize.y = 40.0f;
         
         if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
         {
