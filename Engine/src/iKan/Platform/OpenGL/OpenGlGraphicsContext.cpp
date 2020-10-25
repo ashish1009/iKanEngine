@@ -8,15 +8,11 @@ namespace iKan {
     OpneGlGraphicsContext::OpneGlGraphicsContext(GLFWwindow* window)
     : m_Window(window)
     {
-        IK_PROFILE_FUNCTION();
-
         Init();
     }
     
     void OpneGlGraphicsContext::Init()
     {
-        IK_PROFILE_FUNCTION();
-
         // make GLFW Window Context
         glfwMakeContextCurrent(m_Window);
 
@@ -39,8 +35,6 @@ namespace iKan {
     
     void OpneGlGraphicsContext::SwapBuffers()
     {
-        IK_PROFILE_FUNCTION();
-
         // Only for OpenGl
         glfwSwapBuffers(m_Window);
     }

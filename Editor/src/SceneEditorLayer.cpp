@@ -13,8 +13,6 @@ namespace iKan {
     
     void SceneEditor::OnAttach()
     {
-        IK_PROFILE_FUNCTION();
-
         FramebufferSpecification specs;
         specs.Width  = s_WindowWidth;
         specs.Height = s_WindowWidth;
@@ -28,7 +26,6 @@ namespace iKan {
     
     void SceneEditor::OnDetach()
     {
-        IK_PROFILE_FUNCTION();
     }
     
     void SceneEditor::OnEvent(Event& event)
@@ -70,17 +67,12 @@ namespace iKan {
                 
                 break;
             }
-                
-            default:
-                break;
         }
         return false;
     }
     
     void SceneEditor::NewScene()
     {
-        IK_PROFILE_FUNCTION();
-
         m_ActiveScene = Ref<Scene>::Create();
         m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
@@ -88,8 +80,6 @@ namespace iKan {
     
     void SceneEditor::OpenScene()
     {
-        IK_PROFILE_FUNCTION();
-
         std::string filepath = "../../Editor/assets/scene/Example.iKan";
         if (!filepath.empty())
         {
@@ -104,8 +94,6 @@ namespace iKan {
     
     void SceneEditor::SaveSceneAs()
     {
-        IK_PROFILE_FUNCTION();
-
         std::string filepath = "../../Editor/assets/scene/Example.iKan";
         if (!filepath.empty())
         {
@@ -116,8 +104,6 @@ namespace iKan {
     
     void SceneEditor::OnUpdate(TimeStep timeStep)
     {
-        IK_PROFILE_FUNCTION();
-
         // If resize the window call the update the Scene View port and Frame buffer should be resized
         if (FramebufferSpecification spec = m_FrameBuffer->GetSpecification();
             m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
@@ -163,8 +149,6 @@ namespace iKan {
     
     void SceneEditor::OnImguiRender()
     {
-        IK_PROFILE_FUNCTION();
-
         ImGuiAPI::EnableDcocking();
         
         //------------------------ Menu Bar  ------------------------------------------------------

@@ -51,8 +51,6 @@ namespace iKan {
     
     void Renderer2D::Init()
     {
-        IK_PROFILE_FUNCTION();
-
         IK_CORE_INFO("Initialising Renderer2D ");
         s_Data.QuadVertexArray  = VertexArray::Create();
         
@@ -109,8 +107,6 @@ namespace iKan {
     
     void Renderer2D::SetShaader(const std::string &path)
     {
-        IK_PROFILE_FUNCTION();
-
         // Creating array of Slots to store hem in shader
         int32_t samplers[s_Data.MaxTextureSlots];
         for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
@@ -124,15 +120,11 @@ namespace iKan {
     
     void Renderer2D::Shutdown()
     {
-        IK_PROFILE_FUNCTION();
-
         delete[] s_Data.QuadVertexBufferBase;
     }
     
     void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
     {
-        IK_PROFILE_FUNCTION();
-
         // Upload Camera View Projection Matris to shader
         glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
         
@@ -144,15 +136,11 @@ namespace iKan {
     
     void Renderer2D::EndScene()
     {
-        IK_PROFILE_FUNCTION();
-
         Flush();
     }
     
     void Renderer2D::StartBatch()
     {
-        IK_PROFILE_FUNCTION();
-
         s_Data.QuadIndexCount = 0;
         s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
         
@@ -161,8 +149,6 @@ namespace iKan {
 
     void Renderer2D::Flush()
     {
-        IK_PROFILE_FUNCTION();
-
         // Nothing to draw
         if (s_Data.QuadIndexCount == 0)
             return;
@@ -183,8 +169,6 @@ namespace iKan {
     
     void Renderer2D::NextBatch()
     {
-        IK_PROFILE_FUNCTION();
-
         // if num Quad per Batch exceeds then Render the Scene and reset all parameters
         EndScene();
         
@@ -198,8 +182,6 @@ namespace iKan {
     
     void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
     {
-        IK_PROFILE_FUNCTION();
-
         constexpr size_t    quadVertexCount = 4;
         const float         textureIndex    = 0.0f; // White Texture
         constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
@@ -255,8 +237,6 @@ namespace iKan {
     
     void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<Texture>& texture, float tilingFactor, const glm::vec4& tintColor)
     {
-        IK_PROFILE_FUNCTION();
-
         constexpr size_t    quadVertexCount = 4;
         constexpr glm::vec2 textureCoords[] = { { 0.0f, 0.0f }, { 1.0f, 0.0f }, { 1.0f, 1.0f }, { 0.0f, 1.0f } };
         
@@ -330,8 +310,6 @@ namespace iKan {
     
     void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<SubTexture>& subTexture, float tilingFactor, const glm::vec4& tintColor)
     {
-        IK_PROFILE_FUNCTION();
-
         if (s_Data.QuadIndexCount >= Renderer2DData::MaxIndices)
             NextBatch();
 

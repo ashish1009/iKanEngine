@@ -18,8 +18,6 @@ namespace iKan {
     
     OpenGlShader::OpenGlShader(const std::string& vertexSrc, const std::string& fragmentSrc)
     {
-        IK_PROFILE_FUNCTION();
-
         m_Source[GL_VERTEX_SHADER]   = vertexSrc;
         m_Source[GL_FRAGMENT_SHADER] = fragmentSrc;
         
@@ -28,8 +26,6 @@ namespace iKan {
     
     OpenGlShader::OpenGlShader(const std::string& path)
     {
-        IK_PROFILE_FUNCTION();
-
         std::string source  = ReadFromFile(path);
         m_Source            = PreprocessFile(source);
         
@@ -47,8 +43,6 @@ namespace iKan {
     
     std::string OpenGlShader::ReadFromFile(const std::string& path)
     {
-        IK_PROFILE_FUNCTION();
-
         std::string result;
         std::ifstream in(path, std::ios::in | std::ios::binary);
         if (in)
@@ -77,8 +71,6 @@ namespace iKan {
     
     std::unordered_map<GLenum, std::string> OpenGlShader::PreprocessFile(const std::string& source)
     {
-        IK_PROFILE_FUNCTION();
-
         std::unordered_map<GLenum, std::string> shaderSource;
         
         const char* token = "#type";
@@ -103,8 +95,6 @@ namespace iKan {
     
     void OpenGlShader::Compile()
     {
-        IK_PROFILE_FUNCTION();
-
         int program = glCreateProgram();
         std::array<uint32_t, 2> shaderId;
         int glShaderIDIndex = 0;
@@ -175,79 +165,62 @@ namespace iKan {
     
     OpenGlShader::~OpenGlShader()
     {
-        IK_PROFILE_FUNCTION();
-
         glDeleteProgram(m_RendererId);
     }
     
     void OpenGlShader::Bind() const
     {
-        IK_PROFILE_FUNCTION();
-
         glUseProgram(m_RendererId);
     }
     
     void OpenGlShader::Unbind() const
     {
-        IK_PROFILE_FUNCTION();
-
         glUseProgram(0);
     }
     
-   //-------------------------------- Uniforms --------------------------------
+    void OpenGlShader::AddShaderReloadedCallback(const ShaderReloadedCallback& callback)
+    {
+        m_ShaderReloadedCallbacks.push_back(callback);
+    }
+    
+    //-------------------------------- Uniforms --------------------------------
     void OpenGlShader::SetUniformInt1(const std::string& name, int value)
     {
-        IK_PROFILE_FUNCTION();
-
         glUniform1i(GetUniformLocation(name), value);
     }
     
     void OpenGlShader::SetIntArray(const std::string& name, int* values, uint32_t count)
     {
-        IK_PROFILE_FUNCTION();
-
         glUniform1iv(GetUniformLocation(name), count, values);
     }
     
     void OpenGlShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
     {
-        IK_PROFILE_FUNCTION();
-
         glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
 
     void OpenGlShader::SetUniformMat3(const std::string& name, const glm::mat3& value)
     {
-        IK_PROFILE_FUNCTION();
-
         glUniformMatrix3fv(GetUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
     
     void OpenGlShader::SetUniformFloat1(const std::string& name, float value)
     {
-        IK_PROFILE_FUNCTION();
-        
         glUniform1f(GetUniformLocation(name), value);
     }
     
     void OpenGlShader::SetUniformFloat2(const std::string& name, const glm::vec2& value)
     {
-        IK_PROFILE_FUNCTION();
-
         glUniform2f(GetUniformLocation(name), value.x, value.y);
     }
     
     void OpenGlShader::SetUniformFloat3(const std::string& name, const glm::vec3& value)
     {
-        IK_PROFILE_FUNCTION();
-
         glUniform3f(GetUniformLocation(name), value.x, value.y, value.z);
     }
     
     void OpenGlShader::SetUniformFloat4(const std::string& name, const glm::vec4& value)
     {
-        IK_PROFILE_FUNCTION();
-
         glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
     }
     

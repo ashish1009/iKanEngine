@@ -8,22 +8,16 @@ namespace iKan {
     
     Scene::Scene()
     {
-        IK_PROFILE_FUNCTION();
-
         IK_CORE_INFO("Creating Scene !!");
     }
     
     Scene::~Scene()
     {
-        IK_PROFILE_FUNCTION();
-
         IK_CORE_INFO("Destroying Scene !!");
     }
     
     Entity Scene::CreateEntity(const std::string& name)
     {
-        IK_PROFILE_FUNCTION();
-
         // Creating the Entity
         Entity entity = { m_Registry.create(), this };
         entity.AddComponent<TransformComponent>();
@@ -36,15 +30,11 @@ namespace iKan {
 
     void Scene::DestroyEntity(Entity entity)
     {
-        IK_PROFILE_FUNCTION();
-
         m_Registry.destroy(entity);
     }
     
     void Scene::OnUpdate(TimeStep ts)
     {
-        IK_PROFILE_FUNCTION();
-
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
         InstantiateScripts(ts);
         
@@ -81,8 +71,6 @@ namespace iKan {
     
     void Scene::OnViewportResize(uint32_t width, uint32_t height)
     {
-        IK_PROFILE_FUNCTION();
-
         m_ViewportWidth  = width;
         m_ViewportHeight = height;
         
@@ -98,8 +86,6 @@ namespace iKan {
      
     Entity Scene::GetMainCameraEntity()
     {
-        IK_PROFILE_FUNCTION();
-
         auto view = m_Registry.view<CameraComponent>();
         for (auto entity : view)
         {
@@ -112,8 +98,6 @@ namespace iKan {
     
     void Scene::InstantiateScripts(TimeStep ts)
     {
-        IK_PROFILE_FUNCTION();
-
         m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
                                                       {
             // nsc.Scripts is the Vector to store multiple Scripts for 1 entity

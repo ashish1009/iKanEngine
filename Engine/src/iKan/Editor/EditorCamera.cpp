@@ -6,8 +6,6 @@ namespace iKan {
     EditorCamera::EditorCamera(float fov, float aspectRatio, float near, float far)
     : m_PerspectiveFOV(fov), m_AspectRatio(aspectRatio), m_PerspectiveNear(near), m_PerspectiveFar(far)
     {
-        IK_PROFILE_FUNCTION();
-
         m_Rotation   = glm::vec3(90.0f, 0.0f, 0.0f);
         m_FocalPoint = glm::vec3(0.0f);
         
@@ -23,8 +21,6 @@ namespace iKan {
     
     void EditorCamera::SetViewportSize(uint32_t width, uint32_t height)
     {
-        IK_PROFILE_FUNCTION();
-
         m_ViewportWidth  = width;
         m_ViewportHeight = height;
         m_AspectRatio    = (float)m_ViewportWidth / (float)m_ViewportHeight;
@@ -33,8 +29,6 @@ namespace iKan {
     
     void EditorCamera::UpdateCameraView()
     {
-        IK_PROFILE_FUNCTION();
-
         m_Position = CalculatePosition();
         glm::quat orientation = GetOrientation();
         
@@ -45,8 +39,6 @@ namespace iKan {
     
     std::pair<float, float> EditorCamera::PanSpeed() const
     {
-        IK_PROFILE_FUNCTION();
-
         float x = std::min(m_ViewportWidth / 1000.0f, 2.4f); // max = 2.4f
         float xFactor = 0.0366f * (x * x) - 0.1778f * x + 0.3021f;
         
@@ -58,15 +50,11 @@ namespace iKan {
 
     float EditorCamera::RotationSpeed() const
     {
-        IK_PROFILE_FUNCTION();
-
         return 0.8f;
     }
     
     float EditorCamera::ZoomSpeed() const
     {
-        IK_PROFILE_FUNCTION();
-
         float distance  = m_Distance * 0.2f;
         distance        = std::max(distance, 0.0f);
         
@@ -78,8 +66,6 @@ namespace iKan {
     
     void EditorCamera::OnUpdate(TimeStep ts)
     {
-        IK_PROFILE_FUNCTION();
-
         if (Input::IsKeyPressed(KeyCode::LeftAlt))
         {
             const glm::vec2& mouse{ Input::GetMouseX(), Input::GetMouseY() };
@@ -151,36 +137,26 @@ namespace iKan {
 
     glm::vec3 EditorCamera::GetUpDirection() const
     {
-        IK_PROFILE_FUNCTION();
-
         return glm::rotate(GetOrientation(), glm::vec3(0.0f, 1.0f, 0.0f));
     }
     
     glm::vec3 EditorCamera::GetRightDirection() const
     {
-        IK_PROFILE_FUNCTION();
-
         return glm::rotate(GetOrientation(), glm::vec3(1.0f, 0.0f, 0.0f));
     }
     
     glm::vec3 EditorCamera::GetForwardDirection() const
     {
-        IK_PROFILE_FUNCTION();
-
         return glm::rotate(GetOrientation(), glm::vec3(0.0f, 0.0f, -1.0f));
     }
 
     glm::vec3 EditorCamera::CalculatePosition() const
     {
-        IK_PROFILE_FUNCTION();
-
         return m_FocalPoint - GetForwardDirection() * m_Distance;
     }
 
     glm::quat EditorCamera::GetOrientation() const
     {
-        IK_PROFILE_FUNCTION();
-
         return glm::quat(glm::vec3(-m_Pitch, -m_Yaw, 0.0f));
     }
 

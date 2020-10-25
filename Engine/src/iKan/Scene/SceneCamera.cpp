@@ -4,15 +4,11 @@ namespace iKan {
     
     SceneCamera::SceneCamera()
     {
-        IK_PROFILE_FUNCTION();
-
         RecalculateProjection();
     }
     
     void SceneCamera::SetOrthographic(float size, float nearClip, float farClip)
     {
-        IK_PROFILE_FUNCTION();
-
         m_ProjectionType   = ProjectionType::Orthographic;
         m_OrthographicSize = size;
         m_OrthographicNear = nearClip;
@@ -22,8 +18,6 @@ namespace iKan {
     
     void SceneCamera::SetPerspective(float fov, float nearClip, float farClip)
     {
-        IK_PROFILE_FUNCTION();
-
         m_ProjectionType  = ProjectionType::Perspective;
         m_PerspectiveFOV  = fov;
         m_PerspectiveNear = nearClip;
@@ -33,16 +27,12 @@ namespace iKan {
     
     void SceneCamera::SetViewportSize(uint32_t width, uint32_t height)
     {
-        IK_PROFILE_FUNCTION();
-
         m_AspectRatio = (float)width / (float)height;
         RecalculateProjection();
     }
     
     void SceneCamera::RecalculateProjection()
     {
-        IK_PROFILE_FUNCTION();
-
         if (m_ProjectionType == ProjectionType::Perspective)
         {
             m_Projection = glm::perspective(m_PerspectiveFOV, m_AspectRatio, m_PerspectiveNear, m_PerspectiveFar);

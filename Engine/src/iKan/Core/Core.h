@@ -17,8 +17,6 @@
 
 #include <iKan/Core/Ref.h>
 
-#include <iKan/Debug/Instrumentor.h>
-
 namespace iKan {
     
     template<typename T>

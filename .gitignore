@@ -4,7 +4,6 @@ bin-int/
 
 #Engine Files
 *.log
-*.json
 
 # Mac Files
 .DS_Store
