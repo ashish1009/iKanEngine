@@ -30,7 +30,7 @@ namespace iKan {
     private:
         uint32_t m_RendererId;
         uint32_t m_Width, m_Height, m_Channel;
-        GLenum m_InternalFormat = GL_RGB8, m_DataFormat = GL_RGB;
+        GLenum m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
         
     };
     

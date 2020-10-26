@@ -2,6 +2,8 @@
 
 namespace iKan {
     
+    static Ref<Mesh> s_Mesh;
+    
     SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
     {
@@ -13,6 +15,8 @@ namespace iKan {
     
     void SceneEditor::OnAttach()
     {
+        ImGuiAPI::SetDarkThemeColors();
+
         FramebufferSpecification specs;
         specs.Width  = s_WindowWidth;
         specs.Height = s_WindowWidth;
@@ -22,87 +26,14 @@ namespace iKan {
         m_ActiveScene = Ref<Scene>::Create();
                         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+        
+        {
+            s_Mesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+        }
     }
     
     void SceneEditor::OnDetach()
     {
-    }
-    
-    void SceneEditor::OnEvent(Event& event)
-    {
-        m_EditorCamera.OnEvent(event);
-        
-        EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(SceneEditor::OnKeyPressed));
-    }
-    
-    bool SceneEditor::OnKeyPressed(KeyPressedEvent& event)
-    {
-        // Shortcuts
-        if (event.GetRepeatCount() > 0)
-            return false;
-        
-        bool cmd   = Input::IsKeyPressed(Key::LeftSuper) || Input::IsKeyPressed(Key::RightSuper);
-        bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
-        switch (event.GetKeyCode())
-        {
-            case Key::N:
-            {
-                if (cmd)
-                    NewScene();
-                
-                break;
-            }
-            case Key::O:
-            {
-                if (cmd)
-                    OpenScene();
-                
-                break;
-            }
-            case Key::S:
-            {
-                if (cmd && shift)
-                    SaveSceneAs();
-                
-                break;
-            }
-                
-            default:
-                break;
-        }
-        return false;
-    }
-    
-    void SceneEditor::NewScene()
-    {
-        m_ActiveScene = Ref<Scene>::Create();
-        m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
-    }
-    
-    void SceneEditor::OpenScene()
-    {
-        std::string filepath = "../../Editor/assets/scene/Example.iKan";
-        if (!filepath.empty())
-        {
-            m_ActiveScene = Ref<Scene>::Create();
-            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-            m_SceneHierarchyPannel.SetContext(m_ActiveScene);
-            
-            SceneSerializer serializer(m_ActiveScene);
-            serializer.Deserialize(filepath);
-        }
-    }
-    
-    void SceneEditor::SaveSceneAs()
-    {
-        std::string filepath = "../../Editor/assets/scene/Example.iKan";
-        if (!filepath.empty())
-        {
-            SceneSerializer serializer(m_ActiveScene);
-            serializer.Serialize(filepath);
-        }
     }
     
     void SceneEditor::OnUpdate(TimeStep timeStep)
@@ -164,12 +95,12 @@ namespace iKan {
                     }
                     if (ImGui::MenuItem("Dark"))
                     {
-                        ImGuiAPI::SetLightThemeColors();
+                        ImGuiAPI::SetDarkThemeColors();
                         m_BgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
                     }
                     if (ImGui::MenuItem("Grey"))
                     {
-                        ImGuiAPI::SetLightThemeColors();
+                        ImGuiAPI::SetGreyThemeColors();
                         m_BgColor = { 0.25f, 0.25f, 0.25f, 1.0f };
                     }
                     ImGui::EndMenu();
@@ -204,6 +135,80 @@ namespace iKan {
         ImGui::PopStyleVar();
         
         ImGuiAPI::EndDocking();
+    }
+    
+    void SceneEditor::OnEvent(Event& event)
+    {
+        m_EditorCamera.OnEvent(event);
+        
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(SceneEditor::OnKeyPressed));
+    }
+    
+    bool SceneEditor::OnKeyPressed(KeyPressedEvent& event)
+    {
+        // Shortcuts
+        if (event.GetRepeatCount() > 0)
+            return false;
+        
+        bool cmd   = Input::IsKeyPressed(Key::LeftSuper) || Input::IsKeyPressed(Key::RightSuper);
+        bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+        switch (event.GetKeyCode())
+        {
+            case Key::N:
+            {
+                if (cmd)
+                    NewScene();
+                break;
+            }
+            case Key::O:
+            {
+                if (cmd)
+                    OpenScene();
+                break;
+            }
+            case Key::S:
+            {
+                if (cmd && shift)
+                    SaveSceneAs();
+                break;
+            }
+                
+            default:
+                break;
+        }
+        return false;
+    }
+    
+    void SceneEditor::NewScene()
+    {
+        m_ActiveScene = Ref<Scene>::Create();
+        m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+    }
+    
+    void SceneEditor::OpenScene()
+    {
+        std::string filepath = "../../Editor/assets/scene/Example.iKan";
+        if (!filepath.empty())
+        {
+            m_ActiveScene = Ref<Scene>::Create();
+            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+            
+            SceneSerializer serializer(m_ActiveScene);
+            serializer.Deserialize(filepath);
+        }
+    }
+    
+    void SceneEditor::SaveSceneAs()
+    {
+        std::string filepath = "../../Editor/assets/scene/Example.iKan";
+        if (!filepath.empty())
+        {
+            SceneSerializer serializer(m_ActiveScene);
+            serializer.Serialize(filepath);
+        }
     }
     
 }
