@@ -3,6 +3,7 @@
 #include <iKan/Scene/Entity.h>
 
 #include <iKan/Renderer/API/Renderer2D.h>
+#include <iKan/Renderer/API/SceneRenderer.h>
 
 namespace iKan {
     
@@ -33,6 +34,19 @@ namespace iKan {
         m_Registry.destroy(entity);
     }
     
+    void Scene::OnRenderEditor(TimeStep ts, const EditorCamera &editorCamera)
+    {
+        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix() });
+        
+        auto group = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
+        for (auto entity : group)
+        {
+            const auto [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
+            SceneRenderer::Draw(mesh.Mesh, transform.GetTransform());
+        }
+        SceneRenderer::EndScene();
+    }
+    
     void Scene::OnUpdate(TimeStep ts)
     {
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
@@ -51,7 +65,7 @@ namespace iKan {
         if (mainCamera)
         {
             Renderer2D::BeginScene(*mainCamera, cameraTransform);
-            auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+            auto group = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
             for (auto entity : group)
             {
                 const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
@@ -139,6 +153,12 @@ namespace iKan {
     template<>
     void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
     {
+    }
+    
+    template<>
+    void Scene::OnComponentAdded<MeshComponent>(Entity entity, MeshComponent& component)
+    {
+        
     }
 
 }

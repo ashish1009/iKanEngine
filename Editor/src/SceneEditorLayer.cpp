@@ -2,10 +2,7 @@
 
 namespace iKan {
     
-    static Ref<Mesh> s_Mesh;
-    static Ref<Shader> s_Shader;
-
-    SceneEditor::SceneEditor()
+       SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
     {
     }
@@ -29,7 +26,9 @@ namespace iKan {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
         
         {
-            s_Mesh   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+            Ref<Mesh> mesh    = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+            Entity meshEntity = m_ActiveScene->CreateEntity("Mesh");
+            meshEntity.AddComponent<MeshComponent>(mesh);
         }
     }
     
@@ -56,14 +55,9 @@ namespace iKan {
         
         Renderer::Clear(m_BgColor);
         
+        m_ActiveScene->OnRenderEditor(timeStep, m_EditorCamera);
         m_ActiveScene->OnUpdate(timeStep);
         
-        {
-            SceneRenderer::BegineScene({ m_EditorCamera, m_EditorCamera.GetViewMatrix() });
-            
-            SceneRenderer::Draw(s_Mesh, glm::mat4(1.0f));
-        }
-
         m_FrameBuffer->Unbind();
     }
     

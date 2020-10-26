@@ -22,7 +22,10 @@ namespace iKan {
         Entity CreateEntity(const std::string& name = std::string());
         void DestroyEntity(Entity entity);
 
-        void OnViewportResize(uint32_t width, uint32_t height);
+        void OnViewportResize(uint32_t width, uint32_t height);\
+        
+        void OnRenderEditor(TimeStep ts, const EditorCamera& editorCamera);
+
         void OnUpdate(TimeStep ts);
         
     private:

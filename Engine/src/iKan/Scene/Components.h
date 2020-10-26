@@ -92,6 +92,9 @@ namespace iKan {
         
         MeshComponent() = default;
         MeshComponent(const MeshComponent&) = default;
+        
+        MeshComponent(const Ref<iKan::Mesh>& mesh)
+        : Mesh(mesh) {}
     };
     
 }
