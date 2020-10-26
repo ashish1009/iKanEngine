@@ -75,7 +75,7 @@ namespace iKan {
             s_Shader->Unbind();
             
             s_Shader->Bind();
-            s_Shader->SetUniformMat4("u_Transform", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.2f)));
+            s_Shader->SetUniformMat4("u_Transform", m_EditorCamera.GetViewProjection());
             s_Shader->Unbind();
             
             s_Mesh->Draw(*s_Shader.Raw());
