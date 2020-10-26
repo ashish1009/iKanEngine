@@ -3,7 +3,8 @@
 namespace iKan {
     
     static Ref<Mesh> s_Mesh;
-    
+    static Ref<Shader> s_Shader;
+
     SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
     {
@@ -28,7 +29,18 @@ namespace iKan {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
         
         {
-            s_Mesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+            s_Mesh   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+            
+            s_Shader = Shader::Create("../../Engine/assets/shaders/MeshShader.glsl");
+            
+            // Creating array of Slots to store hem in shader
+            int32_t samplers[16];
+            for (uint32_t i = 0; i < 16; i++)
+                samplers[i] = i;
+            
+            s_Shader->Bind();
+            s_Shader->SetIntArray("u_Textures", samplers, 16);
+            s_Shader->Unbind();
         }
     }
     
@@ -56,6 +68,18 @@ namespace iKan {
         Renderer::Clear(m_BgColor);
         
         m_ActiveScene->OnUpdate(timeStep);
+        
+        {
+            s_Shader->Bind();
+            s_Shader->SetUniformMat4("u_ViewProjection", glm::mat4(1.0f));
+            s_Shader->Unbind();
+            
+            s_Shader->Bind();
+            s_Shader->SetUniformMat4("u_Transform", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(0.2f)));
+            s_Shader->Unbind();
+            
+            s_Mesh->Draw(*s_Shader.Raw());
+        }
 
         m_FrameBuffer->Unbind();
     }

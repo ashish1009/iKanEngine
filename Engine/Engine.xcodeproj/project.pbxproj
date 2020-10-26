@@ -150,6 +150,8 @@
 		B2473FDA24FD22380099535D /* Buffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Buffers.h; sourceTree = "<group>"; };
 		B2473FDD24FD232E0099535D /* OpenGlBuffers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlBuffers.cpp; sourceTree = "<group>"; };
 		B2473FDE24FD232E0099535D /* OpenGlBuffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlBuffers.h; sourceTree = "<group>"; };
+		B24D18C52546C93B009FF803 /* BatchRenderer2DShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BatchRenderer2DShader.glsl; sourceTree = "<group>"; };
+		B24D18C62546C93B009FF803 /* MeshShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MeshShader.glsl; sourceTree = "<group>"; };
 		B24FF88724ED1A3C00884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B24FF89124ED1AAB00884EDA /* Log.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Log.cpp; sourceTree = "<group>"; };
 		B24FF89224ED1AAB00884EDA /* Log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Log.h; sourceTree = "<group>"; };
@@ -321,9 +323,27 @@
 			path = Events;
 			sourceTree = "<group>";
 		};
+		B24D18C32546C93B009FF803 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				B24D18C42546C93B009FF803 /* shaders */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		B24D18C42546C93B009FF803 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B24D18C52546C93B009FF803 /* BatchRenderer2DShader.glsl */,
+				B24D18C62546C93B009FF803 /* MeshShader.glsl */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		B24FF87E24ED1A3C00884EDA = {
 			isa = PBXGroup;
 			children = (
+				B24D18C32546C93B009FF803 /* assets */,
 				B24FF88E24ED1A7900884EDA /* src */,
 				B213761C24ED4E6000A14055 /* vendor */,
 				B213760C24ED286C00A14055 /* Dependencies */,
