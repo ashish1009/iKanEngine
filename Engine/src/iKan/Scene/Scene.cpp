@@ -37,14 +37,25 @@ namespace iKan {
     void Scene::OnRenderEditor(TimeStep ts, const EditorCamera &editorCamera)
     {
         SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix() });
-        
-        auto group = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
-        for (auto entity : group)
+        auto meshGroup = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
+        for (auto entity : meshGroup)
         {
-            const auto [transform, mesh] = group.get<TransformComponent, MeshComponent>(entity);
+            const auto [transform, mesh] = meshGroup.get<TransformComponent, MeshComponent>(entity);
             SceneRenderer::Draw(mesh.Mesh, transform.GetTransform());
         }
         SceneRenderer::EndScene();
+        
+        Renderer2D::BeginScene(editorCamera, glm::inverse(editorCamera.GetViewMatrix()));
+        auto spriteGroup = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
+        for (auto entity : spriteGroup)
+        {
+            const auto [transform, sprite] = spriteGroup.get<TransformComponent, SpriteRendererComponent>(entity);
+            if (sprite.SubTexComp)
+                Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp);
+            else
+                Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+        }
+        Renderer2D::EndScene();
     }
     
     void Scene::OnUpdate(TimeStep ts)
@@ -65,7 +76,7 @@ namespace iKan {
         if (mainCamera)
         {
             Renderer2D::BeginScene(*mainCamera, cameraTransform);
-            auto group = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
+            auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
             for (auto entity : group)
             {
                 const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);

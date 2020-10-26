@@ -56,7 +56,6 @@ namespace iKan {
         Renderer::Clear(m_BgColor);
         
         m_ActiveScene->OnRenderEditor(timeStep, m_EditorCamera);
-        m_ActiveScene->OnUpdate(timeStep);
         
         m_FrameBuffer->Unbind();
     }
