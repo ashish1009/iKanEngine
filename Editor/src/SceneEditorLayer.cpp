@@ -30,17 +30,6 @@ namespace iKan {
         
         {
             s_Mesh   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
-            
-            s_Shader = Shader::Create("../../Engine/assets/shaders/MeshShader.glsl");
-            
-            // Creating array of Slots to store hem in shader
-            int32_t samplers[16];
-            for (uint32_t i = 0; i < 16; i++)
-                samplers[i] = i;
-            
-            s_Shader->Bind();
-            s_Shader->SetIntArray("u_Textures", samplers, 16);
-            s_Shader->Unbind();
         }
     }
     
@@ -70,15 +59,9 @@ namespace iKan {
         m_ActiveScene->OnUpdate(timeStep);
         
         {
-            s_Shader->Bind();
-            s_Shader->SetUniformMat4("u_ViewProjection", glm::mat4(1.0f));
-            s_Shader->Unbind();
+            SceneRenderer::BegineScene({ m_EditorCamera, m_EditorCamera.GetViewMatrix() });
             
-            s_Shader->Bind();
-            s_Shader->SetUniformMat4("u_Transform", m_EditorCamera.GetViewProjection());
-            s_Shader->Unbind();
-            
-            s_Mesh->Draw(*s_Shader.Raw());
+            SceneRenderer::Draw(s_Mesh, glm::mat4(1.0f));
         }
 
         m_FrameBuffer->Unbind();

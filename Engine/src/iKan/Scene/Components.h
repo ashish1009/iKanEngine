@@ -86,4 +86,12 @@ namespace iKan {
         ScriptableEntity* Instance = nullptr;
     };
     
+    struct MeshComponent
+    {
+        Ref<iKan::Mesh> Mesh;
+        
+        MeshComponent() = default;
+        MeshComponent(const MeshComponent&) = default;
+    };
+    
 }

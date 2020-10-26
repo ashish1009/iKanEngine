@@ -74,23 +74,9 @@ namespace iKan {
             
             if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
                 MouseRotate(delta);
-        }
-        if (Input::IsKeyPressed(KeyCode::LeftControl))
-        {
-            const glm::vec2& mouse{ Input::GetMouseX(), Input::GetMouseY() };
-            glm::vec2 delta = (mouse - m_InitialMousePosition) * 0.003f;
-            m_InitialMousePosition = mouse;
-            
-            if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
+            if (Input::IsMouseButtonPressed(MouseCode::ButtonMiddle))
                 MousePan(delta);
-        }
-        if (Input::IsKeyPressed(KeyCode::LeftShift))
-        {
-            const glm::vec2& mouse{ Input::GetMouseX(), Input::GetMouseY() };
-            glm::vec2 delta = (mouse - m_InitialMousePosition) * 0.003f;
-            m_InitialMousePosition = mouse;
-            
-            if (Input::IsMouseButtonPressed(MouseCode::ButtonLeft))
+            if (Input::IsMouseButtonPressed(MouseCode::ButtonRight))
                 MouseZoom(delta.y);
         }
         

@@ -24,6 +24,7 @@
 
 #include <iKan/Renderer/API/RendererCommand.h>
 #include <iKan/Renderer/API/Renderer2D.h>
+#include <iKan/Renderer/API/SceneRenderer.h>
 #include <iKan/Renderer/API/Renderer.h>
 #include <iKan/Renderer/API/RendererStats.h>
 

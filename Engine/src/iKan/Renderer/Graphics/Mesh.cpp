@@ -54,7 +54,6 @@ namespace iKan {
         Renderer::DrawIndexed(m_VAO);
         
         m_VAO->Unbind();
-        shader.Unbind();
         
         RendererStatistics::VertexCount += m_Vertices.size();
         RendererStatistics::IndexCount  += m_Indices.size();

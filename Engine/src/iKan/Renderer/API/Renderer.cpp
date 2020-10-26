@@ -1,5 +1,6 @@
 #include <iKan/Renderer/API/Renderer.h>
 #include <iKan/Renderer/API/Renderer2D.h>
+#include <iKan/Renderer/API/SceneRenderer.h>
 #include <iKan/Renderer/API/RendererStats.h>
 
 namespace iKan {
@@ -14,6 +15,7 @@ namespace iKan {
     {
         RendererCommand::Init();
         Renderer2D::Init();
+        SceneRenderer::Init();
         
         s_Data.m_ShaderLibrary = Ref<ShaderLibrary>::Create();
     }
@@ -44,6 +46,7 @@ namespace iKan {
     void Renderer::Shutdown()
     {
         Renderer2D::Shutdown();
+        SceneRenderer::Shutdown();
     }
     
     Ref<ShaderLibrary> Renderer::GetShaderLibrary()
