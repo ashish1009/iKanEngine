@@ -145,6 +145,17 @@ namespace iKan {
             out << YAML::EndMap; // SpriteRendererComponent
         }
         
+        if (entity.HasComponent<MeshComponent>())
+        {
+            out << YAML::Key << "MeshComponent";
+            out << YAML::BeginMap; // MeshComponent
+            
+            auto& mesh = entity.GetComponent<MeshComponent>().Mesh;
+            out << YAML::Key << "AssetPath" << YAML::Value << mesh->GetFilepath();
+            
+            out << YAML::EndMap; // MeshComponent
+        }
+        
         out << YAML::EndMap; // Entity
     }
     
@@ -212,6 +223,11 @@ namespace iKan {
                     tc.Translation = transformComponent["Translation"].as<glm::vec3>();
                     tc.Rotation = transformComponent["Rotation"].as<glm::vec3>();
                     tc.Scale = transformComponent["Scale"].as<glm::vec3>();
+                    
+                    IK_CORE_INFO("  Entity Transform:");
+                    IK_CORE_INFO("    Translation: {0}, {1}, {2}", tc.Translation.x, tc.Translation.y, tc.Translation.z);
+                    IK_CORE_INFO("    Rotation: {0}, {1}, {2}", tc.Rotation.x, tc.Rotation.y, tc.Rotation.z);
+                    IK_CORE_INFO("    Scale: {0}, {1}, {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
                 }
                 
                 auto cameraComponent = entity["CameraComponent"];
@@ -239,6 +255,17 @@ namespace iKan {
                 {
                     auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
                     src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+                }
+                
+                auto meshComponent = entity["MeshComponent"];
+                if (meshComponent)
+                {
+                    std::string meshPath = meshComponent["AssetPath"].as<std::string>();
+                    // TEMP (because script creates mesh component...)
+                    if (!deserializedEntity.HasComponent<MeshComponent>())
+                        deserializedEntity.AddComponent<MeshComponent>(Ref<Mesh>::Create(meshPath));
+                    
+                    IK_CORE_INFO("  Mesh Asset Path: {0}", meshPath);
                 }
             }
         }

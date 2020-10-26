@@ -81,6 +81,7 @@ namespace iKan {
     
     // ----------------------------------------------------------- < Sub Mesh > -----------------------------------------------------------
     Mesh::Mesh(const std::string& path)
+    : m_Filepath(path)
     {
         LoadModel(path);
     }

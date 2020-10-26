@@ -52,8 +52,10 @@ namespace iKan {
         Mesh(const std::string& path);
         ~Mesh() = default;
         
-        void Draw(Shader &shader) const;
+        const std::string& GetFilepath() const { return m_Filepath; }
         
+        void Draw(Shader &shader) const;
+                
     private:
         void LoadModel(const std::string& path);
         void ProcessNode(aiNode* node, const aiScene* scene);
@@ -61,8 +63,9 @@ namespace iKan {
         std::vector<MeshTexture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
         
     private:
-        std::vector<SubMesh>      m_Meshes;
+        std::string               m_Filepath;
         std::string               m_Directory;
+        std::vector<SubMesh>      m_Meshes;
         std::vector<MeshTexture>  m_TexturesLoaded;
     };
     
