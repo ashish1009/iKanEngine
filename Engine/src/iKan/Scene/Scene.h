@@ -9,6 +9,8 @@
 
 #include <iKan/Editor/EditorCamera.h>
 
+#include <iKan/Scene/SceneLight.h>
+
 namespace iKan {
     
     class Entity;
@@ -30,6 +32,8 @@ namespace iKan {
         
     private:
         Entity GetMainCameraEntity();
+        Entity GetLightEntity();
+
         void InstantiateScripts(TimeStep ts);
 
         template<typename T>

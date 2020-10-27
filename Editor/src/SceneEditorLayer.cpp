@@ -2,7 +2,10 @@
 
 namespace iKan {
     
-       SceneEditor::SceneEditor()
+    // TODO: Temp
+    static Entity lighEnt;
+    
+    SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
     {
     }
@@ -32,9 +35,9 @@ namespace iKan {
             Entity bagpackEntity = m_ActiveScene->CreateEntity("Bagpack");
             bagpackEntity.AddComponent<MeshComponent>(bagpackMesh);
             
-            Entity lightEntity = m_ActiveScene->CreateEntity("Light");
-            lightEntity.AddComponent<MeshComponent>(lightMesh);
-
+            lighEnt = m_ActiveScene->CreateEntity("Light");
+            lighEnt.AddComponent<MeshComponent>(lightMesh);
+            lighEnt.AddComponent<LightComponent>();
         }
     }
     

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iKan/Scene/SceneCamera.h>
+#include <iKan/Scene/SceneLight.h>
 #include <iKan/Scene/ScriptableEntity.h>
 
 #include <iKan/Renderer/Graphics/Texture.h>
@@ -95,6 +96,16 @@ namespace iKan {
         
         MeshComponent(const Ref<iKan::Mesh>& mesh)
         : Mesh(mesh) {}
+    };
+    
+    struct LightComponent
+    {
+        SceneLight Light;
+        
+        bool IsLight = false;
+        
+        LightComponent() = default;
+        LightComponent(const LightComponent&) = default;
     };
     
 }

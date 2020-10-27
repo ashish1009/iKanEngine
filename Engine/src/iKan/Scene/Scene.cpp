@@ -36,7 +36,15 @@ namespace iKan {
     
     void Scene::OnRenderEditor(TimeStep ts, const EditorCamera &editorCamera)
     {
-        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix(), editorCamera.GetForwardDirection() });
+        SceneLight* light = nullptr;
+        glm::vec3 lightPosition;
+        if (Entity lightEntity = GetLightEntity(); lightEntity!= Entity(entt::null, nullptr))
+        {
+            light = &lightEntity.GetComponent<LightComponent>().Light;
+            lightPosition = lightEntity.GetComponent<TransformComponent>().Translation;
+        }
+        
+        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix(), editorCamera.GetForwardDirection() }, { light, lightPosition });
         auto meshGroup = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
         for (auto entity : meshGroup)
         {
@@ -121,6 +129,18 @@ namespace iKan {
         return {};
     }
     
+    Entity Scene::GetLightEntity()
+    {
+        auto view = m_Registry.view<LightComponent>();
+        for (auto entity : view)
+        {
+            auto& comp = view.get<LightComponent>(entity);
+            if (comp.IsLight)
+                return { entity, this };
+        }
+        return {};
+    }
+    
     void Scene::InstantiateScripts(TimeStep ts)
     {
         m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
@@ -169,7 +189,11 @@ namespace iKan {
     template<>
     void Scene::OnComponentAdded<MeshComponent>(Entity entity, MeshComponent& component)
     {
-        
+    }
+    
+    template<>
+    void Scene::OnComponentAdded<LightComponent>(Entity entity, LightComponent& component)
+    {
     }
 
 }

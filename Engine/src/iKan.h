@@ -14,7 +14,8 @@
 #include <iKan/Core/Events/KeyEvents.h>
 #include <iKan/Core/Events/MouseEvents.h>
 
-#include <iKan/Renderer/Graphics/Camera.h>
+#include <iKan/Renderer/Camera/Camera.h>
+
 #include <iKan/Renderer/Graphics/VertexArray.h>
 #include <iKan/Renderer/Graphics/Buffers.h>
 #include <iKan/Renderer/Graphics/FrameBuffer.h>
@@ -32,6 +33,8 @@
 #include <iKan/Scene/Components.h>
 #include <iKan/Scene/Scene.h>
 #include <iKan/Scene/SceneSerializer.h>
+#include <iKan/Scene/SceneCamera.h>
+#include <iKan/Scene/SceneLight.h>
 
 #include <iKan/Editor/SceneHierarchyPannel.h>
 #include <iKan/Editor/EditorCamera.h>

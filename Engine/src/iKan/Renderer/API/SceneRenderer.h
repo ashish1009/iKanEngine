@@ -1,7 +1,9 @@
 #pragma once
 
-#include <iKan/Editor/EditorCamera.h>
+#include <iKan/Renderer/Camera/Camera.h>
 #include <iKan/Renderer/Graphics/Mesh.h>
+
+#include <iKan/Scene/SceneLight.h>
 
 namespace iKan {
     
@@ -13,11 +15,18 @@ namespace iKan {
         glm::vec3 Front;      
     };
     
+    struct SceneRendererLight
+    {
+        iKan::SceneLight* Light;
+        
+        glm::vec3 Position;
+    };
+    
     class SceneRenderer
     {
     public:
         static void Init();
-        static void BegineScene(const SceneRendererCamera& camera);
+        static void BegineScene(const SceneRendererCamera& camera, const SceneRendererLight& light);
         static void EndScene();
         static void Shutdown();
 

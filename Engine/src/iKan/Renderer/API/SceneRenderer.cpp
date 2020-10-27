@@ -24,23 +24,33 @@ namespace iKan {
         s_Data.MeshShader->Unbind();
     }
     
-    void SceneRenderer::BegineScene(const SceneRendererCamera& camera)
+    void SceneRenderer::BegineScene(const SceneRendererCamera& camera, const SceneRendererLight& light)
     {
         s_Data.MeshShader->Bind();
         s_Data.MeshShader->SetUniformMat4("u_ViewProjection", camera.Camera.GetProjection() * camera.ViewMatrix);
         
+        s_Data.MeshShader->SetUniformInt1("u_IsSceneLight", (light.Light != nullptr));
+        
+        s_Data.MeshShader->SetUniformFloat3("u_Light.Position", light.Position);
+        
         // TODO: Find better place for this
+        if (light.Light)
         {
-            s_Data.MeshShader->SetUniformFloat3("u_Light.Position", { 0.0f, 0.0f, -3.0f });
             s_Data.MeshShader->SetUniformFloat3("u_ViewPos", camera.ViewMatrix[3]);
             
             // light properties
-            s_Data.MeshShader->SetUniformFloat3("u_Light.Ambient", { 0.2f, 0.2f, 0.2f });
+            s_Data.MeshShader->SetUniformInt1("u_Light.IsAmbient", light.Light->IsAmbient);
+            if (light.Light->IsAmbient)
+                s_Data.MeshShader->SetUniformFloat3("u_Light.Ambient", light.Light->Ambient);
             
-            s_Data.MeshShader->SetUniformFloat3("u_Light.Diffuse", { 0.5f, 0.5f, 0.5f });
+            s_Data.MeshShader->SetUniformInt1("u_Light.IsDiffuse", light.Light->IsDiffuse);
+            if (light.Light->IsDiffuse)
+                s_Data.MeshShader->SetUniformFloat3("u_Light.Diffuse", light.Light->Diffuse);
             
-            s_Data.MeshShader->SetUniformFloat3("u_Light.Specular", { 1.0f, 1.0f, 1.0f });
-            
+            s_Data.MeshShader->SetUniformInt1("u_Light.IsSpecular", light.Light->IsSpecular);
+            if (light.Light->IsSpecular)
+                s_Data.MeshShader->SetUniformFloat3("u_Light.Specular", light.Light->Specular);
+                        
             // material properties
             s_Data.MeshShader->SetUniformFloat1("u_Material.Shininess", 64.0f);
             s_Data.MeshShader->Unbind();
