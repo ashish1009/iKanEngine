@@ -10,6 +10,7 @@ namespace iKan {
         iKan::Camera Camera;
         
         glm::mat4 ViewMatrix;
+        glm::vec3 Front;      
     };
     
     class SceneRenderer

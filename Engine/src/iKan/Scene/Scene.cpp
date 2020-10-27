@@ -36,7 +36,7 @@ namespace iKan {
     
     void Scene::OnRenderEditor(TimeStep ts, const EditorCamera &editorCamera)
     {
-        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix() });
+        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix(), editorCamera.GetForwardDirection() });
         auto meshGroup = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
         for (auto entity : meshGroup)
         {

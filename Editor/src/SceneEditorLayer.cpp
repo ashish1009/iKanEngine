@@ -26,9 +26,15 @@ namespace iKan {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
         
         {
-            Ref<Mesh> mesh    = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
-            Entity meshEntity = m_ActiveScene->CreateEntity("Mesh");
-            meshEntity.AddComponent<MeshComponent>(mesh);
+            Ref<Mesh> bagpackMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
+            Ref<Mesh> lightMesh   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
+            
+            Entity bagpackEntity = m_ActiveScene->CreateEntity("Bagpack");
+            bagpackEntity.AddComponent<MeshComponent>(bagpackMesh);
+            
+            Entity lightEntity = m_ActiveScene->CreateEntity("Light");
+            lightEntity.AddComponent<MeshComponent>(lightMesh);
+
         }
     }
     

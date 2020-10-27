@@ -9,26 +9,26 @@ namespace iKan {
     {
         switch (type)
         {
-            case aiTextureType_NONE              : return "None";                   break;
-            case aiTextureType_DIFFUSE           : return "Diffuse";                break;
-            case aiTextureType_SPECULAR          : return "Specular";               break;
-            case aiTextureType_AMBIENT           : return "Ambient";                break;
-            case aiTextureType_EMISSIVE          : return "Emissive";               break;
-            case aiTextureType_HEIGHT            : return "Height";                 break;
-            case aiTextureType_NORMALS           : return "Normal";                 break;
-            case aiTextureType_SHININESS         : return "Shininess";              break;
-            case aiTextureType_OPACITY           : return "Opacity";                break;
-            case aiTextureType_DISPLACEMENT      : return "Dispacement";            break;
-            case aiTextureType_LIGHTMAP          : return "Lightmap";               break;
-            case aiTextureType_REFLECTION        : return "Reflection";             break;
-            case aiTextureType_BASE_COLOR        : return "BaseColor";              break;
-            case aiTextureType_NORMAL_CAMERA     : return "NormalCamera";           break;
-            case aiTextureType_EMISSION_COLOR    : return "EmissionColor";          break;
-            case aiTextureType_METALNESS         : return "Metalness";              break;
-            case aiTextureType_DIFFUSE_ROUGHNESS : return "DiffuseRoughness";       break;
-            case aiTextureType_AMBIENT_OCCLUSION : return "AmbientOcclusion";       break;
-            case aiTextureType_UNKNOWN           : return "Unknow";                 break;
-            case _aiTextureType_Force32Bit       : return "MAX";                    break;
+            case aiTextureType_NONE              : return "None";             break;
+            case aiTextureType_DIFFUSE           : return "Diffuse";          break;
+            case aiTextureType_SPECULAR          : return "Specular";         break;
+            case aiTextureType_AMBIENT           : return "Ambient";          break;
+            case aiTextureType_EMISSIVE          : return "Emissive";         break;
+            case aiTextureType_HEIGHT            : return "Height";           break;
+            case aiTextureType_NORMALS           : return "Normal";           break;
+            case aiTextureType_SHININESS         : return "Shininess";        break;
+            case aiTextureType_OPACITY           : return "Opacity";          break;
+            case aiTextureType_DISPLACEMENT      : return "Dispacement";      break;
+            case aiTextureType_LIGHTMAP          : return "Lightmap";         break;
+            case aiTextureType_REFLECTION        : return "Reflection";       break;
+            case aiTextureType_BASE_COLOR        : return "BaseColor";        break;
+            case aiTextureType_NORMAL_CAMERA     : return "NormalCamera";     break;
+            case aiTextureType_EMISSION_COLOR    : return "EmissionColor";    break;
+            case aiTextureType_METALNESS         : return "Metalness";        break;
+            case aiTextureType_DIFFUSE_ROUGHNESS : return "DiffuseRoughness"; break;
+            case aiTextureType_AMBIENT_OCCLUSION : return "AmbientOcclusion"; break;
+            case aiTextureType_UNKNOWN           : return "Unknow";           break;
+            case _aiTextureType_Force32Bit       : return "MAX";              break;
         }
     }
     
@@ -43,6 +43,7 @@ namespace iKan {
         uint32_t slot = 0;
         for(auto texture : m_Textures)
         {
+            // TODO: In case get any mesh that is having texture with some other sequence as expected then change this algo. For now it is considered that 0 is for diffuse and so on....
             texture.Texture->Bind(slot);
             slot++;
             RendererStatistics::TextureCount++;
