@@ -55,23 +55,42 @@ uniform int u_NumTextureSlots;
 
 vec4 GetLightEffect(vec3 lightDir)
 {
+    int slotBinded = 0;
+    
+    vec3 result = vec3(0.0f, 0.0f, 0.0f);
+    
     vec3 norm = normalize(v_Normal);
 
-    // ambient
-    vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+    if (slotBinded < u_NumTextureSlots)
+    {
+        // ambient
+        vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+        
+        result += ambient;
+        
+        textureRendered ++;
     
-    // diffuse
-    float diff    = max(dot(norm, lightDir), 0.0);
-    vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+        // diffuse
+        float diff    = max(dot(norm, lightDir), 0.0);
+        vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+        
+        result += diffuse;
+
+        slotBinded++;
+    }
     
-    // specular
-    vec3  viewDir    = normalize(u_ViewPos - v_Position);
-    vec3  reflectDir = reflect(-lightDir, norm);
-    float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
-    vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
-    
-    vec3 result = ambient + diffuse + specular;
-    
+    if (slotBinded < u_NumTextureSlots)
+    {
+        // specular
+        vec3  viewDir    = normalize(u_ViewPos - v_Position);
+        vec3  reflectDir = reflect(-lightDir, norm);
+        float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
+        vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
+        
+        result += specular;
+
+        slotBinded++;
+    }
     return vec4(result, 1.0f);
 }
 
