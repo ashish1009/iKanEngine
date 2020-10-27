@@ -17,7 +17,7 @@ out vec2 v_TexCoord;
 void main()
 {
     v_Position = a_Position;
-    v_Normal   = a_Normal;
+    v_Normal   = mat3(transpose(inverse(u_Transform))) * a_Normal;
     v_TexCoord = a_TexCoord;
 
     gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
@@ -68,8 +68,6 @@ vec4 GetLightEffect(vec3 lightDir)
         
         result += ambient;
         
-        textureRendered ++;
-    
         // diffuse
         float diff    = max(dot(norm, lightDir), 0.0);
         vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
