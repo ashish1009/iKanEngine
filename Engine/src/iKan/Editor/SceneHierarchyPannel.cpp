@@ -256,17 +256,9 @@ namespace iKan {
             {
                 auto& light = component.Light;
 
-                ImGui::Checkbox("Is Ambient", &light.IsAmbient);
-                if (light.IsAmbient)
-                    Property("Ambient", light.Ambient, 0.1f);
-
-                ImGui::Checkbox("Is Diffuse", &light.IsDiffuse);
-                if (light.IsDiffuse)
-                    Property("Diffuse", light.Diffuse, 0.1f);
-                
-                ImGui::Checkbox("Is Specular", &light.IsSpecular);
-                if (light.IsSpecular)
-                    Property("Specular", light.Specular, 0.1f);
+                Property("Ambient", &light.IsAmbient, light.Ambient, 0.1f, 0.2f);
+                Property("Diffuse", &light.IsDiffuse, light.Diffuse, 0.1f, 0.5f);
+                Property("Specular", &light.IsSpecular, light.Specular, 0.1f, 1.0f);
             }
         });
         
