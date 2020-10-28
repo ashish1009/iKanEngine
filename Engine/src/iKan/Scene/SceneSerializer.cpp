@@ -82,8 +82,10 @@ namespace iKan {
     
     static void SerializeEntity(YAML::Emitter& out, Entity entity)
     {
+        UUID uuid = entity.GetComponent<IDComponent>().ID;
+
         out << YAML::BeginMap; // Entity
-        out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
+        out << YAML::Key << "Entity" << YAML::Value << uuid; // TODO: Entity ID goes here
         
         if (entity.HasComponent<TagComponent>())
         {
@@ -139,6 +141,7 @@ namespace iKan {
             out << YAML::Key << "SpriteRendererComponent";
             out << YAML::BeginMap; // SpriteRendererComponent
             
+            // TODO: Add for Texture
             auto& spriteRendererComponent = entity.GetComponent<SpriteRendererComponent>();
             out << YAML::Key << "Color" << YAML::Value << spriteRendererComponent.Color;
             
@@ -149,11 +152,34 @@ namespace iKan {
         {
             out << YAML::Key << "MeshComponent";
             out << YAML::BeginMap; // MeshComponent
-            
+
             auto& mesh = entity.GetComponent<MeshComponent>().Mesh;
             out << YAML::Key << "AssetPath" << YAML::Value << mesh->GetFilepath();
-            
+
             out << YAML::EndMap; // MeshComponent
+        }
+        
+        if (entity.HasComponent<LightComponent>())
+        {
+            out << YAML::Key << "LightComponent";
+            out << YAML::BeginMap; // LightComponent
+            
+            auto& lightComponent = entity.GetComponent<LightComponent>();
+            auto& light = lightComponent.Light;
+            
+            out << YAML::Key << "Light" << YAML::Value;
+            out << YAML::BeginMap; // Light
+            out << YAML::Key << "Is Ambient" << YAML::Value << (bool)light.IsAmbient;
+            out << YAML::Key << "Is Diffuse" << YAML::Value << (bool)light.IsDiffuse;
+            out << YAML::Key << "Is Specular" << YAML::Value << (bool)light.IsSpecular;
+            out << YAML::Key << "Ambient" << YAML::Value <<  light.Ambient;
+            out << YAML::Key << "Diffuse" << YAML::Value <<  light.Diffuse;
+            out << YAML::Key << "Specular" << YAML::Value << light.Specular;
+            out << YAML::EndMap; // Light
+            
+            out << YAML::Key << "Is Light" << YAML::Value << lightComponent.IsLight;
+            
+            out << YAML::EndMap; // LightComponent
         }
         
         out << YAML::EndMap; // Entity
@@ -213,7 +239,7 @@ namespace iKan {
                 
                 IK_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
                 
-                Entity deserializedEntity = m_Scene->CreateEntity(name);
+                Entity deserializedEntity = m_Scene->CreateEntityWithID(uuid, name);
                 
                 auto transformComponent = entity["TransformComponent"];
                 if (transformComponent)
@@ -248,11 +274,25 @@ namespace iKan {
                     
                     cc.Primary = cameraComponent["Primary"].as<bool>();
                     cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
+                    
+                    IK_CORE_INFO("  Entity Camera:");
+                    IK_CORE_INFO("    Primary: {0}", cc.Primary);
+                    IK_CORE_INFO("    FixedAspectRatio: {0}", cc.FixedAspectRatio);
+                    IK_CORE_INFO("      Projection Type: {0}", cc.Camera.GetProjectionType());
+                    
+                    IK_CORE_INFO("      PerspectiveFOV: {0}", cc.Camera.GetPerspectiveFOV());
+                    IK_CORE_INFO("      PerspectiveFar: {0}", cc.Camera.GetPerspectiveFarClip());
+                    IK_CORE_INFO("      PerspectiveNear: {0}", cc.Camera.GetPerspectiveNearClip());
+
+                    IK_CORE_INFO("      OrthographicSize: {0}", cc.Camera.GetOrthographicSize());
+                    IK_CORE_INFO("      OrthographicNear: {0}", cc.Camera.GetOrthographicNearClip());
+                    IK_CORE_INFO("      OrthographicFar: {0}",  cc.Camera.GetOrthographicFarClip());
                 }
                 
                 auto spriteRendererComponent = entity["SpriteRendererComponent"];
                 if (spriteRendererComponent)
                 {
+                    // TODO: Add for Texutre
                     auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
                     src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
                 }
@@ -264,9 +304,38 @@ namespace iKan {
                     // TEMP (because script creates mesh component...)
                     if (!deserializedEntity.HasComponent<MeshComponent>())
                         deserializedEntity.AddComponent<MeshComponent>(Ref<Mesh>::Create(meshPath));
-                    
+
                     IK_CORE_INFO("  Mesh Asset Path: {0}", meshPath);
                 }
+                
+                auto lightComponent = entity["LightComponent"];
+                if (lightComponent)
+                {
+                    auto& lc = deserializedEntity.AddComponent<LightComponent>();
+                    
+                    auto lightProps = lightComponent["Light"]; // TODO: It was reference
+                    lc.Light.IsAmbient = lightProps["Is Ambient"].as<bool>();
+                    lc.Light.IsDiffuse = lightProps["Is Diffuse"].as<bool>();
+                    lc.Light.IsSpecular = lightProps["Is Specular"].as<bool>();
+
+                    lc.Light.Ambient = lightProps["Ambient"].as<glm::vec3>();
+                    lc.Light.Diffuse = lightProps["Diffuse"].as<glm::vec3>();
+                    lc.Light.Specular = lightProps["Specular"].as<glm::vec3>();
+                    
+                    lc.IsLight = lightComponent["Is Light"].as<bool>();
+                    
+                    IK_CORE_INFO("  Entity Light:");
+                    IK_CORE_INFO("    Is Light: {0}", lc.IsLight);
+                    
+                    IK_CORE_INFO("      Is Ambient: {0}",  lc.Light.IsAmbient);
+                    IK_CORE_INFO("      Is Diffuse: {0}",  lc.Light.IsDiffuse);
+                    IK_CORE_INFO("      Is Specular: {0}", lc.Light.IsSpecular);
+                    
+                    IK_CORE_INFO("      Ambient: {0}, {1}, {2}",  lc.Light.Ambient.x, lc.Light.Ambient.y, lc.Light.Ambient.z);
+                    IK_CORE_INFO("      Diffuse: {0}, {1}, {2}",  lc.Light.Diffuse.x, lc.Light.Diffuse.y, lc.Light.Diffuse.z);
+                    IK_CORE_INFO("      Specular: {0}, {1}, {2}", lc.Light.Specular.x, lc.Light.Specular.y, lc.Light.Specular.z);
+                }
+                
             }
         }
         

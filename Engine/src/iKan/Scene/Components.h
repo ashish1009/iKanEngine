@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iKan/Core/UUID.h>
+
 #include <iKan/Scene/SceneCamera.h>
 #include <iKan/Scene/SceneLight.h>
 #include <iKan/Scene/ScriptableEntity.h>
@@ -11,6 +13,11 @@ namespace iKan {
     
     static constexpr float MaterialRefractiveIndex[] = { 1.00f, 1.33f, 1.309, 1.52, 2.42 };
     
+    struct IDComponent
+    {
+        UUID ID = 0;
+    };
+
     struct TagComponent
     {
         std::string Tag;

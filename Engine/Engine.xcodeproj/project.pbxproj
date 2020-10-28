@@ -74,6 +74,8 @@
 		B2B1F7E7253F49E6008DD031 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B1F7E2253F49E6008DD031 /* MacWindow.cpp */; };
 		B2B1F7E8253F49E6008DD031 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B1F7E3253F49E6008DD031 /* MacWindow.h */; };
 		B2B1F7EA253F4B3F008DD031 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B1F7E9253F4B3F008DD031 /* Window.cpp */; };
+		B2B953E12549AA74008408A6 /* UUID.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B953DF2549AA74008408A6 /* UUID.cpp */; };
+		B2B953E22549AA74008408A6 /* UUID.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B953E02549AA74008408A6 /* UUID.h */; };
 		B2C5BE7E25288130005E260D /* GlmMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C5BE7C25288130005E260D /* GlmMath.cpp */; };
 		B2C5BE7F25288130005E260D /* GlmMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C5BE7D25288130005E260D /* GlmMath.h */; };
 		B2CDABD42500E885008C6BDF /* entt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABD12500E885008C6BDF /* entt.hpp */; };
@@ -200,6 +202,8 @@
 		B2B1F7E3253F49E6008DD031 /* MacWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
 		B2B1F7E9253F4B3F008DD031 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
 		B2B1F7F1253F5D59008DD031 /* SceneProperyGrid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneProperyGrid.h; sourceTree = "<group>"; };
+		B2B953DF2549AA74008408A6 /* UUID.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = UUID.cpp; sourceTree = "<group>"; };
+		B2B953E02549AA74008408A6 /* UUID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
 		B2C5BE7C25288130005E260D /* GlmMath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlmMath.cpp; sourceTree = "<group>"; };
 		B2C5BE7D25288130005E260D /* GlmMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlmMath.h; sourceTree = "<group>"; };
 		B2CDABCF2500E885008C6BDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -419,6 +423,8 @@
 				B2FEC92E24FC207800388451 /* TimeStep.h */,
 				B2C5BE7C25288130005E260D /* GlmMath.cpp */,
 				B2C5BE7D25288130005E260D /* GlmMath.h */,
+				B2B953DF2549AA74008408A6 /* UUID.cpp */,
+				B2B953E02549AA74008408A6 /* UUID.h */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -600,6 +606,7 @@
 				B2752D1A24FAC201005EF655 /* Application.h in Headers */,
 				B23D4E7B24F829880049238A /* Events.h in Headers */,
 				B266521F24FECADF0032AF99 /* Texture.h in Headers */,
+				B2B953E22549AA74008408A6 /* UUID.h in Headers */,
 				B2473FD224FD1DB40099535D /* VertexArray.h in Headers */,
 				B2CDABDB2500EF2C008C6BDF /* Components.h in Headers */,
 				B213761A24ED2AA700A14055 /* iKan.h in Headers */,
@@ -739,6 +746,7 @@
 				B25639DB251E6A9F00BF0F33 /* SceneHierarchyPannel.cpp in Sources */,
 				B2473FDF24FD232E0099535D /* OpenGlBuffers.cpp in Sources */,
 				B2B1F7E7253F49E6008DD031 /* MacWindow.cpp in Sources */,
+				B2B953E12549AA74008408A6 /* UUID.cpp in Sources */,
 				B2F0FBFF24F80DF90004443A /* OpenGlGraphicsContext.cpp in Sources */,
 				B266521424FEBA1A0032AF99 /* Shader.cpp in Sources */,
 				B2473FDB24FD22380099535D /* Buffers.cpp in Sources */,

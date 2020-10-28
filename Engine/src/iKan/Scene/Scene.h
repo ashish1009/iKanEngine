@@ -11,10 +11,13 @@
 
 #include <iKan/Scene/SceneLight.h>
 
+#include <iKan/Core/UUID.h>
+
 namespace iKan {
     
     class Entity;
-    
+    using EntityMap = std::unordered_map<UUID, Entity>;
+
     class Scene : public RefCounted
     {
     public:
@@ -22,6 +25,8 @@ namespace iKan {
         ~Scene();
         
         Entity CreateEntity(const std::string& name = std::string());
+        Entity CreateEntityWithID(UUID uuid, const std::string& name = "");
+
         void DestroyEntity(Entity entity);
 
         void OnViewportResize(uint32_t width, uint32_t height);\
@@ -29,6 +34,8 @@ namespace iKan {
         void OnRenderEditor(TimeStep ts, const EditorCamera& editorCamera);
 
         void OnUpdate(TimeStep ts);
+        
+        const EntityMap& GetEntityMap() const { return m_EntityIDMap; }
         
     private:
         Entity GetMainCameraEntity();
@@ -44,6 +51,8 @@ namespace iKan {
         entt::registry m_Registry;
         uint32_t m_ViewportWidth = 1280.0f, m_ViewportHeight = 720.0f;
         
+        EntityMap m_EntityIDMap;
+
         friend class Entity;
         friend class SceneHeirarchyPannel;
         friend class SceneSerializer;

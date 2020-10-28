@@ -21,11 +21,32 @@ namespace iKan {
     {
         // Creating the Entity
         Entity entity = { m_Registry.create(), this };
+
+        auto& idComponent = entity.AddComponent<IDComponent>();
+        idComponent.ID = {};
+
         entity.AddComponent<TransformComponent>();
         
         auto& tag = entity.AddComponent<TagComponent>();
         tag.Tag   = name.empty() ? "Entity" : name;
         
+        m_EntityIDMap[idComponent.ID] = entity;
+        
+        return entity;
+    }
+    
+    Entity Scene::CreateEntityWithID(UUID uuid, const std::string& name)
+    {
+        auto entity = Entity{ m_Registry.create(), this };
+        auto& idComponent = entity.AddComponent<IDComponent>();
+        idComponent.ID = uuid;
+        
+        entity.AddComponent<TransformComponent>();
+        if (!name.empty())
+            entity.AddComponent<TagComponent>(name);
+        
+        IK_CORE_ASSERT((m_EntityIDMap.find(uuid) == m_EntityIDMap.end()), "Entity Akready Added");
+        m_EntityIDMap[uuid] = entity;
         return entity;
     }
 
@@ -160,6 +181,11 @@ namespace iKan {
 
     }
 
+    template<>
+    void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component)
+    {
+    }
+    
     template<>
     void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)
     {
