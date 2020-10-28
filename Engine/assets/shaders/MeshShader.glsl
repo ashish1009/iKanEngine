@@ -33,7 +33,7 @@ struct Material
     float Shininess;
 };
 
-struct Light
+struct DirLight
 {
     bool IsAmbient;
     bool IsDiffuse;
@@ -53,54 +53,47 @@ in vec2 v_TexCoord;
 uniform bool     u_IsSceneLight;
 uniform vec3     u_ViewPos;
 uniform Material u_Material;
-uniform Light    u_Light;
+uniform DirLight u_DirLight;
 
 uniform sampler2D u_Textures[16];
 uniform int u_NumTextureSlots;
 
-vec4 GetLightEffect(vec3 lightDir)
+vec4 CalcDirLight(vec3 norm, vec3 viewDir)
 {
-    int slotBinded = 0;
-    
-    vec3 result = vec3(0.0f, 0.0f, 0.0f);
-    
-    vec3 norm = normalize(v_Normal);
+    vec3 result   = vec3(0.0f, 0.0f, 0.0f);
+    vec3 lightDir = normalize(u_DirLight.Position - v_Position);
 
+    int slotBinded = 0;
     if (slotBinded < u_NumTextureSlots)
     {
-        if (u_Light.IsAmbient)
+        if (u_DirLight.IsAmbient)
         {
             // ambient
-            vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
-            
+            vec3 ambient = u_DirLight.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
             result += ambient;
         }
         
-        if (u_Light.IsDiffuse)
+        if (u_DirLight.IsDiffuse)
         {
             // diffuse
             float diff    = max(dot(norm, lightDir), 0.0);
-            vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
-            
+            vec3  diffuse = u_DirLight.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
             result += diffuse;
         }
 
-        if (u_Light.IsDiffuse || u_Light.IsAmbient)
+        if (u_DirLight.IsDiffuse || u_DirLight.IsAmbient)
             slotBinded++;
     }
     
     if (slotBinded < u_NumTextureSlots)
     {
-        if (u_Light.IsSpecular)
+        if (u_DirLight.IsSpecular)
         {
             // specular
-            vec3  viewDir    = normalize(u_ViewPos - v_Position);
             vec3  reflectDir = reflect(-lightDir, norm);
             float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
-            vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
-            
+            vec3  specular   = u_DirLight.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
             result += specular;
-
             slotBinded++;
         }
     }
@@ -109,10 +102,12 @@ vec4 GetLightEffect(vec3 lightDir)
 
 void main()
 {
-    vec3 lightDir = normalize(u_Light.Position - v_Position);
+    // properties
+    vec3 norm    = normalize(v_Normal);
+    vec3 viewDir = normalize(u_ViewPos - v_Position);
 
     if (u_IsSceneLight)
-        color = GetLightEffect(lightDir);
+        color = CalcDirLight(norm, viewDir);
     else
         color = texture(u_Textures[0], v_TexCoord);
 }
