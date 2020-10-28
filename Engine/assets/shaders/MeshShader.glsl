@@ -16,7 +16,7 @@ out vec2 v_TexCoord;
 
 void main()
 {
-    v_Position = a_Position;
+    v_Position = vec3(u_Transform * vec4(a_Position, 1.0));
     v_Normal   = mat3(transpose(inverse(u_Transform))) * a_Normal;
     v_TexCoord = a_TexCoord;
 

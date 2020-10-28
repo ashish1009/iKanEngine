@@ -11,6 +11,7 @@ namespace iKan {
     {
         iKan::Camera Camera;
         
+        glm::vec3 Position;
         glm::mat4 ViewMatrix;
         glm::vec3 Front;      
     };
@@ -18,15 +19,16 @@ namespace iKan {
     struct SceneRendererLight
     {
         iKan::SceneLight* Light;
-        
         glm::vec3 Position;
+        glm::vec3 ViewPos;
     };
     
     class SceneRenderer
     {
     public:
         static void Init();
-        static void BegineScene(const SceneRendererCamera& camera, const SceneRendererLight& light);
+        static void BegineScene(const SceneRendererCamera& camera);
+        static void SetupLight(const SceneRendererLight& light);
         static void EndScene();
         static void Shutdown();
 

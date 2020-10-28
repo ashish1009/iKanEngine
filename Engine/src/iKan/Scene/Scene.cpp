@@ -57,15 +57,23 @@ namespace iKan {
     
     void Scene::OnRenderEditor(TimeStep ts, const EditorCamera &editorCamera)
     {
-        SceneLight* light = nullptr;
-        glm::vec3 lightPosition;
-        if (Entity lightEntity = GetLightEntity(); lightEntity!= Entity(entt::null, nullptr))
+        auto lightView = m_Registry.view<LightComponent>();
+        for (auto entity : lightView)
         {
-            light = &lightEntity.GetComponent<LightComponent>().Light;
-            lightPosition = lightEntity.GetComponent<TransformComponent>().Translation;
+            SceneLight* light = nullptr;
+            glm::vec3 lightPosition;
+            auto& comp = lightView.get<LightComponent>(entity);
+            if (comp.IsLight)
+            {
+                Entity lightEnt = { entity, this };
+                light = &lightEnt.GetComponent<LightComponent>().Light;
+                lightPosition = lightEnt.GetComponent<TransformComponent>().Translation;
+                
+                SceneRenderer::SetupLight({ light, lightPosition, editorCamera.GetPosition() });
+            }
         }
         
-        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix(), editorCamera.GetForwardDirection() }, { light, lightPosition });
+        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetPosition(), editorCamera.GetViewMatrix(), editorCamera.GetForwardDirection() });
         auto meshGroup = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
         for (auto entity : meshGroup)
         {
