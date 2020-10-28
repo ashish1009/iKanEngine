@@ -35,19 +35,20 @@ namespace iKan {
             s_Data.MeshShader->SetUniformFloat3("u_ViewPos", light.ViewPos);
 
             // light properties
-            s_Data.MeshShader->SetUniformInt1("u_Light.IsAmbient", light.Light->IsAmbient);
-            if (light.Light->IsAmbient)
-                s_Data.MeshShader->SetUniformFloat3("u_Light.Ambient", light.Light->Ambient);
+            s_Data.MeshShader->SetUniformInt1("u_Light.IsAmbient", light.Light->GetAmbientFlag());
+            if (light.Light->GetAmbientFlag())
+                s_Data.MeshShader->SetUniformFloat3("u_Light.Ambient", light.Light->GetAmbient());
             
-            s_Data.MeshShader->SetUniformInt1("u_Light.IsDiffuse", light.Light->IsDiffuse);
-            if (light.Light->IsDiffuse)
-                s_Data.MeshShader->SetUniformFloat3("u_Light.Diffuse", light.Light->Diffuse);
+            s_Data.MeshShader->SetUniformInt1("u_Light.IsDiffuse", light.Light->GetDiffuseFlag());
+            if (light.Light->GetDiffuseFlag())
+                s_Data.MeshShader->SetUniformFloat3("u_Light.Diffuse", light.Light->GetDiffuse());
             
-            s_Data.MeshShader->SetUniformInt1("u_Light.IsSpecular", light.Light->IsSpecular);
-            if (light.Light->IsSpecular)
-                s_Data.MeshShader->SetUniformFloat3("u_Light.Specular", light.Light->Specular);
+            s_Data.MeshShader->SetUniformInt1("u_Light.IsSpecular", light.Light->GetSpecularFlag());
+            if (light.Light->GetSpecularFlag())
+                s_Data.MeshShader->SetUniformFloat3("u_Light.Specular", light.Light->GetSpecular());
             
             // material properties
+            // TODO: Add Im gui for this or move to shader hard code
             s_Data.MeshShader->SetUniformFloat1("u_Material.Shininess", 64.0f);
             s_Data.MeshShader->Unbind();
                         

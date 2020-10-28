@@ -169,12 +169,16 @@ namespace iKan {
             
             out << YAML::Key << "Light" << YAML::Value;
             out << YAML::BeginMap; // Light
-            out << YAML::Key << "Is Ambient" << YAML::Value << (bool)light.IsAmbient;
-            out << YAML::Key << "Is Diffuse" << YAML::Value << (bool)light.IsDiffuse;
-            out << YAML::Key << "Is Specular" << YAML::Value << (bool)light.IsSpecular;
-            out << YAML::Key << "Ambient" << YAML::Value <<  light.Ambient;
-            out << YAML::Key << "Diffuse" << YAML::Value <<  light.Diffuse;
-            out << YAML::Key << "Specular" << YAML::Value << light.Specular;
+
+            out << YAML::Key << "LightType" << YAML::Value << (int)light.GetType();
+
+            out << YAML::Key << "Is Ambient" << YAML::Value << (bool)light.GetAmbientFlag();
+            out << YAML::Key << "Is Diffuse" << YAML::Value << (bool)light.GetDiffuseFlag();
+            out << YAML::Key << "Is Specular" << YAML::Value << (bool)light.GetSpecularFlag();
+
+            out << YAML::Key << "Ambient" << YAML::Value <<  light.GetAmbient();
+            out << YAML::Key << "Diffuse" << YAML::Value <<  light.GetDiffuse();
+            out << YAML::Key << "Specular" << YAML::Value << light.GetSpecular();
             out << YAML::EndMap; // Light
             
             out << YAML::Key << "Is Light" << YAML::Value << lightComponent.IsLight;
@@ -314,26 +318,31 @@ namespace iKan {
                     auto& lc = deserializedEntity.AddComponent<LightComponent>();
                     
                     auto lightProps = lightComponent["Light"]; // TODO: It was reference
-                    lc.Light.IsAmbient = lightProps["Is Ambient"].as<bool>();
-                    lc.Light.IsDiffuse = lightProps["Is Diffuse"].as<bool>();
-                    lc.Light.IsSpecular = lightProps["Is Specular"].as<bool>();
+                    
+                    lc.Light.SetType((SceneLight::LightType)lightProps["LightType"].as<int>());
 
-                    lc.Light.Ambient = lightProps["Ambient"].as<glm::vec3>();
-                    lc.Light.Diffuse = lightProps["Diffuse"].as<glm::vec3>();
-                    lc.Light.Specular = lightProps["Specular"].as<glm::vec3>();
+                    lc.Light.SetAmbientFlag(lightProps["Is Ambient"].as<bool>());
+                    lc.Light.SetDiffuseFlag(lightProps["Is Diffuse"].as<bool>());
+                    lc.Light.SetSpecularFlag(lightProps["Is Specular"].as<bool>());
+
+                    lc.Light.SetAmbient(lightProps["Ambient"].as<glm::vec3>());
+                    lc.Light.SetDiffuse(lightProps["Diffuse"].as<glm::vec3>());
+                    lc.Light.SetSpecular(lightProps["Specular"].as<glm::vec3>());
                     
                     lc.IsLight = lightComponent["Is Light"].as<bool>();
                     
                     IK_CORE_INFO("  Entity Light:");
                     IK_CORE_INFO("    Is Light: {0}", lc.IsLight);
                     
-                    IK_CORE_INFO("      Is Ambient: {0}",  lc.Light.IsAmbient);
-                    IK_CORE_INFO("      Is Diffuse: {0}",  lc.Light.IsDiffuse);
-                    IK_CORE_INFO("      Is Specular: {0}", lc.Light.IsSpecular);
+                    IK_CORE_INFO("      Is Type: {0}",  lc.Light.GetType());
                     
-                    IK_CORE_INFO("      Ambient: {0}, {1}, {2}",  lc.Light.Ambient.x, lc.Light.Ambient.y, lc.Light.Ambient.z);
-                    IK_CORE_INFO("      Diffuse: {0}, {1}, {2}",  lc.Light.Diffuse.x, lc.Light.Diffuse.y, lc.Light.Diffuse.z);
-                    IK_CORE_INFO("      Specular: {0}, {1}, {2}", lc.Light.Specular.x, lc.Light.Specular.y, lc.Light.Specular.z);
+                    IK_CORE_INFO("      Is Ambient: {0}",  lc.Light.GetAmbientFlag());
+                    IK_CORE_INFO("      Is Diffuse: {0}",  lc.Light.GetDiffuseFlag());
+                    IK_CORE_INFO("      Is Specular: {0}", lc.Light.GetSpecularFlag());
+                    
+                    IK_CORE_INFO("      Ambient: {0}, {1}, {2}",  lc.Light.GetAmbient().x, lc.Light.GetAmbient().y, lc.Light.GetAmbient().z);
+                    IK_CORE_INFO("      Diffuse: {0}, {1}, {2}",  lc.Light.GetDiffuse().x, lc.Light.GetDiffuse().y, lc.Light.GetDiffuse().z);
+                    IK_CORE_INFO("      Specular: {0}, {1}, {2}", lc.Light.GetSpecular().x, lc.Light.GetSpecular().y, lc.Light.GetSpecular().z);
                 }
                 
             }
