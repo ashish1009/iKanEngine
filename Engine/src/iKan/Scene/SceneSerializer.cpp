@@ -179,6 +179,11 @@ namespace iKan {
             out << YAML::Key << "Ambient" << YAML::Value <<  light.GetAmbient();
             out << YAML::Key << "Diffuse" << YAML::Value <<  light.GetDiffuse();
             out << YAML::Key << "Specular" << YAML::Value << light.GetSpecular();
+            
+            out << YAML::Key << "Constant" << YAML::Value << light.GetConstant();
+            out << YAML::Key << "Quadratic" << YAML::Value << light.GetQuadratic();
+            out << YAML::Key << "Linear" << YAML::Value << light.GetLinear();
+            
             out << YAML::EndMap; // Light
             
             out << YAML::Key << "Is Light" << YAML::Value << lightComponent.IsLight;
@@ -329,6 +334,10 @@ namespace iKan {
                     lc.Light.SetDiffuse(lightProps["Diffuse"].as<glm::vec3>());
                     lc.Light.SetSpecular(lightProps["Specular"].as<glm::vec3>());
                     
+                    lc.Light.SetAmbientFlag(lightProps["Constant"].as<float>());
+                    lc.Light.SetDiffuseFlag(lightProps["Quadratic"].as<float>());
+                    lc.Light.SetSpecularFlag(lightProps["Linear"].as<float>());
+                    
                     lc.IsLight = lightComponent["Is Light"].as<bool>();
                     
                     IK_CORE_INFO("  Entity Light:");
@@ -343,6 +352,10 @@ namespace iKan {
                     IK_CORE_INFO("      Ambient: {0}, {1}, {2}",  lc.Light.GetAmbient().x, lc.Light.GetAmbient().y, lc.Light.GetAmbient().z);
                     IK_CORE_INFO("      Diffuse: {0}, {1}, {2}",  lc.Light.GetDiffuse().x, lc.Light.GetDiffuse().y, lc.Light.GetDiffuse().z);
                     IK_CORE_INFO("      Specular: {0}, {1}, {2}", lc.Light.GetSpecular().x, lc.Light.GetSpecular().y, lc.Light.GetSpecular().z);
+                    
+                    IK_CORE_INFO("      Constant: {0}",  lc.Light.GetConstant());
+                    IK_CORE_INFO("      Quadratic: {0}",  lc.Light.GetQuadratic());
+                    IK_CORE_INFO("      Linear: {0}", lc.Light.GetLinear());
                 }
                 
             }

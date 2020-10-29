@@ -1,10 +1,10 @@
 Scene: Untitled
 Entities:
-  - Entity: 14172044819463442679
+  - Entity: 3576869483435293769
     TagComponent:
       Tag: Light
     TransformComponent:
-      Translation: [0, 0.800000012, 5.69999981]
+      Translation: [0, 0, 12.25]
       Rotation: [0, 0, 0]
       Scale: [0.200000003, 0.200000003, 0.200000003]
     MeshComponent:
@@ -18,8 +18,11 @@ Entities:
         Ambient: [0.200000003, 0.200000003, 0.200000003]
         Diffuse: [0.5, 0.5, 0.5]
         Specular: [1, 1, 1]
+        Constant: 1
+        Quadratic: 0.0320000015
+        Linear: 0.0900000036
       Is Light: true
-  - Entity: 1026285771095570354
+  - Entity: 11082292001048160139
     TagComponent:
       Tag: Bagpack
     TransformComponent:

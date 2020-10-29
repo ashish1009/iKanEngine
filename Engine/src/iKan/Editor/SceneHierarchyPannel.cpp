@@ -261,11 +261,11 @@ namespace iKan {
                     ImGui::Text("Light Type");
                     ImGui::NextColumn();
                     ImGui::PushItemWidth(-1);
-                    const char* lightypeSTring[] = { "Direction" };
+                    const char* lightypeSTring[] = { "Direction", "Point" };
                     const char* currentlightType = lightypeSTring[(int32_t)light.GetType()];
                     if (ImGui::BeginCombo("##Type", currentlightType))
                     {
-                        for (int i = 0; i < 1; i++)
+                        for (int i = 0; i < 2; i++)
                         {
                             bool bIsSelected = currentlightType == lightypeSTring[i];
                             if (ImGui::Selectable(lightypeSTring[i], bIsSelected))
@@ -287,10 +287,25 @@ namespace iKan {
                 }
                 ImGui::Separator();
 
-
                 Property("Ambient", &light.m_IsAmbient, light.m_Ambient, 0.1f, 0.2f);
                 Property("Diffuse", &light.m_IsDiffuse, light.m_Diffuse, 0.1f, 0.5f);
                 Property("Specular", &light.m_IsSpecular, light.m_Specular, 0.1f, 1.0f);
+                
+                if (light.GetType() == SceneLight::LightType::PointLight)
+                {
+                    float linear = light.GetLinear();
+                    if (Property("linear", linear))
+                        light.SetLinear(linear);
+                    
+                    float quadratic = light.GetQuadratic();
+                    if (Property("quadratic", quadratic))
+                        light.SetQuadratic(quadratic);
+                    
+                    float constant = light.GetConstant();
+                    if (Property("constant", constant))
+                        light.SetConstant(constant);
+                }
+
             }
         });
         

@@ -7,7 +7,7 @@ namespace iKan {
     public:
         friend class SceneHeirarchyPannel;
         
-        enum class LightType { Direction };
+        enum class LightType { Direction, PointLight };
         
     public:
         SceneLight() = default;
@@ -24,6 +24,10 @@ namespace iKan {
         
         void SetType(LightType type) { m_Type = type; }
         
+        void SetConstant(float value) { m_Constant = value; }
+        void SetLinear(float value) { m_Linear = value; }
+        void SetQuadratic(float value) { m_Quadratic = value; }
+        
         // ------------------------------------------------------ Get Values ----------------------------------------
         bool GetAmbientFlag() const { return m_IsAmbient; }
         bool GetDiffuseFlag() const { return m_IsDiffuse; }
@@ -35,6 +39,10 @@ namespace iKan {
         
         LightType GetType() const { return m_Type; }
         
+        float GetConstant() const { return m_Constant; }
+        float GetLinear() const { return m_Linear; }
+        float GetQuadratic() const { return m_Quadratic; }
+        
     private:
         LightType m_Type = LightType::Direction;
         
@@ -43,6 +51,10 @@ namespace iKan {
         glm::vec3 m_Ambient  = { 0.2f, 0.2f, 0.2f };
         glm::vec3 m_Diffuse  = { 0.5f, 0.5f, 0.5f };
         glm::vec3 m_Specular = { 1.0f, 1.0f, 1.0f };
+        
+        float m_Constant  = 1.0f;
+        float m_Linear    = 0.09f;
+        float m_Quadratic = 0.032f;
     };
     
 }

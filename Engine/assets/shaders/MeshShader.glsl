@@ -33,7 +33,7 @@ struct Material
     float Shininess;
 };
 
-struct DirLight
+struct Light
 {
     bool IsAmbient;
     bool IsDiffuse;
@@ -46,53 +46,79 @@ struct DirLight
     vec3 Specular;
 };
 
+struct PointLight
+{
+    bool Present;
+    
+    float Constant;
+    float Linear;
+    float Quadratic;
+};
+
 in vec3 v_Position;
 in vec3 v_Normal;
 in vec2 v_TexCoord;
 
 uniform bool     u_IsSceneLight;
 uniform vec3     u_ViewPos;
-uniform Material u_Material;
-uniform DirLight u_DirLight;
+
+uniform Material   u_Material;
+uniform Light      u_Light;
+uniform PointLight u_PointLight;
 
 uniform sampler2D u_Textures[16];
 uniform int u_NumTextureSlots;
 
-vec4 CalcDirLight(vec3 norm, vec3 viewDir)
+// calculates the color when using a directional light. with point light flag.
+vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight)
 {
     vec3 result   = vec3(0.0f, 0.0f, 0.0f);
-    vec3 lightDir = normalize(u_DirLight.Position - v_Position);
-
+    vec3 lightDir = normalize(u_Light.Position - v_Position);
+    
+    float distance;
+    float attenuation;
+    if (pointLight)
+    {
+        distance = length(u_Light.Position - v_Position);
+        attenuation = 1.0 / (u_PointLight.Constant + u_PointLight.Linear * distance + u_PointLight.Quadratic * (distance * distance));
+    }
+    
     int slotBinded = 0;
     if (slotBinded < u_NumTextureSlots)
     {
-        if (u_DirLight.IsAmbient)
+        if (u_Light.IsAmbient)
         {
             // ambient
-            vec3 ambient = u_DirLight.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+            vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+            if (pointLight)
+                ambient *= attenuation;
             result += ambient;
         }
         
-        if (u_DirLight.IsDiffuse)
+        if (u_Light.IsDiffuse)
         {
             // diffuse
             float diff    = max(dot(norm, lightDir), 0.0);
-            vec3  diffuse = u_DirLight.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+            vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+            if (pointLight)
+                diffuse *= attenuation;
             result += diffuse;
         }
-
-        if (u_DirLight.IsDiffuse || u_DirLight.IsAmbient)
+        
+        if (u_Light.IsDiffuse || u_Light.IsAmbient)
             slotBinded++;
     }
     
     if (slotBinded < u_NumTextureSlots)
     {
-        if (u_DirLight.IsSpecular)
+        if (u_Light.IsSpecular)
         {
             // specular
             vec3  reflectDir = reflect(-lightDir, norm);
             float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
-            vec3  specular   = u_DirLight.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
+            vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
+            if (pointLight)
+                specular *= attenuation;
             result += specular;
             slotBinded++;
         }
@@ -100,14 +126,15 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir)
     return vec4(result, 1.0f);
 }
 
+
 void main()
 {
     // properties
     vec3 norm    = normalize(v_Normal);
     vec3 viewDir = normalize(u_ViewPos - v_Position);
-
+    
     if (u_IsSceneLight)
-        color = CalcDirLight(norm, viewDir);
+        color = CalcDirLight(norm, viewDir, u_PointLight.Present);
     else
         color = texture(u_Textures[0], v_TexCoord);
 }
