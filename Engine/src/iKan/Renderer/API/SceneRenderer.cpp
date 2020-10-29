@@ -32,8 +32,9 @@ namespace iKan {
         if (light.Light)
         {
             // if point light then set the flag to 1
-            s_Data.MeshShader->SetUniformInt1("u_PointLight.Present", int((SceneLight::LightType::PointLight == light.Light->GetType())));
-            
+            s_Data.MeshShader->SetUniformInt1("u_PointLight.Present", int((SceneLight::LightType::Point == light.Light->GetType())));
+            s_Data.MeshShader->SetUniformInt1("u_SpotLight.Present", int((SceneLight::LightType::Spot == light.Light->GetType())));
+
             s_Data.MeshShader->SetUniformFloat3("u_Light.Position", light.Position);
             s_Data.MeshShader->SetUniformFloat3("u_ViewPos", light.ViewPos);
 
@@ -51,11 +52,20 @@ namespace iKan {
                 s_Data.MeshShader->SetUniformFloat3("u_Light.Specular", light.Light->GetSpecular());
             
             // Point light variables
-            if (SceneLight::LightType::PointLight == light.Light->GetType())
+            if (SceneLight::LightType::Point == light.Light->GetType())
             {
                 s_Data.MeshShader->SetUniformFloat1("u_PointLight.Constant", light.Light->GetConstant());
                 s_Data.MeshShader->SetUniformFloat1("u_PointLight.Quadratic", light.Light->GetQuadratic());
                 s_Data.MeshShader->SetUniformFloat1("u_PointLight.Linear", light.Light->GetLinear());
+            }
+            
+            // Spot light variables
+            else if (SceneLight::LightType::Spot == light.Light->GetType())
+            {
+                s_Data.MeshShader->SetUniformFloat3("u_SpotLight.Direction", light.CameraFront);
+
+                s_Data.MeshShader->SetUniformFloat1("u_SpotLight.CutOff", glm::cos(glm::radians(light.Light->GetCutoff())));
+                s_Data.MeshShader->SetUniformFloat1("u_SpotLight.OuterCutOff", glm::cos(glm::radians(light.Light->GetOuterCutoff())));
             }
             
             // material properties

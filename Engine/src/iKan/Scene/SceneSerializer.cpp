@@ -183,6 +183,11 @@ namespace iKan {
             out << YAML::Key << "Constant" << YAML::Value << light.GetConstant();
             out << YAML::Key << "Quadratic" << YAML::Value << light.GetQuadratic();
             out << YAML::Key << "Linear" << YAML::Value << light.GetLinear();
+
+            out << YAML::Key << "Spot Light Dir" << YAML::Value <<  light.GetSpotLightDir();
+
+            out << YAML::Key << "Cutoff" << YAML::Value << light.GetCutoff();
+            out << YAML::Key << "Outer Cutoff" << YAML::Value << light.GetOuterCutoff();
             
             out << YAML::EndMap; // Light
             
@@ -334,9 +339,14 @@ namespace iKan {
                     lc.Light.SetDiffuse(lightProps["Diffuse"].as<glm::vec3>());
                     lc.Light.SetSpecular(lightProps["Specular"].as<glm::vec3>());
                     
-                    lc.Light.SetAmbientFlag(lightProps["Constant"].as<float>());
-                    lc.Light.SetDiffuseFlag(lightProps["Quadratic"].as<float>());
-                    lc.Light.SetSpecularFlag(lightProps["Linear"].as<float>());
+                    lc.Light.SetConstant(lightProps["Constant"].as<float>());
+                    lc.Light.SetQuadratic(lightProps["Quadratic"].as<float>());
+                    lc.Light.SetLinear(lightProps["Linear"].as<float>());
+ 
+                    lc.Light.SetSpotLightDir(lightProps["Spot Light Dir"].as<glm::vec3>());
+
+                    lc.Light.SetCutoff(lightProps["Cutoff"].as<float>());
+                    lc.Light.SetOuterCutoff(lightProps["Outer Cutoff"].as<float>());
                     
                     lc.IsLight = lightComponent["Is Light"].as<bool>();
                     
@@ -356,6 +366,11 @@ namespace iKan {
                     IK_CORE_INFO("      Constant: {0}",  lc.Light.GetConstant());
                     IK_CORE_INFO("      Quadratic: {0}",  lc.Light.GetQuadratic());
                     IK_CORE_INFO("      Linear: {0}", lc.Light.GetLinear());
+                    
+                    IK_CORE_INFO("      Spot Light Direction: {0}, {1}, {2}",  lc.Light.GetSpotLightDir().x, lc.Light.GetSpotLightDir().y, lc.Light.GetSpotLightDir().z);
+                    
+                    IK_CORE_INFO("      Cutoff: {0}",  lc.Light.GetCutoff());
+                    IK_CORE_INFO("      Outer Cutoff: {0}", lc.Light.GetOuterCutoff());
                 }
                 
             }

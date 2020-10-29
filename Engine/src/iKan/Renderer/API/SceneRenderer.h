@@ -21,6 +21,7 @@ namespace iKan {
         iKan::SceneLight* Light;
         glm::vec3 Position;
         glm::vec3 ViewPos;
+        glm::vec3 CameraFront;
     };
     
     class SceneRenderer

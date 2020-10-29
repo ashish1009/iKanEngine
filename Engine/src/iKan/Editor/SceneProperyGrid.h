@@ -132,7 +132,7 @@ namespace iKan {
         ImGui::PopFont();
         
         ImGui::SameLine();
-        if (ImGui::DragFloat("##X", &value, 0.1f, 0.0f, 0.0f, "%.2f"))
+        if (ImGui::DragFloat("##X", &value, delta, 0.0f, 0.0f, "%.2f"))
             modified = true;
         
         ImGui::PopItemWidth();
@@ -180,7 +180,7 @@ namespace iKan {
         ImGui::PopFont();
         
         ImGui::SameLine();
-        if (ImGui::DragFloat("##X", &value.x, 0.1f, 0.0f, 0.0f, "%.2f"))
+        if (ImGui::DragFloat("##X", &value.x, delta, 0.0f, 0.0f, "%.2f"))
             modified = true;
         
         ImGui::PopItemWidth();
@@ -196,7 +196,7 @@ namespace iKan {
         ImGui::PopFont();
         
         ImGui::SameLine();
-        if (ImGui::DragFloat("##Y", &value.y, 0.1f, 0.0f, 0.0f, "%.2f"))
+        if (ImGui::DragFloat("##Y", &value.y, delta, 0.0f, 0.0f, "%.2f"))
             modified = true;
         
         ImGui::PopItemWidth();s
@@ -244,7 +244,7 @@ namespace iKan {
         ImGui::PopFont();
 
         ImGui::SameLine();
-        if (ImGui::DragFloat("##X", &value.x, 0.1f, 0.0f, 0.0f, "%.2f"))
+        if (ImGui::DragFloat("##X", &value.x, delta, 0.0f, 0.0f, "%.2f"))
             modified = true;
         
         ImGui::PopItemWidth();
@@ -260,7 +260,7 @@ namespace iKan {
         ImGui::PopFont();
 
         ImGui::SameLine();
-        if (ImGui::DragFloat("##Y", &value.y, 0.1f, 0.0f, 0.0f, "%.2f"))
+        if (ImGui::DragFloat("##Y", &value.y, delta, 0.0f, 0.0f, "%.2f"))
             modified = true;
 
         ImGui::PopItemWidth();
@@ -276,7 +276,7 @@ namespace iKan {
         ImGui::PopFont();
 
         ImGui::SameLine();
-        if (ImGui::DragFloat("##Z", &value.z, 0.1f, 0.0f, 0.0f, "%.2f"))
+        if (ImGui::DragFloat("##Z", &value.z, delta, 0.0f, 0.0f, "%.2f"))
             modified = true;
 
         ImGui::PopItemWidth();
@@ -326,7 +326,7 @@ namespace iKan {
             ImGui::PopFont();
             
             ImGui::SameLine();
-            if (ImGui::DragFloat("##X", &value.x, 0.1f, 0.0f, 0.0f, "%.2f"))
+            if (ImGui::DragFloat("##X", &value.x, delta, 0.0f, 0.0f, "%.2f"))
                 modified = true;
             
             ImGui::PopItemWidth();
@@ -342,7 +342,7 @@ namespace iKan {
             ImGui::PopFont();
             
             ImGui::SameLine();
-            if (ImGui::DragFloat("##Y", &value.y, 0.1f, 0.0f, 0.0f, "%.2f"))
+            if (ImGui::DragFloat("##Y", &value.y, delta, 0.0f, 0.0f, "%.2f"))
                 modified = true;
             
             ImGui::PopItemWidth();
@@ -358,7 +358,7 @@ namespace iKan {
             ImGui::PopFont();
             
             ImGui::SameLine();
-            if (ImGui::DragFloat("##Z", &value.z, 0.1f, 0.0f, 0.0f, "%.2f"))
+            if (ImGui::DragFloat("##Z", &value.z, delta, 0.0f, 0.0f, "%.2f"))
                 modified = true;
             
             ImGui::PopItemWidth();

@@ -55,6 +55,16 @@ struct PointLight
     float Quadratic;
 };
 
+struct SpotLight
+{
+    vec3 Direction;
+
+    bool Present;
+    
+    float CutOff;
+    float OuterCutOff;
+};
+
 in vec3 v_Position;
 in vec3 v_Normal;
 in vec2 v_TexCoord;
@@ -65,22 +75,31 @@ uniform vec3     u_ViewPos;
 uniform Material   u_Material;
 uniform Light      u_Light;
 uniform PointLight u_PointLight;
+uniform SpotLight  u_SpotLight;
 
 uniform sampler2D u_Textures[16];
 uniform int u_NumTextureSlots;
 
 // calculates the color when using a directional light. with point light flag.
-vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight)
+vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
 {
     vec3 result   = vec3(0.0f, 0.0f, 0.0f);
     vec3 lightDir = normalize(u_Light.Position - v_Position);
     
-    float distance;
     float attenuation;
-    if (pointLight)
+    float intensity;
+    if (pointLight || spotLight)
     {
-        distance = length(u_Light.Position - v_Position);
+        float distance = length(u_Light.Position - v_Position);
         attenuation = 1.0 / (u_PointLight.Constant + u_PointLight.Linear * distance + u_PointLight.Quadratic * (distance * distance));
+        
+        if (spotLight)
+        {
+            // spotlight intensity
+            float theta = dot(lightDir, normalize(-u_SpotLight.Direction));
+            float epsilon = u_SpotLight.CutOff - u_SpotLight.OuterCutOff;
+            intensity = clamp((theta - u_SpotLight.OuterCutOff) / epsilon, 0.0, 1.0);
+        }
     }
     
     int slotBinded = 0;
@@ -90,8 +109,12 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight)
         {
             // ambient
             vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
-            if (pointLight)
+            if (pointLight || spotLight)
+            {
                 ambient *= attenuation;
+                if (spotLight)
+                    ambient *= intensity;
+            }
             result += ambient;
         }
         
@@ -100,8 +123,12 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight)
             // diffuse
             float diff    = max(dot(norm, lightDir), 0.0);
             vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
-            if (pointLight)
+            if (pointLight || spotLight)
+            {
                 diffuse *= attenuation;
+                if (spotLight)
+                    diffuse *= intensity;
+            }
             result += diffuse;
         }
         
@@ -117,8 +144,12 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight)
             vec3  reflectDir = reflect(-lightDir, norm);
             float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
             vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
-            if (pointLight)
+            if (pointLight || spotLight)
+            {
                 specular *= attenuation;
+                if (spotLight)
+                    specular *= intensity;
+            }
             result += specular;
             slotBinded++;
         }
@@ -134,7 +165,7 @@ void main()
     vec3 viewDir = normalize(u_ViewPos - v_Position);
     
     if (u_IsSceneLight)
-        color = CalcDirLight(norm, viewDir, u_PointLight.Present);
+        color = CalcDirLight(norm, viewDir, u_PointLight.Present, u_SpotLight.Present);
     else
         color = texture(u_Textures[0], v_TexCoord);
 }

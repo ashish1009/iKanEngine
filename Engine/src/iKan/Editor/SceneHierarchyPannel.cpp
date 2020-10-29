@@ -261,11 +261,11 @@ namespace iKan {
                     ImGui::Text("Light Type");
                     ImGui::NextColumn();
                     ImGui::PushItemWidth(-1);
-                    const char* lightypeSTring[] = { "Direction", "Point" };
+                    const char* lightypeSTring[] = { "Direction", "Point", "Spot" };
                     const char* currentlightType = lightypeSTring[(int32_t)light.GetType()];
                     if (ImGui::BeginCombo("##Type", currentlightType))
                     {
-                        for (int i = 0; i < 2; i++)
+                        for (int i = 0; i < 3; i++)
                         {
                             bool bIsSelected = currentlightType == lightypeSTring[i];
                             if (ImGui::Selectable(lightypeSTring[i], bIsSelected))
@@ -291,19 +291,30 @@ namespace iKan {
                 Property("Diffuse", &light.m_IsDiffuse, light.m_Diffuse, 0.1f, 0.5f);
                 Property("Specular", &light.m_IsSpecular, light.m_Specular, 0.1f, 1.0f);
                 
-                if (light.GetType() == SceneLight::LightType::PointLight)
+                if (light.GetType() == SceneLight::LightType::Point)
                 {
                     float linear = light.GetLinear();
-                    if (Property("linear", linear))
+                    if (Property("Linear", linear, 0.001))
                         light.SetLinear(linear);
                     
                     float quadratic = light.GetQuadratic();
-                    if (Property("quadratic", quadratic))
+                    if (Property("Quadratic", quadratic, 0.001))
                         light.SetQuadratic(quadratic);
                     
                     float constant = light.GetConstant();
-                    if (Property("constant", constant))
+                    if (Property("Constant", constant, 0.001))
                         light.SetConstant(constant);
+                }
+                
+                if (light.GetType() == SceneLight::LightType::Spot)
+                {
+                    float cutoff = light.GetCutoff();
+                    if (Property("Cutoff", cutoff, 0.01))
+                        light.SetCutoff(cutoff);
+                    
+                    float outerCutoff = light.GetOuterCutoff();
+                    if (Property("Outer Cutoff", outerCutoff, 0.01))
+                        light.SetOuterCutoff(outerCutoff);
                 }
 
             }

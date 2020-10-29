@@ -69,7 +69,7 @@ namespace iKan {
                 light = &lightEnt.GetComponent<LightComponent>().Light;
                 lightPosition = lightEnt.GetComponent<TransformComponent>().Translation;
                 
-                SceneRenderer::SetupLight({ light, lightPosition, editorCamera.GetPosition() });
+                SceneRenderer::SetupLight({ light, lightPosition, editorCamera.GetPosition(), editorCamera.GetForwardDirection() });
             }
         }
         
