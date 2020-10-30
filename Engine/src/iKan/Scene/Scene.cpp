@@ -73,7 +73,7 @@ namespace iKan {
             }
         }
         
-        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetPosition(), editorCamera.GetViewMatrix(), editorCamera.GetForwardDirection() });
+        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix() });
         auto meshGroup = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
         for (auto entity : meshGroup)
         {

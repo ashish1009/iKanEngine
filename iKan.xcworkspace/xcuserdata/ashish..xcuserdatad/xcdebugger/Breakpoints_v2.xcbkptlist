@@ -94,8 +94,8 @@
             filePath = "Engine/src/iKan/Renderer/API/SceneRenderer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "SceneRenderer::SetupLight(light)"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "Editor/src/SceneEditorLayer.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "SceneEditor::OnKeyPressed(event)"
             landmarkType = "7">
          </BreakpointContent>

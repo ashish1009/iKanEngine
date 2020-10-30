@@ -78,6 +78,7 @@
 		B2B953E22549AA74008408A6 /* UUID.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B953E02549AA74008408A6 /* UUID.h */; };
 		B2C5BE7E25288130005E260D /* GlmMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C5BE7C25288130005E260D /* GlmMath.cpp */; };
 		B2C5BE7F25288130005E260D /* GlmMath.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C5BE7D25288130005E260D /* GlmMath.h */; };
+		B2C70C87254C7A0A00624736 /* Vertices.h in Headers */ = {isa = PBXBuildFile; fileRef = B2C70C86254C7A0A00624736 /* Vertices.h */; };
 		B2CDABD42500E885008C6BDF /* entt.hpp in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABD12500E885008C6BDF /* entt.hpp */; };
 		B2CDABDB2500EF2C008C6BDF /* Components.h in Headers */ = {isa = PBXBuildFile; fileRef = B2CDABD62500EF2C008C6BDF /* Components.h */; };
 		B2CDABDC2500EF2C008C6BDF /* Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2CDABD72500EF2C008C6BDF /* Scene.cpp */; };
@@ -157,7 +158,6 @@
 		B2473FDD24FD232E0099535D /* OpenGlBuffers.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGlBuffers.cpp; sourceTree = "<group>"; };
 		B2473FDE24FD232E0099535D /* OpenGlBuffers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGlBuffers.h; sourceTree = "<group>"; };
 		B24D18C52546C93B009FF803 /* BatchRenderer2DShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BatchRenderer2DShader.glsl; sourceTree = "<group>"; };
-		B24D18C62546C93B009FF803 /* MeshShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MeshShader.glsl; sourceTree = "<group>"; };
 		B24D18CA25472E2E009FF803 /* SceneRenderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneRenderer.cpp; sourceTree = "<group>"; };
 		B24D18CB25472E2E009FF803 /* SceneRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneRenderer.h; sourceTree = "<group>"; };
 		B24FF88724ED1A3C00884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +206,9 @@
 		B2B953E02549AA74008408A6 /* UUID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UUID.h; sourceTree = "<group>"; };
 		B2C5BE7C25288130005E260D /* GlmMath.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = GlmMath.cpp; sourceTree = "<group>"; };
 		B2C5BE7D25288130005E260D /* GlmMath.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlmMath.h; sourceTree = "<group>"; };
+		B2C70C81254C6E6E00624736 /* MeshShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MeshShader.glsl; sourceTree = "<group>"; };
+		B2C70C85254C6E8E00624736 /* CubemapShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CubemapShader.glsl; sourceTree = "<group>"; };
+		B2C70C86254C7A0A00624736 /* Vertices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Vertices.h; sourceTree = "<group>"; };
 		B2CDABCF2500E885008C6BDF /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B2CDABD12500E885008C6BDF /* entt.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = entt.hpp; sourceTree = "<group>"; };
 		B2CDABD62500EF2C008C6BDF /* Components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Components.h; sourceTree = "<group>"; };
@@ -353,7 +356,8 @@
 			isa = PBXGroup;
 			children = (
 				B24D18C52546C93B009FF803 /* BatchRenderer2DShader.glsl */,
-				B24D18C62546C93B009FF803 /* MeshShader.glsl */,
+				B2C70C81254C6E6E00624736 /* MeshShader.glsl */,
+				B2C70C85254C6E8E00624736 /* CubemapShader.glsl */,
 			);
 			path = shaders;
 			sourceTree = "<group>";
@@ -487,6 +491,7 @@
 				B2752D1C24FACD64005EF655 /* RendererCommand.h */,
 				B264E230251FB3BC008C781A /* RendererStats.h */,
 				B264E232251FB45A008C781A /* RendererStats.cpp */,
+				B2C70C86254C7A0A00624736 /* Vertices.h */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -601,6 +606,7 @@
 				B2473FDC24FD22380099535D /* Buffers.h in Headers */,
 				B2309B3F2544A540001A4EE9 /* SceneSerializer.h in Headers */,
 				B2F0FC0524F80E960004443A /* GraphicsContext.h in Headers */,
+				B2C70C87254C7A0A00624736 /* Vertices.h in Headers */,
 				B2752D1024FABBA1005EF655 /* MouseCode.h in Headers */,
 				B25718242524707200E30030 /* EditorCamera.h in Headers */,
 				B2752D1A24FAC201005EF655 /* Application.h in Headers */,

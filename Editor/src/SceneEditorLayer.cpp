@@ -1,7 +1,6 @@
 #include "SceneEditorLayer.h"
 
 namespace iKan {
-
     
     SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
@@ -25,11 +24,6 @@ namespace iKan {
         m_ActiveScene = Ref<Scene>::Create();
                         
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
-        
-        {
-            Entity tex = m_ActiveScene->CreateEntity("Tex");
-            tex.AddComponent<SpriteRendererComponent>().Texture = Texture::Create("../../Editor/assets/resources/texture/grass.png");
-        }
     }
     
     void SceneEditor::OnDetach()

@@ -9,11 +9,8 @@ namespace iKan {
     
     struct SceneRendererCamera
     {
-        iKan::Camera Camera;
-        
-        glm::vec3 Position;
+        iKan::Camera Camera;        
         glm::mat4 ViewMatrix;
-        glm::vec3 Front;      
     };
     
     struct SceneRendererLight
@@ -30,10 +27,13 @@ namespace iKan {
         static void Init();
         static void BegineScene(const SceneRendererCamera& camera);
         static void SetupLight(const SceneRendererLight& light);
+        static void SetCubemapTexture(const std::string& path);
+
         static void EndScene();
         static void Shutdown();
 
         static void Draw(const Ref<Mesh>& mesh, const glm::mat4& transform);
+        static void DrawCubemap(const glm::mat4& transform);
     };
     
 }
