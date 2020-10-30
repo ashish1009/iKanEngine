@@ -1,9 +1,7 @@
 #include "SceneEditorLayer.h"
 
 namespace iKan {
-    
-    // TODO: Temp
-    static Entity lighEnt;
+
     
     SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
@@ -29,15 +27,8 @@ namespace iKan {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
         
         {
-            Ref<Mesh> bagpackMesh = Ref<Mesh>::Create("../../Editor/assets/resources/objects/backpack/backpack.obj");
-            Ref<Mesh> lightMesh   = Ref<Mesh>::Create("../../Editor/assets/resources/objects/Light/Light.obj");
-            
-            Entity bagpackEntity = m_ActiveScene->CreateEntity("Bagpack");
-            bagpackEntity.AddComponent<MeshComponent>(bagpackMesh);
-            
-            lighEnt = m_ActiveScene->CreateEntity("Light");
-            lighEnt.AddComponent<MeshComponent>(lightMesh);
-            lighEnt.AddComponent<LightComponent>();
+            Entity tex = m_ActiveScene->CreateEntity("Tex");
+            tex.AddComponent<SpriteRendererComponent>().Texture = Texture::Create("../../Editor/assets/resources/texture/grass.png");
         }
     }
     

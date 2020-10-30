@@ -22,6 +22,8 @@ namespace iKan {
         
         virtual uint32_t GetRendererID() const override { return m_RendererId; }
         
+        virtual std::string GetfilePath() const override { return m_Filepath; }
+
         virtual bool operator==(const Texture& other) const override
         {
             return m_RendererId == ((OpenGlTexture&)other).m_RendererId;
@@ -32,6 +34,7 @@ namespace iKan {
         uint32_t m_Width, m_Height, m_Channel;
         GLenum m_InternalFormat = GL_RGBA8, m_DataFormat = GL_RGBA;
         
+        std::string m_Filepath;
     };
     
     class OpenGlCubeMapTexture : public CubeMapTexture

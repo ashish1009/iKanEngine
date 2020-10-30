@@ -88,8 +88,10 @@ namespace iKan {
         for (auto entity : spriteGroup)
         {
             const auto [transform, sprite] = spriteGroup.get<TransformComponent, SpriteRendererComponent>(entity);
-            if (sprite.SubTexComp)
-                Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp);
+            if (sprite.Texture)
+                Renderer2D::DrawQuad(transform.GetTransform(), sprite.Texture, sprite.TilingFactor, sprite.Color);
+            else if (sprite.SubTexComp)
+                Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp, sprite.TilingFactor, sprite.Color);
             else
                 Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
         }
@@ -118,8 +120,10 @@ namespace iKan {
             for (auto entity : group)
             {
                 const auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
-                if (sprite.SubTexComp)
-                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp);
+                if (sprite.Texture)
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.Texture, sprite.TilingFactor, sprite.Color);
+                else if (sprite.SubTexComp)
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp, sprite.TilingFactor, sprite.Color);
                 else
                     Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
             }

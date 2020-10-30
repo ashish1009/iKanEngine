@@ -7,6 +7,7 @@
 namespace iKan {
  
     OpenGlTexture::OpenGlTexture(const std::string& path)
+    : m_Filepath(path)
     {
         // Texture
         stbi_set_flip_vertically_on_load(1);

@@ -259,6 +259,8 @@ namespace iKan {
         DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& component)
                                                {
             ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+            if (component.Texture || component.SubTexComp)
+                ImGuiAPI::Counter("Tiling Factor", component.TilingFactor);
         });
         
         DrawComponent<MeshComponent>("Mesh", entity, [](auto& mc)

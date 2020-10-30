@@ -15,6 +15,8 @@ namespace iKan {
         
         virtual uint32_t GetRendererID() const = 0;
         
+        virtual std::string GetfilePath() const = 0;
+        
         virtual bool operator==(const Texture& other) const = 0;
         
         static Ref<Texture> Create(const std::string& path);

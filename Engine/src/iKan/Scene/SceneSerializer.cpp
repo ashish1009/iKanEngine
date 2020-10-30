@@ -141,10 +141,17 @@ namespace iKan {
             out << YAML::Key << "SpriteRendererComponent";
             out << YAML::BeginMap; // SpriteRendererComponent
             
-            // TODO: Add for Texture
             auto& spriteRendererComponent = entity.GetComponent<SpriteRendererComponent>();
             out << YAML::Key << "Color" << YAML::Value << spriteRendererComponent.Color;
             
+            out << YAML::Key << "TilingFactor" << YAML::Value << spriteRendererComponent.TilingFactor;
+            
+            if (spriteRendererComponent.Texture)
+                out << YAML::Key << "TexAssetPath" << YAML::Value << spriteRendererComponent.Texture->GetfilePath();
+            else
+                out << YAML::Key << "TexAssetPath" << YAML::Value << "";
+
+            // TODO: Add subtexture later
             out << YAML::EndMap; // SpriteRendererComponent
         }
         
@@ -309,17 +316,31 @@ namespace iKan {
                     // TODO: Add for Texutre
                     auto& src = deserializedEntity.AddComponent<SpriteRendererComponent>();
                     src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+
+                    src.TilingFactor = spriteRendererComponent["TilingFactor"].as<float>();
+                        
+                    std::string texPath = spriteRendererComponent["TexAssetPath"].as<std::string>();
+                    if (texPath != "")
+                        src.Texture = Texture::Create(texPath);
+                    else
+                        src.Texture = nullptr;
+                    
+                    IK_CORE_INFO("  Entity Sprite:");
+                    
+                    IK_CORE_INFO("    Color: {0}, {1}, {2}", src.Color.x, src.Color.y, src.Color.z);
+                    IK_CORE_INFO("    Texture Tiling Factor: {0}", src.TilingFactor);
+                    IK_CORE_INFO("    Texture Asset Path: {0}", texPath);
                 }
                 
                 auto meshComponent = entity["MeshComponent"];
                 if (meshComponent)
                 {
                     std::string meshPath = meshComponent["AssetPath"].as<std::string>();
-                    // TEMP (because script creates mesh component...)
                     if (!deserializedEntity.HasComponent<MeshComponent>())
                         deserializedEntity.AddComponent<MeshComponent>(Ref<Mesh>::Create(meshPath));
 
-                    IK_CORE_INFO("  Mesh Asset Path: {0}", meshPath);
+                    IK_CORE_INFO("  Entity Mesh:");
+                    IK_CORE_INFO("    Mesh Asset Path: {0}", meshPath);
                 }
                 
                 auto lightComponent = entity["LightComponent"];

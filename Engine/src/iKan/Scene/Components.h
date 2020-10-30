@@ -54,9 +54,16 @@ namespace iKan {
     
     struct SpriteRendererComponent
     {
-        glm::vec4 Color = glm::vec4(1.0f);
-        Ref<SubTexture> SubTexComp = nullptr;
+        glm::vec4 Color                  = glm::vec4(1.0f);
+        Ref<iKan::SubTexture> SubTexComp = nullptr;
+        Ref<iKan::Texture> Texture       = nullptr;
         
+        float TilingFactor = 1.0f;
+        
+        glm::vec2 SpriteSize = { 1.0f, 1.0f };
+        glm::vec2 CellSize   = { 16.0f, 16.0f };
+        glm::vec2 Coords     = { 0.0f, 0.0f };
+
         SpriteRendererComponent() = default;
         SpriteRendererComponent(const SpriteRendererComponent&) = default;
         
@@ -64,7 +71,10 @@ namespace iKan {
         : Color(color) {}
         
         SpriteRendererComponent(const Ref<SubTexture>& subtexture)
-        : SubTexComp(subtexture) {}
+        : SubTexComp(subtexture), Texture(nullptr) {}
+        
+        SpriteRendererComponent(const Ref<iKan::Texture>& texture)
+        : SubTexComp(nullptr), Texture(texture) {}
     };
     
     struct CameraComponent
