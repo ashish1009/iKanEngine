@@ -261,6 +261,72 @@ namespace iKan {
             ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
             if (component.Texture || component.SubTexComp)
                 ImGuiAPI::Counter("Tiling Factor", component.TilingFactor);
+            ImGui::Separator();
+            
+            ImGui::Columns(2);
+            ImGui::SetColumnWidth(0, 100);
+            ImGui::SetColumnWidth(1, 300);
+            ImGui::Text("File Path");
+            ImGui::NextColumn();
+            ImGui::PushItemWidth(-1);
+            {
+                std::string currentTexture;
+                {
+                    if (component.Texture)
+                    {
+                        // Extract the name of current Mesh
+                        auto path      = component.Texture->GetfilePath();
+                        auto lastSlash = path.find_last_of("/\\");
+                        lastSlash      = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+                        
+                        auto lastDot = path.find_last_of('.');
+                        auto count   = lastDot == std::string::npos ? path.size() - lastSlash : lastDot - lastSlash;
+                        
+                        currentTexture = path.substr(lastSlash, count);
+                        ImGui::InputText("##Texturefilepath", (char*)path.c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+                    }
+                    else
+                    {
+                        currentTexture = "Null";
+                        ImGui::InputText("##Texturefilepath", (char*)"Null", 256, ImGuiInputTextFlags_ReadOnly);
+                        
+                    }
+                    ImGui::PopItemWidth();
+                }
+                
+                ImGui::Columns(1);
+                
+                ImGui::Columns(2);
+                ImGui::Text("Available Textures");
+                ImGui::NextColumn();
+                ImGui::PushItemWidth(-1);
+                
+                const std::vector<const char*> availabelTextureString = { "checkerboard", "container", "grass", "marble", "matrix", "metal", "smile", "window", "wood" };
+                if (ImGui::BeginCombo("##Type", currentTexture.c_str()))
+                {
+                    for (int i = 0; i < availabelTextureString.size(); i++)
+                    {
+                        bool bIsSelected = currentTexture == availabelTextureString[i];
+                        if (ImGui::Selectable(availabelTextureString[i], bIsSelected))
+                        {
+                            currentTexture = availabelTextureString[i];
+                            // TODO: for now path is hard coded will fix this in future
+                            // Make sure file name is same as the foler name
+                            std::string filePath = "/Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/texture/" + currentTexture + ".png";
+                            component.Texture = Texture::Create(filePath);
+                        }
+                        
+                        if (bIsSelected)
+                        {
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+                    ImGui::EndCombo();
+                }
+                ImGui::PopItemWidth();
+                ImGui::NextColumn();
+                ImGui::Columns(1);
+            }
         });
         
         DrawComponent<MeshComponent>("Mesh", entity, [](auto& mc)
@@ -294,7 +360,7 @@ namespace iKan {
                         auto count   = lastDot == std::string::npos ? path.size() - lastSlash : lastDot - lastSlash;
                         
                         currentMeshType = path.substr(lastSlash, count);
-                        ImGui::InputText("##meshfilepath", (char*)mc.Mesh->GetFilepath().c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+                        ImGui::InputText("##meshfilepath", (char*)path.c_str(), 256, ImGuiInputTextFlags_ReadOnly);
                     }
                     else
                     {
@@ -331,7 +397,6 @@ namespace iKan {
                 ImGui::NextColumn();
                 ImGui::Columns(1);
             }
-            ImGui::Separator();
         });
         
         DrawComponent<LightComponent>("Light", entity, [](auto& component)
