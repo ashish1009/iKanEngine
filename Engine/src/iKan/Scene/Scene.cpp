@@ -78,7 +78,8 @@ namespace iKan {
         for (auto entity : meshGroup)
         {
             const auto [transform, mesh] = meshGroup.get<TransformComponent, MeshComponent>(entity);
-            SceneRenderer::Draw(mesh.Mesh, transform.GetTransform());
+            if (mesh.Mesh)
+                SceneRenderer::Draw(mesh.Mesh, transform.GetTransform());
         }
         SceneRenderer::EndScene();
         

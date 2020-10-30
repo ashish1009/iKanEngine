@@ -156,6 +156,18 @@ namespace iKan {
                 m_SelectionContext.AddComponent<SpriteRendererComponent>();
                 ImGui::CloseCurrentPopup();
             }
+
+            if (ImGui::MenuItem("Light"))
+            {
+                m_SelectionContext.AddComponent<LightComponent>();
+                ImGui::CloseCurrentPopup();
+            }
+            
+            if (ImGui::MenuItem("Mesh"))
+            {
+                m_SelectionContext.AddComponent<MeshComponent>();
+                ImGui::CloseCurrentPopup();
+            }
             
             ImGui::EndPopup();
         }
@@ -183,11 +195,12 @@ namespace iKan {
                 ImGui::Text("Projection Type");
                 ImGui::NextColumn();
                 ImGui::PushItemWidth(-1);
-                const char* projectionTypeSTring[] = { "Projection", "Orthographic" };
+                
+                const std::vector <const char*> projectionTypeSTring = { "Projection", "Orthographic" };
                 const char* currentProjectionType = projectionTypeSTring[(int32_t)camera.GetProjectionType()];
                 if (ImGui::BeginCombo("##Projection", currentProjectionType))
                 {
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < projectionTypeSTring.size(); i++)
                     {
                         bool bIsSelected = currentProjectionType == projectionTypeSTring[i];
                         if (ImGui::Selectable(projectionTypeSTring[i], bIsSelected))
@@ -248,6 +261,77 @@ namespace iKan {
             ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
         });
         
+        DrawComponent<MeshComponent>("Mesh", entity, [](auto& mc)
+                                     {
+            ImGui::Columns(2);
+            ImGui::SetColumnWidth(0, 100);
+            ImGui::SetColumnWidth(1, 300);
+            ImGui::Text("File Path");
+            ImGui::NextColumn();
+            ImGui::PushItemWidth(-1);
+            ImGui::Columns(1);
+
+            // TODO: Provide the option of Mesh we have May be later use file open dialog box
+            ImGui::Separator();
+            {
+                ImGui::Columns(2);
+                ImGui::Text("Available Mesh");
+                ImGui::NextColumn();
+                ImGui::PushItemWidth(-1);
+                
+                std::string currentMeshType;
+                {
+                    if (mc.Mesh)
+                    {
+                        // Extract the name of current Mesh
+                        auto path      = mc.Mesh->GetFilepath();
+                        auto lastSlash = path.find_last_of("/\\");
+                        lastSlash      = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+                        
+                        auto lastDot = path.find_last_of('.');
+                        auto count   = lastDot == std::string::npos ? path.size() - lastSlash : lastDot - lastSlash;
+                        
+                        currentMeshType = path.substr(lastSlash, count);
+                        ImGui::InputText("##meshfilepath", (char*)mc.Mesh->GetFilepath().c_str(), 256, ImGuiInputTextFlags_ReadOnly);
+                    }
+                    else
+                    {
+                        currentMeshType = "Null";
+                        ImGui::InputText("##meshfilepath", (char*)"Null", 256, ImGuiInputTextFlags_ReadOnly);
+
+                    }
+                    ImGui::PopItemWidth();
+                }
+
+                const std::vector<const char*> availabelMeshString = { "backpack", "GroundPlane", "Light" };
+                if (ImGui::BeginCombo("##Type", currentMeshType.c_str()))
+                {
+                    for (int i = 0; i < availabelMeshString.size(); i++)
+                    {
+                        bool bIsSelected = currentMeshType == availabelMeshString[i];
+                        if (ImGui::Selectable(availabelMeshString[i], bIsSelected))
+                        {
+                            currentMeshType = availabelMeshString[i];
+                            // TODO: for now path is hard coded will fix this in future
+                            // Make sure file name is same as the foler name
+                            std::string filePath = "/Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/objects/" + currentMeshType + "/" + currentMeshType + ".obj";
+                            mc.Mesh = Ref<Mesh>::Create(filePath);
+                        }
+                        
+                        if (bIsSelected)
+                        {
+                            ImGui::SetItemDefaultFocus();
+                        }
+                    }
+                    ImGui::EndCombo();
+                }
+                ImGui::PopItemWidth();
+                ImGui::NextColumn();
+                ImGui::Columns(1);
+            }
+            ImGui::Separator();
+        });
+        
         DrawComponent<LightComponent>("Light", entity, [](auto& component)
                                                {
             ImGui::Checkbox("Is Scene Light", &component.IsLight);
@@ -261,11 +345,12 @@ namespace iKan {
                     ImGui::Text("Light Type");
                     ImGui::NextColumn();
                     ImGui::PushItemWidth(-1);
-                    const char* lightypeSTring[] = { "Direction", "Point", "Spot" };
+                    
+                    const std::vector<const char*> lightypeSTring = { "Direction", "Point", "Spot" };
                     const char* currentlightType = lightypeSTring[(int32_t)light.GetType()];
                     if (ImGui::BeginCombo("##Type", currentlightType))
                     {
-                        for (int i = 0; i < 3; i++)
+                        for (int i = 0; i < lightypeSTring.size(); i++)
                         {
                             bool bIsSelected = currentlightType == lightypeSTring[i];
                             if (ImGui::Selectable(lightypeSTring[i], bIsSelected))
