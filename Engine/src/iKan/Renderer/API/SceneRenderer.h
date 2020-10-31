@@ -15,7 +15,10 @@ namespace iKan {
     
     struct SceneRendererLight
     {
-        iKan::SceneLight* Light;
+        bool IsPresent;
+        
+        SceneLight Light;
+        
         glm::vec3 Position;
         glm::vec3 ViewPos;
         glm::vec3 CameraFront;

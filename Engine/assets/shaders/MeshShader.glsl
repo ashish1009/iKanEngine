@@ -146,7 +146,7 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
             }
             else
             {
-                spec     = pow(max(dot(viewDir, reflectDir), 0.0), 32.0f);
+                spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0f);
             }
             specular = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
             slotBinded++;

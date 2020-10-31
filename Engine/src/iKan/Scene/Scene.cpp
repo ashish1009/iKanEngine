@@ -60,17 +60,12 @@ namespace iKan {
         auto lightView = m_Registry.view<LightComponent>();
         for (auto entity : lightView)
         {
-            SceneLight* light = nullptr;
-            glm::vec3 lightPosition;
-            auto& comp = lightView.get<LightComponent>(entity);
-            if (comp.IsLight)
-            {
-                Entity lightEnt = { entity, this };
-                light = &lightEnt.GetComponent<LightComponent>().Light;
-                lightPosition = lightEnt.GetComponent<TransformComponent>().Translation;
-                
-                SceneRenderer::SetupLight({ light, lightPosition, editorCamera.GetPosition(), editorCamera.GetForwardDirection() });
-            }
+            auto& lc = lightView.get<LightComponent>(entity);
+            Entity lightEnt = { entity, this };
+            SceneLight light = lc.Light;
+            glm::vec3  lightPosition = lightEnt.GetComponent<TransformComponent>().Translation;
+            
+            SceneRenderer::SetupLight({ lc.IsLight, light, lightPosition, editorCamera.GetPosition(), editorCamera.GetForwardDirection() });
         }
         
         SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix() });
