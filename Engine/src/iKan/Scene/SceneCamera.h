@@ -7,6 +7,8 @@ namespace iKan {
     class SceneCamera : public Camera
     {
     public:
+        friend class SceneHeirarchyPannel;
+
         enum class ProjectionType { Perspective = 0, Orthographic = 1};
         
     public:

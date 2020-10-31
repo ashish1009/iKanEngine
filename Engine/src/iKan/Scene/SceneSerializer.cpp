@@ -183,6 +183,8 @@ namespace iKan {
             out << YAML::Key << "Is Diffuse" << YAML::Value << (bool)light.GetDiffuseFlag();
             out << YAML::Key << "Is Specular" << YAML::Value << (bool)light.GetSpecularFlag();
 
+            out << YAML::Key << "Is Blinn" << YAML::Value << (bool)light.GetBlinnFlag();
+
             out << YAML::Key << "Ambient" << YAML::Value <<  light.GetAmbient();
             out << YAML::Key << "Diffuse" << YAML::Value <<  light.GetDiffuse();
             out << YAML::Key << "Specular" << YAML::Value << light.GetSpecular();
@@ -356,6 +358,8 @@ namespace iKan {
                     lc.Light.SetDiffuseFlag(lightProps["Is Diffuse"].as<bool>());
                     lc.Light.SetSpecularFlag(lightProps["Is Specular"].as<bool>());
 
+                    lc.Light.SetBlinnFlag(lightProps["Is Blinn"].as<bool>());
+
                     lc.Light.SetAmbient(lightProps["Ambient"].as<glm::vec3>());
                     lc.Light.SetDiffuse(lightProps["Diffuse"].as<glm::vec3>());
                     lc.Light.SetSpecular(lightProps["Specular"].as<glm::vec3>());
@@ -379,7 +383,9 @@ namespace iKan {
                     IK_CORE_INFO("      Is Ambient: {0}",  lc.Light.GetAmbientFlag());
                     IK_CORE_INFO("      Is Diffuse: {0}",  lc.Light.GetDiffuseFlag());
                     IK_CORE_INFO("      Is Specular: {0}", lc.Light.GetSpecularFlag());
-                    
+
+                    IK_CORE_INFO("      Is Blinn: {0}",  lc.Light.GetBlinnFlag());
+
                     IK_CORE_INFO("      Ambient: {0}, {1}, {2}",  lc.Light.GetAmbient().x, lc.Light.GetAmbient().y, lc.Light.GetAmbient().z);
                     IK_CORE_INFO("      Diffuse: {0}, {1}, {2}",  lc.Light.GetDiffuse().x, lc.Light.GetDiffuse().y, lc.Light.GetDiffuse().z);
                     IK_CORE_INFO("      Specular: {0}, {1}, {2}", lc.Light.GetSpecular().x, lc.Light.GetSpecular().y, lc.Light.GetSpecular().z);

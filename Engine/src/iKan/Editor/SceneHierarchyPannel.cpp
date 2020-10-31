@@ -174,20 +174,20 @@ namespace iKan {
         
         ImGui::PopItemWidth();
         
-        DrawComponent<TransformComponent>("Transform", entity, [](auto& component)
+        DrawComponent<TransformComponent>("Transform", entity, [](auto& tc)
                                           {
-            Property("Translation", component.Translation, 0.25f);
-            glm::vec3 rotation = glm::degrees(component.Rotation);
+            Property("Translation", tc.Translation, 0.25f);
+            glm::vec3 rotation = glm::degrees(tc.Rotation);
             Property("Rotation", rotation, 0.25f);
-            component.Rotation = glm::radians(rotation);
-            Property("Scale", component.Scale, 0.25f, 1.0f);
+            tc.Rotation = glm::radians(rotation);
+            Property("Scale", tc.Scale, 0.25f, 1.0f);
         });
         
-        DrawComponent<CameraComponent>("Camera", entity, [](auto& component)
+        DrawComponent<CameraComponent>("Camera", entity, [](auto& cc)
                                        {
-            auto& camera = component.Camera;
+            auto& camera = cc.Camera;
             
-            Property("Primary", component.Primary);
+            Property("Primary", cc.Primary);
             ImGui::Separator();
 
             {
@@ -228,39 +228,26 @@ namespace iKan {
                 if (Property("Vertical FOV", perspectiveVerticalFov))
                     camera.SetPerspectiveFOV(glm::radians(perspectiveVerticalFov));
                 
-                float perspectiveNear = camera.GetPerspectiveNearClip();
-                if (Property("Near", perspectiveNear))
-                    camera.SetPerspectiveNearClip(perspectiveNear);
-                
-                float perspectiveFar = camera.GetPerspectiveFarClip();
-                if (Property("Far", perspectiveFar))
-                    camera.SetPerspectiveFarClip(perspectiveFar);
+                Property("Near", camera.m_PerspectiveNear, 0.001f, 0.01f);
+                Property("Far", camera.m_PerspectiveFar, 10.0f, 1000.0f);
             }
             
             if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orthographic)
             {
-                float orthoSize = camera.GetOrthographicSize();
-                if (Property("Size", orthoSize))
-                    camera.SetOrthographicSize(orthoSize);
-                
-                float orthoNear = camera.GetOrthographicNearClip();
-                if (Property("Near", orthoNear))
-                    camera.SetOrthographicNearClip(orthoNear);
-                
-                float orthoFar = camera.GetOrthographicFarClip();
-                if (Property("Far", orthoFar))
-                    camera.SetOrthographicFarClip(orthoFar);
+                Property("Size", camera.m_OrthographicSize, 0.1f, 10.0f);
+                Property("Near", camera.m_OrthographicNear, 0.1f, -1.0f);
+                Property("Far", camera.m_OrthographicFar, 0.1f, 1.0f);
                 
                 ImGui::Separator();
-                Property("Fixed Aspect Ratio", component.FixedAspectRatio);
+                Property("Fixed Aspect Ratio", cc.FixedAspectRatio);
             }
         });
         
-        DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& component)
+        DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& src)
                                                {
-            ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
-            if (component.Texture || component.SubTexComp)
-                ImGuiAPI::Counter("Tiling Factor", component.TilingFactor);
+            ImGui::ColorEdit4("Color", glm::value_ptr(src.Color));
+            if (src.Texture || src.SubTexComp)
+                ImGuiAPI::Counter("Tiling Factor", src.TilingFactor);
             ImGui::Separator();
             
             ImGui::Columns(2);
@@ -272,10 +259,10 @@ namespace iKan {
             {
                 std::string currentTexture;
                 {
-                    if (component.Texture)
+                    if (src.Texture)
                     {
                         // Extract the name of current Mesh
-                        auto path      = component.Texture->GetfilePath();
+                        auto path      = src.Texture->GetfilePath();
                         auto lastSlash = path.find_last_of("/\\");
                         lastSlash      = lastSlash == std::string::npos ? 0 : lastSlash + 1;
                         
@@ -313,7 +300,7 @@ namespace iKan {
                             // TODO: for now path is hard coded will fix this in future
                             // Make sure file name is same as the foler name
                             std::string filePath = "/Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/texture/" + currentTexture + ".png";
-                            component.Texture = Texture::Create(filePath);
+                            src.Texture = Texture::Create(filePath);
                         }
                         
                         if (bIsSelected)
@@ -399,16 +386,20 @@ namespace iKan {
             }
         });
         
-        DrawComponent<LightComponent>("Light", entity, [](auto& component)
+        DrawComponent<LightComponent>("Light", entity, [](auto& lc)
                                                {
-            ImGui::Checkbox("Is Scene Light", &component.IsLight);
-            if (component.IsLight)
+            ImGui::Columns(3);
+            ImGui::SetColumnWidth(0, 120);
+            ImGui::SetColumnWidth(1, 80);
+            ImGui::SetColumnWidth(2, 150);
+
+            ImGui::Checkbox("Is Scene Light", &lc.IsLight);
+            ImGui::NextColumn();
+            if (lc.IsLight)
             {
-                auto& light = component.Light;
-                
+                auto& light = lc.Light;
                 ImGui::Separator();
                 {
-                    ImGui::Columns(2);
                     ImGui::Text("Light Type");
                     ImGui::NextColumn();
                     ImGui::PushItemWidth(-1);
@@ -443,30 +434,21 @@ namespace iKan {
                 Property("Diffuse", &light.m_IsDiffuse, light.m_Diffuse, 0.1f, 0.5f);
                 Property("Specular", &light.m_IsSpecular, light.m_Specular, 0.1f, 1.0f);
                 
+                ImGui::Separator();
+                Property("Blinn", light.m_IsBlinn);
+                ImGui::Separator();
+                
                 if (light.GetType() == SceneLight::LightType::Point)
                 {
-                    float linear = light.GetLinear();
-                    if (Property("Linear", linear, 0.001))
-                        light.SetLinear(linear);
-                    
-                    float quadratic = light.GetQuadratic();
-                    if (Property("Quadratic", quadratic, 0.001))
-                        light.SetQuadratic(quadratic);
-                    
-                    float constant = light.GetConstant();
-                    if (Property("Constant", constant, 0.001))
-                        light.SetConstant(constant);
+                    Property("Linear", light.m_Linear, 0.001, 0.09);
+                    Property("Quadratic", light.m_Quadratic, 0.001, 0.032f);
+                    Property("Constant", light.m_Constant, 0.001, 1.0f);
                 }
                 
                 if (light.GetType() == SceneLight::LightType::Spot)
                 {
-                    float cutoff = light.GetCutoff();
-                    if (Property("Cutoff", cutoff, 0.01))
-                        light.SetCutoff(cutoff);
-                    
-                    float outerCutoff = light.GetOuterCutoff();
-                    if (Property("Outer Cutoff", outerCutoff, 0.01))
-                        light.SetOuterCutoff(outerCutoff);
+                    Property("Cutoff", light.m_CutOff, 0.01, 12.5f);
+                    Property("Outer Cutoff", light.m_OuterCutOff, 0.01, 15.0f);
                 }
 
             }

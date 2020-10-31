@@ -70,6 +70,8 @@ in vec3 v_Normal;
 in vec2 v_TexCoord;
 
 uniform bool u_IsSceneLight;
+uniform bool u_Blinn;
+
 uniform vec3 u_ViewPos;
 
 uniform Material   u_Material;
@@ -140,17 +142,26 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
     {
         // specular
         vec3  reflectDir = reflect(-lightDir, norm);
+        float spec;
         vec3  specular;
         if (slotBinded < u_NumTextureSlots)
         {
-            float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
-            specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
+            spec     = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
+            specular = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
             slotBinded++;
         }
         else
         {
-            float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);
-            specular   = vec3(0.3) * spec;
+            if (u_Blinn)
+            {
+                vec3 halfwayDir = normalize(lightDir + viewDir);
+                spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0);
+            }
+            else
+            {
+                spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);
+            }
+            specular = vec3(0.3) * spec;
         }
         
         if (pointLight || spotLight)

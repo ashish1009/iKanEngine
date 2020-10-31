@@ -96,7 +96,10 @@ namespace iKan {
             
             s_Data.MeshShader->SetUniformInt1("u_Light.IsSpecular", light.Light->GetSpecularFlag());
             if (light.Light->GetSpecularFlag())
+            {
+                s_Data.MeshShader->SetUniformFloat1("u_Blinn", light.Light->GetBlinnFlag());
                 s_Data.MeshShader->SetUniformFloat3("u_Light.Specular", light.Light->GetSpecular());
+            }
             
             // Point light variables
             if (SceneLight::LightType::Point == light.Light->GetType())

@@ -62,7 +62,9 @@ namespace iKan {
         void SetAmbientFlag(bool flag) { m_IsAmbient = flag; }
         void SetDiffuseFlag(bool flag) { m_IsDiffuse = flag; }
         void SetSpecularFlag(bool flag) { m_IsSpecular = flag; }
-        
+
+        void SetBlinnFlag(bool flag) { m_IsBlinn = flag; }
+
         void SetAmbient(const glm::vec3& ambient) { m_Ambient = ambient; }
         void SetDiffuse(const glm::vec3& diffuse) { m_Diffuse = diffuse; }
         void SetSpecular(const glm::vec3& specular) { m_Specular = specular; }
@@ -81,6 +83,8 @@ namespace iKan {
         bool GetDiffuseFlag() const { return m_IsDiffuse; }
         bool GetSpecularFlag() const { return m_IsSpecular; }
         
+        bool GetBlinnFlag() const { return m_IsBlinn; }
+
         const glm::vec3& GetAmbient() const { return m_Ambient; }
         const glm::vec3& GetDiffuse() const { return m_Diffuse; }
         const glm::vec3& GetSpecular() const { return m_Specular; }
@@ -100,6 +104,7 @@ namespace iKan {
         LightType m_Type = LightType::Direction;
         
         bool m_IsAmbient = false, m_IsDiffuse = false, m_IsSpecular = false;
+        bool m_IsBlinn = false;
         
         glm::vec3 m_Ambient  = { 0.2f, 0.2f, 0.2f };
         glm::vec3 m_Diffuse  = { 0.5f, 0.5f, 0.5f };
