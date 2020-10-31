@@ -69,8 +69,8 @@ in vec3 v_Position;
 in vec3 v_Normal;
 in vec2 v_TexCoord;
 
-uniform bool     u_IsSceneLight;
-uniform vec3     u_ViewPos;
+uniform bool u_IsSceneLight;
+uniform vec3 u_ViewPos;
 
 uniform Material   u_Material;
 uniform Light      u_Light;
@@ -96,9 +96,9 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
         if (spotLight)
         {
             // spotlight intensity
-            float theta = dot(lightDir, normalize(-u_SpotLight.Direction));
+            float theta   = dot(lightDir, normalize(-u_SpotLight.Direction));
             float epsilon = u_SpotLight.CutOff - u_SpotLight.OuterCutOff;
-            intensity = clamp((theta - u_SpotLight.OuterCutOff) / epsilon, 0.0, 1.0);
+            intensity     = clamp((theta - u_SpotLight.OuterCutOff) / epsilon, 0.0, 1.0);
         }
     }
     
@@ -136,23 +136,30 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
             slotBinded++;
     }
     
-    if (slotBinded < u_NumTextureSlots)
+    if (u_Light.IsSpecular)
     {
-        if (u_Light.IsSpecular)
+        // specular
+        vec3  reflectDir = reflect(-lightDir, norm);
+        vec3  specular;
+        if (slotBinded < u_NumTextureSlots)
         {
-            // specular
-            vec3  reflectDir = reflect(-lightDir, norm);
-            float spec       = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
-            vec3  specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
-            if (pointLight || spotLight)
-            {
-                specular *= attenuation;
-                if (spotLight)
-                    specular *= intensity;
-            }
-            result += specular;
+            float spec = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
+            specular   = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
             slotBinded++;
         }
+        else
+        {
+            float spec = pow(max(dot(viewDir, reflectDir), 0.0), 8.0);
+            specular   = vec3(0.3) * spec;
+        }
+        
+        if (pointLight || spotLight)
+        {
+            specular *= attenuation;
+            if (spotLight)
+                specular *= intensity;
+        }
+        result += specular;
     }
     return vec4(result, 1.0f);
 }

@@ -371,7 +371,7 @@ namespace iKan {
                     ImGui::PopItemWidth();
                 }
 
-                const std::vector<const char*> availabelMeshString = { "backpack", "GroundPlane", "Light" };
+                const std::vector<const char*> availabelMeshString = { "backpack", "GroundPlane", "Sphere" };
                 if (ImGui::BeginCombo("##Type", currentMeshType.c_str()))
                 {
                     for (int i = 0; i < availabelMeshString.size(); i++)
