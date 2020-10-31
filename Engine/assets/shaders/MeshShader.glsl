@@ -28,11 +28,6 @@ void main()
 
 layout(location = 0) out vec4 color;
 
-struct Material
-{
-    float Shininess;
-};
-
 struct Light
 {
     bool IsAmbient;
@@ -74,7 +69,6 @@ uniform bool u_Blinn;
 
 uniform vec3 u_ViewPos;
 
-uniform Material   u_Material;
 uniform Light      u_Light;
 uniform PointLight u_PointLight;
 uniform SpotLight  u_SpotLight;
@@ -133,7 +127,6 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
             }
             result += diffuse;
         }
-        
         if (u_Light.IsDiffuse || u_Light.IsAmbient)
             slotBinded++;
     }
@@ -146,7 +139,15 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
         vec3  specular;
         if (slotBinded < u_NumTextureSlots)
         {
-            spec     = pow(max(dot(viewDir, reflectDir), 0.0), u_Material.Shininess);
+            if (u_Blinn)
+            {
+                vec3 halfwayDir = normalize(lightDir + viewDir);
+                spec = pow(max(dot(norm, halfwayDir), 0.0), 32.0f);
+            }
+            else
+            {
+                spec     = pow(max(dot(viewDir, reflectDir), 0.0), 32.0f);
+            }
             specular = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
             slotBinded++;
         }

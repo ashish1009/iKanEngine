@@ -117,12 +117,7 @@ namespace iKan {
                 s_Data.MeshShader->SetUniformFloat1("u_SpotLight.CutOff", glm::cos(glm::radians(light.Light->GetCutoff())));
                 s_Data.MeshShader->SetUniformFloat1("u_SpotLight.OuterCutOff", glm::cos(glm::radians(light.Light->GetOuterCutoff())));
             }
-            
-            // material properties
-            // TODO: Add Im gui for this or move to shader hard code
-            s_Data.MeshShader->SetUniformFloat1("u_Material.Shininess", 64.0f);
-            s_Data.MeshShader->Unbind();
-                        
+            s_Data.MeshShader->Unbind();            
         }
     }
     
