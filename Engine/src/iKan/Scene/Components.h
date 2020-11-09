@@ -59,10 +59,6 @@ namespace iKan {
         Ref<iKan::Texture> Texture       = nullptr;
         
         float TilingFactor = 1.0f;
-        
-        glm::vec2 SpriteSize = { 1.0f, 1.0f };
-        glm::vec2 CellSize   = { 16.0f, 16.0f };
-        glm::vec2 Coords     = { 0.0f, 0.0f };
 
         SpriteRendererComponent() = default;
         SpriteRendererComponent(const SpriteRendererComponent&) = default;
@@ -123,6 +119,14 @@ namespace iKan {
         
         LightComponent() = default;
         LightComponent(const LightComponent&) = default;
+    };
+    
+    struct BoxCollider2DComponent
+    {
+        bool IsRigid = true;
+        
+        BoxCollider2DComponent() = default;
+        BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
     };
     
 }

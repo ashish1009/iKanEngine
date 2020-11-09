@@ -186,7 +186,11 @@ namespace iKan {
                 script->OnUpdate(ts);
             }
         });
-
+    }
+    
+    bool Scene::IsCollision(Entity entity)
+    {
+        return false;
     }
 
     template<>

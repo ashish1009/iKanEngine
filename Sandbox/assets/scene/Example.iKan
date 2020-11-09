@@ -1,8 +1,8 @@
 Scene: Untitled
 Entities:
-  - Entity: 8012468650201767113
+  - Entity: 10171828780249283974
     TagComponent:
-      Tag: Empty Entity
+      Tag: Camera Entity
     TransformComponent:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
@@ -18,5 +18,25 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
+  - Entity: 8512388699574942245
+    TagComponent:
+      Tag: Red Square
+    TransformComponent:
+      Translation: [-2, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
     SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
+      Color: [0.699999988, 0.100000001, 0.100000001, 1]
+      TilingFactor: 1
+      TexAssetPath: ""
+  - Entity: 5076000505439309752
+    TagComponent:
+      Tag: Green Square
+    TransformComponent:
+      Translation: [2, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.100000001, 0.699999988, 0.100000001, 1]
+      TilingFactor: 1
+      TexAssetPath: ""

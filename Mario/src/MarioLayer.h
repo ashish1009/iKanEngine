@@ -22,7 +22,7 @@ namespace iKan {
         bool m_ViewportFocused = false, m_ViewportHovered = false;
 
         Ref<Framebuffer> m_FrameBuffer;
-        Ref<Scene> m_Scene;
+        Ref<Scene> m_ActiveScene;
 
         glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
         

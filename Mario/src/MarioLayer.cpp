@@ -42,9 +42,16 @@ namespace iKan {
     "GGGGGG GG GGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGG GGGGGGGGGGGGGGG  GGGGGGGGGGGGG                                                                                               GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
     ;
     
+    // To store the Tile sprite
     static Ref<Texture> s_TileSpriteSheet;
+    
+    // Map of Subtexture to the Char of their corresponding
     static std::unordered_map<char, Ref<SubTexture>> s_TextureMap;
+    
+    // Map of group of Entity to the Char of their corresponding
     static std::unordered_map<char, std::vector<Entity>> s_EntityVector;
+    
+    // Map of gorup of Subtextures to the Char of their corresponding
     static std::unordered_map<char, std::vector<Ref<SubTexture>>> s_SubTextureVectorMap;
     
     glm::vec4 s_BgColor = { 0.3f, 0.1f, 0.6f, 1.0f };
@@ -91,7 +98,7 @@ namespace iKan {
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
  
         // Adding Scene
-        m_Scene = Ref<Scene>::Create();
+        m_ActiveScene = Ref<Scene>::Create();
         
         // Frame Buffers
         FramebufferSpecification fbSpec;
@@ -100,11 +107,11 @@ namespace iKan {
         
         m_FrameBuffer = Framebuffer::Create(fbSpec);
 
-        m_SceneHierarchyPannel.SetContext(m_Scene);
+        m_SceneHierarchyPannel.SetContext(m_ActiveScene);
         
         // Level 1 Map
         {
-            Ref<Scene> scene = m_Scene;
+            Ref<Scene> scene = m_ActiveScene;
             // Texture tile
             s_TileSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
             
@@ -192,12 +199,13 @@ namespace iKan {
             {
                 for (uint32_t x = 0; x < mapWidth; x++)
                 {
-                    if (char tileType = s_MapTiles[x + y * mapWidth];
-                        s_TextureMap.find(tileType) != s_TextureMap.end())
+                    if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
                     {
                         Ref<SubTexture> subTexture = s_TextureMap[tileType];
                         
-                        auto entity       = s_EntityVector[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
+                        auto entity = s_EntityVector[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
+                        entity.AddComponent<BoxCollider2DComponent>();
+                        
                         auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);
                         auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
                         
@@ -212,7 +220,7 @@ namespace iKan {
         
         // Camera Entity
         {
-            Ref<Scene> scene = m_Scene;
+            Ref<Scene> scene = m_ActiveScene;
             
             Entity cameraEntity = scene->CreateEntity("Camera");
             auto& camera = cameraEntity.AddComponent<CameraComponent>().Camera;
@@ -250,7 +258,7 @@ namespace iKan {
             (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
         {
             m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-            m_Scene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         }
 
         RendererStatistics::Reset();
@@ -258,7 +266,7 @@ namespace iKan {
         
         Renderer::Clear(s_BgColor);
                     
-        m_Scene->OnUpdate(timeStep);
+        m_ActiveScene->OnUpdate(timeStep);
         
         m_FrameBuffer->Unbind();
     }

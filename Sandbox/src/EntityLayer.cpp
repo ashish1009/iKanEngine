@@ -2,6 +2,41 @@
 
 namespace iKan {
     
+    class BoxController : public ScriptableEntity
+    {
+    public:
+        void OnCreate()
+        {
+        }
+        
+        void OnUpdate(TimeStep ts)
+        {
+            if (HasComponent<TransformComponent>())
+            {
+                auto& translation = GetComponent<TransformComponent>().Translation;
+                float speed = 2.5f;
+                
+                {
+                    m_Entity.GetScene()->IsCollision(m_Entity);
+                }
+                if(Input::IsKeyPressed(Key::Left))
+                    translation.x -= speed * ts;
+                if(Input::IsKeyPressed(Key::Right))
+                    translation.x += speed * ts;
+                if(Input::IsKeyPressed(Key::Down))
+                    translation.y += speed * ts;
+                if(Input::IsKeyPressed(Key::Up))
+                    translation.y -= speed * ts;
+            }
+        }
+        
+        void OnDestroy()
+        {
+        }
+        
+        // OnAwake(), CollisionCallbacks()
+    };
+    
     EntityLayer::EntityLayer()
     {
         
@@ -26,50 +61,18 @@ namespace iKan {
         m_Framebuffer = Framebuffer::Create(fbSpec);
         m_ActiveScene = Ref<Scene>::Create();
         
-#if 0
         auto blueSquare = m_ActiveScene->CreateEntity("Green Square");
-        blueSquare.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 0.0f, 0.7f, 1.0f});
-        blueSquare.GetComponent<TransformComponent>().Translation.x= 2;
+        blueSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.1f, 0.7f, 0.1f, 1.0f });
+        blueSquare.GetComponent<TransformComponent>().Translation.x = 2;
         
         auto redSquare = m_ActiveScene->CreateEntity("Red Square");
-        redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
+        redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.7f, 0.1f, 0.1f, 1.0f });
         redSquare.GetComponent<TransformComponent>().Translation.x = -2;
         
-        class BoxController : public ScriptableEntity
-        {
-        public:
-            void OnCreate()
-            {
-            }
-            
-            void OnUpdate(TimeStep ts)
-            {
-                if (HasComponent<TransformComponent>())
-                {
-                    auto& translation = GetComponent<TransformComponent>().Translation;
-                    float speed = 2.5f;
-                    
-                    if(Input::IsKeyPressed(Key::Left))
-                        translation.x -= speed * ts;
-                    if(Input::IsKeyPressed(Key::Right))
-                        translation.x += speed * ts;
-                    if(Input::IsKeyPressed(Key::Down))
-                        translation.y += speed * ts;
-                    if(Input::IsKeyPressed(Key::Up))
-                        translation.y -= speed * ts;
-                }
-            }
-            
-            void OnDestroy()
-            {
-            }
-            
-            // OnAwake(), CollisionCallbacks()
-        };
-        redSquare.AddComponent<NativeScriptComponent>().Bind<BoxController>();
-	
-        m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-        m_CameraEntity.AddComponent<CameraComponent>();
+        redSquare.GetScene()->IsCollision(redSquare);
+        	
+        auto cameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+        cameraEntity.AddComponent<CameraComponent>().Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
         
         class CameraController : public ScriptableEntity
         {
@@ -102,8 +105,7 @@ namespace iKan {
             
             // OnAwake(), CollisionCallbacks()
         };
-        m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-#endif
+        cameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
     }
     
     void EntityLayer::OnDetach()

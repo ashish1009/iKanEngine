@@ -37,6 +37,8 @@ namespace iKan {
         
         const EntityMap& GetEntityMap() const { return m_EntityIDMap; }
         
+        bool IsCollision(Entity entity);
+        
     private:
         Entity GetMainCameraEntity();
         Entity GetLightEntity();

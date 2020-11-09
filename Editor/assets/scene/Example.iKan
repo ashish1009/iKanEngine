@@ -1,33 +1,31 @@
 Scene: Untitled
 Entities:
-  - Entity: 13496456470369876614
+  - Entity: 735502125368342914
     TagComponent:
-      Tag: Wall 2
+      Tag: Empty Entity
     TransformComponent:
-      Translation: [-7.75, 10, -26.75]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
-      Scale: [50, 20, 1]
+      Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 1, 1, 1]
       TilingFactor: 1
       TexAssetPath: ""
-  - Entity: 10676285804312310865
+  - Entity: 6221222595841406806
     TagComponent:
-      Tag: Ground Plane
+      Tag: Empty Entity
     TransformComponent:
       Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
-      Scale: [10, 1, 10]
-    MeshComponent:
-      AssetPath: /Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/objects/GroundPlane/GroundPlane.obj
-  - Entity: 2252229372668239003
-    TagComponent:
-      Tag: Wall1
-    TransformComponent:
-      Translation: [-32.5, 10, -1.75]
-      Rotation: [0, -1.55770636, 0]
-      Scale: [50, 20, 1]
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      TilingFactor: 1
-      TexAssetPath: /Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/texture/metal.png
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false

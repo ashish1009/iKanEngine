@@ -228,18 +228,28 @@ namespace iKan {
                 if (Property("Vertical FOV", perspectiveVerticalFov))
                     camera.SetPerspectiveFOV(glm::radians(perspectiveVerticalFov));
                 
-                Property("Near", camera.m_PerspectiveNear, 0.001f, 0.01f);
-                Property("Far", camera.m_PerspectiveFar, 10.0f, 1000.0f);
+                float perspectiveNear = camera.GetPerspectiveNearClip();
+                if (Property("Near", perspectiveNear))
+                    camera.SetPerspectiveNearClip(perspectiveNear);
+                
+                float perspectiveFar = camera.GetPerspectiveFarClip();
+                if (Property("Far", perspectiveFar))
+                    camera.SetPerspectiveFarClip(perspectiveFar);
             }
             
             if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orthographic)
             {
-                Property("Size", camera.m_OrthographicSize, 0.1f, 10.0f);
-                Property("Near", camera.m_OrthographicNear, 0.1f, -1.0f);
-                Property("Far", camera.m_OrthographicFar, 0.1f, 1.0f);
+                float orthoSize = camera.GetOrthographicSize();
+                if (Property("Size", orthoSize))
+                    camera.SetOrthographicSize(orthoSize);
                 
-                ImGui::Separator();
-                Property("Fixed Aspect Ratio", cc.FixedAspectRatio);
+                float orthoNear = camera.GetOrthographicNearClip();
+                if (Property("Near", orthoNear))
+                    camera.SetOrthographicNearClip(orthoNear);
+                
+                float orthoFar = camera.GetOrthographicFarClip();
+                if (Property("Far", orthoFar))
+                    camera.SetOrthographicFarClip(orthoFar);
             }
         });
         
