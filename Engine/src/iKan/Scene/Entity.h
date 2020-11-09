@@ -52,6 +52,9 @@ namespace iKan {
         
         bool operator ==(const Entity& other) { return m_EntityHandle == other.m_EntityHandle && m_Scene == other.m_Scene; }
         bool operator !=(const Entity& other) { return !(*this == other); }
+        
+        bool operator ==(const entt::entity& other) { return m_EntityHandle == other; }
+        bool operator !=(const entt::entity& other) { return !(*this == other); }
 
     private:
         entt::entity m_EntityHandle{ entt::null };

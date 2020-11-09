@@ -21,6 +21,15 @@ namespace iKan {
     class Scene : public RefCounted
     {
     public:
+        enum class CollisionSide
+        {
+            Up    = BIT(0),
+            Down  = BIT(1),
+            Right = BIT(2),
+            Left  = BIT(3),
+        };
+        
+    public:
         Scene();
         ~Scene();
         
@@ -37,7 +46,7 @@ namespace iKan {
         
         const EntityMap& GetEntityMap() const { return m_EntityIDMap; }
         
-        bool IsCollision(Entity entity);
+        int CollisionDetection(Entity& entity);
         
     private:
         Entity GetMainCameraEntity();

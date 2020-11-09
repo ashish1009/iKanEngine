@@ -188,9 +188,51 @@ namespace iKan {
         });
     }
     
-    bool Scene::IsCollision(Entity entity)
+    int Scene::CollisionDetection(Entity& currEntity)
     {
-        return false;
+        int result = 0;
+        const auto& currEntPos  = currEntity.GetComponent<TransformComponent>().Translation;
+        const auto& currEntSize = currEntity.GetComponent<TransformComponent>().Scale;
+        
+        auto group = m_Registry.group<>(entt::get<TransformComponent, BoxCollider2DComponent>);
+        for (auto entity : group)
+        {
+            if (currEntity == entity)
+                continue;
+            
+            const auto [transform, boxColl] = group.get<TransformComponent, BoxCollider2DComponent>(entity);
+            if (boxColl.IsRigid)
+            {
+                const auto& entPos  = transform.Translation;
+                const auto& entSize = transform.Scale;
+                
+                // Right collision of current entity
+                {
+                    // Illustration
+                    {
+                        // Case A.
+                        /*
+                         Case 1.            Case 2.             Case 3.
+                                                |--|
+                         |--||--|           |--||__|            |--|
+                         |__||__|           |__|                |__||--|
+                                                                    |__|
+                         */
+                    }
+                    
+                    if ((currEntPos.y + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&  // Case 2
+                        (currEntPos.y - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))    // Case 3
+                    {
+                        if ((currEntPos.x + (currEntSize.z / 2) >= entPos.x - (entSize.x /2)) &&
+                            (currEntPos.x - (currEntSize.z / 2) <= entPos.x + (entSize.x /2)))
+                        {
+                            result |= (int)CollisionSide::Right;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     template<>
@@ -231,6 +273,11 @@ namespace iKan {
     
     template<>
     void Scene::OnComponentAdded<LightComponent>(Entity entity, LightComponent& component)
+    {
+    }
+    
+    template<>
+    void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
     {
     }
 

@@ -2,6 +2,8 @@
 
 namespace iKan {
     
+#define IsCollision(x) (m_Entity.GetScene()->CollisionDetection(m_Entity) & (int)Scene::CollisionSide::x)
+    
     class BoxController : public ScriptableEntity
     {
     public:
@@ -16,13 +18,15 @@ namespace iKan {
                 auto& translation = GetComponent<TransformComponent>().Translation;
                 float speed = 2.5f;
                 
-                {
-                    m_Entity.GetScene()->IsCollision(m_Entity);
-                }
                 if(Input::IsKeyPressed(Key::Left))
                     translation.x -= speed * ts;
                 if(Input::IsKeyPressed(Key::Right))
-                    translation.x += speed * ts;
+                {
+                    if (!IsCollision(Right))
+                    {
+                        translation.x += speed * ts;
+                    }
+                }
                 if(Input::IsKeyPressed(Key::Down))
                     translation.y += speed * ts;
                 if(Input::IsKeyPressed(Key::Up))
@@ -63,14 +67,16 @@ namespace iKan {
         
         auto blueSquare = m_ActiveScene->CreateEntity("Green Square");
         blueSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.1f, 0.7f, 0.1f, 1.0f });
+        blueSquare.AddComponent<BoxCollider2DComponent>();
         blueSquare.GetComponent<TransformComponent>().Translation.x = 2;
         
         auto redSquare = m_ActiveScene->CreateEntity("Red Square");
         redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.7f, 0.1f, 0.1f, 1.0f });
+        redSquare.AddComponent<BoxCollider2DComponent>();
         redSquare.GetComponent<TransformComponent>().Translation.x = -2;
+
+        redSquare.AddComponent<NativeScriptComponent>().Bind<BoxController>();
         
-        redSquare.GetScene()->IsCollision(redSquare);
-        	
         auto cameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
         cameraEntity.AddComponent<CameraComponent>().Camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
         
