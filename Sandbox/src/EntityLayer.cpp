@@ -2,7 +2,7 @@
 
 namespace iKan {
     
-#define IsCollision(x) (m_Entity.GetScene()->CollisionDetection(m_Entity) & (int)Scene::CollisionSide::x)
+#define IsCollision(x) (m_Entity.GetScene()->CollisionDetection(m_Entity, speed * ts) & (int)Scene::CollisionSide::x)
     
     class BoxController : public ScriptableEntity
     {
@@ -19,7 +19,12 @@ namespace iKan {
                 float speed = 2.5f;
                 
                 if(Input::IsKeyPressed(Key::Left))
-                    translation.x -= speed * ts;
+                {
+                    if (!IsCollision(Left))
+                    {
+                        translation.x -= speed * ts;
+                    }
+                }
                 if(Input::IsKeyPressed(Key::Right))
                 {
                     if (!IsCollision(Right))

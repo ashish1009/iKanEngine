@@ -38,7 +38,7 @@ namespace iKan {
 
         void DestroyEntity(Entity entity);
 
-        void OnViewportResize(uint32_t width, uint32_t height);\
+        void OnViewportResize(uint32_t width, uint32_t height);
         
         void OnRenderEditor(TimeStep ts, const EditorCamera& editorCamera);
 
@@ -46,7 +46,7 @@ namespace iKan {
         
         const EntityMap& GetEntityMap() const { return m_EntityIDMap; }
         
-        int CollisionDetection(Entity& entity);
+        int CollisionDetection(Entity& entity, float speed);
         
     private:
         Entity GetMainCameraEntity();

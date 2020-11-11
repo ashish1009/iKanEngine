@@ -188,7 +188,7 @@ namespace iKan {
         });
     }
     
-    int Scene::CollisionDetection(Entity& currEntity)
+    int Scene:: CollisionDetection(Entity& currEntity, float speed)
     {
         int result = 0;
         const auto& currEntPos  = currEntity.GetComponent<TransformComponent>().Translation;
@@ -206,28 +206,58 @@ namespace iKan {
                 const auto& entPos  = transform.Translation;
                 const auto& entSize = transform.Scale;
                 
-                // Right collision of current entity
+                // Illustration for Right Left Face overlap
                 {
-                    // Illustration
+                    /*
+                     Case 1.            Case 2.             Case 3.
+                                            |--|
+                     |--||--|           |--||__|            |--|
+                     |__||__|           |__|                |__||--|
+                                                                |__|
+                     */
+                }
+                if ((currEntPos.y + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&  // Case 2
+                    (currEntPos.y - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))    // Case 3
+                {
+                    // Right collision of current entity
+                    if ((currEntPos.x + speed + (currEntSize.x / 2) >= entPos.x - (entSize.x / 2)) &&
+                        (currEntPos.x - (currEntSize.x / 2) < entPos.x + (entSize.x / 2)))
                     {
-                        // Case A.
-                        /*
-                         Case 1.            Case 2.             Case 3.
-                                                |--|
-                         |--||--|           |--||__|            |--|
-                         |__||__|           |__|                |__||--|
-                                                                    |__|
-                         */
+                        result |= (int)CollisionSide::Right;
                     }
                     
-                    if ((currEntPos.y + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&  // Case 2
-                        (currEntPos.y - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))    // Case 3
+                    else if ((currEntPos.x + (currEntSize.x / 2) > entPos.x - (entSize.x / 2)) &&
+                             (currEntPos.x - speed - (currEntSize.x / 2) <= entPos.x + (entSize.x / 2)))
                     {
-                        if ((currEntPos.x + (currEntSize.z / 2) >= entPos.x - (entSize.x /2)) &&
-                            (currEntPos.x - (currEntSize.z / 2) <= entPos.x + (entSize.x /2)))
-                        {
-                            result |= (int)CollisionSide::Right;
-                        }
+                        result |= (int)CollisionSide::Left;
+                    }
+                }
+                
+                // Illustration for Right Left Face overlap
+                {
+                    /*
+                     Case 1.            Case 2.             Case 3.
+                     |--|               |--|                  |--|
+                     |__|               |__|                  |__|
+                     |--|                 |--|              |--|
+                     |__|                 |__|              |__|
+                         
+                     */
+                }
+                if ((currEntPos.x + (currEntSize.x / 2) >= entPos.x - (entSize.x / 2)) &&  // Case 2
+                    (currEntPos.x - (currEntSize.x / 2) <= entPos.x + (entSize.x / 2)))    // Case 3
+                {
+                    // Right collision of current entity
+                    if ((currEntPos.y + speed + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&
+                        (currEntPos.y - (currEntSize.y / 2) < entPos.y + (entSize.y / 2)))
+                    {
+                        result |= (int)CollisionSide::Up;
+                    }
+
+                    else if ((currEntPos.y + (currEntSize.y / 2) > entPos.y - (entSize.y / 2)) &&
+                             (currEntPos.y - speed - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))
+                    {
+                        result |= (int)CollisionSide::Down;
                     }
                 }
             }
