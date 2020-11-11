@@ -12,7 +12,7 @@ namespace iKan {
         
         void SetContext(const Ref<Scene>& scene);
         
-        void OnImguiender();
+        void OnImguiender(bool* pIsOpen = nullptr);
         
     private:
         void DrawEntityNode(Entity entity);

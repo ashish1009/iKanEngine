@@ -14,9 +14,9 @@ namespace iKan {
         m_Context = context;
     }
     
-    void SceneHeirarchyPannel::OnImguiender()
+    void SceneHeirarchyPannel::OnImguiender(bool* pIsOpen)
     {
-        ImGui::Begin("Scene Hierarchy");
+        ImGui::Begin("Scene Hierarchy", pIsOpen);
         
         m_Context->m_Registry.each([&](auto entityID)
         {
@@ -38,7 +38,7 @@ namespace iKan {
         
         ImGui::End();
         
-        ImGui::Begin("Properties");
+        ImGui::Begin("Properties", pIsOpen);
         if (m_SelectionContext)
             DrawComponents(m_SelectionContext);
         

@@ -77,6 +77,36 @@ namespace iKan {
         IK_ASSERT(false, "Invalid Type");
         return "";
     }
+
+    static void ImgButtons(const char name)
+    {
+        if (ImGui::TreeNode(GetEntityNameFromChar(name).c_str()))
+        {
+            ImTextureID myTexId = (ImTextureID)((size_t)s_TileSpriteSheet->GetRendererID());
+            float myTexW = (float)s_TileSpriteSheet->GetWidth();
+            float myTexH = (float)s_TileSpriteSheet->GetHeight();
+            
+            int32_t i = 0;
+            for (auto subTex : s_SubTextureVectorMap[name])
+            {
+                ImGui::PushID(i);
+                
+                auto coords = subTex->GetCoords();
+                glm::vec2 uv1 = { (coords.x + 1) * 16.0f, coords.y * 16.0f };
+                glm::vec2 uv0 = { coords.x * 16.0f, (coords.y + 1) * 16.0f };
+                if (ImGui::ImageButton(myTexId, ImVec2(32.0f, 32.0f), ImVec2(uv0.x / myTexW, uv0.y / myTexH), ImVec2(uv1.x / myTexW, uv1.y / myTexH), 0))
+                    for (auto entity : s_EntityVector[name])
+                        if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+                            subTexComp = subTex;
+                
+                ImGui::PopID();
+                ImGui::SameLine();
+                i++;
+            }
+            ImGui::NewLine();
+            ImGui::TreePop();
+        }
+    }
         
     MarioLayer::MarioLayer()
     : Layer("Mario")
@@ -335,6 +365,12 @@ namespace iKan {
                     
     void MarioLayer::OnImguiRender()
     {
+        static bool isFrameRate           = false;
+        static bool isRendererStats       = false;
+        static bool isVendorType          = false;
+        static bool isSetting             = false;
+        static bool isSceneHeirarchypanel = false;
+        
         ImGuiAPI::EnableDcocking();
         // ----------------------- Menu Bar ---------------------------------------------------------------
         if (ImGui::BeginMenuBar())
@@ -344,22 +380,30 @@ namespace iKan {
                 if (ImGui::MenuItem("Exit")) Application::Get().Close();
                 ImGui::EndMenu();
             }
+            if (ImGui::BeginMenu("View"))
+            {
+                if (ImGui::MenuItem("Scene Heirarchy Panel"))
+                    isSceneHeirarchypanel = true;
+                if (ImGui::MenuItem("Setting"))
+                    isSetting = true;
+                if (ImGui::MenuItem("Frame Rate"))
+                    isFrameRate = true;
+                if (ImGui::MenuItem("Render Stats"))
+                    isRendererStats = true;
+                if (ImGui::MenuItem("Vendor Types"))
+                    isVendorType = true;
+                ImGui::EndMenu();
+            }
             if (ImGui::BeginMenu("Properties"))
             {
                 if (ImGui::BeginMenu("Theme"))
                 {
                     if (ImGui::MenuItem("Light"))
-                    {
                         ImGuiAPI::SetLightThemeColors();
-                    }
                     if (ImGui::MenuItem("Dark"))
-                    {
                         ImGuiAPI::SetDarkThemeColors();
-                    }
                     if (ImGui::MenuItem("Grey"))
-                    {
                         ImGuiAPI::SetGreyThemeColors();
-                    }
                     ImGui::EndMenu();
                 }
                 ImGui::EndMenu();
@@ -367,15 +411,48 @@ namespace iKan {
             ImGui::EndMenuBar();
         }
         
-        // Stats 
-        ImGuiAPI::FrameRate();
-        ImGuiAPI::RendererStats();
-        ImGuiAPI::RendererVersion();
-        m_SceneHierarchyPannel.OnImguiender();
+        if (isFrameRate)
+            ImGuiAPI::FrameRate(&isFrameRate);
+        
+        if (isRendererStats)
+            ImGuiAPI::RendererStats(&isRendererStats);
+        
+        if (isVendorType)
+            ImGuiAPI::RendererVersion(&isVendorType);
+        
+        if (isSceneHeirarchypanel)
+            m_SceneHierarchyPannel.OnImguiender(&isSceneHeirarchypanel);
         
         // ----------------------- Setings ----------------------------------------------------------------
-        ImGui::Begin("Setting");
-        ImGui::End();
+        if (isSetting)
+        {
+            ImGui::Begin("Setting", &isSetting);
+            
+            {
+                if (ImGui::CollapsingHeader("BackGround"))
+                {
+                    if (ImGui::TreeNode("Color"))
+                    {
+                        ImGuiAPI::ColorEdit(s_BgColor);
+                        ImGui::TreePop();
+                    }
+                    if (ImGui::TreeNode("Tiles"))
+                    {
+                        ImgButtons('G');
+                        ImgButtons('X');
+                        ImgButtons('B');
+                        ImgButtons('S');
+                        ImgButtons('-');
+                        ImgButtons('Y');
+                        ImgButtons('!');
+                        
+                        ImGui::TreePop();
+                    }
+                }
+            }
+            
+            ImGui::End();
+        }
         
         //------------------------ View Port ---------------------------------------------------------------
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });

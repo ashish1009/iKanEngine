@@ -7,9 +7,9 @@
 
 namespace iKan {
     
-    void ImGuiAPI::RendererVersion()
+    void ImGuiAPI::RendererVersion(bool *pIsOpen)
     {
-        ImGui::Begin("Renderer");
+        ImGui::Begin("Renderer", pIsOpen);
         auto& caps = RendererAPI::GetCapabilities();
 
         ImGui::PushID("Renderer");
@@ -35,17 +35,17 @@ namespace iKan {
         ImGui::End();
     }
     
-    void ImGuiAPI::FrameRate()
+    void ImGuiAPI::FrameRate(bool *pIsOpen)
     {
-        ImGui::Begin("Frame Rate");
+        ImGui::Begin("Frame Rate", pIsOpen);
         ImGui::Text("%.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
     }
     
-    void ImGuiAPI::RendererStats()
+    void ImGuiAPI::RendererStats(bool *pIsOpen)
     {
         //------------------------ Statistics -------------------------------------------------------------
-        ImGui::Begin("Stats");
+        ImGui::Begin("Stats", pIsOpen);
         
         ImGui::PushID("Renderer");
         
