@@ -25,7 +25,10 @@ Make sure that you do a `--recursive` clone to fetch all of the submodules!
 
 ### Library
 Link the libiKan.a in your project
-Link the libassimp.5.0.0.dylib inyour project from the path `${PROJECT_DIR}/../iKan/vendor/assimp/lib`
+Link the libassimp.5.dylib inyour project from the path `${PROJECT_DIR}/../iKan/vendor/assimp/lib`
+Link the libIrrXML.dylib inyour project from the path `${PROJECT_DIR}/../iKan/vendor/assimp/lib`
+
+Copy the library 
 
 ### Frameworks
 As GLFW is statically linked to libiKan.a so Link the following Framework

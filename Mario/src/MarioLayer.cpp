@@ -17,11 +17,17 @@ namespace iKan {
      Y : Pipe Head
      X : Bricks
      B : Bonus
+     ( : Cloud Left
+     ^ : Cloud
+     ) : Cloud Right
+     < : Grass Left
+     v : Grass
+     > : Grass Right
      */
     static const char* s_MapTiles =
     "                                                                                                                                                                                                                                                                                                                                                                                                                                        "
     "                                                                                                                                                                                                                                                                                                                                                                                                                                        "
-    "                                                                                                                                                                                                                                                                                                                                                                                                                                        "
+    "    (^)                   (^^^)                                               (^)                                      (^^)                                                                (^)                                                                       (^^)                                 (^^^)                                      (^)                                       (^^)                                     "
     "                                                                                                                                                                                                                                                                                                                                                                                                                               .        "
     "        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                         |        "
     "                                                                                                                                                                                                                                                                                                                                                                                                                              ...       "
@@ -37,7 +43,7 @@ namespace iKan {
     "                                                  Y                 SS                                                                          SS                                 SSSS                                                                                                                                           S  S                                                           SSSSS                  ............... "
     "                                                  !                SSS                                                   S  S                  SSS                                SSSSS                                                                                                                      Y                   SS  SS                                                         SSSSSS                  ||||||||||||||| "
     "                            Y                     !               SSSS                               Y                  SS  SS                SSSS             Y                 SSSSSS                                                                                                                      !                  SSS  SSS                    Y                                  SSSSSSS                  |u||u||u||u||u| "
-    "                   S        !       S  S          !              SSSSS                               !                 SSS  SSS              SSSSS             !                SSSSSSS                                                                                                                      !                 SSSS  SSSS                   !                                 SSSSSSSS                  |o||o||o||o||0| "
+    "             <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS  SSSv>          <vSSSSS             !                SSSSSSS                                                                                                                      !vv>              SSSS  SSSS                   !>        <v>                     SSSSSSSS         <v>      |o||o||o||o||0| "
     "GGGGGG GG GGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGG GGGGGGGGGGGGGGG  GGGGGGGGGGGGG-----------------------------------------------------------------------------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
     "GGGGGG GG GGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGG GGGGGGGGGGGGGGG  GGGGGGGGGGGGG                                                                                               GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
     ;
@@ -70,9 +76,15 @@ namespace iKan {
             case 'S' : return "Steps";               break;
             case '-' : return "Bridge";              break;
             case '!' : return "Pipe Base";           break;
-            case 'Y' : return "Pipe Head";           break;
+            case 'Y' : return "Pipe";                break;
             case 'X' : return "Bricks";              break;
             case 'B' : return "Bonus";               break;
+            case '<' : return "Grass Left";          break;
+            case 'v' : return "Grass";               break;
+            case '>' : return "Grass Right";         break;
+            case '(' : return "Cloud Left";          break;
+            case '^' : return "Cloud";               break;
+            case ')' : return "Cloud Right";         break;
         }
         IK_ASSERT(false, "Invalid Type");
         return "";
@@ -95,10 +107,38 @@ namespace iKan {
                 glm::vec2 uv1 = { (coords.x + 1) * 16.0f, coords.y * 16.0f };
                 glm::vec2 uv0 = { coords.x * 16.0f, (coords.y + 1) * 16.0f };
                 if (ImGui::ImageButton(myTexId, ImVec2(32.0f, 32.0f), ImVec2(uv0.x / myTexW, uv0.y / myTexH), ImVec2(uv1.x / myTexW, uv1.y / myTexH), 0))
+                {
                     for (auto entity : s_EntityVector[name])
                         if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
                             subTexComp = subTex;
-                
+                    
+                    if (name == 'Y')
+                    {
+                        for (auto entity : s_EntityVector['!'])
+                            if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+                                subTexComp = s_SubTextureVectorMap['!'][i];
+                    }
+                    
+                    else if (name == 'v')
+                    {
+                        for (auto entity : s_EntityVector['<'])
+                            if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+                                subTexComp = s_SubTextureVectorMap['<'][i];
+                        for (auto entity : s_EntityVector['>'])
+                            if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+                                subTexComp = s_SubTextureVectorMap['>'][i];
+                    }
+                    
+                    else if (name == '^')
+                    {
+                        for (auto entity : s_EntityVector[')'])
+                            if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+                                subTexComp = s_SubTextureVectorMap[')'][i];
+                        for (auto entity : s_EntityVector['('])
+                            if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+                                subTexComp = s_SubTextureVectorMap['('][i];
+                    }
+                }
                 ImGui::PopID();
                 ImGui::SameLine();
                 i++;
@@ -214,8 +254,53 @@ namespace iKan {
                 s_TextureMap['!'] = s_SubTextureVectorMap['!'][3];
             }
             
-            // Adding Texture maps
-            // Ground
+            // Grass
+            {
+                s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 18.0f })); // Green
+                s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 14.0f })); // Orange
+                s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 12.0f })); // Grey
+                s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 8.0f  })); // Pink
+                
+                s_TextureMap['<'] = s_SubTextureVectorMap['<'][3];
+                
+                s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 18.0f })); // Green
+                s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 14.0f })); // Orange
+                s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 12.0f })); // Grey
+                s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 8.0f  })); // Pink
+                
+                s_TextureMap['v'] = s_SubTextureVectorMap['v'][3];
+                
+                s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 18.0f })); // Green
+                s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 14.0f })); // Orange
+                s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 12.0f })); // Grey
+                s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 8.0f  })); // Pink
+                
+                s_TextureMap['>'] = s_SubTextureVectorMap['>'][3];
+            }
+            
+            // Grass
+            {
+                s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+                s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+                s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+                s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+                
+                s_TextureMap['('] = s_SubTextureVectorMap['('][3];
+                
+                s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+                s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+                s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+                s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+                
+                s_TextureMap['^'] = s_SubTextureVectorMap['^'][3];
+                
+                s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+                s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+                s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+                s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+                
+                s_TextureMap[')'] = s_SubTextureVectorMap[')'][3];
+            }
             
             // Castel
             s_TextureMap['.'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 19.0f, 25.0f });
@@ -365,10 +450,10 @@ namespace iKan {
                     
     void MarioLayer::OnImguiRender()
     {
-        static bool isFrameRate           = false;
-        static bool isRendererStats       = false;
-        static bool isVendorType          = false;
-        static bool isSetting             = false;
+        static bool isFrameRate           = true;
+        static bool isRendererStats       = true;
+        static bool isVendorType          = true;
+        static bool isSetting             = true;
         static bool isSceneHeirarchypanel = false;
         
         ImGuiAPI::EnableDcocking();
@@ -445,7 +530,9 @@ namespace iKan {
                         ImgButtons('-');
                         ImgButtons('Y');
                         ImgButtons('!');
-                        
+                        ImgButtons('v');
+                        ImgButtons('^');
+
                         ImGui::TreePop();
                     }
                 }
