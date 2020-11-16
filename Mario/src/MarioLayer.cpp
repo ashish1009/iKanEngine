@@ -50,9 +50,15 @@ namespace iKan {
     
     // To store the Tile sprite
     static Ref<Texture> s_TileSpriteSheet;
+
+    struct Tile
+    {
+        Ref<iKan::SubTexture> SubTexture;
+        bool Rigid = true;
+    };
     
     // Map of Subtexture to the Char of their corresponding
-    static std::unordered_map<char, Ref<SubTexture>> s_TextureMap;
+    static std::unordered_map<char, Tile> s_TextureMap;
     
     // Map of group of Entity to the Char of their corresponding
     static std::unordered_map<char, std::vector<Entity>> s_EntityVector;
@@ -195,7 +201,7 @@ namespace iKan {
                 s_SubTextureVectorMap['G'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 23.0f })); // Grey
                 s_SubTextureVectorMap['G'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 21.0f })); // Green
                 
-                s_TextureMap['G'] = s_SubTextureVectorMap['G'][3];
+                s_TextureMap['G'].SubTexture = s_SubTextureVectorMap['G'][3];
             }
             
             // Bricks SubTextures
@@ -205,17 +211,17 @@ namespace iKan {
                 s_SubTextureVectorMap['X'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17.0f, 23.0f })); // Grey;
                 s_SubTextureVectorMap['X'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17.0f, 21.0f })); // green;
                 
-                s_TextureMap['X'] = s_SubTextureVectorMap['X'][1];
+                s_TextureMap['X'].SubTexture = s_SubTextureVectorMap['X'][1];
             }
             
-            // Bomus SubTextures
+            // Bonus SubTextures
             {
                 s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 27.0f })); // Brown
                 s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 25.0f })); // Blue
                 s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 23.0f })); // Grey
                 s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 21.0f })); // Green
                 
-                s_TextureMap['B'] = s_SubTextureVectorMap['B'][3];
+                s_TextureMap['B'].SubTexture = s_SubTextureVectorMap['B'][3];
             }
             
             // Steos SubTextures
@@ -225,7 +231,7 @@ namespace iKan {
                 s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 22.0f })); // Grey
                 s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 20.0f })); // Green
                 
-                s_TextureMap['S'] = s_SubTextureVectorMap['S'][2];
+                s_TextureMap['S'].SubTexture = s_SubTextureVectorMap['S'][2];
             }
             
             // Bridge SubTexture
@@ -235,7 +241,7 @@ namespace iKan {
                 s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 11.0f })); // Grey
                 s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 9.0f }));  // Pink
                 
-                s_TextureMap['-'] = s_SubTextureVectorMap['-'][3];
+                s_TextureMap['-'].SubTexture = s_SubTextureVectorMap['-'][3];
             }
             
             // PipesHead
@@ -250,8 +256,8 @@ namespace iKan {
                 s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 12.0f }, { 2.0f, 1.0f })); // Grey
                 s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 8.0f }, { 2.0f, 1.0f }));  // Pink
                 
-                s_TextureMap['Y'] = s_SubTextureVectorMap['Y'][3];
-                s_TextureMap['!'] = s_SubTextureVectorMap['!'][3];
+                s_TextureMap['Y'].SubTexture = s_SubTextureVectorMap['Y'][3];
+                s_TextureMap['!'].SubTexture = s_SubTextureVectorMap['!'][3];
             }
             
             // Grass
@@ -261,21 +267,24 @@ namespace iKan {
                 s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 12.0f })); // Grey
                 s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 8.0f  })); // Pink
                 
-                s_TextureMap['<'] = s_SubTextureVectorMap['<'][3];
-                
+                s_TextureMap['<'].SubTexture = s_SubTextureVectorMap['<'][3];
+                s_TextureMap['<'].Rigid = false;
+
                 s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 18.0f })); // Green
                 s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 14.0f })); // Orange
                 s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 12.0f })); // Grey
                 s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 8.0f  })); // Pink
                 
-                s_TextureMap['v'] = s_SubTextureVectorMap['v'][3];
+                s_TextureMap['v'].SubTexture = s_SubTextureVectorMap['v'][3];
+                s_TextureMap['v'].Rigid = false;
                 
                 s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 18.0f })); // Green
                 s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 14.0f })); // Orange
                 s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 12.0f })); // Grey
                 s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 8.0f  })); // Pink
                 
-                s_TextureMap['>'] = s_SubTextureVectorMap['>'][3];
+                s_TextureMap['>'].SubTexture = s_SubTextureVectorMap['>'][3];
+                s_TextureMap['>'].Rigid = false;
             }
             
             // Grass
@@ -285,30 +294,33 @@ namespace iKan {
                 s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
                 s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 2.0f }, { 1.0f, 2.0f })); // Red
                 
-                s_TextureMap['('] = s_SubTextureVectorMap['('][3];
+                s_TextureMap['('].SubTexture = s_SubTextureVectorMap['('][3];
+                s_TextureMap['('].Rigid = false;
                 
                 s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
                 s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Red
                 s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
                 s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Red
                 
-                s_TextureMap['^'] = s_SubTextureVectorMap['^'][3];
+                s_TextureMap['^'].SubTexture = s_SubTextureVectorMap['^'][3];
+                s_TextureMap['^'].Rigid = false;
                 
                 s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
                 s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Red
                 s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
                 s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Red
                 
-                s_TextureMap[')'] = s_SubTextureVectorMap[')'][3];
+                s_TextureMap[')'].SubTexture = s_SubTextureVectorMap[')'][3];
+                s_TextureMap[')'].Rigid = false;
             }
             
             // Castel
-            s_TextureMap['.'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 19.0f, 25.0f });
-            s_TextureMap['u'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 24.0f });
-            s_TextureMap['o'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 24.0f });
-            s_TextureMap['|'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 25.0f });
-            s_TextureMap['l'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 25.0f });
-            s_TextureMap['r'] = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 22.0f, 25.0f });
+            s_TextureMap['.'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 19.0f, 25.0f });
+            s_TextureMap['u'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 24.0f });
+            s_TextureMap['o'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 24.0f });
+            s_TextureMap['|'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 25.0f });
+            s_TextureMap['l'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 25.0f });
+            s_TextureMap['r'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 22.0f, 25.0f });
             
             for (uint32_t y = 0; y < mapHeight; y++)
             {
@@ -316,12 +328,12 @@ namespace iKan {
                 {
                     if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
                     {
-                        Ref<SubTexture> subTexture = s_TextureMap[tileType];
-                        
                         auto entity = s_EntityVector[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
-                        entity.AddComponent<BoxCollider2DComponent>();
                         
-                        auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(subTexture);
+                        if (s_TextureMap[tileType].Rigid)
+                            entity.AddComponent<BoxCollider2DComponent>();
+                        
+                        auto spriteEntity = entity.AddComponent<SpriteRendererComponent>(s_TextureMap[tileType].SubTexture);
                         auto spriteSize   = spriteEntity.SubTexComp->GetSpriteSize();
                         
                         auto& tc = entity.GetComponent<TransformComponent>();
