@@ -184,7 +184,6 @@
 		B26D9D0F250022CF003291C4 /* FrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameBuffer.cpp; sourceTree = "<group>"; };
 		B26D9D12250022F5003291C4 /* OpenGLFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLFrameBuffer.cpp; sourceTree = "<group>"; };
 		B26D9D13250022F5003291C4 /* OpenGLFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLFrameBuffer.h; sourceTree = "<group>"; };
-		B27417462519E98E003CA8E9 /* libassimp.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.0.0.dylib; path = vendor/Assimp/lib/libassimp.5.0.0.dylib; sourceTree = "<group>"; };
 		B2752D0724FA7E5C005EF655 /* KeyEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvents.h; sourceTree = "<group>"; };
 		B2752D0B24FAB248005EF655 /* MouseEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvents.h; sourceTree = "<group>"; };
 		B2752D0D24FABB8D005EF655 /* KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
@@ -255,7 +254,6 @@
 		B21375ED24ED274A00A14055 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B27417462519E98E003CA8E9 /* libassimp.5.0.0.dylib */,
 				B21375EE24ED274A00A14055 /* libglfw3.a */,
 			);
 			name = Frameworks;

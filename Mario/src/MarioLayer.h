@@ -1,6 +1,8 @@
 #include <iKan.h>
 
-namespace iKan {
+using namespace iKan;
+
+namespace Mario {
     
     class MarioLayer : public Layer
     {

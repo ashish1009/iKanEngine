@@ -9,7 +9,7 @@ public:
     MarioApp(const iKan::ApplicationProps& props)
     : Application(props)
     {
-        PushLayer(new iKan::MarioLayer());
+        PushLayer(new Mario::MarioLayer());
     }
     
     virtual ~MarioApp()

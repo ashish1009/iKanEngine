@@ -13,6 +13,7 @@
 		B22B331924FFB0390002D428 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331824FFB0390002D428 /* OpenGL.framework */; };
 		B22B331B24FFB0460002D428 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B22B331A24FFB0460002D428 /* IOKit.framework */; };
 		B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D022500072E003291C4 /* MarioLayer.cpp */; };
+		B29287582566CE4400B61ED4 /* BackgroundTiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29287562566CE4400B61ED4 /* BackgroundTiles.cpp */; };
 		B2CB6EA72560270D00F5EF3F /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA62560270C00F5EF3F /* libassimp.5.dylib */; };
 		B2CB6EAA2560273C00F5EF3F /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */; };
 /* End PBXBuildFile section */
@@ -36,9 +37,13 @@
 		B22B331624FFB0330002D428 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B22B331824FFB0390002D428 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B22B331A24FFB0460002D428 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B230184B25680CB4003A391A /* CameraController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraController.h; sourceTree = "<group>"; };
+		B230184D25680D1E003A391A /* PlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
 		B26D9D022500072E003291C4 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B26D9D032500072E003291C4 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
 		B26D9D0D2500168D003291C4 /* Shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.glsl; sourceTree = "<group>"; };
+		B29287562566CE4400B61ED4 /* BackgroundTiles.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BackgroundTiles.cpp; sourceTree = "<group>"; wrapsLines = 0; };
+		B29287572566CE4400B61ED4 /* BackgroundTiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundTiles.h; sourceTree = "<group>"; };
 		B2CB6EA62560270C00F5EF3F /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
 		B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = ../Engine/vendor/Assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,9 +86,12 @@
 		B22B330B24FFAAE00002D428 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B230184A25680C80003A391A /* NativScripts */,
 				B22B330C24FFAAE00002D428 /* MarioApp.cpp */,
 				B26D9D022500072E003291C4 /* MarioLayer.cpp */,
 				B26D9D032500072E003291C4 /* MarioLayer.h */,
+				B29287562566CE4400B61ED4 /* BackgroundTiles.cpp */,
+				B29287572566CE4400B61ED4 /* BackgroundTiles.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -99,6 +107,15 @@
 				B22B331424FFB02D0002D428 /* libEngine.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B230184A25680C80003A391A /* NativScripts */ = {
+			isa = PBXGroup;
+			children = (
+				B230184B25680CB4003A391A /* CameraController.h */,
+				B230184D25680D1E003A391A /* PlayerController.h */,
+			);
+			path = NativScripts;
 			sourceTree = "<group>";
 		};
 		B26D9D0B2500168D003291C4 /* assets */ = {
@@ -176,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */,
+				B29287582566CE4400B61ED4 /* BackgroundTiles.cpp in Sources */,
 				B22B330D24FFAAE00002D428 /* MarioApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

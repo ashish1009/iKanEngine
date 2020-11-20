@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B21A9CE32523B2EA007867A5 /* libassimp.5.0.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B21A9CE22523B2EA007867A5 /* libassimp.5.0.0.dylib */; };
 		B23EF0322517CF03003630D6 /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B23EF0312517CF03003630D6 /* libEngine.a */; };
 		B23EF0342517CF09003630D6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B23EF0332517CF09003630D6 /* Cocoa.framework */; };
 		B23EF0362517CF0E003630D6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B23EF0352517CF0E003630D6 /* OpenGL.framework */; };
@@ -30,7 +29,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B21A9CE22523B2EA007867A5 /* libassimp.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.0.0.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.0.0.dylib; sourceTree = "<group>"; };
 		B23EF00B2517CDDC003630D6 /* Sandbox */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Sandbox; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23EF0312517CF03003630D6 /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23EF0332517CF09003630D6 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -55,7 +53,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B21A9CE32523B2EA007867A5 /* libassimp.5.0.0.dylib in Frameworks */,
 				B23EF0382517CF14003630D6 /* IOKit.framework in Frameworks */,
 				B23EF0362517CF0E003630D6 /* OpenGL.framework in Frameworks */,
 				B23EF0342517CF09003630D6 /* Cocoa.framework in Frameworks */,
@@ -87,7 +84,6 @@
 		B23EF0302517CF03003630D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B21A9CE22523B2EA007867A5 /* libassimp.5.0.0.dylib */,
 				B23EF0372517CF14003630D6 /* IOKit.framework */,
 				B23EF0352517CF0E003630D6 /* OpenGL.framework */,
 				B23EF0332517CF09003630D6 /* Cocoa.framework */,
