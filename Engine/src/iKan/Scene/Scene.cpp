@@ -241,7 +241,7 @@ namespace iKan {
                      |__|               |__|                  |__|
                      |--|                 |--|              |--|
                      |__|                 |__|              |__|
-                         
+
                      */
                 }
                 if ((currEntPos.x + (currEntSize.x / 2) >= entPos.x - (entSize.x / 2)) &&  // Case 2

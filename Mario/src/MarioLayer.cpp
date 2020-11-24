@@ -1,7 +1,7 @@
 #include "MarioLayer.h"
+#include "Player.h"
 #include "BackgroundTiles.h"
 #include "NativScripts/CameraController.h"
-#include "NativScripts/PlayerController.h"
 
 namespace Mario {
         
@@ -37,25 +37,18 @@ namespace Mario {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         BackgroundTile::Init(m_ActiveScene);
-        
+        Player::Init(m_ActiveScene);
+
         // Camera Entity
         {
             Ref<Scene> scene = m_ActiveScene;
-            
+
             Entity cameraEntity = scene->CreateEntity("Camera");
             auto& camera = cameraEntity.AddComponent<CameraComponent>().Camera;
             camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
             camera.SetOrthographicSize(20.0);
 
             cameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-        }
-        
-        // Player Entity
-        {
-            auto playerEntity = m_ActiveScene->CreateEntity("Player");
-            playerEntity.AddComponent<SpriteRendererComponent>();
-            
-            playerEntity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
         }
     }
     
@@ -92,6 +85,9 @@ namespace Mario {
         }
 
         RendererStatistics::Reset();
+
+        Player::Update(timeStep);
+
         m_FrameBuffer->Bind();
         
         Renderer::Clear(BackgroundTile::s_BgColor);
@@ -121,15 +117,15 @@ namespace Mario {
             if (ImGui::BeginMenu("View"))
             {
                 if (ImGui::MenuItem("Scene Heirarchy Panel"))
-                    isSceneHeirarchypanel = true;
+                    isSceneHeirarchypanel = !isSceneHeirarchypanel;
                 if (ImGui::MenuItem("Setting"))
-                    isSetting = true;
+                    isSetting = !isSetting;
                 if (ImGui::MenuItem("Frame Rate"))
-                    isFrameRate = true;
+                    isFrameRate = !isFrameRate;
                 if (ImGui::MenuItem("Render Stats"))
-                    isRendererStats = true;
+                    isRendererStats = !isRendererStats;
                 if (ImGui::MenuItem("Vendor Types"))
-                    isVendorType = true;
+                    isVendorType = !isVendorType;
                 ImGui::EndMenu();
             }
             if (ImGui::BeginMenu("Properties"))

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iKan.h>
+#include <Player.h>
 
 using namespace iKan;
 
@@ -18,7 +19,7 @@ namespace Mario {
             if (HasComponent<TransformComponent>())
             {
                 auto& translation = GetComponent<TransformComponent>().Translation;
-                float speed = 2.5f;
+                float speed = Player::s_Speed;
 
                 if(Input::IsKeyPressed(Key::Left))
                 {

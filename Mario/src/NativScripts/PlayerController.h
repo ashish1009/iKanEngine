@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iKan.h>
+#include <Player.h>
 
 #define IsCollision(x) (m_Entity.GetScene()->CollisionDetection(m_Entity, speed * ts) & (int)Scene::CollisionSide::x)
 
@@ -20,7 +21,7 @@ namespace Mario {
             if (HasComponent<TransformComponent>())
             {
                 auto& translation = GetComponent<TransformComponent>().Translation;
-                float speed = 2.5f;
+                float speed = Player::s_Speed;
 
                 if(Input::IsKeyPressed(Key::Left))
                 {
@@ -36,20 +37,6 @@ namespace Mario {
                         translation.x += speed * ts;
                     }
                 }
-                if(Input::IsKeyPressed(Key::Up))
-                {
-                    if (!IsCollision(Up))
-                    {
-                        translation.y += speed * ts;
-                    }
-                }
-                if(Input::IsKeyPressed(Key::Down))
-                {
-                    if (!IsCollision(Down))
-                    {
-                        translation.y -= speed * ts;
-                    }
-                }
             }
         }
 
@@ -59,7 +46,5 @@ namespace Mario {
 
         // OnAwake(), CollisionCallbacks()
     };
-
-
 
 }

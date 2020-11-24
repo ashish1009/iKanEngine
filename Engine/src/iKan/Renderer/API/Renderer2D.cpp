@@ -159,7 +159,8 @@ namespace iKan {
         // Bind textures
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
         {
-            RendererStatistics::TextureCount++;
+            if (i > 0)
+                RendererStatistics::TextureCount++;
             s_Data.TextureSlots[i]->Bind(i);
         }
         

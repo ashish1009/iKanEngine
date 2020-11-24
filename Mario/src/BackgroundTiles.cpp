@@ -2,8 +2,8 @@
 
 namespace Mario {
 
-    static const uint32_t s_MapWidth = 212 * 2;
     /*
+     0 : END OF LINE TO GET NUMBER OF ELEMENT IN A ROW
      G : Ground
      | : Castel Brick
      o : Castel Gate
@@ -24,27 +24,28 @@ namespace Mario {
      v : Grass
      > : Grass Right
      */
-    static const char* s_MapTiles =
-    "                                                                                                                                                                                                                                                                                                                                                                                                                                        "
-    "                                                                                                                                                                                                                                                                                                                                                                                                                                        "
-    "    (^)                                                                  (^)                                                                                                      (^)                                              (^^)                                                                  (^^^)                                                                             (^^)                                         "
-    "                          (^^^)                                                                                  (^^)                                  (^)                                                                                                              (^^^)                                                                       (^)                                                                        .        "
-    "                                                                                                                                                                                                                                                                                                                                                                                                                              ...       "
-    "                                                                                                                                                                                                                                                                                                                                                                                                                              |u|       "
-    "                                                                                                                                                                                                                                                                                                                                                                                                                              |o|       "
-    "                                                                                                                                                                                                                                                                                                                                                                                                                            .......     "
-    "XXXX             B                  XXXX                             B            XBX                                                            B                                    B                               XXXXXXXX     XXXXX           B           XXXXX XX  XX XXXXX                                                                           B                                                               |u|r|u|     "
-    "                                                                                                                                                                                                                                                                                                                                                                                                                            |o|||o|     "
-    "                                                                                                                                                                                                                                                                                                                                                                                                     S                    ...........   "
-    "                                                                                                                                                                                                                                                                                                                                                                                                    SS                    |||||||||||   "
-    "                                                                                                                                                                                     SS                                                                                                                                                                                                            SSS                    |l|u|r|u|l|   "
-    "               XBXBX              XBXXXXBX                           S           XXXXX               B                                           S                                  SSS                            XXXX      XXXX             B    B    B             XXXX                                                                                XBXBX                                   SSSS                    |||o|||o|||   "
-    "                                                  Y                 SS                                                                          SS                                 SSSS                                                                                                                                           S  S                                                           SSSSS                  ............... "
-    "                                                  !                SSS                                                   S  S                  SSS                                SSSSS                                                                                                                      Y                   SS  SS                                                         SSSSSS                  ||||||||||||||| "
-    "                            Y                     !               SSSS                               Y                  SS  SS                SSSS             Y                 SSSSSS                                                                                                                      !                  SSS  SSS                    Y                                  SSSSSSS                  |u||u||u||u||u| "
-    "             <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS  SSSv>          <vSSSSS             !                SSSSSSS                                                                                                                      !vv>              SSSS  SSSS                   !>        <v>                     SSSSSSSS         <v>      |o||o||o||o||0| "
-    "GGGGGG GG GGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGG GGGGGGGGGGGGGGG  GGGGGGGGGGGGG-----------------------------------------------------------------------------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
-    "GGGGGG GG GGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGG GGGGGGGGGGGGGGG  GGGGGGGGGGGGG                                                                                               GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+    static std::string s_MapTiles =
+    "                                                                                                                                                                                                                                                                                              0"
+    "                                                                                                                                                                                                                                                                                              0"
+    "                                                                                                                                                                                                                                                                                              0"
+    "    (^)                                                                  (^)                                                                                           (^^^)                                                                         (^^)                                     0"
+    "                          (^^^)                                                                                  (^^)                                                                                           (^)                                                                  .        0"
+    "                                                                                                                                                                                                                                                                                    ...       0"
+    "                                                                                                                                                                                                                                                                                    |u|       0"
+    "                                                                                                                                                                                                                                                                                    |o|       0"
+    "                                                                                                                                                                                                                                                                                  .......     0"
+    "XXXX             B                  XXXX                             B            XBX                                                                 B                                                                 B                                                         |u|r|u|     0"
+    "                                                                                                                                                                                                                                                                                  |o|||o|     0"
+    "                                                                                                                                                                                                                                                                                ...........   0"
+    "                                                                                                                                                                                                                                                                                |||||||||||   0"
+    "                                                                                                                                                                                                                                                                                |l|u|r|u|l|   0"
+    "               XBXBX              XBXXXXBX                           S           XXXXX               B                                           B    B    B                                                          XBXBX                                                     |||o|||o|||   0"
+    "                                                  Y                 SS                                                                                                                          S  S                                                       S                  ............... 0"
+    "                                                  !                SSS                                                   S                                                 Y                   SS  SS                                                     SS                  ||||||||||||||| 0"
+    "                            Y                     !               SSSS                               Y                  SS                                                 !                  SSS  SSS                  Y                                SSS                  |u||u||u||u||u| 0"
+    "             <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS                                                 !                 SSSS  SSSS                 !         <v>                   SSSS         <v>      |o||o||o||o||0| 0"
+    "GGGGGG GG GGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG--------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
+    "GGGGGG GG GGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG                          GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
     ;
 
     // Static Member functions
@@ -88,8 +89,9 @@ namespace Mario {
         // Texture tile
         s_TileSpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Tile.png");
 
-        uint32_t mapWidth  = s_MapWidth;
-        uint32_t mapHeight = static_cast<uint32_t>(strlen(s_MapTiles)) / s_MapWidth;
+
+        auto mapWidth = s_MapTiles.find_first_of('0') + 1;
+        uint32_t mapHeight = static_cast<uint32_t>(strlen(s_MapTiles.c_str())) / mapWidth;
 
         // Ground SubTexutres
         {
@@ -133,10 +135,10 @@ namespace Mario {
 
         // Bridge SubTexture
         {
-            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 19.0f })); // Green
-            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 15.0f })); // Orange
-            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 11.0f })); // Grey
-            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 9.0f }));  // Pink
+            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 18.5f })); // Green
+            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 14.5f })); // Orange
+            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 10.5f })); // Grey
+            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f,  8.5f }));  // Pink
 
             s_TextureMap['-'].SubTexture = s_SubTextureVectorMap['-'][3];
         }
@@ -146,12 +148,12 @@ namespace Mario {
             s_SubTextureVectorMap['Y'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 19.0f }, { 2.0f, 1.0f })); // Green
             s_SubTextureVectorMap['Y'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 15.0f }, { 2.0f, 1.0f })); // Orange
             s_SubTextureVectorMap['Y'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 13.0f }, { 2.0f, 1.0f })); // Grey
-            s_SubTextureVectorMap['Y'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 9.0f }, { 2.0f, 1.0f }));  // Pink
+            s_SubTextureVectorMap['Y'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f,  9.0f }, { 2.0f, 1.0f }));  // Pink
 
             s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 18.0f }, { 2.0f, 1.0f })); // Green
             s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 14.0f }, { 2.0f, 1.0f })); // Orange
             s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 12.0f }, { 2.0f, 1.0f })); // Grey
-            s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 8.0f }, { 2.0f, 1.0f }));  // Pink
+            s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f,  8.0f }, { 2.0f, 1.0f }));  // Pink
 
             s_TextureMap['Y'].SubTexture = s_SubTextureVectorMap['Y'][3];
             s_TextureMap['!'].SubTexture = s_SubTextureVectorMap['!'][3];
@@ -162,7 +164,7 @@ namespace Mario {
             s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 18.0f })); // Green
             s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 14.0f })); // Orange
             s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 12.0f })); // Grey
-            s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 8.0f  })); // Pink
+            s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f,  8.0f })); // Pink
 
             s_TextureMap['<'].SubTexture = s_SubTextureVectorMap['<'][3];
             s_TextureMap['<'].Rigid = false;
@@ -170,7 +172,7 @@ namespace Mario {
             s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 18.0f })); // Green
             s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 14.0f })); // Orange
             s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 12.0f })); // Grey
-            s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 8.0f  })); // Pink
+            s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f,  8.0f })); // Pink
 
             s_TextureMap['v'].SubTexture = s_SubTextureVectorMap['v'][3];
             s_TextureMap['v'].Rigid = false;
