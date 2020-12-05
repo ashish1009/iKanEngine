@@ -37,7 +37,7 @@ namespace Mario {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         BackgroundTile::Init(m_ActiveScene);
-        Player::Init(m_ActiveScene);
+        Player::Get().Init(m_ActiveScene);
 
         // Camera Entity
         {
@@ -65,11 +65,13 @@ namespace Mario {
     
     bool MarioLayer::OnKeyPressed(KeyPressedEvent& event)
     {
+        Player::Get().OnKeyPressed(event);
         return false;
     }
     
     bool MarioLayer::OnKeyReleased(KeyReleasedEvent& event)
     {
+        Player::Get().OnKeyReleased(event);
         return false;
     }
                                  
@@ -86,7 +88,7 @@ namespace Mario {
 
         RendererStatistics::Reset();
 
-        Player::Update(timeStep);
+        Player::Get().Update(timeStep);
 
         m_FrameBuffer->Bind();
         

@@ -4,25 +4,36 @@
 
 namespace Mario {
 
-    Entity Player::s_Entity;
-    float Player::s_Speed = 12.5f;
+    Player* Player::s_Instance = nullptr;
 
     void Player::Init(Ref<Scene>& scene)
     {
-        s_Entity = scene->CreateEntity("Player");
-        s_Entity.AddComponent<SpriteRendererComponent>();
-        s_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
+        m_Entity = scene->CreateEntity("Player");
+        m_Entity.AddComponent<SpriteRendererComponent>();
+        m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
     }
 
     void Player::Update(TimeStep ts)
     {
-        auto& position = s_Entity.GetComponent<TransformComponent>().Translation;
-        float speed = s_Speed * ts;
+        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
+        float speed = m_Speed * ts;
 
-        if (!(s_Entity.GetScene()->CollisionDetection(s_Entity, speed) & (int)Scene::CollisionSide::Down))
+        if (!(m_Entity.GetScene()->CollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::Down))
         {
             position.y -= speed;
         }
+    }
+
+    void Player::OnKeyPressed(KeyPressedEvent& event)
+    {
+        if (Key::X == event.GetKeyCode())
+        {
+        }
+    }
+
+    void Player::OnKeyReleased(KeyReleasedEvent& event)
+    {
+
     }
 
 }

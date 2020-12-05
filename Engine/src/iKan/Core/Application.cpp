@@ -99,8 +99,6 @@ namespace iKan {
         // Event callpacks for all layers
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); it++)
         {
-            if (event.Handled)
-                break;
             (*it)->OnEvent(event);
         }
     }
