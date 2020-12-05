@@ -14,7 +14,12 @@ namespace Mario {
         static constexpr float FreeFallSpeed    = 12.5;
 
     public:
-        enum class State { Falling = 0, Standing, Jumping, LAST };
+        enum class State
+        {
+            Standing = BIT(0),
+            Falling  = BIT(1),
+            Jumping  = BIT(2),
+        };
 
     public:
         Player(const Player& other) = delete;
@@ -38,16 +43,20 @@ namespace Mario {
         void SetTranslationSpeed(float speed) { m_TranslationSpeed = speed; }
         void SetFreeFallSpeed(float speed) { m_FreeFallSpeed = speed; }
         void SetJumpSpeed(float speed) { m_JumpSpeed = speed; }
-        void SetState(State state) { m_State = state; }
 
         float GetTranslationSpeed() const { return m_TranslationSpeed; }
         float GetFreeFallSpeed() const { return m_FreeFallSpeed; }
         float GetJumpSpeed() const { return m_JumpSpeed; }
-        State GetState() const { return m_State; }
 
         void FreeFall();
-        void Standing();
-        void Jumping();
+        void Stand();
+        void Jump();
+
+        int32_t ToggleBit(int32_t bitPos);
+        int32_t ClearBit(int32_t bitPos);
+        int32_t SetBit(int32_t bitPos);
+
+        void StateCallbacks(State state);
 
     private:
         Player() = default;
@@ -56,14 +65,16 @@ namespace Mario {
     private:
         static Player* s_Instance;
 
-        std::array<void (Player::*)(), size_t(State::LAST)> m_PlayerUpdateFnPtr;
+        // 3 : Max number of states for now
+        std::array<void (Player::*)(), 3> m_PlayerUpdateFnPtr;
 
-        State    m_State            = State::Falling;
-        float    m_TranslationSpeed = 1.0f;
-        float    m_FreeFallSpeed    = 1.0f;
-        float    m_JumpSpeed        = 1.0f;
+        int32_t m_State = (int32_t)(State::Falling);
 
-        Entity   m_Entity;
+        float m_TranslationSpeed = 1.0f;
+        float m_FreeFallSpeed    = 1.0f;
+        float m_JumpSpeed        = 1.0f;
+        
+        Entity m_Entity;
     };
 
 }

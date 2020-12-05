@@ -41,7 +41,7 @@
 		B230184B25680CB4003A391A /* CameraController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraController.h; sourceTree = "<group>"; };
 		B230184D25680D1E003A391A /* PlayerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerController.h; sourceTree = "<group>"; };
 		B230184F25682A8C003A391A /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
-		B230185025682A8C003A391A /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		B230185025682A8C003A391A /* Player.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B26D9D022500072E003291C4 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B26D9D032500072E003291C4 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
 		B26D9D0D2500168D003291C4 /* Shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Shader.glsl; sourceTree = "<group>"; };
