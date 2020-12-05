@@ -21,20 +21,20 @@ namespace Mario {
             if (HasComponent<TransformComponent>())
             {
                 auto& translation = GetComponent<TransformComponent>().Translation;
-                float speed = Player::Get().GetSpeed();
+                float speed = Player::Get().GetTranslationSpeed();
 
                 if(Input::IsKeyPressed(Key::Left))
                 {
                     if (!IsCollision(Left))
                     {
-                        translation.x -= speed * ts;
+                        translation.x -= speed;
                     }
                 }
                 if(Input::IsKeyPressed(Key::Right))
                 {
                     if (!IsCollision(Right))
                     {
-                        translation.x += speed * ts;
+                        translation.x += speed;
                     }
                 }
             }
