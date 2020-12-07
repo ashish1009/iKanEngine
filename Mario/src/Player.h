@@ -16,9 +16,9 @@ namespace Mario {
     public:
         enum class State
         {
-            Standing = BIT(0),
-            Falling  = BIT(1),
-            Jumping  = BIT(2),
+            Default = BIT(0),
+            Falling = BIT(1),
+            Jumping = BIT(2),
         };
 
     public:
