@@ -48,13 +48,11 @@ namespace Mario {
         float GetFreeFallSpeed() const { return m_FreeFallSpeed; }
         float GetJumpSpeed() const { return m_JumpSpeed; }
 
+        glm::vec3& GetPosition() { return m_Position; }
+
         void FreeFall();
         void Stand();
         void Jump();
-
-        int32_t ToggleBit(int32_t bitPos);
-        int32_t ClearBit(int32_t bitPos);
-        int32_t SetBit(int32_t bitPos);
 
         void StateCallbacks(State state);
 
@@ -75,6 +73,8 @@ namespace Mario {
         float m_JumpSpeed        = 1.0f;
         
         Entity m_Entity;
+
+        glm::vec3 m_Position;
     };
 
 }

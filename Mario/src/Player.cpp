@@ -4,6 +4,12 @@
 
 namespace Mario {
 
+#define ToggleBit(state) m_State = (m_State ^ (1 << (int32_t)log2((int32_t)State::state)))
+#define ClearBit(state)  m_State = (m_State & (~(1 << (int32_t)log2((int32_t)State::state))))
+#define SetBit(state)    m_State = (m_State | (int32_t)State::state)
+
+    static float jumpHeight;
+
     Player* Player::s_Instance = nullptr;
 
     static inline size_t GetBitPos(int32_t state)
@@ -13,26 +19,13 @@ namespace Mario {
         return log2(state);
     }
 
-    int32_t Player::ToggleBit(int32_t state)
-    {
-        return (m_State ^ (1 << (int32_t)log2(state)));
-    }
-
-    int32_t Player::ClearBit(int32_t state)
-    {
-        return (m_State & (~(1 << (int32_t)log2(state))));
-    }
-
-    int32_t Player::SetBit(int32_t state)
-    {
-        return (m_State | state);
-    }
-
     void Player::Init(Ref<Scene>& scene)
     {
         m_Entity = scene->CreateEntity("Player");
         m_Entity.AddComponent<SpriteRendererComponent>();
         m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
+
+        m_Position = m_Entity.GetComponent<TransformComponent>().Translation;
 
         // Registering the callback function according to the states
         m_PlayerUpdateFnPtr[GetBitPos((int32_t)State::Default)] = &Player::Stand;
@@ -57,14 +50,15 @@ namespace Mario {
         {
             if ((m_Entity.GetScene()->CollisionDetection(m_Entity, m_FreeFallSpeed) & (int)Scene::CollisionSide::Down))
             {
-                m_State = ClearBit((int32_t)State::Falling);
-                m_State = SetBit((int32_t)State::Default);
+                ClearBit(Falling);
+                SetBit(Default);
+                jumpHeight = m_Position.y;
             }
             else
             {
                 if (!(m_State & (int32_t)State::Jumping))
                 {
-                    m_State = SetBit((int32_t)State::Falling);
+                    SetBit(Falling);
                 }
             }
         }
@@ -73,15 +67,16 @@ namespace Mario {
         StateCallbacks(State::Falling);
         StateCallbacks(State::Jumping);
 
-        IK_CORE_INFO("STATE {0}", m_State);
+        // Update the local position to the entity
+        m_Entity.GetComponent<TransformComponent>().Translation = m_Position;
     }
 
     void Player::OnKeyPressed(KeyPressedEvent& event)
     {
         if (Key::X == event.GetKeyCode())
         {
-            m_State = SetBit((int32_t)State::Jumping);
-            m_State = ClearBit((int32_t)State::Falling);
+            SetBit(Jumping);
+            ClearBit(Falling);
         }
     }
 
@@ -92,8 +87,7 @@ namespace Mario {
 
     void Player::FreeFall()
     {
-        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
-        position.y -= m_FreeFallSpeed;
+        m_Position.y -= m_FreeFallSpeed;
     }
 
     void Player::Stand()
@@ -103,17 +97,13 @@ namespace Mario {
 
     void Player::Jump()
     {
-        auto& position = m_Entity.GetComponent<TransformComponent>().Translation;
-        static float jumpHeight = position.y;
-
-        if (position.y - jumpHeight < 3)
+        if (m_Position.y - jumpHeight < 3)
         {
-            position.y += m_JumpSpeed;
-            IK_CORE_INFO("Position {0}, {1}, {2}, {3}", position.y, jumpHeight, (position.y - jumpHeight), m_JumpSpeed);
+            m_Position.y += m_JumpSpeed;
         }
         else
         {
-            m_State = ClearBit((int32_t)State::Jumping);
+            ClearBit(Jumping);
         }
     }
 
