@@ -225,7 +225,7 @@ namespace iKan {
                     {
                         result |= (int)CollisionSide::Right;
                     }
-                    
+                    // Left collision of current entity
                     else if ((currEntPos.x + (currEntSize.x / 2) > entPos.x - (entSize.x / 2)) &&
                              (currEntPos.x - speed - (currEntSize.x / 2) <= entPos.x + (entSize.x / 2)))
                     {
@@ -233,7 +233,7 @@ namespace iKan {
                     }
                 }
                 
-                // Illustration for Right Left Face overlap
+                // Illustration for Up Down Face overlap
                 {
                     /*
                      Case 1.            Case 2.             Case 3.
@@ -247,13 +247,13 @@ namespace iKan {
                 if ((currEntPos.x + (currEntSize.x / 2) >= entPos.x - (entSize.x / 2)) &&  // Case 2
                     (currEntPos.x - (currEntSize.x / 2) <= entPos.x + (entSize.x / 2)))    // Case 3
                 {
-                    // Right collision of current entity
+                    // Up collision of current entity
                     if ((currEntPos.y + speed + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&
                         (currEntPos.y - (currEntSize.y / 2) < entPos.y + (entSize.y / 2)))
                     {
                         result |= (int)CollisionSide::Up;
                     }
-
+                    // Down collision of current entity
                     else if ((currEntPos.y + (currEntSize.y / 2) > entPos.y - (entSize.y / 2)) &&
                              (currEntPos.y - speed - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))
                     {

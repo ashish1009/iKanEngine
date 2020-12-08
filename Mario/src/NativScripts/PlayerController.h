@@ -3,7 +3,7 @@
 #include <iKan.h>
 #include <Player.h>
 
-#define IsCollision(x) (m_Entity.GetScene()->CollisionDetection(m_Entity, speed * ts) & (int)Scene::CollisionSide::x)
+#define IsCollision(x) (m_Entity.GetScene()->CollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::x)
 
 using namespace iKan;
 
