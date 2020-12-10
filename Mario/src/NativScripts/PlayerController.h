@@ -3,7 +3,7 @@
 #include <iKan.h>
 #include <Player.h>
 
-#define IsCollision(x) (m_Entity.GetScene()->CollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::x)
+#define IsCollision(side, speed) (m_Entity.GetScene()->CollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::side)
 
 using namespace iKan;
 
@@ -25,14 +25,14 @@ namespace Mario {
 
                 if(Input::IsKeyPressed(Key::Left))
                 {
-                    if (!IsCollision(Left))
+                    if (!IsCollision(Left, speed))
                     {
                         position.x -= speed;
                     }
                 }
                 if(Input::IsKeyPressed(Key::Right))
                 {
-                    if (!IsCollision(Right))
+                    if (!IsCollision(Right, speed))
                     {
                         position.x += speed;
                     }
