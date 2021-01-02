@@ -97,6 +97,7 @@
 		B2309B382544A464001A4EE9 /* parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2309ADE2544A464001A4EE9 /* parser.cpp */; };
 		B2309B392544A464001A4EE9 /* setting.h in Headers */ = {isa = PBXBuildFile; fileRef = B2309ADF2544A464001A4EE9 /* setting.h */; };
 		B2309B3A2544A464001A4EE9 /* directives.h in Headers */ = {isa = PBXBuildFile; fileRef = B2309AE02544A464001A4EE9 /* directives.h */; };
+		B291E20525A06B6700EBA4BA /* yamlPrefixHeader.pch in Headers */ = {isa = PBXBuildFile; fileRef = B291E20425A06B6700EBA4BA /* yamlPrefixHeader.pch */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +194,7 @@
 		B2309ADE2544A464001A4EE9 /* parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parser.cpp; sourceTree = "<group>"; };
 		B2309ADF2544A464001A4EE9 /* setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setting.h; sourceTree = "<group>"; };
 		B2309AE02544A464001A4EE9 /* directives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = directives.h; sourceTree = "<group>"; };
+		B291E20425A06B6700EBA4BA /* yamlPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = yamlPrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +211,7 @@
 		B2309A662544A3B7001A4EE9 = {
 			isa = PBXGroup;
 			children = (
+				B291E20425A06B6700EBA4BA /* yamlPrefixHeader.pch */,
 				B2309A7E2544A463001A4EE9 /* include */,
 				B2309AA82544A464001A4EE9 /* src */,
 				B2309A702544A3B7001A4EE9 /* Products */,
@@ -433,6 +436,7 @@
 				B2309B392544A464001A4EE9 /* setting.h in Headers */,
 				B2309AF92544A464001A4EE9 /* node_iterator.h in Headers */,
 				B2309AE82544A464001A4EE9 /* null.h in Headers */,
+				B291E20525A06B6700EBA4BA /* yamlPrefixHeader.pch in Headers */,
 				B2309AEA2544A464001A4EE9 /* emitterstyle.h in Headers */,
 				B2309AF82544A464001A4EE9 /* memory.h in Headers */,
 				B2309B212544A464001A4EE9 /* nodebuilder.h in Headers */,
@@ -651,8 +655,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/yamlPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/yaml-cpp/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -664,8 +668,8 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "${PROJECT_DIR}/yamlPrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${PROJECT_DIR}/yaml-cpp/include";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
