@@ -20,10 +20,13 @@ namespace iKan {
         specs.Height = s_WindowWidth;
         
         m_FrameBuffer = Framebuffer::Create(specs);
-        
         m_ActiveScene = Ref<Scene>::Create();
-                        
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
+
+        // Temp for Skeleton Mesh testing
+        Entity meshComp = m_ActiveScene->CreateEntity("Mesh");
+        Ref<Mesh> mesh  = Ref<Mesh>::Create("/Users/ashish./iKan/Github/iKanEngine/Editor/assets/resources/objects/Animation/Model/Model.fbx");
+        meshComp.AddComponent<MeshComponent>(mesh);
     }
     
     void SceneEditor::OnDetach()

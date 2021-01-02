@@ -58,15 +58,26 @@ namespace iKan {
         {
             switch (element.Type)
             {
-                case ShaderDataType::Float:
-                case ShaderDataType::Float2:
-                case ShaderDataType::Float3:
-                case ShaderDataType::Float4:
                 case ShaderDataType::Int:
                 case ShaderDataType::Int2:
                 case ShaderDataType::Int3:
                 case ShaderDataType::Int4:
                 case ShaderDataType::Bool:
+                {
+                    glEnableVertexAttribArray(index);
+                    glVertexAttribIPointer(index,
+                                          element.Count,
+                                          ShaderDataTypeToOpenGLBaseType(element.Type),
+                                          layout.GetStride(),
+                                          (const void*)element.Offset);
+                    index++;
+                    break;
+                }
+
+                case ShaderDataType::Float:
+                case ShaderDataType::Float2:
+                case ShaderDataType::Float3:
+                case ShaderDataType::Float4:
                 {
                     glEnableVertexAttribArray(index);
                     glVertexAttribPointer(index,

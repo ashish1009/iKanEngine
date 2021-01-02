@@ -70,7 +70,9 @@ namespace iKan {
             { ShaderDataType::Float3, "a_Normal" },
             { ShaderDataType::Float2, "a_TexCoord" },
             { ShaderDataType::Float3, "a_Tangent" },
-            { ShaderDataType::Float3, "a_Bitangent" }
+            { ShaderDataType::Float3, "a_Bitangent" },
+            { ShaderDataType::Int4,   "a_BoneID" },
+            { ShaderDataType::Float4, "a_BoneWeight" }
         });
         m_VAO->AddVertexBuffer(vertexBuffer);
         
@@ -195,6 +197,53 @@ namespace iKan {
             std::vector<MeshTexture> maps = LoadMaterialTextures(material, aiTextureType(i), GetStringFromAiTextureType(aiTextureType(i)));
             textures.insert(textures.end(), maps.begin(), maps.end());
         }
+
+
+
+
+
+
+
+
+
+        int32_t boneArraysSize = mesh->mNumVertices * VertexBone::WEIGHTS_PER_VERTEX;
+
+        std::vector<int32_t> boneIDs;
+        boneIDs.resize(boneArraysSize);
+
+        std::vector<float> boneWeights;
+        boneWeights.resize(boneArraysSize);
+
+        for(uint32_t i = 0; i < mesh->mNumBones; i++)
+        {
+            aiBone* aiBone = mesh->mBones[i];
+            for(uint32_t j = 0; j < aiBone->mNumWeights; j++)
+            {
+                aiVertexWeight weight = aiBone->mWeights[j];
+                uint32_t vertexStart = weight.mVertexId * VertexBone::WEIGHTS_PER_VERTEX;
+
+                for(uint32_t k = 0; k < VertexBone::WEIGHTS_PER_VERTEX; k++)
+                {
+                    if(boneWeights.at(vertexStart+k) == 0)
+                    {
+                        boneWeights.at(vertexStart+k) = weight.mWeight;
+                        boneIDs.at(vertexStart+k) = i;
+
+                        vertices.at(weight.mVertexId).BoneData[k].ID = i;
+                        vertices.at(weight.mVertexId).BoneData[k].Weight = weight.mWeight;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
+
+
         
         return SubMesh(vertices, indices, textures);
     }

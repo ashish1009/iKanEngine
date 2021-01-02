@@ -10,6 +10,14 @@
 #include <assimp/postprocess.h>     // Post processing flags
 
 namespace iKan {
+
+    struct VertexBone
+    {
+        static const uint32_t WEIGHTS_PER_VERTEX = 4;
+
+        uint32_t ID;
+        float    Weight;
+    };
     
     struct MeshVertex
     {
@@ -18,6 +26,8 @@ namespace iKan {
         glm::vec2 TexCoords;
         glm::vec3 Tangent;
         glm::vec3 Bitangent;
+
+        VertexBone BoneData[VertexBone::WEIGHTS_PER_VERTEX];
     };
     
     struct MeshTexture
