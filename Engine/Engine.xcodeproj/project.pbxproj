@@ -20,6 +20,8 @@
 		B22A8A562517C8A600D2B9C8 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22A8A542517C8A600D2B9C8 /* Renderer.cpp */; };
 		B22A8A572517C8A600D2B9C8 /* Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = B22A8A552517C8A600D2B9C8 /* Renderer.h */; };
 		B22BD7D9254880FC00D16397 /* SceneLight.h in Headers */ = {isa = PBXBuildFile; fileRef = B22BD7D8254880FC00D16397 /* SceneLight.h */; };
+		B22DFC6225A4B89200CFB37C /* Bone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B22DFC6025A4B89200CFB37C /* Bone.cpp */; };
+		B22DFC6325A4B89200CFB37C /* Bone.h in Headers */ = {isa = PBXBuildFile; fileRef = B22DFC6125A4B89200CFB37C /* Bone.h */; };
 		B2309B3B2544A47C001A4EE9 /* libyaml-cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2309A7D2544A3B7001A4EE9 /* libyaml-cpp.a */; };
 		B2309B3E2544A540001A4EE9 /* SceneSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2309B3C2544A540001A4EE9 /* SceneSerializer.cpp */; };
 		B2309B3F2544A540001A4EE9 /* SceneSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = B2309B3D2544A540001A4EE9 /* SceneSerializer.h */; };
@@ -144,6 +146,8 @@
 		B22A8A542517C8A600D2B9C8 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
 		B22A8A552517C8A600D2B9C8 /* Renderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 		B22BD7D8254880FC00D16397 /* SceneLight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneLight.h; sourceTree = "<group>"; };
+		B22DFC6025A4B89200CFB37C /* Bone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Bone.cpp; sourceTree = "<group>"; };
+		B22DFC6125A4B89200CFB37C /* Bone.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bone.h; sourceTree = "<group>"; };
 		B2309A762544A3B7001A4EE9 /* yaml-cpp.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "yaml-cpp.xcodeproj"; path = "vendor/yaml-cpp/yaml-cpp.xcodeproj"; sourceTree = "<group>"; };
 		B2309B3C2544A540001A4EE9 /* SceneSerializer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneSerializer.cpp; sourceTree = "<group>"; };
 		B2309B3D2544A540001A4EE9 /* SceneSerializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneSerializer.h; sourceTree = "<group>"; };
@@ -456,6 +460,8 @@
 		B2B1F7EB253F4C41008DD031 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				B22DFC6025A4B89200CFB37C /* Bone.cpp */,
+				B22DFC6125A4B89200CFB37C /* Bone.h */,
 				B2E734F82520FCEA00BD41D3 /* Mesh.cpp */,
 				B2E734F92520FCEA00BD41D3 /* Mesh.h */,
 				B26D9D0F250022CF003291C4 /* FrameBuffer.cpp */,
@@ -627,6 +633,7 @@
 				B26D9D10250022CF003291C4 /* FrameBuffer.h in Headers */,
 				B2CDABDE2500EF2C008C6BDF /* Scene.h in Headers */,
 				B266522324FECB2F0032AF99 /* OpenGlTexture.h in Headers */,
+				B22DFC6325A4B89200CFB37C /* Bone.h in Headers */,
 				B2CDABD42500E885008C6BDF /* entt.hpp in Headers */,
 				B2752D0824FA7E5C005EF655 /* KeyEvents.h in Headers */,
 				B2752D1424FABDF3005EF655 /* Input.h in Headers */,
@@ -741,6 +748,7 @@
 				B2E734FA2520FCEA00BD41D3 /* Mesh.cpp in Sources */,
 				B26D9D07250009A3003291C4 /* Renderer2D.cpp in Sources */,
 				B2309B3E2544A540001A4EE9 /* SceneSerializer.cpp in Sources */,
+				B22DFC6225A4B89200CFB37C /* Bone.cpp in Sources */,
 				B26D9D14250022F5003291C4 /* OpenGLFrameBuffer.cpp in Sources */,
 				B266521E24FECADF0032AF99 /* Texture.cpp in Sources */,
 				B2FEC91B24FB9AA500388451 /* OpenGlRendererAPI.cpp in Sources */,

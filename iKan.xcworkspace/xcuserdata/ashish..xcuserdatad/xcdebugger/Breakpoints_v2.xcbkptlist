@@ -14,9 +14,9 @@
             filePath = "Engine/src/iKan/Renderer/Graphics/Mesh.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "232"
-            endingLineNumber = "232"
-            landmarkName = "Mesh::ProcessMesh(mesh, scene)"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "Mesh::LoadMaterialTextures(mat, type, typeName)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

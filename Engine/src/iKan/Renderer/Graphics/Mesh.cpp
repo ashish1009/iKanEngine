@@ -1,4 +1,5 @@
 #include <iKan/Renderer/Graphics/Mesh.h>
+#include <iKan/Renderer/Graphics/Bone.h>
 
 #include <iKan/Renderer/API/Renderer.h>
 #include <iKan/Renderer/API/RendererStats.h>
@@ -98,34 +99,38 @@ namespace iKan {
     void Mesh::LoadModel(const std::string &path)
     {
         Assimp::Importer importer;
-        const aiScene* scene = importer.ReadFile( path,
+        m_Scene = importer.ReadFile( path,
                                                  aiProcess_Triangulate            |
                                                  aiProcess_JoinIdenticalVertices  |
                                                  aiProcess_GenNormals             |
                                                  aiProcess_OptimizeMeshes         |
                                                  aiProcess_SplitLargeMeshes);
         
-        if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+        if(!m_Scene || m_Scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !m_Scene->mRootNode)
             IK_CORE_ASSERT(false, importer.GetErrorString());
+
+        RecursiveNodeProcess(m_Scene->mRootNode);
+        AnimNodeProcess();
+        m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_Scene->mRootNode->mTransformation));
         
         m_Directory = path.substr(0, path.find_last_of('/'));
-        ProcessNode(scene->mRootNode, scene);
+        ProcessNode(m_Scene->mRootNode);
     }
     
-    void Mesh::ProcessNode(aiNode *node, const aiScene *scene)
+    void Mesh::ProcessNode(aiNode *node)
     {
         for(uint32_t i = 0; i < node->mNumMeshes; i++)
         {
-            aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-            m_Meshes.push_back(ProcessMesh(mesh, scene));
+            aiMesh* mesh = m_Scene->mMeshes[node->mMeshes[i]];
+            m_Meshes.push_back(ProcessMesh(mesh));
         }
         for(uint32_t i = 0; i < node->mNumChildren; i++)
         {
-            ProcessNode(node->mChildren[i], scene);
+            ProcessNode(node->mChildren[i]);
         }
     }
     
-    SubMesh Mesh::ProcessMesh(aiMesh *mesh, const aiScene *scene)
+    SubMesh Mesh::ProcessMesh(aiMesh *mesh)
     {
         std::vector<MeshVertex>   vertices;
         std::vector<uint32_t>     indices;
@@ -190,21 +195,13 @@ namespace iKan {
                 indices.push_back(face.mIndices[j]);
         }
         
-        aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+        aiMaterial* material = m_Scene->mMaterials[mesh->mMaterialIndex];
         
         for (uint32_t i = aiTextureType_DIFFUSE; i < aiTextureType_UNKNOWN; i++)
         {
             std::vector<MeshTexture> maps = LoadMaterialTextures(material, aiTextureType(i), GetStringFromAiTextureType(aiTextureType(i)));
             textures.insert(textures.end(), maps.begin(), maps.end());
         }
-
-
-
-
-
-
-
-
 
         int32_t boneArraysSize = mesh->mNumVertices * VertexBone::WEIGHTS_PER_VERTEX;
 
@@ -237,14 +234,6 @@ namespace iKan {
             }
         }
 
-
-
-
-
-
-
-
-        
         return SubMesh(vertices, indices, textures);
     }
     
@@ -281,5 +270,22 @@ namespace iKan {
             }
         }
         return meshTextureVector;
+    }
+
+    void Mesh::RecursiveNodeProcess(aiNode* node)
+    {
+        m_AiNodes.push_back(node);
+
+        for(int32_t i = 0; i < node->mNumChildren; i++)
+            RecursiveNodeProcess(node->mChildren[i]);
+    }
+
+    void Mesh::AnimNodeProcess()
+    {
+        if(m_Scene->mNumAnimations == 0)
+            return;
+
+        for(int32_t i = 0; i < m_Scene->mAnimations[0]->mNumChannels; i++)
+            m_AiNodesAnim.push_back(m_Scene->mAnimations[0]->mChannels[i]);
     }
 }

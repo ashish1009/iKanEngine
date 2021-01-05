@@ -68,15 +68,23 @@ namespace iKan {
                 
     private:
         void LoadModel(const std::string& path);
-        void ProcessNode(aiNode* node, const aiScene* scene);
-        SubMesh ProcessMesh(aiMesh *mesh, const aiScene *scene);
+        void ProcessNode(aiNode* node);
+        SubMesh ProcessMesh(aiMesh *mesh);
         std::vector<MeshTexture> LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName);
+
+        void RecursiveNodeProcess(aiNode* node);
+        void AnimNodeProcess();
         
     private:
         std::string               m_Filepath;
         std::string               m_Directory;
         std::vector<SubMesh>      m_Meshes;
         std::vector<MeshTexture>  m_TexturesLoaded;
+
+        std::vector<aiNode*>      m_AiNodes;
+        std::vector<aiNodeAnim*>  m_AiNodesAnim;
+        const aiScene*            m_Scene;
+        glm::mat4                 m_GlobalInverseTransform;
     };
     
 }
