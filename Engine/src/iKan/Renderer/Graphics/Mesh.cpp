@@ -288,4 +288,47 @@ namespace iKan {
         for(int32_t i = 0; i < m_Scene->mAnimations[0]->mNumChannels; i++)
             m_AiNodesAnim.push_back(m_Scene->mAnimations[0]->mChannels[i]);
     }
+
+    Bone* Mesh::FindBone(const std::string& name)
+    {
+        for (auto& bone : m_Bones)
+        {
+            if (bone.Name == name)
+                return &bone;
+        }
+        return nullptr;
+    }
+
+    aiNode* Mesh::FindAiNode(const std::string& name)
+    {
+        for (auto aiNode : m_AiNodes)
+        {
+            if (aiNode->mName.data == name)
+                return aiNode;
+        }
+        return nullptr;
+    }
+
+    aiNodeAnim* Mesh::FindAiNodeAnim(const std::string& name)
+    {
+        for (auto aiAnimNode : m_AiNodesAnim)
+        {
+            if (aiAnimNode->mNodeName.data == name)
+                return aiAnimNode;
+        }
+        return nullptr;
+    }
+
+    int32_t Mesh::FindBoneIDByName(const std::string& name)
+    {
+        int32_t i = 0;
+        for (auto bone : m_Bones)
+        {
+            if (bone.Name == name)
+                return i;
+            i++;
+        }
+        return -1;
+    }
+
 }

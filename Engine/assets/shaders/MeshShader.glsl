@@ -194,10 +194,10 @@ void main()
 //    if (u_IsSceneLight)
 //        color = CalcDirLight(norm, viewDir, u_PointLight.Present, u_SpotLight.Present);
 //    else
-        color = texture(u_Textures[0], v_TexCoord);
+//        color = texture(u_Textures[0], v_TexCoord);
 
-//    vec4 weightsColor = vec4(v_BoneWeight.xyz,1.0);
-//
-//    color = weightsColor;
+    vec4 weightsColor = vec4(v_BoneWeight.xyz,1.0);
+
+    color = weightsColor;
 
 }

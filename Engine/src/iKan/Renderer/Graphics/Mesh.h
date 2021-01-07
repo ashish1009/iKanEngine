@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iKan/Renderer/Graphics/Bone.h>
 #include <iKan/Renderer/Graphics/VertexArray.h>
 #include <iKan/Renderer/Graphics/Shader.h>
 #include <iKan/Renderer/Graphics/Texture.h>
@@ -74,7 +75,12 @@ namespace iKan {
 
         void RecursiveNodeProcess(aiNode* node);
         void AnimNodeProcess();
-        
+
+        Bone* FindBone(const std::string& name);
+        aiNode* FindAiNode(const std::string& name);
+        aiNodeAnim* FindAiNodeAnim(const std::string& name);
+        int32_t FindBoneIDByName(const std::string& name);
+
     private:
         std::string               m_Filepath;
         std::string               m_Directory;
@@ -85,6 +91,8 @@ namespace iKan {
         std::vector<aiNodeAnim*>  m_AiNodesAnim;
         const aiScene*            m_Scene;
         glm::mat4                 m_GlobalInverseTransform;
+
+        std::vector<Bone>         m_Bones;
     };
     
 }
