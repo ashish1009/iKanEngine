@@ -33,6 +33,8 @@ namespace iKan {
         
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
+
+        void SetWindowVSynch(bool flag) { m_Window->SetVSync(flag); } 
         
         void Close() { m_IsRunning = false; }
         

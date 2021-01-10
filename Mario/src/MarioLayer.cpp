@@ -146,10 +146,10 @@ namespace Mario {
             }
             ImGui::EndMenuBar();
         }
-        
+
         if (isFrameRate)
             ImGuiAPI::FrameRate(&isFrameRate);
-        
+
         if (isRendererStats)
             ImGuiAPI::RendererStats(&isRendererStats);
         
@@ -169,7 +169,6 @@ namespace Mario {
 
             ImGui::End();
         }
-        
         //------------------------ View Port ---------------------------------------------------------------
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport");

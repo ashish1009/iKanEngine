@@ -19,7 +19,8 @@ namespace iKan {
         // Creating Window from Applicaition
         m_Window = Window::Create(WindowProp(props.Title, props.Width, props.Height));
         m_Window->SetEventCallback(IK_BIND_EVENT_FN(Application::OnEvent));
-        
+        m_Window->SetVSync(true);
+
         // Initialising the Renderer
         Renderer::Init();
 

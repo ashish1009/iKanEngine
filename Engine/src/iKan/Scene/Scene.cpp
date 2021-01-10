@@ -216,8 +216,8 @@ namespace iKan {
                                                                 |__|
                      */
                 }
-                if ((currEntPos.y + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&  // Case 2
-                    (currEntPos.y - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))    // Case 3
+                if ((currEntPos.y + (currEntSize.y / 2) > entPos.y - (entSize.y / 2)) &&  // Case 2
+                    (currEntPos.y - (currEntSize.y / 2) < entPos.y + (entSize.y / 2)))    // Case 3
                 {
                     // Right collision of current entity
                     if ((currEntPos.x + speed + (currEntSize.x / 2) >= entPos.x - (entSize.x / 2)) &&
@@ -226,8 +226,8 @@ namespace iKan {
                         result |= (int)CollisionSide::Right;
                     }
                     // Left collision of current entity
-                    else if ((currEntPos.x + (currEntSize.x / 2) > entPos.x - (entSize.x / 2)) &&
-                             (currEntPos.x - speed - (currEntSize.x / 2) <= entPos.x + (entSize.x / 2)))
+                    if ((currEntPos.x + (currEntSize.x / 2) > entPos.x - (entSize.x / 2)) &&
+                        (currEntPos.x - speed - (currEntSize.x / 2) <= entPos.x + (entSize.x / 2)))
                     {
                         result |= (int)CollisionSide::Left;
                     }
@@ -244,8 +244,8 @@ namespace iKan {
 
                      */
                 }
-                if ((currEntPos.x + (currEntSize.x / 2) >= entPos.x - (entSize.x / 2)) &&  // Case 2
-                    (currEntPos.x - (currEntSize.x / 2) <= entPos.x + (entSize.x / 2)))    // Case 3
+                if ((currEntPos.x + (currEntSize.x / 2) > entPos.x - (entSize.x / 2)) &&  // Case 2
+                    (currEntPos.x - (currEntSize.x / 2) < entPos.x + (entSize.x / 2)))    // Case 3
                 {
                     // Up collision of current entity
                     if ((currEntPos.y + speed + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&
@@ -254,8 +254,8 @@ namespace iKan {
                         result |= (int)CollisionSide::Up;
                     }
                     // Down collision of current entity
-                    else if ((currEntPos.y + (currEntSize.y / 2) > entPos.y - (entSize.y / 2)) &&
-                             (currEntPos.y - speed - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))
+                    if ((currEntPos.y + (currEntSize.y / 2) > entPos.y - (entSize.y / 2)) &&
+                        (currEntPos.y - speed - (currEntSize.y / 2) <= entPos.y + (entSize.y / 2)))
                     {
                         result |= (int)CollisionSide::Down;
                     }

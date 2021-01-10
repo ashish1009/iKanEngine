@@ -24,8 +24,8 @@ namespace Mario {
      v : Grass
      > : Grass Right
      */
+    // TODO: For now making number of row even to make position of y integral
     static std::string s_MapTiles =
-    "                                                                                                                                                                                                                                                                                              0"
     "                                                                                                                                                                                                                                                                                              0"
     "                                                                                                                                                                                                                                                                                              0"
     "    (^)                                                                  (^)                                                                                           (^^^)                                                                         (^^)                                     0"
