@@ -8,6 +8,12 @@ namespace Mario {
 
     class PlayerController;
 
+    // For Big Player Add the value by 1
+    enum class PlayerColor
+    {
+        Black = 0, Skin = 3, Grey = 6, Blue = 9, BlueOrange = 12, RedOrange = 15, GreenOrange = 18, BlackOrange = 21, GreeWhite = 24, RedWhite = 27, Basic = 30,
+    };
+
     enum class State
     {
         Standing = BIT(0),
@@ -18,9 +24,9 @@ namespace Mario {
     class Player
     {
     public:
-        static constexpr float TranslationSpeed = 12.5;
+        static constexpr float TranslationSpeed = 6;
         static constexpr float JumpSpeed        = 12.5;
-        static constexpr float FreeFallSpeed    = 12.5;
+        static constexpr float FreeFallSpeed    = 25;
 
     public:
         Player(const Player& other) = delete;
@@ -67,7 +73,13 @@ namespace Mario {
         float m_TranslationSpeed;
         float m_FreeFallSpeed;
         float m_JumpSpeed;
-        
+
+        // Color of player
+        float m_Color = (float)(PlayerColor::BlueOrange);
+
+        Ref<SubTexture> m_StandSubtexture;
+        Ref<Texture>    m_SpriteSheet;
+
         Entity m_Entity;
 
         glm::vec3 m_Position;

@@ -4,8 +4,14 @@
 
 namespace Mario {
 
+// Clear a state from current states
 #define ClearState(state)           m_State = (m_State & (~(1 << (int32_t)log2((int32_t)State::state))))
+
+// Adds a state into current states
 #define AddState(state)             m_State = (m_State | (int32_t)State::state)
+
+// Set only one state
+#define SetState(state)             m_State = 0; m_State = (int32_t)State::state;
 
     Player* Player::s_Instance = nullptr;
 
@@ -25,8 +31,13 @@ namespace Mario {
 
     void Player::Init(Ref<Scene>& scene)
     {
+        IK_INFO("Player Instance Created");
+
+        m_SpriteSheet     = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
+        m_StandSubtexture = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, m_Color });
+
         m_Entity = scene->CreateEntity("Player");
-        m_Entity.AddComponent<SpriteRendererComponent>();
+        m_Entity.AddComponent<SpriteRendererComponent>(m_StandSubtexture);
         m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
 
         m_Position = m_Entity.GetComponent<TransformComponent>().Translation;
@@ -51,8 +62,11 @@ namespace Mario {
             }
             else
             {
-                ClearState(Standing);
-                AddState(Falling);
+                if (!(m_State & (int32_t)State::Jumping))
+                {
+                    ClearState(Standing);
+                    AddState(Falling);
+                }
             }
         }
 
