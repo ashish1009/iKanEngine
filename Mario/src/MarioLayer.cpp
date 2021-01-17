@@ -104,7 +104,7 @@ namespace Mario {
         static bool isFrameRate           = true;
         static bool isRendererStats       = true;
         static bool isVendorType          = true;
-        static bool isSetting             = true;
+        static bool isSetting             = false;
         static bool isSceneHeirarchypanel = false;
         
         ImGuiAPI::EnableDcocking();

@@ -6,6 +6,15 @@ using namespace iKan;
 
 namespace Mario {
 
+    class PlayerController;
+
+    enum class State
+    {
+        Standing = BIT(0),
+        Falling  = BIT(1),
+        Jumping  = BIT(2),
+    };
+
     class Player
     {
     public:
@@ -46,16 +55,30 @@ namespace Mario {
         Player() = default;
         ~Player() = default;
 
+        void Stand();
+        void Freefall();
+        void Jump();
+
+        void StateCallback(State state);
+
     private:
         static Player* s_Instance;
 
-        float m_TranslationSpeed = 1.0f;
-        float m_FreeFallSpeed    = 1.0f;
-        float m_JumpSpeed        = 1.0f;
+        float m_TranslationSpeed;
+        float m_FreeFallSpeed;
+        float m_JumpSpeed;
         
         Entity m_Entity;
 
         glm::vec3 m_Position;
+
+        // Storing State in int as it can store multiple state at one time
+        int32_t m_State = (int32_t)(State::Falling);
+
+        // 3 : Using 3 as there are 3 states available
+        std::array<void (Player::*)(), 3> m_PlayerStateFnPtr;
+
+        friend class PlayerController;
     };
 
 }

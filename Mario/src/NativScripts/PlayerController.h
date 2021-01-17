@@ -3,7 +3,7 @@
 #include <iKan.h>
 #include <Player.h>
 
-#define IsCollision(side, speed) (m_Entity.GetScene()->CollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::side)
+#define IsCollision(side, speed) (m_Entity.GetScene()->BoxCollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::side)
 
 using namespace iKan;
 
@@ -18,25 +18,31 @@ namespace Mario {
 
         void OnUpdate(TimeStep ts)
         {
-            if (HasComponent<TransformComponent>())
+            if(Input::IsKeyPressed(Key::Left))
             {
-                auto& position = Player::Get().GetPosition();
-                float speed = Player::Get().GetTranslationSpeed();
+                if (!IsCollision(Left, m_Player.m_TranslationSpeed))
+                {
+                    m_Player.m_Position.x -= m_Player.m_TranslationSpeed;
+                }
+            }
+            if(Input::IsKeyPressed(Key::Right))
+            {
+                if (!IsCollision(Right, m_Player.m_TranslationSpeed))
+                {
+                    m_Player.m_Position.x += m_Player.m_TranslationSpeed;
+                }
+            }
+        }
 
-                if(Input::IsKeyPressed(Key::Left))
-                {
-                    if (!IsCollision(Left, speed))
-                    {
-                        position.x -= speed;
-                    }
-                }
-                if(Input::IsKeyPressed(Key::Right))
-                {
-                    if (!IsCollision(Right, speed))
-                    {
-                        position.x += speed;
-                    }
-                }
+        void OnCollision(int collision = 0)
+        {
+            if (collision)
+            {
+                //
+            }
+            else
+            {
+                //
             }
         }
 
@@ -45,6 +51,9 @@ namespace Mario {
         }
 
         // OnAwake(), CollisionCallbacks()
+
+    private:
+        Player& m_Player = Player::Get();
     };
 
 }

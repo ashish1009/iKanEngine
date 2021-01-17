@@ -188,7 +188,7 @@ namespace iKan {
         });
     }
     
-    int Scene:: CollisionDetection(Entity& currEntity, float speed)
+    int Scene:: BoxCollisionDetection(Entity& currEntity, float speed)
     {
         int result = 0;
         const auto& currEntPos  = currEntity.GetComponent<TransformComponent>().Translation;
@@ -249,7 +249,7 @@ namespace iKan {
                 {
                     // Up collision of current entity
                     if ((currEntPos.y + speed + (currEntSize.y / 2) >= entPos.y - (entSize.y / 2)) &&
-                        (currEntPos.y - (currEntSize.y / 2) < entPos.y + (entSize.y / 2)))
+                        (currEntPos.y - (currEntSize.y / 2) < entPos.y - (entSize.y / 2)))
                     {
                         result |= (int)CollisionSide::Up;
                     }
@@ -260,7 +260,25 @@ namespace iKan {
                         result |= (int)CollisionSide::Down;
                     }
                 }
-            }
+            } // if (boxColl.IsRigid)
+        } // for (auto entity : group)
+
+        if (result)
+        {
+            m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+                                                          {
+                // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
+                for (auto script : nsc.Scripts)
+                {
+                    // If a script is not created before then create the script and update the function
+                    if (!script->m_Created)
+                    {
+                        script->m_Entity = { entity, this };
+                        script->OnCreate();
+                    }
+                    script->OnCollision(result);
+                }
+            });
         }
         return result;
     }
