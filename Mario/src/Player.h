@@ -8,6 +8,9 @@ namespace Mario {
 
     class PlayerController;
 
+    static const int32_t MaxPlayerImages = 10;
+    static const int32_t PlayerImgDiff   = 3;
+    
     // For Big Player Add the value by 1
     enum class PlayerColor
     {
@@ -57,6 +60,8 @@ namespace Mario {
 
         glm::vec3& GetPosition() { return m_Position; }
 
+        void ImGuiRenderer();
+
     private:
         Player() = default;
         ~Player() = default;
@@ -75,9 +80,11 @@ namespace Mario {
         float m_JumpSpeed;
 
         // Color of player
-        float m_Color = (float)(PlayerColor::BlueOrange);
+        float m_Color = (float)(PlayerColor::RedOrange);
 
-        Ref<SubTexture> m_StandSubtexture;
+        Ref<SubTexture> m_StandSubtexture[MaxPlayerImages];
+        Ref<SubTexture> m_RunningSubtexture[MaxPlayerImages][3];
+        
         Ref<Texture>    m_SpriteSheet;
 
         Entity m_Entity;

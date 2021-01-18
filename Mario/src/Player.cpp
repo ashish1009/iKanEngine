@@ -33,11 +33,15 @@ namespace Mario {
     {
         IK_INFO("Player Instance Created");
 
-        m_SpriteSheet     = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
-        m_StandSubtexture = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, m_Color });
+        m_SpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
+
+        for (int32_t i = 0; i < MaxPlayerImages; i++)
+        {
+            m_StandSubtexture[i] = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, float(i * PlayerImgDiff) });
+        }
 
         m_Entity = scene->CreateEntity("Player");
-        m_Entity.AddComponent<SpriteRendererComponent>(m_StandSubtexture);
+        m_Entity.AddComponent<SpriteRendererComponent>();
         m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
 
         m_Position = m_Entity.GetComponent<TransformComponent>().Translation;
@@ -81,6 +85,7 @@ namespace Mario {
     void Player::Stand()
     {
         m_Position.y = std::floor(m_Position.y);
+        m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = m_StandSubtexture[int32_t(m_Color / PlayerImgDiff)];
     }
 
     void Player::Freefall()
@@ -104,4 +109,38 @@ namespace Mario {
     {
     }
 
+    void Player::ImGuiRenderer()
+    {
+        if (ImGui::TreeNode("Player..."))
+        {
+            ImTextureID myTexId = (ImTextureID)((size_t)m_SpriteSheet->GetRendererID());
+            float myTexW = (float)m_SpriteSheet->GetWidth();
+            float myTexH = (float)m_SpriteSheet->GetHeight();
+
+            // there are 10 Images for player
+            for (int32_t i = 0; i < MaxPlayerImages; i++)
+            {
+                ImGui::PushID(i);
+
+                float X = 6.0f;
+                float Y = float(i * PlayerImgDiff);
+
+                glm::vec2 uv1 = { (X + 1) * 16.0f, Y * 16.0f };
+                glm::vec2 uv0 = { X * 16.0f, (Y + 1) * 16.0f };
+
+                if (ImGui::ImageButton(myTexId, ImVec2(32.0f, 32.0f), ImVec2(uv0.x / myTexW, uv0.y / myTexH), ImVec2(uv1.x / myTexW, uv1.y / myTexH), 0))
+                {
+                    if (auto &subTexComp = m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp)
+                    {
+                        m_Color = float(i * PlayerImgDiff);
+                    }
+                }
+                ImGui::PopID();
+                ImGui::SameLine();
+            }
+
+            ImGui::NewLine();
+            ImGui::TreePop();
+        }
+    }
 }

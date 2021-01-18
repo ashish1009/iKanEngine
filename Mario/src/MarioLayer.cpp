@@ -104,7 +104,7 @@ namespace Mario {
         static bool isFrameRate           = true;
         static bool isRendererStats       = true;
         static bool isVendorType          = true;
-        static bool isSetting             = false;
+        static bool isSetting             = true;
         static bool isSceneHeirarchypanel = false;
         
         ImGuiAPI::EnableDcocking();
@@ -166,6 +166,9 @@ namespace Mario {
             
             if (ImGui::CollapsingHeader("BackGround"))
                 BackgroundTile::ImGuiRenderer();
+
+            if (ImGui::CollapsingHeader("Player"))
+                Player::Get().ImGuiRenderer();
 
             ImGui::End();
         }
