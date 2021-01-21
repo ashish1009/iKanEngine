@@ -13,6 +13,9 @@ namespace Mario {
 // Set only one state
 #define SetState(state)             m_State = 0; m_State = (int32_t)State::state;
 
+// Check if one state is present or not
+#define IsState(state)              (m_State & (int32_t)State::state)
+
     Player* Player::s_Instance = nullptr;
 
     static int32_t GetBitPos(int32_t state)
@@ -35,9 +38,11 @@ namespace Mario {
 
         m_SpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
 
+        // Storing all kind of images in init time
         for (int32_t i = 0; i < MaxPlayerImages; i++)
         {
             m_StandSubtexture[i] = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, float(i * PlayerImgColorDiff) });
+            m_JumpSubtexture[i]  = SubTexture::CreateFromCoords(m_SpriteSheet, { 4.0f, float(i * PlayerImgColorDiff) });
 
             for (int32_t j = 0; j < PlayerRunImages; j++)
             {
@@ -45,9 +50,13 @@ namespace Mario {
             }
         }
 
+        // Creating Player Entity
         m_Entity = scene->CreateEntity("Player");
         m_Entity.AddComponent<SpriteRendererComponent>();
         m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
+
+        // Bring player in front
+        m_Entity.GetComponent<TransformComponent>().Translation.z = 0.1;
 
         m_Position = m_Entity.GetComponent<TransformComponent>().Translation;
 
@@ -63,15 +72,18 @@ namespace Mario {
         m_FreeFallSpeed    = FreeFallSpeed * ts;
         m_JumpSpeed        = JumpSpeed * ts;
 
+        // Landing Logic and states
         {
-            if (IsCollision(Down, m_FreeFallSpeed))
+            if (!IsState(Jumping) && IsCollision(Down, m_FreeFallSpeed))
             {
+                m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = m_StandSubtexture[int32_t(m_Color)];
+
                 ClearState(Falling);
                 AddState(Standing);
             }
             else
             {
-                if (!(m_State & (int32_t)State::Jumping))
+                if (!IsState(Jumping))
                 {
                     ClearState(Standing);
                     AddState(Falling);
@@ -94,6 +106,7 @@ namespace Mario {
             IK_ERROR("Invalid Direction");
         }
 
+        // State Callbacks
         StateCallback(State::Standing);
         StateCallback(State::Falling);
         StateCallback(State::Jumping);
@@ -104,16 +117,18 @@ namespace Mario {
 
     void Player::UpdateRunningImage(int32_t runImgIdx)
     {
-        m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = m_RunningSubtexture[int32_t(m_Color / PlayerImgColorDiff)][m_RunningImgIdx];
+        if (IsState(Standing))
+        {
+            m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = m_RunningSubtexture[int32_t(m_Color)][m_RunningImgIdx];
 
-        m_RunningImgIdx = runImgIdx;
-        m_RunningImgIdx = m_RunningImgIdx % 3;
+            m_RunningImgIdx = runImgIdx;
+            m_RunningImgIdx = m_RunningImgIdx % 3;
+        }
     }
 
     void Player::Stand()
     {
         m_Position.y = std::floor(m_Position.y);
-        m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = m_StandSubtexture[int32_t(m_Color / PlayerImgColorDiff)];
     }
 
     void Player::Freefall()
@@ -123,13 +138,36 @@ namespace Mario {
 
     void Player::Jump()
     {
+        m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp = m_JumpSubtexture[int32_t(m_Color)];
 
+        if (m_Position.y - m_JumpBeginPosition > MaxJumpHeight)
+        {
+            ClearState(Jumping);
+            AddState(Falling);
+        }
+        else
+        {
+            if (!IsCollision(Up, m_JumpSpeed))
+            {
+                m_Position.y += m_JumpSpeed;
+            }
+            else
+            {
+                ClearState(Jumping);
+                AddState(Falling);
+            }
+        }
     }
 
     void Player::OnKeyPressed(KeyPressedEvent& event)
     {
-        if (Key::X == event.GetKeyCode())
+        if ((Key::X == event.GetKeyCode()) && (IsState(Standing)))
         {
+            ClearState(Falling);
+            ClearState(Standing);
+            AddState(Jumping);
+
+            m_JumpBeginPosition = m_Position.y;
         }
     }
 
@@ -155,7 +193,7 @@ namespace Mario {
                 ImGui::PushID(i);
 
                 float X = 6.0f;
-                float Y = float(i * PlayerImgColorDiff);
+                float Y = float(i);
 
                 glm::vec2 uv1 = { (X + 1) * 16.0f, Y * 16.0f };
                 glm::vec2 uv0 = { X * 16.0f, (Y + 1) * 16.0f };
@@ -164,7 +202,7 @@ namespace Mario {
                 {
                     if (auto &subTexComp = m_Entity.GetComponent<SpriteRendererComponent>().SubTexComp)
                     {
-                        m_Color = float(i * PlayerImgColorDiff);
+                        m_Color = float(i);
                     }
                 }
                 ImGui::PopID();

@@ -8,10 +8,6 @@ namespace Mario {
 
     class PlayerController;
 
-    static const int32_t MaxPlayerImages    = 10;
-    static const int32_t PlayerImgColorDiff = 3;
-    static const int32_t PlayerRunImages    = 3;
-
     enum class State
     {
         Standing = BIT(0),
@@ -30,13 +26,19 @@ namespace Mario {
         // For Big Player Add the value by 1
         enum class PlayerColor
         {
-            Black = 0, Skin = 3, Grey = 6, Blue = 9, BlueOrange = 12, RedOrange = 15, GreenOrange = 18, BlackOrange = 21, GreeWhite = 24, RedWhite = 27, Basic = 30,
+            Black = 0, Skin = 1, Grey = 2, Blue = 3, BlueOrange = 4, RedOrange = 5, GreenOrange = 6, BlackOrange = 7, GreeWhite = 8, RedWhite = 9, Basic = 10,
         };
 
     public:
-        static constexpr float TranslationSpeed = 6;
+        static constexpr int32_t MaxPlayerImages    = 10;
+        static constexpr int32_t PlayerImgColorDiff = 3;
+        static constexpr int32_t PlayerRunImages    = 3;
+
+        static constexpr float TranslationSpeed = 6.0f;
         static constexpr float JumpSpeed        = 12.5;
-        static constexpr float FreeFallSpeed    = 25;
+        static constexpr float FreeFallSpeed    = 25.0f;
+
+        static constexpr float MaxJumpHeight    = 5.0f;
 
     public:
         Player(const Player& other) = delete;
@@ -95,6 +97,9 @@ namespace Mario {
         float m_FreeFallSpeed;
         float m_JumpSpeed;
 
+        float m_JumpBeginPosition;
+        float m_JumpRelativeHeight;
+
         // Color of player
         float m_Color = (float)(PlayerColor::RedOrange);
 
@@ -106,6 +111,7 @@ namespace Mario {
 
         // Subtexture of player stored as per its state
         Ref<SubTexture> m_StandSubtexture[MaxPlayerImages];
+        Ref<SubTexture> m_JumpSubtexture[MaxPlayerImages];
         Ref<SubTexture> m_RunningSubtexture[MaxPlayerImages][PlayerRunImages];
         
         Ref<Texture>    m_SpriteSheet;
