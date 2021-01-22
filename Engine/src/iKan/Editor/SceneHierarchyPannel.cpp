@@ -147,25 +147,37 @@ namespace iKan {
         {
             if (ImGui::MenuItem("Camera"))
             {
-                m_SelectionContext.AddComponent<CameraComponent>();
+                if (!m_SelectionContext.HasComponent<CameraComponent>())
+                    m_SelectionContext.AddComponent<CameraComponent>();
+                else
+                    IK_CORE_WARN("This entity already has the Camera Component!");
                 ImGui::CloseCurrentPopup();
             }
             
             if (ImGui::MenuItem("Sprite Renderer"))
             {
-                m_SelectionContext.AddComponent<SpriteRendererComponent>();
+                if (!m_SelectionContext.HasComponent<SpriteRendererComponent>())
+                    m_SelectionContext.AddComponent<SpriteRendererComponent>();
+                else
+                    IK_CORE_WARN("This entity already has the Camera Component!");
                 ImGui::CloseCurrentPopup();
             }
 
             if (ImGui::MenuItem("Light"))
             {
-                m_SelectionContext.AddComponent<LightComponent>();
+                if (!m_SelectionContext.HasComponent<LightComponent>())
+                    m_SelectionContext.AddComponent<LightComponent>();
+                else
+                    IK_CORE_WARN("This entity already has the Camera Component!");
                 ImGui::CloseCurrentPopup();
             }
             
             if (ImGui::MenuItem("Mesh"))
             {
-                m_SelectionContext.AddComponent<MeshComponent>();
+                if (!m_SelectionContext.HasComponent<MeshComponent>())
+                    m_SelectionContext.AddComponent<MeshComponent>();
+                else
+                    IK_CORE_WARN("This entity already has the Camera Component!");
                 ImGui::CloseCurrentPopup();
             }
             
