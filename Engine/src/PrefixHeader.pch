@@ -20,6 +20,9 @@
 // ImGui
 #include <imgui.h>
 
+// Imguizmo
+#include <ImGuizmo.h>
+
 // Glm Match Library
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>

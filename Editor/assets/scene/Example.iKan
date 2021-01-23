@@ -1,11 +1,42 @@
 Scene: Untitled
 Entities:
-  - Entity: 9033380298993303168
+  - Entity: 10423632982683359470
     TagComponent:
-      Tag: Empty Entity
+      Tag: Right
     TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
+      Translation: [0.351999998, 0.351999998, 0]
+      Rotation: [0, 0.785398185, 0]
       Scale: [1, 1, 1]
-    MeshComponent:
-      AssetPath: /Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/objects/backpack/backpack.obj
+    SpriteRendererComponent:
+      Color: [0.85840708, 0.535554826, 0.535554826, 1]
+      TilingFactor: 1
+      TexAssetPath: ""
+  - Entity: 14199096629347114173
+    TagComponent:
+      Tag: Left
+    TransformComponent:
+      Translation: [-0.354999989, 0.349999994, 0]
+      Rotation: [0, -0.785398185, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0.942477882, 0.0708943531, 0.0708943531, 1]
+      TilingFactor: 1
+      TexAssetPath: ""
+  - Entity: 18424787035098591354
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0.25, -0.25]
+      Rotation: [-0.650135159, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 3.4000001
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false

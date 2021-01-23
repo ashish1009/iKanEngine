@@ -24,9 +24,11 @@ namespace iKan {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         // Temp for Skeleton Mesh testing
+#if 0
         Entity meshComp = m_ActiveScene->CreateEntity("Mesh");
         Ref<Mesh> mesh  = Ref<Mesh>::Create("/Users/ashish./iKan/Github/iKanEngine/Editor/assets/resources/objects/Animation/Model/Model.fbx");
         meshComp.AddComponent<MeshComponent>(mesh);
+#endif
     }
     
     void SceneEditor::OnDetach()
@@ -51,8 +53,11 @@ namespace iKan {
         m_FrameBuffer->Bind();
         
         Renderer::Clear(m_BgColor);
-        
+
+#ifdef ASSIMP_TEST
         m_ActiveScene->OnRenderEditor(timeStep, m_EditorCamera);
+#endif
+        m_ActiveScene->OnUpdate(timeStep);
         
         m_FrameBuffer->Unbind();
     }
@@ -121,13 +126,61 @@ namespace iKan {
         
         m_ViewportFocused = ImGui::IsWindowFocused();
         m_ViewportHovered = ImGui::IsWindowHovered();
-        Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
-        
+        Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
+
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
         m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
         
         size_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
         ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+#if 0
+        // Gizmos
+        Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
+        if (selectedEntity && m_GizmoType != -1)
+        {
+            ImGuizmo::SetOrthographic(false);
+            ImGuizmo::SetDrawlist();
+
+            float windowWidth = (float)ImGui::GetWindowWidth();
+            float windowHeight = (float)ImGui::GetWindowHeight();
+            ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+
+            // Camera
+            auto cameraEntity = m_ActiveScene->GetMainCameraEntity();
+            const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+            const glm::mat4& cameraProjection = camera.GetProjection();
+            glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+            // Entity transform
+            auto& tc = selectedEntity.GetComponent<TransformComponent>();
+            glm::mat4 transform = tc.GetTransform();
+
+            // Snapping
+            bool snap = Input::IsKeyPressed(Key::LeftControl);
+            float snapValue = 0.5f; // Snap to 0.5m for translation/scale
+                                    // Snap to 45 degrees for rotation
+            if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
+                snapValue = 45.0f;
+
+            float snapValues[3] = { snapValue, snapValue, snapValue };
+
+            ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+                                 (ImGuizmo::OPERATION)m_GizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+                                 nullptr, snap ? snapValues : nullptr);
+
+            if (ImGuizmo::IsUsing())
+            {
+                glm::vec3 translation, rotation, scale;
+                Math::DecomposeTransform(transform, translation, rotation, scale);
+
+                glm::vec3 deltaRotation = rotation - tc.Rotation;
+                tc.Translation = translation;
+                tc.Rotation += deltaRotation;
+                tc.Scale = scale;
+            }
+        }
+#endif
         ImGui::End();
         ImGui::PopStyleVar();
         
@@ -170,6 +223,20 @@ namespace iKan {
                     SaveSceneAs();
                 break;
             }
+
+                // Gizmos
+            case Key::Q:
+                m_GizmoType = -1;
+                break;
+            case Key::W:
+                m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+                break;
+            case Key::E:
+                m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+                break;
+            case Key::R:
+                m_GizmoType = ImGuizmo::OPERATION::SCALE;
+                break;
                 
             default:
                 break;

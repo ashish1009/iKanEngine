@@ -40,3 +40,5 @@
 #include <iKan/Editor/EditorCamera.h>
 
 #include <iKan/ImGui/ImGuiAPI.h>
+
+#include <iKan/Math/Maths.h>

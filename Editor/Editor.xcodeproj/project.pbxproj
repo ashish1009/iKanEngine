@@ -309,6 +309,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
+					"${PROJECT_DIR}/../Engine/vendor/imguizmo",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -334,6 +335,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
+					"${PROJECT_DIR}/../Engine/vendor/imguizmo",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";

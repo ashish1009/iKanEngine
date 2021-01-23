@@ -11,8 +11,9 @@ namespace iKan {
         SceneHeirarchyPannel(const Ref<Scene>& scene);
         
         void SetContext(const Ref<Scene>& scene);
-        
         void OnImguiender(bool* pIsOpen = nullptr);
+
+        Entity GetSelectedEntity() const { return m_SelectionContext; }
         
     private:
         void DrawEntityNode(Entity entity);

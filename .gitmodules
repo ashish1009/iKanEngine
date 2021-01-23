@@ -13,3 +13,6 @@
 [submodule "Engine/vendor/yaml-cpp/yaml-cpp"]
 	path = Engine/vendor/yaml-cpp/yaml-cpp
 	url = https://github.com/ashish1009/yaml-cpp
+[submodule "Engine/vendor/imguizmo"]
+	path = Engine/vendor/imguizmo
+	url = https://github.com/ashish1009/ImGuizmo

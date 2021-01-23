@@ -48,10 +48,10 @@ namespace iKan {
         
         int BoxCollisionDetection(Entity& entity, float speed);
         
-    private:
         Entity GetMainCameraEntity();
         Entity GetLightEntity();
 
+    private:
         void InstantiateScripts(TimeStep ts);
 
         template<typename T>
