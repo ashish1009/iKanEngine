@@ -21,7 +21,7 @@ namespace iKan {
         
         m_FrameBuffer  = Framebuffer::Create(specs);
         m_ActiveScene  = Ref<Scene>::Create();
-        m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
+//        m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         // Temp for Skeleton Mesh testing
@@ -132,23 +132,28 @@ namespace iKan {
         size_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
         ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
-#if 0
+#if 1
         // Gizmos
         Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
         if (selectedEntity && m_GizmoType != -1)
         {
-            ImGuizmo::SetOrthographic(false);
+            ImGuizmo::SetOrthographic(true);
             ImGuizmo::SetDrawlist();
 
             float windowWidth = (float)ImGui::GetWindowWidth();
             float windowHeight = (float)ImGui::GetWindowHeight();
             ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
-            // Camera
+            // Runtime camera from entity
+#if 0
             auto cameraEntity = m_ActiveScene->GetMainCameraEntity();
             const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
             const glm::mat4& cameraProjection = camera.GetProjection();
             glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+#endif
+            // Editor camera
+            const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
+            glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
 
             // Entity transform
             auto& tc = selectedEntity.GetComponent<TransformComponent>();
