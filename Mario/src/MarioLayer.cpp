@@ -94,7 +94,7 @@ namespace Mario {
         
         Renderer::Clear(BackgroundTile::s_BgColor);
                     
-        m_ActiveScene->OnUpdate(timeStep);
+        m_ActiveScene->OnUpdateRuntime(timeStep);
         
         m_FrameBuffer->Unbind();
     }

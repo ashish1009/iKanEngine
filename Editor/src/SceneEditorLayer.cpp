@@ -19,8 +19,9 @@ namespace iKan {
         specs.Width  = s_WindowWidth;
         specs.Height = s_WindowWidth;
         
-        m_FrameBuffer = Framebuffer::Create(specs);
-        m_ActiveScene = Ref<Scene>::Create();
+        m_FrameBuffer  = Framebuffer::Create(specs);
+        m_ActiveScene  = Ref<Scene>::Create();
+        m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         // Temp for Skeleton Mesh testing
@@ -54,11 +55,8 @@ namespace iKan {
         
         Renderer::Clear(m_BgColor);
 
-#ifdef ASSIMP_TEST
-        m_ActiveScene->OnRenderEditor(timeStep, m_EditorCamera);
-#endif
-        m_ActiveScene->OnUpdate(timeStep);
-        
+        m_ActiveScene->OnUpdateEditor(timeStep, m_EditorCamera);
+
         m_FrameBuffer->Unbind();
     }
     

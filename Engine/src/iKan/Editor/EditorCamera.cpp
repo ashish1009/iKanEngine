@@ -4,7 +4,8 @@
 namespace iKan {
     
     EditorCamera::EditorCamera(float fov, float aspectRatio, float near, float far)
-    : m_PerspectiveFOV(fov), m_AspectRatio(aspectRatio), m_PerspectiveNear(near), m_PerspectiveFar(far)
+    : m_PerspectiveFOV(fov), m_AspectRatio(aspectRatio), m_PerspectiveNear(near), m_PerspectiveFar(far),
+    Camera(glm::perspective(glm::radians(fov), aspectRatio, near, far))
     {
         m_Rotation   = glm::vec3(90.0f, 0.0f, 0.0f);
         m_FocalPoint = glm::vec3(0.0f);

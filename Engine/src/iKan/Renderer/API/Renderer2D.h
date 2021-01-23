@@ -3,6 +3,8 @@
 #include <iKan/Renderer/Camera/Camera.h>
 #include <iKan/Renderer/Graphics/Texture.h>
 
+#include <iKan/Editor/EditorCamera.h>
+
 namespace iKan {
     
     class Renderer2D
@@ -12,7 +14,8 @@ namespace iKan {
         static void Shutdown();
         
         static void BeginScene(const Camera& camera, const glm::mat4& transform);
-        
+        static void BeginScene(const EditorCamera& camera);
+
         static void EndScene();
         static void Flush();
         

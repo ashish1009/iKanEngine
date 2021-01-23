@@ -4,13 +4,9 @@
 
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Core/Core.h>
-
 #include <iKan/Renderer/API/Renderer2D.h>
-
 #include <iKan/Editor/EditorCamera.h>
-
 #include <iKan/Scene/SceneLight.h>
-
 #include <iKan/Core/UUID.h>
 
 namespace iKan {
@@ -39,11 +35,10 @@ namespace iKan {
         void DestroyEntity(Entity entity);
 
         void OnViewportResize(uint32_t width, uint32_t height);
-        
-        void OnRenderEditor(TimeStep ts, const EditorCamera& editorCamera);
 
-        void OnUpdate(TimeStep ts);
-        
+        void OnUpdateRuntime(TimeStep ts);
+        void OnUpdateEditor(TimeStep ts, EditorCamera& camera);
+
         const EntityMap& GetEntityMap() const { return m_EntityIDMap; }
         
         int BoxCollisionDetection(Entity& entity, float speed);

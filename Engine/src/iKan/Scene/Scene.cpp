@@ -55,7 +55,7 @@ namespace iKan {
         m_Registry.destroy(entity);
     }
     
-    void Scene::OnRenderEditor(TimeStep ts, const EditorCamera &editorCamera)
+    void Scene::OnUpdateEditor(TimeStep ts, EditorCamera &editorCamera)
     {
         auto lightView = m_Registry.view<LightComponent>();
         for (auto entity : lightView)
@@ -78,7 +78,8 @@ namespace iKan {
         }
         SceneRenderer::EndScene();
         
-        Renderer2D::BeginScene(editorCamera, glm::inverse(editorCamera.GetViewMatrix()));
+        Renderer2D::BeginScene(editorCamera);
+
         auto spriteGroup = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
         for (auto entity : spriteGroup)
         {
@@ -93,7 +94,7 @@ namespace iKan {
         Renderer2D::EndScene();
     }
     
-    void Scene::OnUpdate(TimeStep ts)
+    void Scene::OnUpdateRuntime(TimeStep ts)
     {
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
         InstantiateScripts(ts);
