@@ -16,12 +16,12 @@ namespace iKan {
         ImGuiAPI::SetDarkThemeColors();
 
         FramebufferSpecification specs;
-        specs.Width  = s_WindowWidth;
-        specs.Height = s_WindowWidth;
+        specs.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
+        specs.Width       = s_WindowWidth;
+        specs.Height      = s_WindowWidth;
         
         m_FrameBuffer  = Framebuffer::Create(specs);
         m_ActiveScene  = Ref<Scene>::Create();
-//        m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         // Temp for Skeleton Mesh testing
@@ -132,7 +132,6 @@ namespace iKan {
         size_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
         ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
-#if 1
         // Gizmos
         Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
         if (selectedEntity && m_GizmoType != -1)
@@ -183,7 +182,7 @@ namespace iKan {
                 tc.Scale = scale;
             }
         }
-#endif
+
         ImGui::End();
         ImGui::PopStyleVar();
         

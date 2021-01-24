@@ -22,5 +22,5 @@ public:
  */
 iKan::Application* iKan::CreateApplication()
 {
-    return new EditorApp({ "Editor", 1280, 720 });
+    return new EditorApp({ "Editor", 800, 450 });
 }

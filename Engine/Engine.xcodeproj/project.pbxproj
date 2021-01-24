@@ -209,7 +209,7 @@
 		B26D9D0E250022CF003291C4 /* FrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameBuffer.h; sourceTree = "<group>"; };
 		B26D9D0F250022CF003291C4 /* FrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameBuffer.cpp; sourceTree = "<group>"; };
 		B26D9D12250022F5003291C4 /* OpenGLFrameBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenGLFrameBuffer.cpp; sourceTree = "<group>"; };
-		B26D9D13250022F5003291C4 /* OpenGLFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLFrameBuffer.h; sourceTree = "<group>"; };
+		B26D9D13250022F5003291C4 /* OpenGLFrameBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGLFrameBuffer.h; sourceTree = "<group>"; wrapsLines = 0; };
 		B2752D0724FA7E5C005EF655 /* KeyEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyEvents.h; sourceTree = "<group>"; };
 		B2752D0B24FAB248005EF655 /* MouseEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MouseEvents.h; sourceTree = "<group>"; };
 		B2752D0D24FABB8D005EF655 /* KeyCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCode.h; sourceTree = "<group>"; };
