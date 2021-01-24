@@ -5,6 +5,7 @@
 #include <iKan/Core/TimeStep.h>
 #include <iKan/Core/Core.h>
 #include <iKan/Renderer/API/Renderer2D.h>
+#include <iKan/Renderer/Graphics/FrameBuffer.h>
 #include <iKan/Editor/EditorCamera.h>
 #include <iKan/Scene/SceneLight.h>
 #include <iKan/Core/UUID.h>
@@ -45,6 +46,8 @@ namespace iKan {
         
         Entity GetMainCameraEntity();
         Entity GetLightEntity();
+
+        int32_t Pixel(int mx, int my);
 
     private:
         void InstantiateScripts(TimeStep ts);

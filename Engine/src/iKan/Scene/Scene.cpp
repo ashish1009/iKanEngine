@@ -5,6 +5,8 @@
 #include <iKan/Renderer/API/Renderer2D.h>
 #include <iKan/Renderer/API/SceneRenderer.h>
 
+#include <glad/glad.h>
+
 namespace iKan {
     
     Scene::Scene()
@@ -57,43 +59,60 @@ namespace iKan {
     
     void Scene::OnUpdateEditor(TimeStep ts, EditorCamera &editorCamera)
     {
-        auto lightView = m_Registry.view<LightComponent>();
-        for (auto entity : lightView)
+        // Get the Light
         {
-            auto& lc = lightView.get<LightComponent>(entity);
-            Entity lightEnt = { entity, this };
-            SceneLight light = lc.Light;
-            glm::vec3  lightPosition = lightEnt.GetComponent<TransformComponent>().Translation;
-            
-            SceneRenderer::SetupLight({ lc.IsLight, light, lightPosition, editorCamera.GetPosition(), editorCamera.GetForwardDirection() });
-        }
-        
-        SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix() });
-        auto meshGroup = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
-        for (auto entity : meshGroup)
-        {
-            const auto [transform, mesh] = meshGroup.get<TransformComponent, MeshComponent>(entity);
-            if (mesh.Mesh)
-                SceneRenderer::Draw(mesh.Mesh, transform.GetTransform());
-        }
-        SceneRenderer::EndScene();
-        
-        Renderer2D::BeginScene(editorCamera);
+            auto lightView = m_Registry.view<LightComponent>();
+            for (auto entity : lightView)
+            {
+                auto& lc = lightView.get<LightComponent>(entity);
+                Entity lightEnt = { entity, this };
+                SceneLight light = lc.Light;
+                glm::vec3  lightPosition = lightEnt.GetComponent<TransformComponent>().Translation;
 
-        auto spriteGroup = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
-        for (auto entity : spriteGroup)
-        {
-            const auto [transform, sprite] = spriteGroup.get<TransformComponent, SpriteRendererComponent>(entity);
-            if (sprite.Texture)
-                Renderer2D::DrawQuad(transform.GetTransform(), sprite.Texture, sprite.TilingFactor, sprite.Color);
-            else if (sprite.SubTexComp)
-                Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp, sprite.TilingFactor, sprite.Color);
-            else
-                Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+                SceneRenderer::SetupLight({ lc.IsLight, light, lightPosition, editorCamera.GetPosition(), editorCamera.GetForwardDirection() });
+            }
         }
-        Renderer2D::EndScene();
+
+        // Scene Mesh
+        {
+            SceneRenderer::BegineScene({ editorCamera, editorCamera.GetViewMatrix() });
+            auto meshGroup = m_Registry.group<TransformComponent>(entt::get<MeshComponent>);
+            for (auto entity : meshGroup)
+            {
+                const auto [transform, mesh] = meshGroup.get<TransformComponent, MeshComponent>(entity);
+                if (mesh.Mesh)
+                    SceneRenderer::Draw(mesh.Mesh, transform.GetTransform());
+            }
+            SceneRenderer::EndScene();
+        }
+
+        // 2D Renderer
+        {
+            Renderer2D::BeginScene(editorCamera);
+            auto spriteGroup = m_Registry.group<>(entt::get<TransformComponent, SpriteRendererComponent>);
+            for (auto entity : spriteGroup)
+            {
+                const auto [transform, sprite] = spriteGroup.get<TransformComponent, SpriteRendererComponent>(entity);
+                if (sprite.Texture)
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.Texture, sprite.TilingFactor, sprite.Color);
+                else if (sprite.SubTexComp)
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp, sprite.TilingFactor, sprite.Color);
+                else
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color, (int32_t)entity);
+            }
+            Renderer2D::EndScene();
+        }
     }
-    
+
+    int32_t Scene::Pixel(int mx, int my)
+    {
+        glReadBuffer(GL_COLOR_ATTACHMENT1);
+        int32_t pixelData = -1;
+        glReadPixels(mx, my, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+
+        return pixelData;
+    }
+
     void Scene::OnUpdateRuntime(TimeStep ts)
     {
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
@@ -121,7 +140,7 @@ namespace iKan {
                 else if (sprite.SubTexComp)
                     Renderer2D::DrawQuad(transform.GetTransform(), sprite.SubTexComp, sprite.TilingFactor, sprite.Color);
                 else
-                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+                    Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color, (int32_t)entity);
             }
             Renderer2D::EndScene();
         }

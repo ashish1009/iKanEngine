@@ -16,19 +16,25 @@ namespace iKan {
         
     private:
         bool OnKeyPressed(KeyPressedEvent& e);
+        bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
         
         void NewScene();
         void OpenScene();
         void SaveSceneAs();
         
     private:
-        int m_GizmoType = -1;
+        int32_t m_GizmoType = -1;
 
         bool m_ViewportFocused = false, m_ViewportHovered = false;
+
+        Entity m_HoveredEntity;
         
         glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
+        glm::vec2 m_ViewportBounds[2];
         
         Ref<Framebuffer> m_FrameBuffer;
+        Ref<Framebuffer> m_IDFrameBuffer;
+
         Ref<Scene>       m_ActiveScene;
         
         SceneHeirarchyPannel m_SceneHierarchyPannel;

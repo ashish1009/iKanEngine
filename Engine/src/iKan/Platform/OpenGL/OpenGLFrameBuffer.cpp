@@ -106,6 +106,9 @@ namespace iKan {
             glDeleteFramebuffers(1, &m_RendererId);
             glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
             glDeleteTextures(1, &m_DepthAttachment);
+
+            m_ColorAttachments.clear();
+            m_DepthAttachment = 0;
         }
         
         glGenFramebuffers(1, &m_RendererId);
@@ -151,6 +154,20 @@ namespace iKan {
                     break;
             }
         }
+
+        // ID Buffer
+        Utils::CreateTextures(&m_IDAttachment, 1);
+        Utils::BindTexture(multisample, m_IDAttachment);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, m_Specifications.Width, m_Specifications.Height, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_IDAttachment, 0);
+
+        GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+        glDrawBuffers(2, drawBuffers);
 
         if (m_ColorAttachments.size() > 1)
         {

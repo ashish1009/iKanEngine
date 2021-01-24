@@ -20,7 +20,9 @@ namespace iKan {
         specs.Width       = s_WindowWidth;
         specs.Height      = s_WindowWidth;
         
-        m_FrameBuffer  = Framebuffer::Create(specs);
+        m_FrameBuffer   = Framebuffer::Create(specs);
+        m_IDFrameBuffer = Framebuffer::Create(specs);
+
         m_ActiveScene  = Ref<Scene>::Create();
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
@@ -44,6 +46,8 @@ namespace iKan {
             (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
         {
             m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_IDFrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+
             m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
             m_EditorCamera.SetViewportSize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         }
@@ -56,6 +60,24 @@ namespace iKan {
         Renderer::Clear(m_BgColor);
 
         m_ActiveScene->OnUpdateEditor(timeStep, m_EditorCamera);
+
+        auto [mx, my] = ImGui::GetMousePos();
+        mx -= m_ViewportBounds[0].x;
+        my -= m_ViewportBounds[0].y;
+
+        auto viewportHeight = m_ViewportBounds[1].y - m_ViewportBounds[0].y;
+        auto viewPortWidht  = m_ViewportBounds[1].x - m_ViewportBounds[0].x;
+        my = viewportHeight - my;
+
+        int32_t mouseX = (int32_t)mx;
+        int32_t mouseY = (int32_t)my;
+
+        if (mouseX >= 0 && mouseY >= 0 && mouseX <= viewPortWidht && mouseY <= viewportHeight )
+        {
+            int32_t ID = m_ActiveScene->Pixel(mx, my);
+            // TODO:: remove entt::entity
+            m_HoveredEntity = (ID == 1028443341) ? Entity() : Entity((entt::entity)ID, m_ActiveScene.Raw());
+        }
 
         m_FrameBuffer->Unbind();
     }
@@ -114,14 +136,26 @@ namespace iKan {
         ImGuiAPI::FrameRate();
         ImGuiAPI::RendererStats();
         ImGuiAPI::RendererVersion();
-        
+
+        // ----------------------  Hovered Entity --------------------------------------------------------
+        ImGui::Begin("Selected Entity");
+        std::string entityName = "NULL";
+        if ((entt::entity)m_HoveredEntity != entt::null)
+        {
+            entityName = m_HoveredEntity.GetComponent<TagComponent>().Tag;
+            ImGui::Text("Hovered Entity -> ID: %d, Tag: %s", (uint32_t)m_HoveredEntity, entityName.c_str());
+        }
+        ImGui::End();
+
         //------------------------ SceneHierarchy Pannel  --------------------------------------------------
         m_SceneHierarchyPannel.OnImguiender();
         
         //------------------------ View Port ---------------------------------------------------------------
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport");
-        
+
+        auto viewportOffet = ImGui::GetCursorPos();
+
         m_ViewportFocused = ImGui::IsWindowFocused();
         m_ViewportHovered = ImGui::IsWindowHovered();
         Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
@@ -131,6 +165,15 @@ namespace iKan {
         
         size_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
         ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+
+        auto windowSize = ImGui::GetWindowSize();
+        ImVec2 minBound = ImGui::GetWindowPos();
+        minBound.x += viewportOffet.x;
+        minBound.y += viewportOffet.y;
+
+        ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
+        m_ViewportBounds[0] = { minBound.x, minBound.y };
+        m_ViewportBounds[1] = { maxBound.x, maxBound.y };
 
         // Gizmos
         Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
@@ -195,6 +238,16 @@ namespace iKan {
         
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<KeyPressedEvent>(IK_BIND_EVENT_FN(SceneEditor::OnKeyPressed));
+        dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(SceneEditor::OnMouseButtonPressed));
+    }
+
+    bool SceneEditor::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+    {
+        if (e.GetMouseButton() == MouseCode::ButtonLeft && !ImGuizmo::IsOver() && !Input::IsKeyPressed(KeyCode::LeftAlt))
+        {
+            m_SceneHierarchyPannel.SetSelectedEntity(m_HoveredEntity);
+        }
+        return false;
     }
     
     bool SceneEditor::OnKeyPressed(KeyPressedEvent& event)

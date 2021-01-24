@@ -14,9 +14,11 @@ namespace iKan {
         glm::vec3 Position;
         glm::vec4 Color;
         glm::vec2 TexCoord;
-        
-        float     TexIndex;
-        float     TilingFactor;
+
+        float TexIndex;
+        float TilingFactor;
+
+        int32_t ObjectID;
     };
     
     struct Renderer2DData
@@ -61,7 +63,8 @@ namespace iKan {
             { ShaderDataType::Float4, "a_Color" },
             { ShaderDataType::Float2, "a_TexCoord" },
             { ShaderDataType::Float,  "a_TexIndex" },
-            { ShaderDataType::Float,  "a_TilingFactor" }
+            { ShaderDataType::Float,  "a_TilingFactor" },
+            { ShaderDataType::Int,    "a_ObjectID" }
         });
         s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
         
@@ -191,7 +194,7 @@ namespace iKan {
     
     /* -------------------------- Premitives -------------------------------------------------*/
     
-    void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
+    void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int32_t entID)
     {
         constexpr size_t    quadVertexCount = 4;
         const float         textureIndex    = 0.0f; // White Texture
@@ -208,6 +211,7 @@ namespace iKan {
             s_Data.QuadVertexBufferPtr->TexCoord        = textureCoords[i];
             s_Data.QuadVertexBufferPtr->TexIndex        = textureIndex;
             s_Data.QuadVertexBufferPtr->TilingFactor    = tilingFactor;
+            s_Data.QuadVertexBufferPtr->ObjectID        = (int32_t)entID;
             s_Data.QuadVertexBufferPtr++;
         }
         
@@ -217,31 +221,31 @@ namespace iKan {
         RendererStatistics::IndexCount += 6;
     }
     
-    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
+    void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color, int32_t entID)
     {
-        DrawQuad({ position.x, position.y, 0.0f }, size, color);
+        DrawQuad({ position.x, position.y, 0.0f }, size, color, entID);
     }
     
-    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
+    void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, int32_t entID)
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
         * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
         
-        DrawQuad(transform, color);
+        DrawQuad(transform, color, entID);
     }
     
-    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+    void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color, int32_t entID)
     {
-        DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, color);
+        DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, color, entID);
     }
     
-    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+    void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color, int32_t entID)
     {
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
         * glm::rotate(glm::mat4(1.0f), glm::radians(rotation), { 0.0f, 0.0f, 1.0f })
         * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
         
-        DrawQuad(transform, color);
+        DrawQuad(transform, color, entID);
     }
     
     /* ---------------------------------------- Rendering Texture ---------------------------------------------------------------------*/
