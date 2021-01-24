@@ -63,13 +63,34 @@ namespace iKan {
             glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, TextureTarget(multisampled), id, 0);
         }
 
+        static void AttachIDTexture(uint32_t id, int samples, GLenum format, GLenum attachmentType, uint32_t width, uint32_t height)
+        {
+            bool multisampled = samples > 1;
+            if (multisampled)
+            {
+                glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+            }
+            else
+            {
+                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr);
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            }
+
+            glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType, GL_TEXTURE_2D, id, 0);
+
+            GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+            glDrawBuffers(2, drawBuffers);
+        }
+
         static bool IsDepthFormat(FramebufferTextureFormat format)
         {
             switch (format)
             {
                 case FramebufferTextureFormat::None:   return false;
                 case FramebufferTextureFormat::RGBA8:  return false;
-
+                case FramebufferTextureFormat::R32I:   return false;
                 case FramebufferTextureFormat::DEPTH24STENCIL8:  return true;
             }
 
@@ -134,6 +155,10 @@ namespace iKan {
                     case FramebufferTextureFormat::RGBA8:
                         Utils::AttachColorTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_RGBA8, m_Specifications.Width, m_Specifications.Height, (uint32_t)i);
                         break;
+
+                    case FramebufferTextureFormat::R32I:
+                        Utils::AttachIDTexture(m_ColorAttachments[i], m_Specifications.Samples, GL_R32I, GL_COLOR_ATTACHMENT1, m_Specifications.Width, m_Specifications.Height);
+                        break;
                 }
             }
         }
@@ -146,6 +171,7 @@ namespace iKan {
             {
                 case FramebufferTextureFormat::RGBA8:
                 case FramebufferTextureFormat::None:
+                case FramebufferTextureFormat::R32I:
                     break;
 
                 case FramebufferTextureFormat::DEPTH24STENCIL8:
@@ -154,20 +180,6 @@ namespace iKan {
                     break;
             }
         }
-
-        // ID Buffer
-        Utils::CreateTextures(&m_IDAttachment, 1);
-        Utils::BindTexture(multisample, m_IDAttachment);
-
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_R32I, m_Specifications.Width, m_Specifications.Height, 0, GL_RED_INTEGER, GL_UNSIGNED_BYTE, nullptr);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, m_IDAttachment, 0);
-
-        GLenum drawBuffers[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-        glDrawBuffers(2, drawBuffers);
 
         if (m_ColorAttachments.size() > 1)
         {

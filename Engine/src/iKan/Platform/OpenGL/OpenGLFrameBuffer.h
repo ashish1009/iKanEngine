@@ -34,7 +34,6 @@ namespace iKan {
 
         std::vector<uint32_t> m_ColorAttachments;
         uint32_t m_DepthAttachment = 0;
-        uint32_t m_IDAttachment = 0;
     };
     
 }

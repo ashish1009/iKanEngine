@@ -14,8 +14,13 @@ namespace iKan {
         // Depth/stencil
         DEPTH24STENCIL8,
 
+        // ID
+        R32I,
+
         // Defaults
-        Depth = DEPTH24STENCIL8
+        Depth = DEPTH24STENCIL8,
+        ID = R32I
+
     };
 
     struct FramebufferTextureSpecification

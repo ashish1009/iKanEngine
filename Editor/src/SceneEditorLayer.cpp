@@ -16,7 +16,7 @@ namespace iKan {
         ImGuiAPI::SetDarkThemeColors();
 
         FramebufferSpecification specs;
-        specs.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth };
+        specs.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth, FramebufferTextureFormat::R32I};
         specs.Width       = s_WindowWidth;
         specs.Height      = s_WindowWidth;
         
