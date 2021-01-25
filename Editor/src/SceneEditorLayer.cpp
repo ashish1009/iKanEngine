@@ -1,6 +1,9 @@
 #include "SceneEditorLayer.h"
 
 namespace iKan {
+
+    static float ViewportHeight, ViewPortWidht;
+    static int32_t MouseX, MouseY;
     
     SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
@@ -37,7 +40,7 @@ namespace iKan {
     void SceneEditor::OnDetach()
     {
     }
-    
+
     void SceneEditor::OnUpdate(TimeStep timeStep)
     {
         // If resize the window call the update the Scene View port and Frame buffer should be resized
@@ -65,14 +68,15 @@ namespace iKan {
         mx -= m_ViewportBounds[0].x;
         my -= m_ViewportBounds[0].y;
 
-        auto viewportHeight = m_ViewportBounds[1].y - m_ViewportBounds[0].y;
-        auto viewPortWidht  = m_ViewportBounds[1].x - m_ViewportBounds[0].x;
-        my = viewportHeight - my;
+        ViewportHeight = m_ViewportBounds[1].y - m_ViewportBounds[0].y;
+        ViewPortWidht  = m_ViewportBounds[1].x - m_ViewportBounds[0].x;
 
-        int32_t mouseX = (int32_t)mx;
-        int32_t mouseY = (int32_t)my;
+        my = ViewportHeight - my;
 
-        if (mouseX >= 0 && mouseY >= 0 && mouseX <= viewPortWidht && mouseY <= viewportHeight )
+        MouseX = (int32_t)mx;
+        MouseY = (int32_t)my;
+
+        if (MouseX >= 0 && MouseY >= 0 && MouseX <= ViewPortWidht && MouseY <= ViewportHeight )
         {
             int32_t ID = m_ActiveScene->Pixel(mx, my);
             // TODO:: remove entt::entity
@@ -244,9 +248,8 @@ namespace iKan {
     bool SceneEditor::OnMouseButtonPressed(MouseButtonPressedEvent& e)
     {
         if (e.GetMouseButton() == MouseCode::ButtonLeft && !ImGuizmo::IsOver() && !Input::IsKeyPressed(KeyCode::LeftAlt))
-        {
-            m_SceneHierarchyPannel.SetSelectedEntity(m_HoveredEntity);
-        }
+            if (MouseX >= 0 && MouseY >= 0 && MouseX <= ViewPortWidht && MouseY <= ViewportHeight )
+                m_SceneHierarchyPannel.SetSelectedEntity(m_HoveredEntity);
         return false;
     }
     
