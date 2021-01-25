@@ -5,6 +5,8 @@
 #include <iKan/Renderer/Graphics/Shader.h>
 #include <iKan/Renderer/Graphics/Texture.h>
 
+#include <iKan/Scene/Entity.h>
+
 // Assimp Library
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
@@ -29,6 +31,8 @@ namespace iKan {
         glm::vec3 Bitangent;
 
         VertexBone BoneData[VertexBone::WEIGHTS_PER_VERTEX];
+
+        int32_t ObjectID;
     };
     
     struct MeshTexture
@@ -60,7 +64,7 @@ namespace iKan {
     class Mesh : public RefCounted
     {
     public:
-        Mesh(const std::string& path);
+        Mesh(const std::string& path, Entity entity);
         ~Mesh() = default;
         
         const std::string& GetFilepath() const { return m_Filepath; }
@@ -93,6 +97,8 @@ namespace iKan {
         glm::mat4                 m_GlobalInverseTransform;
 
         std::vector<Bone>         m_Bones;
+
+        Entity                    m_Entity;
     };
     
 }

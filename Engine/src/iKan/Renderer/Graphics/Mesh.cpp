@@ -73,7 +73,8 @@ namespace iKan {
             { ShaderDataType::Float3, "a_Tangent" },
             { ShaderDataType::Float3, "a_Bitangent" },
             { ShaderDataType::Int4,   "a_BoneID" },
-            { ShaderDataType::Float4, "a_BoneWeight" }
+            { ShaderDataType::Float4, "a_BoneWeight" },
+            { ShaderDataType::Int,    "a_ObjectID" }
         });
         m_VAO->AddVertexBuffer(vertexBuffer);
         
@@ -84,8 +85,8 @@ namespace iKan {
     }
     
     // ----------------------------------------------------------- < Sub Mesh > -----------------------------------------------------------
-    Mesh::Mesh(const std::string& path)
-    : m_Filepath(path)
+    Mesh::Mesh(const std::string& path, Entity entity)
+    : m_Filepath(path), m_Entity(entity)
     {
         LoadModel(path);
     }
@@ -184,7 +185,10 @@ namespace iKan {
                 vector.z = mesh->mBitangents[i].z;
                 vertex.Bitangent = vector;
             }
-            
+
+            // TODO: Same ID is entring for each vertexm need to change
+            vertex.ObjectID = (uint32_t)m_Entity;
+
             vertices.push_back(vertex);
         }
         

@@ -338,7 +338,7 @@ namespace iKan {
                 {
                     std::string meshPath = meshComponent["AssetPath"].as<std::string>();
                     if (!deserializedEntity.HasComponent<MeshComponent>())
-                        deserializedEntity.AddComponent<MeshComponent>(Ref<Mesh>::Create(meshPath));
+                        deserializedEntity.AddComponent<MeshComponent>(Ref<Mesh>::Create(meshPath, deserializedEntity));
 
                     IK_CORE_INFO("  Entity Mesh:");
                     IK_CORE_INFO("    Mesh Asset Path: {0}", meshPath);

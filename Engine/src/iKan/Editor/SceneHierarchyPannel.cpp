@@ -338,7 +338,7 @@ namespace iKan {
             }
         });
         
-        DrawComponent<MeshComponent>("Mesh", entity, [](auto& mc)
+        DrawComponent<MeshComponent>("Mesh", entity, [entity](auto& mc)
                                      {
             ImGui::Columns(2);
             ImGui::SetColumnWidth(0, 100);
@@ -392,7 +392,7 @@ namespace iKan {
                             // TODO: for now path is hard coded will fix this in future
                             // Make sure file name is same as the foler name
                             std::string filePath = "/Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/objects/" + currentMeshType + "/" + currentMeshType + ".obj";
-                            mc.Mesh = Ref<Mesh>::Create(filePath);
+                            mc.Mesh = Ref<Mesh>::Create(filePath, entity);
                         }
                         
                         if (bIsSelected)
