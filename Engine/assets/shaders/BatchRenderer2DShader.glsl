@@ -10,19 +10,22 @@ layout(location = 5) in int   a_ObjectID;
 
 uniform mat4 u_ViewProjection;
 
-out vec4  v_Color;
-out vec2  v_TexCoord;
-out float v_TexIndex;
-out float v_TilingFactor;
-out float v_ObjectID;
+out VS_OUT
+{
+    vec4  Color;
+    vec2  TexCoord;
+    float TexIndex;
+    float TilingFactor;
+    float ObjectID;
+} vs_out;
 
 void main()
 {
-    v_Color         = a_Color;
-    v_TexCoord      = a_TexCoord;
-    v_TexIndex      = a_TexIndex;
-    v_TilingFactor  = a_TilingFactor;
-    v_ObjectID      = float(a_ObjectID);
+    vs_out.Color         = a_Color;
+    vs_out.TexCoord      = a_TexCoord;
+    vs_out.TexIndex      = a_TexIndex;
+    vs_out.TilingFactor  = a_TilingFactor;
+    vs_out.ObjectID      = float(a_ObjectID);
 
     gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 }
@@ -32,36 +35,39 @@ void main()
 layout(location = 0) out vec4 o_Color;
 layout(location = 1) out int  o_IDBuffer;
 
-in vec4  v_Color;
-in vec2  v_TexCoord;
-in float v_TexIndex;
-in float v_TilingFactor;
-in float v_ObjectID;
+in VS_OUT
+{
+    vec4  Color;
+    vec2  TexCoord;
+    float TexIndex;
+    float TilingFactor;
+    float ObjectID;
+} fs_in;
 
 uniform sampler2D u_Textures[16];
 
 void main()
 {
-    vec4 texColor = v_Color;
-    switch(int(v_TexIndex))
+    vec4 texColor = fs_in.Color;
+    switch(int(fs_in.TexIndex))
     {
-        case 0: texColor *= texture(u_Textures[0], v_TexCoord * v_TilingFactor); break;
-        case 1: texColor *= texture(u_Textures[1], v_TexCoord * v_TilingFactor); break;
-        case 2: texColor *= texture(u_Textures[2], v_TexCoord * v_TilingFactor); break;
-        case 3: texColor *= texture(u_Textures[3], v_TexCoord * v_TilingFactor); break;
-        case 4: texColor *= texture(u_Textures[4], v_TexCoord * v_TilingFactor); break;
-        case 5: texColor *= texture(u_Textures[5], v_TexCoord * v_TilingFactor); break;
-        case 6: texColor *= texture(u_Textures[6], v_TexCoord * v_TilingFactor); break;
-        case 7: texColor *= texture(u_Textures[7], v_TexCoord * v_TilingFactor); break;
-        case 8: texColor *= texture(u_Textures[8], v_TexCoord * v_TilingFactor); break;
-        case 9: texColor *= texture(u_Textures[9], v_TexCoord * v_TilingFactor); break;
-        case 10: texColor *= texture(u_Textures[10], v_TexCoord * v_TilingFactor); break;
-        case 11: texColor *= texture(u_Textures[11], v_TexCoord * v_TilingFactor); break;
-        case 12: texColor *= texture(u_Textures[12], v_TexCoord * v_TilingFactor); break;
-        case 13: texColor *= texture(u_Textures[13], v_TexCoord * v_TilingFactor); break;
-        case 14: texColor *= texture(u_Textures[14], v_TexCoord * v_TilingFactor); break;
-        case 15: texColor *= texture(u_Textures[15], v_TexCoord * v_TilingFactor); break;
+        case 0: texColor *= texture(u_Textures[0], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 1: texColor *= texture(u_Textures[1], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 2: texColor *= texture(u_Textures[2], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 3: texColor *= texture(u_Textures[3], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 4: texColor *= texture(u_Textures[4], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 5: texColor *= texture(u_Textures[5], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 6: texColor *= texture(u_Textures[6], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 7: texColor *= texture(u_Textures[7], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 8: texColor *= texture(u_Textures[8], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 9: texColor *= texture(u_Textures[9], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 10: texColor *= texture(u_Textures[10], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 11: texColor *= texture(u_Textures[11], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 12: texColor *= texture(u_Textures[12], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 13: texColor *= texture(u_Textures[13], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 14: texColor *= texture(u_Textures[14], fs_in.TexCoord * fs_in.TilingFactor); break;
+        case 15: texColor *= texture(u_Textures[15], fs_in.TexCoord * fs_in.TilingFactor); break;
     }
     o_Color = texColor;
-    o_IDBuffer = int(v_ObjectID);
+    o_IDBuffer = int(fs_in.ObjectID);
 }

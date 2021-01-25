@@ -13,21 +13,24 @@ layout(location = 7) in int   a_ObjectID;
 uniform mat4 u_ViewProjection;
 uniform mat4 u_Transform;
 
-out vec3  v_Position;
-out vec3  v_Normal;
-out vec2  v_TexCoord;
-out vec4  v_BoneID;
-out vec4  v_BoneWeight;
-out float v_ObjectID;
+out VS_OUT
+{
+    vec3  Position;
+    vec3  Normal;
+    vec2  TexCoord;
+    vec4  BoneID;
+    vec4  BoneWeight;
+    float ObjectID;
+} vs_out;
 
 void main()
 {
-    v_Position   = vec3(u_Transform * vec4(a_Position, 1.0));
-    v_Normal     = mat3(transpose(inverse(u_Transform))) * a_Normal;
-    v_TexCoord   = a_TexCoord;
-    v_BoneID     = a_BoneID;
-    v_BoneWeight = a_BoneWeight;
-    v_ObjectID   = float(a_ObjectID);
+    vs_out.Position   = vec3(u_Transform * vec4(a_Position, 1.0));
+    vs_out.Normal     = mat3(transpose(inverse(u_Transform))) * a_Normal;
+    vs_out.TexCoord   = a_TexCoord;
+    vs_out.BoneID     = a_BoneID;
+    vs_out.BoneWeight = a_BoneWeight;
+    vs_out.ObjectID   = float(a_ObjectID);
 
     gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 }
@@ -70,12 +73,15 @@ struct SpotLight
     float OuterCutOff;
 };
 
-in vec3  v_Position;
-in vec3  v_Normal;
-in vec2  v_TexCoord;
-in vec4  v_BoneID;
-in vec4  v_BoneWeight;
-in float v_ObjectID;
+in VS_OUT
+{
+    vec3  Position;
+    vec3  Normal;
+    vec2  TexCoord;
+    vec4  BoneID;
+    vec4  BoneWeight;
+    float ObjectID;
+} vs_in;
 
 uniform bool u_IsSceneLight;
 uniform bool u_Blinn;
@@ -93,13 +99,13 @@ uniform int u_NumTextureSlots;
 vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
 {
     vec3 result   = vec3(0.0f, 0.0f, 0.0f);
-    vec3 lightDir = normalize(u_Light.Position - v_Position);
+    vec3 lightDir = normalize(u_Light.Position - vs_in.Position);
     
     float attenuation;
     float intensity;
     if (pointLight || spotLight)
     {
-        float distance = length(u_Light.Position - v_Position);
+        float distance = length(u_Light.Position - vs_in.Position);
         attenuation = 1.0 / (u_PointLight.Constant + u_PointLight.Linear * distance + u_PointLight.Quadratic * (distance * distance));
         
         if (spotLight)
@@ -117,7 +123,7 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
         if (u_Light.IsAmbient)
         {
             // ambient
-            vec3 ambient = u_Light.Ambient * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+            vec3 ambient = u_Light.Ambient * texture(u_Textures[0], vs_in.TexCoord).rgb; // Diffuse Texture
             if (pointLight || spotLight)
             {
                 ambient *= attenuation;
@@ -131,7 +137,7 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
         {
             // diffuse
             float diff    = max(dot(norm, lightDir), 0.0);
-            vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], v_TexCoord).rgb; // Diffuse Texture
+            vec3  diffuse = u_Light.Diffuse * diff * texture(u_Textures[0], vs_in.TexCoord).rgb; // Diffuse Texture
             if (pointLight || spotLight)
             {
                 diffuse *= attenuation;
@@ -161,7 +167,7 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
             {
                 spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0f);
             }
-            specular = u_Light.Specular * spec * texture(u_Textures[1], v_TexCoord).rgb; // Specular Texture
+            specular = u_Light.Specular * spec * texture(u_Textures[1], vs_in.TexCoord).rgb; // Specular Texture
             slotBinded++;
         }
         else
@@ -192,17 +198,17 @@ vec4 CalcDirLight(vec3 norm, vec3 viewDir, bool pointLight, bool spotLight)
 void main()
 {
     // properties
-    vec3 norm    = normalize(v_Normal);
-    vec3 viewDir = normalize(u_ViewPos - v_Position);
+    vec3 norm    = normalize(vs_in.Normal);
+    vec3 viewDir = normalize(u_ViewPos - vs_in.Position);
     
     if (u_IsSceneLight)
         o_Color = CalcDirLight(norm, viewDir, u_PointLight.Present, u_SpotLight.Present);
     else
-        o_Color = texture(u_Textures[0], v_TexCoord);
+        o_Color = texture(u_Textures[0], vs_in.TexCoord);
 
-    o_IDBuffer = int(v_ObjectID);
+    o_IDBuffer = int(vs_in.ObjectID);
 
-    vec4 weightsColor = vec4(v_BoneWeight.xyz,1.0);
+    vec4 weightsColor = vec4(vs_in.BoneWeight.xyz,1.0);
 
 //    o_Color = weightsColor;
 }

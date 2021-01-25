@@ -12,6 +12,8 @@ namespace iKan {
             return GL_VERTEX_SHADER;
         if ("fragment" == type)
             return GL_FRAGMENT_SHADER;
+//        if ("geometry" == type)
+//            return GL_GEOMETRY_SHADER;
         IK_CORE_ASSERT(false, "Unknown shader type!");
         return 0;
     }
