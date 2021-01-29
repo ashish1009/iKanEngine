@@ -54,7 +54,7 @@ namespace Mario {
             return *s_Instance;
         }
 
-        void Init(Ref<Scene>& scene);
+        void Init(Ref<Scene>& scene, Entity cameraEntity);
         void Update(TimeStep ts);
         void OnKeyPressed(KeyPressedEvent& event);
         void OnKeyReleased(KeyReleasedEvent& event);
@@ -86,6 +86,7 @@ namespace Mario {
     private:
         static Player* s_Instance;
         Entity m_Entity;
+        Entity m_CameraEntity;
 
         // 3 : Using 3 as there are 3 states available
         std::array<void (Player::*)(), 3> m_PlayerStateFnPtr;

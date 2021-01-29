@@ -1,7 +1,6 @@
 #include "MarioLayer.h"
 #include "Player.h"
 #include "BackgroundTiles.h"
-#include "NativScripts/CameraController.h"
 
 namespace Mario {
         
@@ -38,19 +37,17 @@ namespace Mario {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
         BackgroundTile::Init(m_ActiveScene);
-        Player::Get().Init(m_ActiveScene);
-
         // Camera Entity
-        {
-            Ref<Scene> scene = m_ActiveScene;
+        Ref<Scene> scene = m_ActiveScene;
 
-            Entity cameraEntity = scene->CreateEntity("Camera");
-            auto& camera = cameraEntity.AddComponent<CameraComponent>().Camera;
-            camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
-            camera.SetOrthographicSize(20.0);
+        Entity cameraEntity = scene->CreateEntity("Camera");
+        auto& camera = cameraEntity.AddComponent<CameraComponent>().Camera;
+        camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
+        camera.SetOrthographicSize(20.0);
 
-            cameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-        }
+        cameraEntity.GetComponent<TransformComponent>().Translation.x = 19.0;
+
+        Player::Get().Init(m_ActiveScene, cameraEntity);
     }
     
     void MarioLayer::OnDetach()
@@ -105,7 +102,7 @@ namespace Mario {
         static bool isFrameRate           = true;
         static bool isRendererStats       = true;
         static bool isVendorType          = true;
-        static bool isSetting             = true;
+        static bool isSetting             = false;
         static bool isSceneHeirarchypanel = false;
         
         ImGuiAPI::EnableDcocking();

@@ -32,10 +32,10 @@ namespace Mario {
             (this->*m_PlayerStateFnPtr[index])();
     }
 
-    void Player::Init(Ref<Scene>& scene)
+    void Player::Init(Ref<Scene>& scene, Entity cameraEntity)
     {
         IK_INFO("Player Instance Created");
-
+        m_CameraEntity = cameraEntity;
         m_SpriteSheet = Texture::Create("../../Mario/assets/Resources/Graphics/Player.png");
 
         // Storing all kind of images in init time
@@ -56,7 +56,7 @@ namespace Mario {
         m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
 
         // Bring player in front
-        m_Entity.GetComponent<TransformComponent>().Translation.z = 0.1;
+        m_Entity.GetComponent<TransformComponent>().Translation.x = 10.0;
 
         m_Position = m_Entity.GetComponent<TransformComponent>().Translation;
 

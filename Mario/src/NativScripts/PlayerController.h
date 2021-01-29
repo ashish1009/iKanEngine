@@ -21,13 +21,17 @@ namespace Mario {
             static float i = 0;
             if(Input::IsKeyPressed(Key::Left))
             {
-                if (!IsCollision(Left, m_Player.m_TranslationSpeed))
+                if (!IsCollision(Left, m_Player.m_TranslationSpeed) && m_Player.m_Position.x >= 0)
                 {
+                    auto& cameraPosition = m_Player.m_CameraEntity.GetComponent<TransformComponent>().Translation;
+                    auto& playerPosition = m_Player.m_Position;
+
                     // Change the Player direction
                     m_Player.m_Direction = Direction::Left;
 
-                    // Chnage the position of Player
-                    m_Player.m_Position.x -= m_Player.m_TranslationSpeed;
+                    // Chnage the position of Player and camera
+                    playerPosition.x -= m_Player.m_TranslationSpeed;
+                    cameraPosition.x -= m_Player.m_TranslationSpeed;
 
                     // Change the image of player while running
                     m_Player.UpdateRunningImage(int32_t(i));
@@ -37,11 +41,15 @@ namespace Mario {
             {
                 if (!IsCollision(Right, m_Player.m_TranslationSpeed))
                 {
+                    auto& cameraPosition = m_Player.m_CameraEntity.GetComponent<TransformComponent>().Translation;
+                    auto& playerPosition = m_Player.m_Position;
+
                     // Change the Player direction
                     m_Player.m_Direction = Direction::Right;
 
-                    // Chnage the position of Player
-                    m_Player.m_Position.x += m_Player.m_TranslationSpeed;
+                    // Chnage the position of Player and camera
+                    playerPosition.x += m_Player.m_TranslationSpeed;
+                    cameraPosition.x += m_Player.m_TranslationSpeed;
 
                     // Change the image of player while running
                     m_Player.UpdateRunningImage(int32_t(i));
