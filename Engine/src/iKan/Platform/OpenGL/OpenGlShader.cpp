@@ -12,8 +12,8 @@ namespace iKan {
             return GL_VERTEX_SHADER;
         if ("fragment" == type)
             return GL_FRAGMENT_SHADER;
-//        if ("geometry" == type)
-//            return GL_GEOMETRY_SHADER;
+        if ("geometry" == type)
+            return GL_GEOMETRY_SHADER;
         IK_CORE_ASSERT(false, "Unknown shader type!");
         return 0;
     }
@@ -98,7 +98,7 @@ namespace iKan {
     void OpenGlShader::Compile()
     {
         int program = glCreateProgram();
-        std::array<uint32_t, 2> shaderId;
+        std::array<uint32_t, 3> shaderId;
         int glShaderIDIndex = 0;
 
         for (auto& kv : m_Source)

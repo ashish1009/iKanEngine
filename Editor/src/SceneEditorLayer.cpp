@@ -23,8 +23,8 @@ namespace iKan {
         specs.Width       = s_WindowWidth;
         specs.Height      = s_WindowWidth;
         
-        m_FrameBuffer   = Framebuffer::Create(specs);
-        m_IDFrameBuffer = Framebuffer::Create(specs);
+        m_FrameBuffer = Framebuffer::Create(specs);
+        m_DepthFrameBuffer = Framebuffer::Create(specs);
 
         m_ActiveScene  = Ref<Scene>::Create();
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
@@ -49,7 +49,7 @@ namespace iKan {
             (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
         {
             m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-            m_IDFrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_DepthFrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 
             m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
             m_EditorCamera.SetViewportSize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);

@@ -1,24 +1,46 @@
 Scene: Untitled
 Entities:
-  - Entity: 14199096629347114173
+  - Entity: 14135516686632083556
     TagComponent:
-      Tag: Left
+      Tag: Wooden plank
     TransformComponent:
-      Translation: [-0.354999989, 0.349999994, 0]
-      Rotation: [0, -0.785398185, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [0.942477882, 0.0708943531, 0.0708943531, 1]
-      TilingFactor: 1
-      TexAssetPath: ""
-  - Entity: 10423632982683359470
+      Translation: [0.538232803, -0.772530615, 0.117279887]
+      Rotation: [0, 0, -0.0100407451]
+      Scale: [10.0000057, 10.0000019, 10]
+    MeshComponent:
+      AssetPath: /Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/objects/GroundPlane/GroundPlane.obj
+  - Entity: 1781501048577186471
     TagComponent:
-      Tag: Right
+      Tag: Bagpack
     TransformComponent:
-      Translation: [0.351999998, 0.351999998, 0]
-      Rotation: [0, 0.785398185, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [0.85840708, 0.535554826, 0.535554826, 1]
-      TilingFactor: 1
-      TexAssetPath: ""
+      Translation: [1.1898067, 5.19496965, 3.30234957]
+      Rotation: [0, 3.14159274, 0]
+      Scale: [0.939999223, 0.940000296, 0.939999282]
+    MeshComponent:
+      AssetPath: /Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/objects/backpack/backpack.obj
+  - Entity: 16127051652997603184
+    TagComponent:
+      Tag: light
+    TransformComponent:
+      Translation: [103.611366, 127.56218, -55.8416252]
+      Rotation: [0, 0, 0]
+      Scale: [0.270000041, 0.270000041, 0.270000041]
+    MeshComponent:
+      AssetPath: /Users/ashish./iKan/GitHub/iKanEngine/Editor/assets/resources/objects/Sphere/Sphere.obj
+    LightComponent:
+      Light:
+        LightType: 0
+        Is Ambient: true
+        Is Diffuse: true
+        Is Specular: true
+        Is Blinn: false
+        Ambient: [0.200000003, 0.200000003, 0.200000003]
+        Diffuse: [0.400000006, 0.400000006, 0.400000006]
+        Specular: [0.5, 0.5, 0.5]
+        Constant: 1
+        Quadratic: 0.0320000015
+        Linear: 0.0900000036
+        Spot Light Dir: [0, 0, 0]
+        Cutoff: 12.5
+        Outer Cutoff: 15
+      Is Light: true

@@ -78,9 +78,9 @@
             filePath = "Engine/src/iKan/Renderer/API/Renderer2D.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "Renderer2D::DrawQuad(transform, color, entID)"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "Renderer2D::DrawRotatedQuad(position, size, rotation, color, entID)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -114,38 +114,6 @@
             endingLineNumber = "76"
             landmarkName = "AttachIDTexture(id, samples, format, attachmentType, width, height)"
             landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D2132569-D169-4A5F-8285-C0BA26E78A06"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Editor/src/SceneEditorLayer.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "SceneEditor::OnMouseButtonPressed(e)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C25C2230-AD4F-4F3A-B34C-1F04AFE0A394"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Editor/src/SceneEditorLayer.cpp"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "SceneEditor::OnImguiRender()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

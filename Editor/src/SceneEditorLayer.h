@@ -33,7 +33,7 @@ namespace iKan {
         glm::vec2 m_ViewportBounds[2];
         
         Ref<Framebuffer> m_FrameBuffer;
-        Ref<Framebuffer> m_IDFrameBuffer;
+        Ref<Framebuffer> m_DepthFrameBuffer;
 
         Ref<Scene>       m_ActiveScene;
         

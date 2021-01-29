@@ -71,3 +71,44 @@ void main()
     o_Color = texColor;
     o_IDBuffer = int(fs_in.ObjectID);
 }
+
+#type geometry
+#version 330 core
+layout (triangles) in;
+layout (triangle_strip, max_vertices = 3) out;
+
+in VS_OUT
+{
+    vec4  Color;
+    vec2  TexCoord;
+    float TexIndex;
+    float TilingFactor;
+    float ObjectID;
+} gs_in[];
+
+out VS_OUT
+{
+    vec4  Color;
+    vec2  TexCoord;
+    float TexIndex;
+    float TilingFactor;
+    float ObjectID;
+} gs_out;
+
+void main()
+{
+    gs_out.Color         = gs_in[0].Color;
+    gs_out.TexCoord      = gs_in[0].TexCoord;
+    gs_out.TexIndex      = gs_in[0].TexIndex;
+    gs_out.TilingFactor  = gs_in[0].TilingFactor;
+    gs_out.ObjectID      = float(gs_in[0].ObjectID);
+
+    gl_Position = gl_in[0].gl_Position;
+    EmitVertex();
+    gl_Position = gl_in[1].gl_Position;
+    EmitVertex();
+    gl_Position = gl_in[2].gl_Position;
+    EmitVertex();
+
+    EndPrimitive();
+}
