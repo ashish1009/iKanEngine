@@ -136,10 +136,15 @@ namespace Mario {
             s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 23.0f })); // Grey
             s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 24.0f, 21.0f })); // Green
 
+            s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 27.0f, 27.0f })); // Brown
+            s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 27.0f, 25.0f })); // Blue
+            s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 27.0f, 23.0f })); // Grey
+            s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 27.0f, 21.0f })); // Green
+
             s_TextureMap['B'].SubTexture = s_SubTextureVectorMap['B'][3];
         }
 
-            // Steos SubTextures
+        // Steos SubTextures
         {
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 26.0f })); // Brown
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 24.0f })); // Blue
@@ -322,6 +327,11 @@ namespace Mario {
             ImGui::NewLine();
             ImGui::TreePop();
         }
+    }
+
+    void BackgroundTile::ChangeBonusTextureToUsed(Entity entity)
+    {
+        entity.GetComponent<SpriteRendererComponent>().SubTexComp = s_SubTextureVectorMap['B'][4];
     }
 
     void BackgroundTile::ImGuiRenderer()

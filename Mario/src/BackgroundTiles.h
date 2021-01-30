@@ -20,6 +20,8 @@ namespace Mario {
         static void ImGuiRenderer();
         static void ImgButtons(const char name);
 
+        static void ChangeBonusTextureToUsed(Entity entity);
+
     public:
         static glm::vec4    s_BgColor;
         static Ref<Texture> s_TileSpriteSheet;

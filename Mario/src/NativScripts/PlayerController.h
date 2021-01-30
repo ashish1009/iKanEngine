@@ -3,6 +3,8 @@
 #include <iKan.h>
 #include <Player.h>
 
+#include <BackgroundTiles.h>
+
 #define IsCollision(side, speed) (m_Entity.GetScene()->BoxCollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::side)
 
 using namespace iKan;
@@ -97,7 +99,11 @@ namespace Mario {
 
         void UpCollision(Entity colloidedEntity)
         {
-            colloidedEntity.GetScene()->DestroyEntity(colloidedEntity);
+            // TODO: make something more clean
+            if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bricks")
+                colloidedEntity.GetScene()->DestroyEntity(colloidedEntity);
+            else if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bonus")
+                BackgroundTile::ChangeBonusTextureToUsed(colloidedEntity);
         }
 
         void DownCollision(Entity colloidedEntity)
