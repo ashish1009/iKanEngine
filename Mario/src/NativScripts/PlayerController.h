@@ -9,13 +9,6 @@ using namespace iKan;
 
 namespace Mario {
 
-    static int32_t GetBitPos(int32_t state)
-    {
-        if (!state)
-            return -1;
-        return log2(state);
-    }
-
     class PlayerController : public ScriptableEntity
     {
     public:
@@ -75,11 +68,11 @@ namespace Mario {
             i += ts * 10;
         }
 
-        void OnCollision(int collision = 0)
+        void OnCollision(Entity* colloidedEntity, int32_t collision = 0)
         {
             if (collision)
             {
-                CollisionCallback(Scene::CollisionSide::Up, collision);
+                CollisionCallback(Scene::CollisionSide::Up, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Up)]);
             }
             else
             {
@@ -95,29 +88,29 @@ namespace Mario {
 
     private:
 
-        void CollisionCallback(Scene::CollisionSide collisionSide, int collision)
+        void CollisionCallback(Scene::CollisionSide collisionSide, int32_t collision, Entity colloidedEntity)
         {
             int32_t index = GetBitPos(collision & (int32_t)collisionSide);
             if (index >= 0)
-                (this->*m_CollisionFnPtr[index])();
+                (this->*m_CollisionFnPtr[index])(colloidedEntity);
         }
 
-        void UpCollision()
+        void UpCollision(Entity colloidedEntity)
+        {
+            colloidedEntity.GetScene()->DestroyEntity(colloidedEntity);
+        }
+
+        void DownCollision(Entity colloidedEntity)
         {
 
         }
 
-        void DownCollision()
+        void RightCollision(Entity colloidedEntity)
         {
 
         }
 
-        void RightCollision()
-        {
-
-        }
-
-        void LeftCollision()
+        void LeftCollision(Entity colloidedEntity)
         {
 
         }
@@ -125,7 +118,7 @@ namespace Mario {
     private:
         Player& m_Player = Player::Get();
 
-        std::array<void (PlayerController::*)(), 4> m_CollisionFnPtr;
+        std::array<void (PlayerController::*)(Entity colloidedEntity), 4> m_CollisionFnPtr;
     };
 
 }

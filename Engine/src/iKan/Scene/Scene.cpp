@@ -8,6 +8,9 @@
 #include <glad/glad.h>
 
 namespace iKan {
+
+    // To store the entity of collisions
+    static Entity s_ColloidedEntity[4];
     
     Scene::Scene()
     {
@@ -213,13 +216,13 @@ namespace iKan {
         int result = 0;
         const auto& currEntPos  = currEntity.GetComponent<TransformComponent>().Translation;
         const auto& currEntSize = currEntity.GetComponent<TransformComponent>().Scale;
-        
+
         auto group = m_Registry.group<>(entt::get<TransformComponent, BoxCollider2DComponent>);
         for (auto entity : group)
         {
             if (currEntity == entity)
                 continue;
-            
+
             const auto [transform, boxColl] = group.get<TransformComponent, BoxCollider2DComponent>(entity);
             if (boxColl.IsRigid)
             {
@@ -243,13 +246,15 @@ namespace iKan {
                     if ((currEntPos.x + speed + (std::abs(currEntSize.x) / 2) >= entPos.x - (std::abs(entSize.x) / 2)) &&
                         (currEntPos.x - (std::abs(currEntSize.x) / 2) < entPos.x + (std::abs(entSize.x) / 2)))
                     {
-                        result |= (int)CollisionSide::Right;
+                        result |= (int32_t)CollisionSide::Right;
+                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Right)] = Entity(entity, this);
                     }
                     // Left collision of current entity
                     if ((currEntPos.x + (std::abs(currEntSize.x) / 2) > entPos.x - (std::abs(entSize.x) / 2)) &&
                         (currEntPos.x - speed - (std::abs(currEntSize.x) / 2) <= entPos.x + (std::abs(entSize.x) / 2)))
                     {
-                        result |= (int)CollisionSide::Left;
+                        result |= (int32_t)CollisionSide::Left;
+                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Left)] = Entity(entity, this);
                     }
                 }
                 
@@ -271,13 +276,15 @@ namespace iKan {
                     if ((currEntPos.y + speed + (std::abs(currEntSize.y) / 2) >= entPos.y - (std::abs(entSize.y) / 2)) &&
                         (currEntPos.y - (std::abs(currEntSize.y) / 2) < entPos.y - (std::abs(entSize.y) / 2)))
                     {
-                        result |= (int)CollisionSide::Up;
+                        result |= (int32_t)CollisionSide::Up;
+                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Up)] = Entity(entity, this);
                     }
                     // Down collision of current entity
                     if ((currEntPos.y + (std::abs(currEntSize.y) / 2) > entPos.y - (std::abs(entSize.y) / 2)) &&
                         (currEntPos.y - speed - (std::abs(currEntSize.y) / 2) <= entPos.y + (std::abs(entSize.y) / 2)))
                     {
-                        result |= (int)CollisionSide::Down;
+                        result |= (int32_t)CollisionSide::Down;
+                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Down)] = Entity(entity, this);
                     }
                 }
             } // if (boxColl.IsRigid)
@@ -296,7 +303,7 @@ namespace iKan {
                         script->m_Entity = { entity, this };
                         script->OnCreate();
                     }
-                    script->OnCollision(result);
+                    script->OnCollision(s_ColloidedEntity, result);
                 }
             });
         }

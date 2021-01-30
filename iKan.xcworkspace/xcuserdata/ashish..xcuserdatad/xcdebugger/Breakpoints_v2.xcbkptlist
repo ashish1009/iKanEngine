@@ -206,9 +206,9 @@
             filePath = "Mario/src/NativScripts/PlayerController.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "UpCollision()"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
+            landmarkName = "UpCollision(colloidedEntity)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -25,7 +25,7 @@ namespace iKan {
         virtual void OnCreate() { m_Created = true; }
         virtual void OnUpdate(TimeStep ts) {}
         virtual void OnDestroy() {}
-        virtual void OnCollision(int Collision = 0) {}
+        virtual void OnCollision(Entity* colloidedEntity, int32_t Collision = 0) {}
         
     protected:
         bool m_Created = false;

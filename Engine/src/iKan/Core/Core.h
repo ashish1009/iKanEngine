@@ -18,6 +18,13 @@
 #include <iKan/Core/Ref.h>
 
 namespace iKan {
+
+    static int32_t GetBitPos(int32_t value)
+    {
+        if (!value)
+            return -1;
+        return log2(value);
+    }
     
     template<typename T>
     using Scope = std::unique_ptr<T>;
