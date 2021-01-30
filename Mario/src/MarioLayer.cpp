@@ -40,12 +40,13 @@ namespace Mario {
         // Camera Entity
         Ref<Scene> scene = m_ActiveScene;
 
+        // TODO: Find better place for this,may be to move in player class
         Entity cameraEntity = scene->CreateEntity("Camera");
         auto& camera = cameraEntity.AddComponent<CameraComponent>().Camera;
         camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
         camera.SetOrthographicSize(20.0);
 
-        cameraEntity.GetComponent<TransformComponent>().Translation.x = 19.0;
+        cameraEntity.GetComponent<TransformComponent>().Translation.x = s_CommonStartPos;
 
         Player::Get().Init(m_ActiveScene, cameraEntity);
     }

@@ -2,6 +2,22 @@
 
 namespace Mario {
 
+    // New Mario Specific Component
+    struct BonusComponent
+    {
+        enum Bonus
+        {
+            COIN, MUSHRUM, FIRE, STAR
+        };
+
+        Bonus EntBonus;
+
+        BonusComponent() = default;
+        BonusComponent(const BonusComponent&) = default;
+        BonusComponent(const Bonus entBonus)
+        : EntBonus(entBonus) {}
+    };
+
     /*
      0 : END OF LINE TO GET NUMBER OF ELEMENT IN A ROW
      G : Ground
@@ -26,26 +42,26 @@ namespace Mario {
      */
     // TODO: For now making number of row even to make position of y integral
     static std::string s_MapTiles =
-    "                                                                                                                                                                                                                                                                                              0"
-    "                                                                                                                                                                                                                                                                                              0"
-    "    (^)                                                                  (^)                                                                                           (^^^)                                                                         (^^)                                     0"
-    "                          (^^^)                                                                                  (^^)                                                                                           (^)                                                                  .        0"
-    "                                                                                                                                                                                                                                                                                    ...       0"
-    "                                                                                                                                                                                                                                                                                    |u|       0"
-    "                                                                                                                                                                                                                                                                                    |o|       0"
-    "                                                                                                                                                                                                                                                                                  .......     0"
-    "XXXX             B                  XXXX                             B            XBX                                                                 B                                                                 B                                                         |u|r|u|     0"
-    "                                                                                                                                                                                                                                                                                  |o|||o|     0"
-    "                                                                                                                                                                                                                                                                                ...........   0"
-    "                                                                                                                                                                                                                                                                                |||||||||||   0"
-    "                                                                                                                                                                                                                                                                                |l|u|r|u|l|   0"
-    "               XBXBX              XBXXXXBX                           S           XXXXX               B                                           B    B    B                                                          XBXBX                                                     |||o|||o|||   0"
-    "                                                  Y                 SS                                                                                                                          S  S                                                       S                  ............... 0"
-    "                                                  !                SSS                                                   S                                                 Y                   SS  SS                                                     SS                  ||||||||||||||| 0"
-    "                            Y                     !               SSSS                               Y                  SS                                                 !                  SSS  SSS                  Y                                SSS                  |u||u||u||u||u| 0"
-    "             <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS                                                 !                 SSSS  SSSS                 !         <v>                   SSSS         <v>      |o||o||o||o||0| 0"
-    "GGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG--------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
-    "GGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG                          GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
+    "                                                                                                                                                                                                                                                                                                                            0"
+    "                                                                                                                                                                                                                                                                                                                            0"
+    "                                  (^)                                                                  (^)                                                                                           (^^^)                                                                         (^^)                                     0"
+    "       (^)                                              (^^^)                                                                                  (^^)                                                                                           (^)                                                                  .        0"
+    "                                                                                                                                                                                                                                                                                                                  ...       0"
+    "                                                                                                                                                                                                                                                                                                                  |u|       0"
+    "                                                                                                                                                                                                                                                                                                                  |o|       0"
+    "                                                                                                                                                                                                                                                                                                                .......     0"
+    "                                               B                  XXXX                             B            XBX                                                                 B                                                                 B                                                         |u|r|u|     0"
+    "                                                                                                                                                                                                                                                                                                                |o|||o|     0"
+    "                                                                                                                                                                                                                                                                                                              ...........   0"
+    "                                                                                                                                                                                                                                                                                                              |||||||||||   0"
+    "                                                                                                                                                                                                                                                                                                              |l|u|r|u|l|   0"
+    "                                             XBXBX              XBXXXXBX                           S           XXXXX               B                                           B    B    B                                                          XBXBX                                                     |||o|||o|||   0"
+    "                                                                                Y                 SS                                                                                                                          S  S                                                       S                  ............... 0"
+    "                                                                                !                SSS                                                   S                                                 Y                   SS  SS                                                     SS                  ||||||||||||||| 0"
+    "                                                          Y                     !               SSSS                               Y                  SS                                                 !                  SSS  SSS                  Y                                SSS                  |u||u||u||u||u| 0"
+    "  <v>                                      <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS                                                 !                 SSSS  SSSS                 !         <v>                   SSSS         <v>      |o||o||o||o||0| 0"
+    "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG--------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
+    "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG                          GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
     ;
 
     // Static Member functions
@@ -239,9 +255,15 @@ namespace Mario {
 
                     tc.Translation = { x, (mapHeight / 2.0f) - y, 0.0f };
                     tc.Scale       = { spriteSize.x, spriteSize.y , 0.0f};
-                }
-            }
-        }
+
+                    // Add bonus Component in the entity
+                    if (tileType == 'B')
+                    {
+                        entity.AddExternalComponent<BonusComponent>(BonusComponent::COIN);
+                    }
+                } //if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
+            } // for (uint32_t x = 0; x < mapWidth; x++)
+        } // for (uint32_t y = 0; y < mapHeight; y++)
     }
 
     void BackgroundTile::ImgButtons(const char name)

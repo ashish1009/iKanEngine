@@ -23,7 +23,15 @@ namespace iKan {
             m_Scene->OnComponentAdded<T>(*this, component);
             return component;
         }
-        
+
+        template<typename T, typename... Args>
+        T& AddExternalComponent(Args&&... args)
+        {
+            IK_CORE_ASSERT(!HasComponent<T>(), "Entity already has component!");
+            T& component = m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+            return component;
+        }
+
         template<typename T>
         T& GetComponent()
         {

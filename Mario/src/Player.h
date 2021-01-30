@@ -7,6 +7,8 @@ using namespace iKan;
 namespace Mario {
 
     class PlayerController;
+    
+    static constexpr float s_CommonStartPos = 19.0f;
 
     enum class State
     {

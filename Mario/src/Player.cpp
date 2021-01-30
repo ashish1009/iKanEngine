@@ -18,13 +18,6 @@ namespace Mario {
 
     Player* Player::s_Instance = nullptr;
 
-    static int32_t GetBitPos(int32_t state)
-    {
-        if (!state)
-            return -1;
-        return log2(state);
-    }
-
     void Player::StateCallback(State state)
     {
         int32_t index = GetBitPos(m_State & (int32_t)state);
@@ -56,7 +49,7 @@ namespace Mario {
         m_Entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
 
         // Bring player in front
-        m_Entity.GetComponent<TransformComponent>().Translation.x = 10.0;
+        m_Entity.GetComponent<TransformComponent>().Translation.x = s_CommonStartPos;
 
         m_Position = m_Entity.GetComponent<TransformComponent>().Translation;
 
