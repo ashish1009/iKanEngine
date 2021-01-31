@@ -99,11 +99,38 @@ namespace Mario {
 
         void UpCollision(Entity colloidedEntity)
         {
-            // TODO: make something more clean
-            if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bricks")
-                colloidedEntity.GetScene()->DestroyEntity(colloidedEntity);
-            else if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bonus")
-                BackgroundTile::ChangeBonusTextureToUsed(colloidedEntity);
+            const auto& colloidedEntPos = colloidedEntity.GetComponent<TransformComponent>().Translation;
+            auto& playerPos = m_Player.m_Position;
+
+            if ((playerPos.x - colloidedEntPos.x) > 0.5f && (playerPos.x - colloidedEntPos.x) < 0.9f)
+            {
+                playerPos.x = std::floor(playerPos.x) + 1.0f;
+                m_Player.m_InAirOffset = true;
+            }
+
+            else if ((playerPos.x - colloidedEntPos.x) < -0.5f && (playerPos.x - colloidedEntPos.x) > -0.9f)
+            {
+                playerPos.x = std::floor(playerPos.x);
+                m_Player.m_InAirOffset = true;
+            }
+
+            else
+            {
+                m_Player.m_InAirOffset = false;
+                // TODO: make something more clean
+                if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bricks")
+                {
+                    colloidedEntity.GetScene()->DestroyEntity(colloidedEntity);
+                }
+                else if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bonus")
+                {
+                    BackgroundTile::ChangeBonusTextureToUsed(colloidedEntity);
+                }
+                else
+                {
+
+                }
+            }
         }
 
         void DownCollision(Entity colloidedEntity)

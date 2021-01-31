@@ -146,8 +146,15 @@ namespace Mario {
             }
             else
             {
-                ClearState(Jumping);
-                AddState(Falling);
+                if (m_InAirOffset)
+                {
+
+                }
+                else
+                {
+                    ClearState(Jumping);
+                    AddState(Falling);
+                }
             }
         }
     }

@@ -95,6 +95,8 @@ namespace Mario {
 
         glm::vec3 m_Position;
 
+        bool m_InAirOffset = false;
+
         // Speed Variables
         float m_TranslationSpeed;
         float m_FreeFallSpeed;
