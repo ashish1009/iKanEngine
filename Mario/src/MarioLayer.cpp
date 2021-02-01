@@ -37,10 +37,6 @@ namespace Mario {
 
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
-        StartScreen::Init(m_ActiveScene);
-
-        BackgroundTile::Init(m_ActiveScene);
-
         // Camera Entity
         Ref<Scene> scene = m_ActiveScene;
 
@@ -53,6 +49,9 @@ namespace Mario {
         cameraEntity.GetComponent<TransformComponent>().Translation.x = s_CommonStartPos;
 
         Player::Get().Init(m_ActiveScene, cameraEntity);
+
+        StartScreen::Init(m_ActiveScene);
+        BackgroundTile::Init(m_ActiveScene);
     }
     
     void MarioLayer::OnDetach()

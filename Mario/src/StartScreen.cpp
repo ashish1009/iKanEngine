@@ -61,14 +61,13 @@ namespace Mario {
     static const std::string s_BasicPath = "/Users/ashish./iKan/Github/iKanEngine/Mario/assets/Resources/Graphics/StartScreen/";
 
     static std::string s_CharTiles =
-    "7TTTTTTTTTTTTTTTTTTTTTTTT90"
-    "L                        R0"
-    "L  i vvklkli kjlklylikl  R0"
-    "L  v vvv,v,v v,vv,v,vv,  R0"
-    "L  v vavvvvv vvvvvvavvv  R0"
-    "L  v vsy/vvv vvvy/vsvvv  R0"
-    "L  v vvv?vot vvvv?vvvot  R0"
-    "1BBcBcccccqrBccccccccqrBB30"
+    "7TTTTTTTTTTTTTTTTTTTTTTTTT90"
+    "L  i vvklkli kjlklylikl   R0"
+    "L  v vvv,v,v v,vv,v,vv,   R0"
+    "L  v vavvvvv vvvvvvavvv   R0"
+    "L  v vsy/vvv vvvy/vsvvv   R0"
+    "L  v vvv?vot vvvv?vvvot s R0"
+    "1BBcBcccccqrBccccccccqrBcB30"
     ;
 
     Ref<Texture> StartScreen::s_TileSpriteSheet = nullptr;
