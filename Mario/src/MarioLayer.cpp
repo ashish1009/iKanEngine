@@ -1,6 +1,7 @@
 #include "MarioLayer.h"
 #include "Player.h"
 #include "BackgroundTiles.h"
+#include "StartScreen.h"
 
 namespace Mario {
         
@@ -36,7 +37,10 @@ namespace Mario {
 
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
 
+        StartScreen::Init(m_ActiveScene);
+
         BackgroundTile::Init(m_ActiveScene);
+
         // Camera Entity
         Ref<Scene> scene = m_ActiveScene;
 
