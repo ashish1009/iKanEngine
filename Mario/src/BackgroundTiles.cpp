@@ -386,9 +386,9 @@ namespace Mario {
                         for (auto entity : s_EntityVector['*'])
                             if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
                                 subTexComp = s_SubTextureVectorMap['*'][i];
-                        for (auto entity : s_EntityVector['{'])
+                        for (auto entity : s_EntityVector['}'])
                             if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)
-                                subTexComp = s_SubTextureVectorMap['{'][i];
+                                subTexComp = s_SubTextureVectorMap['}'][i];
 
                         for (auto entity : s_EntityVector['1'])
                             if (auto &subTexComp = entity.GetComponent<SpriteRendererComponent>().SubTexComp)

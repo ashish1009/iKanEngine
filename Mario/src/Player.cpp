@@ -34,7 +34,7 @@ namespace Mario {
         // Storing all kind of images in init time
         for (int32_t i = 0; i < MaxPlayerImages; i++)
         {
-            m_StandSubtexture[i] = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, float(i * PlayerImgColorDiff) });
+            m_StandSubtexture[i] = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, float(i * PlayerImgColorDiff) + 1.0f }, { 1.0f, 2.0f });
             m_JumpSubtexture[i]  = SubTexture::CreateFromCoords(m_SpriteSheet, { 4.0f, float(i * PlayerImgColorDiff) });
 
             for (int32_t j = 0; j < PlayerRunImages; j++)
@@ -57,6 +57,44 @@ namespace Mario {
         m_PlayerStateFnPtr[GetBitPos((int32_t)State::Standing)] = &Player::Stand;
         m_PlayerStateFnPtr[GetBitPos((int32_t)State::Falling)]  = &Player::Freefall;
         m_PlayerStateFnPtr[GetBitPos((int32_t)State::Jumping)]  = &Player::Jump;
+
+        ChangeSize(Size::Large);
+    }
+
+    void Player::ChangeSize(Size size)
+    {
+        m_Size = size;
+
+        auto& scale = m_Entity.GetComponent<TransformComponent>().Scale.y;
+
+        float tileSize;
+        if (Size::Large == m_Size)
+        {
+            tileSize = 2.0f;
+            scale = 2.0f;
+        }
+        else if (Size::Small == m_Size)
+        {
+            tileSize = 1.0f;
+            scale = 1.0f;
+        }
+        else
+        {
+            tileSize = 0.0f;
+            IK_ASSERT(false, "Invalid Size");
+        }
+
+        for (int32_t i = 0; i < MaxPlayerImages; i++)
+        {
+            m_StandSubtexture[i] = SubTexture::CreateFromCoords(m_SpriteSheet, { 6.0f, float(i * PlayerImgColorDiff) + 1.0f }, { 1.0f, tileSize });
+            m_JumpSubtexture[i]  = SubTexture::CreateFromCoords(m_SpriteSheet, { 4.0f, float(i * PlayerImgColorDiff) + 1.0f }, { 1.0f, tileSize });
+
+            for (int32_t j = 0; j < PlayerRunImages; j++)
+            {
+                m_RunningSubtexture[i][j] = SubTexture::CreateFromCoords(m_SpriteSheet, { float(j), float(i * PlayerImgColorDiff) + 1.0f }, { 1.0f,tileSize });
+            }
+        }
+
     }
 
     void Player::Update(TimeStep ts)
@@ -121,7 +159,10 @@ namespace Mario {
 
     void Player::Stand()
     {
-        m_Position.y = std::floor(m_Position.y);
+        if (Size::Small == m_Size)
+            m_Position.y = std::floor(m_Position.y);
+        else if (Size::Large == m_Size)
+            m_Position.y = std::floor(m_Position.y) + 0.5f;
     }
 
     void Player::Freefall()

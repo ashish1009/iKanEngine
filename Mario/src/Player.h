@@ -10,6 +10,8 @@ namespace Mario {
     
     static constexpr float s_CommonStartPos = 19.0f;
 
+    enum class Size { Large, Small };
+
     enum class State
     {
         Standing = BIT(0),
@@ -25,14 +27,13 @@ namespace Mario {
     class Player
     {
     public:
-        // For Big Player Add the value by 1
         enum class PlayerColor
         {
             Black = 0, Skin = 1, Grey = 2, Blue = 3, BlueOrange = 4, RedOrange = 5, GreenOrange = 6, BlackOrange = 7, GreeWhite = 8, RedWhite = 9, Basic = 10,
         };
 
     public:
-        static constexpr int32_t MaxPlayerImages    = 10;
+        static constexpr int32_t MaxPlayerImages    = 11;
         static constexpr int32_t PlayerImgColorDiff = 3;
         static constexpr int32_t PlayerRunImages    = 3;
 
@@ -83,6 +84,8 @@ namespace Mario {
         void Freefall();
         void Jump();
 
+        void ChangeSize(Size size);
+
         void StateCallback(State state);
 
     private:
@@ -95,6 +98,7 @@ namespace Mario {
 
         glm::vec3 m_Position;
 
+        // Flag to check that do we need to move player if its on edge
         bool m_InAirOffset = false;
 
         // Speed Variables
@@ -106,13 +110,16 @@ namespace Mario {
         float m_JumpRelativeHeight;
 
         // Color of player
-        float m_Color = (float)(PlayerColor::RedOrange);
+        float m_Color = (float)(PlayerColor::Basic);
 
         // Storing State in int as it can store multiple state at one time
         int32_t m_State = (int32_t)(State::Falling);
 
         // Diretion of player
         Direction m_Direction = Direction::Right;
+
+        // Size of Player
+        Size m_Size = Size::Small;
 
         // Subtexture of player stored as per its state
         Ref<SubTexture> m_StandSubtexture[MaxPlayerImages];

@@ -75,6 +75,9 @@ namespace Mario {
             if (collision)
             {
                 CollisionCallback(Scene::CollisionSide::Up, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Up)]);
+                CollisionCallback(Scene::CollisionSide::Down, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Down)]);
+                CollisionCallback(Scene::CollisionSide::Left, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Left)]);
+                CollisionCallback(Scene::CollisionSide::Right, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Right)]);
             }
             else
             {
