@@ -21,6 +21,7 @@ namespace Mario {
         static void ImgButtons(const char name);
 
         static void ChangeBonusTextureToUsed(Entity entity);
+        static void OnCollision(Scene::CollisionSide collisionSide, Entity colloidedEntity);
 
     public:
         static glm::vec4    s_BgColor;

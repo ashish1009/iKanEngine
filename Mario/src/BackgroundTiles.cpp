@@ -1,4 +1,5 @@
 #include "BackgroundTiles.h"
+#include "Items.h"
 
 namespace Mario {
 
@@ -58,8 +59,8 @@ namespace Mario {
     "                                             XBXBX              XBXXXXBX                           S           XXXXX               B                                           B    B    B                                                          XBXBX                                                     |||o|||o|||   0"
     "                                                                                Y                 SS                                                                                                                          S  S                                                       S                  ............... 0"
     "                 *                                                              !                SSS                                                   S                                                 Y                   SS  SS                                                     SS                  ||||||||||||||| 0"
-    "                {1}                                       Y                     !               SSSS                               Y                  SS                                                 !                  SSS  SSS                  Y                                SSS                  |u||u||u||u||u| 0"
-    "  <v>          {123}                       <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS                                                 !                 SSSS  SSSS                 !         <v>                   SSSS         <v>      |o||o||o||o||0| 0"
+    "                {1}                                       Y                     !               SSSS                               Y                  SS        *                                        !                  SSS  SSS       *          Y                                SSS                  |u||u||u||u||u| 0"
+    "  <v>          {123}                       <v>      S     !       S  S          !     <vv>     SSSSS                    <vvv>      !          <v>    SSS       {1}                                       !                 SSSS  SSSS     {1}         !         <v>                   SSSS         <v>      |o||o||o||o||0| 0"
     "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG--------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG--------------------------GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
     "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG                    GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGG                          GGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG  GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG0"
     ;
@@ -297,11 +298,22 @@ namespace Mario {
 
         // Castel
         s_TextureMap['.'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 19.0f, 25.0f });
+        s_TextureMap['.'].Rigid = false;
+
         s_TextureMap['u'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 24.0f });
+        s_TextureMap['u'].Rigid = false;
+
         s_TextureMap['o'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 24.0f });
+        s_TextureMap['o'].Rigid = false;
+
         s_TextureMap['|'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 21.0f, 25.0f });
+        s_TextureMap['|'].Rigid = false;
+
         s_TextureMap['l'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 20.0f, 25.0f });
+        s_TextureMap['l'].Rigid = false;
+
         s_TextureMap['r'].SubTexture = SubTexture::CreateFromCoords(s_TileSpriteSheet, { 22.0f, 25.0f });
+        s_TextureMap['r'].Rigid = false;
 
         for (uint32_t y = 0; y < mapHeight; y++)
         {
@@ -309,7 +321,7 @@ namespace Mario {
             {
                 if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
                 {
-                    auto entity = s_EntityVector[tileType].emplace_back(scene->CreateEntity(GetEntityNameFromChar(tileType)));
+                    auto entity = s_EntityVector[tileType].emplace_back(scene->CreateEntityWithID(UUID(), GetEntityNameFromChar(tileType)));
 
                     if (s_TextureMap[tileType].Rigid)
                         entity.AddComponent<BoxCollider2DComponent>();
@@ -330,6 +342,26 @@ namespace Mario {
                 } //if (char tileType = s_MapTiles[x + y * mapWidth]; s_TextureMap.find(tileType) != s_TextureMap.end())
             } // for (uint32_t x = 0; x < mapWidth; x++)
         } // for (uint32_t y = 0; y < mapHeight; y++)
+    }
+
+    void BackgroundTile::OnCollision(Scene::CollisionSide collisionSide, Entity colloidedEntity)
+    {
+        if (Scene::CollisionSide::Up == collisionSide)
+        {
+            if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bricks")
+            {
+                colloidedEntity.GetScene()->DestroyEntity(colloidedEntity);
+            }
+            else if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bonus")
+            {
+                BackgroundTile::ChangeBonusTextureToUsed(colloidedEntity);
+                Items::CreateBonusItem(colloidedEntity);
+            }
+            else
+            {
+
+            }
+        }
     }
 
     void BackgroundTile::ImgButtons(const char name)

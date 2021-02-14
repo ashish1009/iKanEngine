@@ -18,6 +18,7 @@
 		B29287582566CE4400B61ED4 /* BackgroundTiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29287562566CE4400B61ED4 /* BackgroundTiles.cpp */; };
 		B2CB6EA72560270D00F5EF3F /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA62560270C00F5EF3F /* libassimp.5.dylib */; };
 		B2CB6EAA2560273C00F5EF3F /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */; };
+		B2FAD50F25CC47FF00C5427C /* Items.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2FAD50D25CC47FF00C5427C /* Items.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +52,8 @@
 		B29287572566CE4400B61ED4 /* BackgroundTiles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BackgroundTiles.h; sourceTree = "<group>"; };
 		B2CB6EA62560270C00F5EF3F /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
 		B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = ../Engine/vendor/Assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
+		B2FAD50D25CC47FF00C5427C /* Items.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Items.cpp; sourceTree = "<group>"; };
+		B2FAD50E25CC47FF00C5427C /* Items.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Items.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				B230185025682A8C003A391A /* Player.cpp */,
 				B26F774E25C704BE0065BD3D /* StartScreen.cpp */,
 				B26F774F25C704BE0065BD3D /* StartScreen.h */,
+				B2FAD50D25CC47FF00C5427C /* Items.cpp */,
+				B2FAD50E25CC47FF00C5427C /* Items.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2FAD50F25CC47FF00C5427C /* Items.cpp in Sources */,
 				B26F775025C704BE0065BD3D /* StartScreen.cpp in Sources */,
 				B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */,
 				B29287582566CE4400B61ED4 /* BackgroundTiles.cpp in Sources */,

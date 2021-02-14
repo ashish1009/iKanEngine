@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "BackgroundTiles.h"
 #include "StartScreen.h"
+#include "Items.h"
 
 namespace Mario {
         
@@ -52,6 +53,7 @@ namespace Mario {
 
         StartScreen::Init(m_ActiveScene);
         BackgroundTile::Init(m_ActiveScene);
+        Items::Init(m_ActiveScene);
     }
     
     void MarioLayer::OnDetach()
@@ -91,6 +93,7 @@ namespace Mario {
         RendererStatistics::Reset();
 
         Player::Get().Update(timeStep);
+        Items::Onpdate(timeStep);
 
         m_FrameBuffer->Bind();
         

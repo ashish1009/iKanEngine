@@ -120,19 +120,7 @@ namespace Mario {
             else
             {
                 m_Player.m_InAirOffset = false;
-                // TODO: make something more clean
-                if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bricks")
-                {
-                    colloidedEntity.GetScene()->DestroyEntity(colloidedEntity);
-                }
-                else if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bonus")
-                {
-                    BackgroundTile::ChangeBonusTextureToUsed(colloidedEntity);
-                }
-                else
-                {
-
-                }
+                BackgroundTile::OnCollision(Scene::CollisionSide::Up, colloidedEntity);
             }
         }
 
