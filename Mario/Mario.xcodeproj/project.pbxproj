@@ -15,6 +15,7 @@
 		B230185125682A8C003A391A /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B230185025682A8C003A391A /* Player.cpp */; };
 		B26D9D042500072E003291C4 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26D9D022500072E003291C4 /* MarioLayer.cpp */; };
 		B26F775025C704BE0065BD3D /* StartScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B26F774E25C704BE0065BD3D /* StartScreen.cpp */; };
+		B28E172E25DC198900197D65 /* libIrrXML.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B29287582566CE4400B61ED4 /* BackgroundTiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29287562566CE4400B61ED4 /* BackgroundTiles.cpp */; };
 		B2CB6EA72560270D00F5EF3F /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA62560270C00F5EF3F /* libassimp.5.dylib */; };
 		B2CB6EAA2560273C00F5EF3F /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */; };
@@ -28,6 +29,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				B28E172E25DC198900197D65 /* libIrrXML.dylib in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -159,10 +159,13 @@ namespace Mario {
 
     void Player::Stand()
     {
-        // for now x is always positive
-        if (m_Position.x - (float)((int32_t)m_Position.x) >= 0.9)
+        // Player offset on edge
         {
-            m_Position.x = std::ceil(m_Position.x);
+            if (m_Position.x - (float)((int32_t)m_Position.x) >= 0.9)
+                m_Position.x = std::ceil(m_Position.x);
+
+            if (m_Position.x - (float)((int32_t)m_Position.x) <= 0.1)
+                m_Position.x = std::floor(m_Position.x);
         }
 
         // y offset ifplayer lands as its speed offset make him little float

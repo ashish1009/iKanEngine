@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "02774256-F0D9-48A0-B2FB-D5625C8F4DAD"
+            uuid = "9D569EB7-5241-403F-86A0-7B915527865A"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Mario/src/BackgroundTiles.cpp"
+            filePath = "Engine/src/iKan/Scene/Scene.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
-            landmarkName = "BackgroundTile::Init(scene)"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
+            landmarkName = "Scene:: BoxCollisionDetection(currEntity, speed)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8354A65A-D75E-45DD-8F33-FD1A22A85C01"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Mario/src/NativScripts/PlayerController.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "OnUpdate(ts)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
