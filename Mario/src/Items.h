@@ -6,6 +6,18 @@ using namespace iKan;
 
 namespace Mario {
 
+    struct ItemEntity
+    {
+        iKan::Entity Entity;
+        float yEndPosition;
+
+        ItemEntity(const iKan::Entity& entity, float yPos)
+        : Entity(entity), yEndPosition(yPos)
+        {
+
+        }
+    };
+
     class Items
     {
     public:
@@ -24,7 +36,7 @@ namespace Mario {
         static Ref<Texture> s_TileSpriteSheet;
         static std::unordered_map<std::string, Ref<SubTexture>> s_ItemMap;
 
-        static std::vector<Entity> s_CoinEntity;
+        static std::vector<ItemEntity> s_CoinEntity;
 
         static Ref<Scene> m_Scene;
     };

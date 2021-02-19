@@ -5,7 +5,7 @@ namespace Mario {
     Ref<Scene> Items::m_Scene = nullptr;
     Ref<Texture> Items::s_TileSpriteSheet = nullptr;
     std::unordered_map<std::string, Ref<SubTexture>> Items::s_ItemMap;
-    std::vector<Entity> Items::s_CoinEntity;
+    std::vector<ItemEntity> Items::s_CoinEntity;
 
     // New Mario Specific Component
     void Items::Init(Ref<Scene>& scene)
@@ -26,19 +26,28 @@ namespace Mario {
     void Items::Onpdate(TimeStep ts)
     {
         static float counter = 0;
-        for (auto entity : s_CoinEntity)
+        for (auto it = s_CoinEntity.begin(); it != s_CoinEntity.end(); it++)
         {
+            auto& entity = it->Entity;
             auto& posision = entity.GetComponent<TransformComponent>().Translation;
-            posision.y += 0.1f;
-
-            auto& subTex = entity.GetComponent<SpriteRendererComponent>().SubTexComp;
-            if ((int32_t)counter % 2)
+            if (posision.y < it->yEndPosition)
             {
-                subTex = s_ItemMap["Coin"];
+                posision.y += 0.1f;
+                auto& subTex = entity.GetComponent<SpriteRendererComponent>().SubTexComp;
+                if ((int32_t)counter % 2)
+                {
+                    subTex = s_ItemMap["Coin"];
+                }
+                else
+                {
+                    subTex = s_ItemMap["SideCoin"];
+                }
             }
             else
             {
-                subTex = s_ItemMap["SideCoin"];
+                m_Scene->DestroyEntity(entity);
+                s_CoinEntity.erase(it);
+                break;
             }
         }
 
@@ -50,13 +59,14 @@ namespace Mario {
 
     void Items::CreateBonusItem(Entity colloidedEntity)
     {
-        Entity entity = s_CoinEntity.emplace_back(m_Scene->CreateEntityWithID(UUID(), "Coin"));
-        entity.AddComponent<SpriteRendererComponent>(s_ItemMap["Coin"]);
-
-        entity.AddComponent<BoxCollider2DComponent>();
-
-        auto& itemPos = entity.GetComponent<TransformComponent>().Translation;
         const auto& colloidedEntityPos = colloidedEntity.GetComponent<TransformComponent>().Translation;
+
+        auto& coinEntity = s_CoinEntity.emplace_back(ItemEntity(m_Scene->CreateEntityWithID(UUID(), "Coin"), colloidedEntityPos.y + 5));
+        coinEntity.Entity.AddComponent<SpriteRendererComponent>(s_ItemMap["Coin"]);
+
+        coinEntity.Entity.AddComponent<BoxCollider2DComponent>();
+
+        auto& itemPos = coinEntity.Entity.GetComponent<TransformComponent>().Translation;
         itemPos.x = colloidedEntityPos.x;
         itemPos.y = colloidedEntityPos.y + 1;
     }
