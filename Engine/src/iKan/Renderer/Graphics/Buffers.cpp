@@ -1,14 +1,19 @@
+// ******************************************************************************
+//   File    : Buffers.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/Graphics/Buffers.h>
-
 #include <iKan/Renderer/API/RendererAPI.h>
-
-#include <iKan/Core/Core.h>
-
 #include <iKan/Platform/OpenGL/OpenGlBuffers.h>
 
 namespace iKan {
     
-    // ------------------------- Vertex Buffer --------------------------------------------
+    // ******************************************************************************
+    // Creating instance of Vertex Buffer
+    // ******************************************************************************
     Ref<VertexBuffer> VertexBuffer::Create(uint32_t size, float* data)
     {
         switch (RendererAPI::GetAPI())
@@ -20,6 +25,9 @@ namespace iKan {
         return nullptr;
     }
     
+    // ******************************************************************************
+    // Creating instance of Vertex Buffer
+    // ******************************************************************************
     Ref<VertexBuffer> VertexBuffer::Create(uint32_t size)
     {
         switch (RendererAPI::GetAPI())
@@ -32,7 +40,9 @@ namespace iKan {
         return nullptr;
     }
 
-    // ------------------------- Index Buffer --------------------------------------------
+    // ******************************************************************************
+    // Creating instance of Index Buffer
+    // ******************************************************************************
     Ref<IndexBuffer> IndexBuffer::Create(uint32_t size, uint32_t* data)
     {
         switch (RendererAPI::GetAPI())

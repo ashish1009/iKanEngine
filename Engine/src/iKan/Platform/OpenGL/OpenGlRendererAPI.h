@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : OpenGlRendererAPI.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/API/RendererAPI.h>
 
 namespace iKan {
 
+    // ******************************************************************************
+    // Implementation of Open GL Rendereing API
+    // ******************************************************************************
     class OpenGlRendererAPI : public RendererAPI
     {
     public:

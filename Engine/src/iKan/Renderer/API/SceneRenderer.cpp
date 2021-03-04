@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : SceneRenderer.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/API/SceneRenderer.h>
 #include <iKan/Renderer/API/Renderer.h>
 #include <iKan/Renderer/API/Vertices.h>
@@ -6,15 +13,24 @@
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Scene fata
+    // ******************************************************************************
     struct SceneData
     {
         Ref<Shader> MeshShader;
         
+        // ******************************************************************************
+        // Cubemap storage
+        // ******************************************************************************
         struct CubemapVertex
         {
             glm::vec3 Position;
         };
         
+        // ******************************************************************************
+        // Cubemap data
+        // ******************************************************************************
         struct CubeMapData
         {
             static const uint32_t MaxVertex = 20000;
@@ -32,10 +48,14 @@ namespace iKan {
     };
     static SceneData s_Data;
     
+    // ******************************************************************************
+    // Initialize the 3D Scene
+    // ******************************************************************************
     void SceneRenderer::Init()
     {
+        IK_CORE_INFO("Initialise the 3D Scene ");
         s_Data.MeshShader = Shader::Create("../../Engine/assets/shaders/MeshShader.glsl");
-        
+
         // Creating array of Slots to store hem in shader
         int32_t samplers[16];
         for (uint32_t i = 0; i < 16; i++)
@@ -66,11 +86,18 @@ namespace iKan {
         }
     }
     	
+    // ******************************************************************************
+    // Cube map texture
+    // ******************************************************************************
     void SceneRenderer::SetCubemapTexture(const std::string& path)
     {
+        IK_CORE_INFO("Cubemap texture is set. Path : {0}", path.c_str());
         s_Data.CubeMapData.CubeMapTexture = CubeMapTexture::Create(path);
     }
     
+    // ******************************************************************************
+    // Setup scene light
+    // ******************************************************************************
     void SceneRenderer::SetupLight(const SceneRendererLight &light)
     {
         s_Data.MeshShader->Bind();
@@ -117,7 +144,10 @@ namespace iKan {
         }
         s_Data.MeshShader->Unbind();
     }
-    
+
+    // ******************************************************************************
+    // Begin scene 
+    // ******************************************************************************
     void SceneRenderer::BegineScene(const SceneRendererCamera& camera)
     {
         // Mesh Begin scene
@@ -136,12 +166,18 @@ namespace iKan {
             s_Data.CubeMapData.VertexPtr = s_Data.CubeMapData.VertexBasePtr;
         }
     }
-    
+
+    // ******************************************************************************
+    // End scene
+    // ******************************************************************************
     void SceneRenderer::EndScene()
     {
         
     }
-    
+
+    // ******************************************************************************
+    // Draw scene light
+    // ******************************************************************************
     void SceneRenderer::Draw(const Ref<Mesh>& mesh, const glm::mat4& transform)
     {
         if (mesh)
@@ -153,7 +189,10 @@ namespace iKan {
             mesh->Draw(*s_Data.MeshShader.Raw());
         }
     }
-    
+
+    // ******************************************************************************
+    // Draw Cubemap
+    // ******************************************************************************
     void SceneRenderer::DrawCubemap(const glm::mat4& transform)
     {
         s_Data.CubeMapData.CubeMapShader->Bind();
@@ -183,7 +222,10 @@ namespace iKan {
             s_Data.CubeMapData.CubeMapShader->Unbind();
         }
     }
-    
+
+    // ******************************************************************************
+    // Shutdown scene
+    // ******************************************************************************
     void SceneRenderer::Shutdown()
     {
         delete[] s_Data.CubeMapData.VertexBasePtr;

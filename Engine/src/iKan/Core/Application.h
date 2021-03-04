@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Applications.h
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Core/Events/KeyEvents.h>
@@ -11,6 +18,9 @@
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Wrapper for application Properties
+    // ******************************************************************************
     struct ApplicationProps
     {
         std::string Title = "iKan Engine";
@@ -20,6 +30,10 @@ namespace iKan {
         ApplicationProps() = default;
     };
     
+    // ******************************************************************************
+    // Application class. It is the case application class that can be derieved by
+    // client application
+    // ******************************************************************************
     class Application
     {
     public:
@@ -47,12 +61,13 @@ namespace iKan {
         bool OnWindowClose(WindowCloseEvent& event);
         
     private:
-        /*
-         Make sure the Instance of Window should be at first as in default destructor of Application
-         Destructor of Window should called at last after Detaching all Layers, as In Window Destructor
-         we are TERMINATING the GLFW Window which might have an GLFW Error which detaching (In case we
-         Detaching layer will happen after Terminating the Window)
-         */
+        // ******************************************************************************
+        // Make sure the Instance of Window should be at first as in default destructor
+        // of Application Destructor of Window should called at last after Detaching all
+        // Layers, as In Window Destructor we are TERMINATING the GLFW Window which might
+        // have an GLFW Error which detaching (In case we Detaching layer will happen
+        // after Terminating the Window)
+        // ******************************************************************************
         Scope<Window> m_Window;
         
         LayerStack  m_LayerStack;

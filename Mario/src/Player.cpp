@@ -216,7 +216,7 @@ namespace Mario {
 
     void Player::OnKeyPressed(KeyPressedEvent& event)
     {
-        if ((Key::X == event.GetKeyCode()) && (IsState(Standing)))
+        if ((KeyCode::X == event.GetKeyCode()) && (IsState(Standing)))
         {
             ClearState(Falling);
             ClearState(Standing);
@@ -228,7 +228,7 @@ namespace Mario {
 
     void Player::OnKeyReleased(KeyReleasedEvent& event)
     {
-        if (Key::Right == event.GetKeyCode() || Key::Left == event.GetKeyCode())
+        if (KeyCode::Right == event.GetKeyCode() || KeyCode::Left == event.GetKeyCode())
         {
             m_RunningImgIdx = 0;
         }

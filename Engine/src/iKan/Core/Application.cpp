@@ -1,18 +1,27 @@
-#include <iKan/Core/Application.h>
-#include <iKan/Core/Core.h>
-#include <iKan/Core/Input.h>
+// ******************************************************************************
+//   File    : Applications.cpp
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
 
+#include <iKan/Core/Application.h>
+#include <iKan/Core/Input.h>
 #include <iKan/Renderer/API/Renderer.h>
 #include <iKan/ImGui/ImGuiAPI.h>
-
 #include <GLFW/glfw3.h>
 
 namespace iKan {
     
     Application* Application::s_Instance = nullptr;
     
+    // ******************************************************************************
+    // Constructing Application
+    // ******************************************************************************
     Application::Application(const ApplicationProps& props)
     {
+//        std::vector<int, int> test;
+        IK_CORE_INFO("Application constructor called ");
         IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         s_Instance = this;
         
@@ -28,11 +37,19 @@ namespace iKan {
         PushOverlay(m_ImguiLayer);
     }
     
+    // ******************************************************************************
+    // Destructor Application
+    // ******************************************************************************
     Application::~Application()
     {
+        IK_CORE_WARN("Destroying the application");
+
         Renderer::Shutdown();
     }
     
+    // ******************************************************************************
+    // Pushing layer in Application
+    // ******************************************************************************
     void Application::PushLayer(Layer* layer)
     {
         IK_CORE_INFO("Pushing Layer: {0} at {1} ", layer->GetName(), m_LayerStack.GetNumInserted());
@@ -40,6 +57,9 @@ namespace iKan {
         layer->OnAttach();
     }	
     
+    // ******************************************************************************
+    // Pushing layer in Application
+    // ******************************************************************************
     void Application::PushOverlay(Layer *layer)
     {
         IK_CORE_INFO("Pushing Layer: {0} at End ", layer->GetName());
@@ -47,6 +67,9 @@ namespace iKan {
         layer->OnAttach();
     }
     
+    // ******************************************************************************
+    // ImGui Renderer in Application
+    // ******************************************************************************
     void Application::ImGuiRenderer()
     {
         m_ImguiLayer->Begin();
@@ -58,6 +81,9 @@ namespace iKan {
         m_ImguiLayer->End();
     }
     
+    // ******************************************************************************
+    // Run: Game loop
+    // ******************************************************************************
     void Application::Run()
     {
         // Game Loop
@@ -78,18 +104,31 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Application window resize
+    // ******************************************************************************
     bool Application::OnWindowResize(WindowResizeEvent& event)
     {
+        IK_CORE_INFO("Window is resized to {0} x {1}", event.GetWidth(), event.GetHeight());
+
         Renderer::SetViewport(event.GetWidth(),  event.GetHeight());
         return false;
     }
 
+    // ******************************************************************************
+    // Application window close
+    // ******************************************************************************
     bool Application::OnWindowClose(WindowCloseEvent& event)
     {
+        IK_CORE_WARN("Window is closed");
+
         m_IsRunning = false;
         return false;
     }
 
+    // ******************************************************************************
+    // Application Event hablded
+    // ******************************************************************************
     void Application::OnEvent(Event& event)
     {
         EventDispatcher dispatcher(event);

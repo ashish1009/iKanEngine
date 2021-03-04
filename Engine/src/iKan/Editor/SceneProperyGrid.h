@@ -1,9 +1,22 @@
+// ******************************************************************************
+//   File    : ScenePropertyGrid.h
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <imgui_internal.h>
 
+// ******************************************************************************
+// Wrapper for imgui interface for various operations
+// ******************************************************************************
 namespace iKan {
     
+    // ******************************************************************************
+    // Read and write the String
+    // ******************************************************************************
     static bool Property(const char* label, std::string& value, bool error = false)
     {
         ImGui::Columns(2);
@@ -36,6 +49,9 @@ namespace iKan {
     }
 
 #ifdef NOT_IN_USE
+    // ******************************************************************************
+    // UNUSED
+    // ******************************************************************************
     static void Property(const char* label, const char* value)
     {
         ImGui::Columns(2);
@@ -53,6 +69,9 @@ namespace iKan {
     }
 #endif
     
+    // ******************************************************************************
+    // Checkbox
+    // ******************************************************************************
     static bool Property(const char* label, bool& value)
     {
         bool modified = false;
@@ -76,6 +95,9 @@ namespace iKan {
     }
 
 #ifdef NOT_IN_USE
+    // ******************************************************************************
+    // Drag INT
+    // ******************************************************************************
     static bool Property(const char* label, int& value)
     {
         bool modified = false;
@@ -99,6 +121,9 @@ namespace iKan {
     }
 #endif
     
+    // ******************************************************************************
+    // Drag Float
+    // ******************************************************************************
     static bool Property(const char* label, float& value, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f)
     {
         bool modified = false;
@@ -147,6 +172,9 @@ namespace iKan {
     }
     
 #if 0
+    // ******************************************************************************
+    // Drag Float X 2
+    // ******************************************************************************
     static bool Property(const char* label, glm::vec2& value, float delta = 0.1f, float resetValue = 0.0f)
     {
         bool modified = false;
@@ -211,6 +239,9 @@ namespace iKan {
     }
 #endif
     
+    // ******************************************************************************
+    // Drag Float X 3
+    // ******************************************************************************
     static bool Property(const char* label, glm::vec3& value, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f )
     {
         bool modified = false;
@@ -290,6 +321,9 @@ namespace iKan {
         return modified;
     }
     
+    // ******************************************************************************
+    // Drag Float X 3
+    // ******************************************************************************
     static bool Property(const char* label, bool* flag, glm::vec3& value, float delta = 0.1f, float resetValue = 0.0f, float columnWidth = 100.0f )
     {
         bool modified = false;
@@ -374,6 +408,9 @@ namespace iKan {
     }
 
 #if 0
+    // ******************************************************************************
+    // Drag Float X 4
+    // ******************************************************************************
     static bool Property(const char* label, glm::vec4& value, float delta = 0.1f)
     {
         bool modified = false;

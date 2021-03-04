@@ -1,9 +1,18 @@
-#include <OpenGlVertexArray.h>
+// ******************************************************************************
+//   File    : OpenGlVertexArray.cpp
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
 
+#include <OpenGlVertexArray.h>
 #include <glad/glad.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Get the Open GL Data type from user defined Shader data type
+    // ******************************************************************************
     static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
     {
         switch (type)
@@ -26,29 +35,50 @@ namespace iKan {
         return 0;
     }
     
+    // ******************************************************************************
+    // Open GL Vertex Array Constructor
+    // ******************************************************************************
     OpenGlVertexArray::OpenGlVertexArray()
     {
+        IK_CORE_INFO("Open GL Constructor called ");
+
         glGenVertexArrays(1, &m_RendererId);
         glBindVertexArray(m_RendererId);
     }
     
+    // ******************************************************************************
+    // Open GL Vertex Array Destructed
+    // ******************************************************************************
     OpenGlVertexArray::~OpenGlVertexArray()
     {
+        IK_CORE_WARN("Open GL destroyed ");
+
         glDeleteVertexArrays(1, &m_RendererId);
     }
     
+    // ******************************************************************************
+    // Bind Open GL Vertex Array
+    // ******************************************************************************
     void OpenGlVertexArray::Bind() const
     {
         glBindVertexArray(m_RendererId);
     }
     
+    // ******************************************************************************
+    // Unbind Open GL Vertex Array
+    // ******************************************************************************
     void OpenGlVertexArray::Unbind() const
     {
         glBindVertexArray(0);
     }
     
+    // ******************************************************************************
+    // Add the vertex array in the Open GL Vertex Array.
+    // ******************************************************************************
     void OpenGlVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
     {
+        IK_CORE_INFO("Storing the Vertex Buffer into Vertex Array");
+
         glBindVertexArray(m_RendererId);
         m_VertexBuffers.push_back(vertexBuffer);
         
@@ -108,18 +138,24 @@ namespace iKan {
                     break;
                 }
                 default:
+                {
                     IK_CORE_ASSERT(false, "Unknown ShaderDataType!");
+                }
             }
         }
     }
     
+    // ******************************************************************************
+    // Setting Open GL Vertex Array Constructor
+    // ******************************************************************************
     void OpenGlVertexArray::SetIndexBuffer(const Ref<IndexBuffer>& indexBuffer)
     {
+        IK_CORE_INFO("Setting up the Index Buffer into Vertex Array");
+
         glBindVertexArray(m_RendererId);
         indexBuffer->Bind();
         
         m_IndexBuffer = indexBuffer;
     }
 
-    
 }

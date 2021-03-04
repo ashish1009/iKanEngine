@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : MacWindow.cpp
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Platform/MacOS/MacWindow.h>
 
 #include <iKan/Core/Events/MouseEvents.h>
@@ -8,11 +15,19 @@
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Constructor of MAC Window
+    // ******************************************************************************
     MacWindow::MacWindow(const WindowProp& prop)
     {
+        IK_CORE_INFO("Constructing MAC Window");
+
         Init(prop);
     }
     
+    // ******************************************************************************
+    // Initializing of MAC Window
+    // ******************************************************************************
     void MacWindow::Init(const WindowProp &prop)
     {
         m_Data.Title  = prop.Title;
@@ -48,6 +63,9 @@ namespace iKan {
         SetCallBacks();
     }
     
+    // ******************************************************************************
+    // Set callbacks for AC Window
+    // ******************************************************************************
     void MacWindow::SetCallBacks()
     {
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
@@ -141,32 +159,53 @@ namespace iKan {
         });
     }
     
+    // ******************************************************************************
+    // Destrucot of MAC Window
+    // ******************************************************************************
     MacWindow::~MacWindow()
     {
+        IK_CORE_WARN("Destroying MAC Window");
+
         Shutdown();
     }
     
+    // ******************************************************************************
+    // Shutting down MAC Window
+    // ******************************************************************************
     void MacWindow::Shutdown()
     {
+        IK_CORE_WARN("Shutting down MAC Window");
+
         glfwDestroyWindow(m_Window);
         IK_CORE_INFO("Window : {0} Destroyed", m_Data.Title);
         glfwTerminate();
     }
     
+    // ******************************************************************************
+    // Constructor of MAC Window
+    // ******************************************************************************
     void MacWindow::Update()
     {
         m_Context->SwapBuffers();
         glfwPollEvents();
     }
     
+    // ******************************************************************************
+    // Set VSynch
+    // ******************************************************************************
     void MacWindow::SetVSync(bool enabled)
     {
+        IK_CORE_INFO("Setting VSynch : {0}", enabled);
         (true == enabled) ? glfwSwapInterval(1) : glfwSwapInterval(0);
         m_Data.VSync = enabled;
     }
     
+    // ******************************************************************************
+    // Get VSynch
+    // ******************************************************************************
     bool MacWindow::IsVSync() const
     {
+        IK_CORE_INFO("VSynch : {0}", m_Data.VSync);
         return m_Data.VSync;
     }
     

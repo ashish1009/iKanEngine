@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Scene.h
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <entt.hpp>
@@ -15,10 +22,17 @@ namespace iKan {
     class Entity;
     using EntityMap = std::unordered_map<UUID, Entity>;
 
+    // ******************************************************************************
+    // Scene class. Stores all the information and Entities of a Scene. Can be
+    // 2D, 3D ir both
+    // ******************************************************************************
     class Scene : public RefCounted
     {
     public:
-        enum class CollisionSide
+        // ******************************************************************************
+        // Stores the direction of 2D Box Collision
+        // ******************************************************************************
+        enum class BoxCollisionSide
         {
             Up    = BIT(0),
             Down  = BIT(1),
@@ -42,12 +56,12 @@ namespace iKan {
 
         const EntityMap& GetEntityMap() const { return m_EntityIDMap; }
         
-        int BoxCollisionDetection(Entity& entity, float speed);
+        int32_t BoxCollisionDetection(Entity& entity, float speed);
         
         Entity GetMainCameraEntity();
         Entity GetLightEntity();
 
-        int32_t Pixel(int mx, int my);
+        int32_t Pixel(int32_t mx, int32_t my);
 
     private:
         void InstantiateScripts(TimeStep ts);

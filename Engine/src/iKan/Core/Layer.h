@@ -1,11 +1,21 @@
+// ******************************************************************************
+//   File    : Layer.h
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Core/Events/Events.h>
-
 #include <iKan/Core/TimeStep.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Interface of layer for application. Multipla layers can be stored into
+    // applications.
+    // ******************************************************************************
     class Layer
     {
     public:

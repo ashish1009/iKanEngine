@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Mesh.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/Bone.h>
@@ -14,6 +21,9 @@
 
 namespace iKan {
 
+    // ******************************************************************************
+    // Vertex of each Bone
+    // ******************************************************************************
     struct VertexBone
     {
         static const uint32_t WEIGHTS_PER_VERTEX = 4;
@@ -22,6 +32,9 @@ namespace iKan {
         float    Weight;
     };
     
+    // ******************************************************************************
+    // Mesh Vertex. stores all\ the information of each vertex
+    // ******************************************************************************
     struct MeshVertex
     {
         glm::vec3 Position;
@@ -35,6 +48,9 @@ namespace iKan {
         int32_t ObjectID;
     };
     
+    // ******************************************************************************
+    // Stores the Texture information of Mssh
+    // ******************************************************************************
     struct MeshTexture
     {
         Ref<Texture> Texture;
@@ -42,6 +58,9 @@ namespace iKan {
         std::string  Path;
     };
     
+    // ******************************************************************************
+    // Renderer class for a single submesh
+    // ******************************************************************************
     class SubMesh
     {
     public:
@@ -58,9 +77,12 @@ namespace iKan {
         Ref<VertexArray>            m_VAO;
         
     private:
-        void setupMesh();
+        void SetupMesh();
     };
     
+    // ******************************************************************************
+    // Main Mesh class that holds the record of sub meshes
+    // ******************************************************************************
     class Mesh : public RefCounted
     {
     public:

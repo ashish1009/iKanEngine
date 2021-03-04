@@ -1,11 +1,20 @@
+// ******************************************************************************
+//   File    : MacWindow.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Core/Window.h>
-
 #include <iKan/Renderer/Graphics/GraphicsContext.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Implementation of Mac Window
+    // ******************************************************************************
     class MacWindow : public Window
     {
     public:
@@ -17,7 +26,7 @@ namespace iKan {
         virtual uint32_t GetHeight() const override { return m_Data.Height; }
         virtual void Shutdown() override;
         
-        /* Window attributes */
+        // Window attributes
         virtual void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
         virtual void SetVSync(bool enabled) override;
         virtual bool IsVSync() const override;
@@ -31,6 +40,9 @@ namespace iKan {
         Scope<GraphicsContext> m_Context;
         GLFWwindow* m_Window;
         
+        // ******************************************************************************
+        // Wrapper to store MAC Window data
+        // ******************************************************************************
         struct WindowData
         {
             std::string Title;

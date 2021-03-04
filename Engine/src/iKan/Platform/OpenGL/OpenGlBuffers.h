@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : OpenGlBuffers.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/Buffers.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Implementation of Open GL Vertex Buffer
+    // ******************************************************************************
     class OpenGlVertexBuffer : public VertexBuffer
     {
     public:
@@ -24,7 +34,9 @@ namespace iKan {
         BufferLayout m_Layout;
     };
 
-    // ---------------------------------- Index Buffer ----------------------------------------
+    // ******************************************************************************
+    // Implementation of Open GL Index Buffer
+    // ******************************************************************************
     class OpenGlIndexBuffer : public IndexBuffer
     {
     public:

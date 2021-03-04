@@ -1,10 +1,19 @@
+// ******************************************************************************
+//   File    : Entity.h
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Scene/Scene.h>
-#include <iKan/Core/Core.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Wrapper to stroe the entt:: entity and handle its components
+    // ******************************************************************************
     class Entity
     {
     public:

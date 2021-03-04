@@ -5,6 +5,9 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
+      location = "group:iKanEditor/iKanEditor.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Sandbox/Sandbox.xcodeproj">
    </FileRef>
    <FileRef

@@ -1,11 +1,19 @@
+// ******************************************************************************
+//   File    : Framebuffer.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/Graphics/FrameBuffer.h>
-
 #include <iKan/Renderer/API/RendererAPI.h>
-
 #include <iKan/Platform/OpenGL/OpenGLFrameBuffer.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Create instance for Framebuffer
+    // ******************************************************************************
     Ref<Framebuffer> Framebuffer::Create(const FramebufferSpecification& spec)
     {
         switch (RendererAPI::GetAPI())

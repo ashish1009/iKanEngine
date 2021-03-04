@@ -42,14 +42,15 @@ ${PROJECT_DIR}/../iKan/vendor/spdlog/include
 ${PROJECT_DIR}/../iKan/vendor/glm
 ${PROJECT_DIR}/../iKan/vendor/imgui/imgui
 ${PROJECT_DIR}/../iKan/vendor/EnTT/include
-${PROJECT_DIR}/../iKan/vendor/assimp/include
+${PROJECT_DIR}/../Engine/vendor/Assimp/include
+${PROJECT_DIR}/../Engine/vendor/imguizmo
 
 ### Library path
 ${PROJECT_DIR}/../iKan/vendor/assimp/lib
 
 ### Pre Compiled Header
 - Enable Pre compiled header
-- Add the path - `${PROJECT_DIR}/../iKan/src/PrecompiledHeader.pch`
+- Add the path - `${PROJECT_DIR}/../Editor/src/PrefixHeader.pch`
 
 ### Preprocessors
 1. For eanbling Log : "IK_ENABLE_LOG"

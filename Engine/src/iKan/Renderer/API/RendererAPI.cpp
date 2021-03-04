@@ -1,13 +1,20 @@
+// ******************************************************************************
+//   File    : RendererAPI.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/API/RendererAPI.h>
-
-#include <iKan/Core/Core.h>
-
 #include <iKan/Platform/OpenGL/OpenGlRendererAPI.h>
 
 namespace iKan {
     
     API RendererAPI::s_API = API::OpenGL;
     
+    // ******************************************************************************
+    // Create instacne of Renderer API
+    // ******************************************************************************
     Scope<RendererAPI> RendererAPI::Create()
     {
         switch (s_API)

@@ -1,12 +1,26 @@
+// ******************************************************************************
+//   File    : SceneCamera.cpp
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Scene/SceneCamera.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // COnstructor
+    // ******************************************************************************
     SceneCamera::SceneCamera()
     {
+        IK_CORE_INFO("Scene camera is constructed");
         RecalculateProjection();
     }
     
+    // ******************************************************************************
+    // Set Orthpgraphic
+    // ******************************************************************************
     void SceneCamera::SetOrthographic(float size, float nearClip, float farClip)
     {
         m_ProjectionType   = ProjectionType::Orthographic;
@@ -15,7 +29,10 @@ namespace iKan {
         m_OrthographicFar  = farClip;
         RecalculateProjection();
     }
-    
+
+    // ******************************************************************************
+    // Set Perspective
+    // ******************************************************************************
     void SceneCamera::SetPerspective(float fov, float nearClip, float farClip)
     {
         m_ProjectionType  = ProjectionType::Perspective;
@@ -24,13 +41,19 @@ namespace iKan {
         m_PerspectiveFar  = farClip;
         RecalculateProjection();
     }
-    
+
+    // ******************************************************************************
+    // Set View port
+    // ******************************************************************************
     void SceneCamera::SetViewportSize(uint32_t width, uint32_t height)
     {
         m_AspectRatio = (float)width / (float)height;
         RecalculateProjection();
     }
-    
+
+    // ******************************************************************************
+    // Recalculate
+    // ******************************************************************************
     void SceneCamera::RecalculateProjection()
     {
         if (m_ProjectionType == ProjectionType::Perspective)

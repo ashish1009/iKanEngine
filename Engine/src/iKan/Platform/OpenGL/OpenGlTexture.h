@@ -1,11 +1,20 @@
+// ******************************************************************************
+//   File    : OpenGlTexture.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/Texture.h>
-
 #include <glad/glad.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Implementation for OpenGL Texture
+    // ******************************************************************************
     class OpenGlTexture : public Texture
     {
     public:
@@ -16,12 +25,11 @@ namespace iKan {
         
         virtual uint32_t GetWidth() const override { return m_Width;  }
         virtual uint32_t GetHeight() const override { return m_Height; }
-        
+        virtual uint32_t GetRendererID() const override { return m_RendererId; }
+
         virtual void Bind(uint32_t slot = 0) const override;
         virtual void Unbind() const override;
-        
-        virtual uint32_t GetRendererID() const override { return m_RendererId; }
-        
+
         virtual std::string GetfilePath() const override { return m_Filepath; }
 
         virtual bool operator==(const Texture& other) const override
@@ -37,6 +45,9 @@ namespace iKan {
         std::string m_Filepath;
     };
     
+    // ******************************************************************************
+    // Implementation for OpenGL Cubemap
+    // ******************************************************************************
     class OpenGlCubeMapTexture : public CubeMapTexture
     {
     public:

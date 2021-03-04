@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Mesh.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/Graphics/Mesh.h>
 #include <iKan/Renderer/Graphics/Bone.h>
 
@@ -6,6 +13,9 @@
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Return the texture name from type of Texture
+    // ******************************************************************************
     static std::string GetStringFromAiTextureType(aiTextureType type)
     {
         switch (type)
@@ -33,12 +43,20 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Sub Mesh Constructor
+    // ******************************************************************************
     SubMesh::SubMesh(std::vector<MeshVertex> vertices, std::vector<uint32_t> indices, std::vector<MeshTexture> textures)
     : m_Vertices(vertices), m_Indices(indices), m_Textures(textures)
     {
-        setupMesh();
+        IK_CORE_INFO("Creating Submesh ... ");
+
+        SetupMesh();
     }
     
+    // ******************************************************************************
+    // Draw call for each submesh
+    // ******************************************************************************
     void SubMesh::Draw(Shader &shader)
     {
         uint32_t slot = 0;
@@ -61,7 +79,10 @@ namespace iKan {
         RendererStatistics::IndexCount  += m_Indices.size();
     }
     
-    void SubMesh::setupMesh()
+    // ******************************************************************************
+    // Setup Submesh. Stores buffer layout of each submesh
+    // ******************************************************************************
+    void SubMesh::SetupMesh()
     {
         m_VAO = VertexArray::Create();
         
@@ -84,21 +105,32 @@ namespace iKan {
         m_VAO->Unbind();
     }
     
-    // ----------------------------------------------------------- < Sub Mesh > -----------------------------------------------------------
+    // ******************************************************************************
+    // Mesh Constructor
+    // ******************************************************************************
     Mesh::Mesh(const std::string& path, Entity entity)
     : m_Filepath(path), m_Entity(entity)
     {
+        IK_CORE_INFO("Mesh Constructor called");
         LoadModel(path);
     }
     
-    void Mesh::Draw(Shader &shader) const 
+    // ******************************************************************************
+    // Draw call for Mesh
+    // ******************************************************************************
+    void Mesh::Draw(Shader &shader) const
     {
         for(auto mesh : m_Meshes)
             mesh.Draw(shader);
     }
     
+    // ******************************************************************************
+    // Load mesh
+    // ******************************************************************************
     void Mesh::LoadModel(const std::string &path)
     {
+        IK_CORE_INFO("Loading Mesh from path {0}", path.c_str());
+
         Assimp::Importer importer;
         m_Scene = importer.ReadFile( path,
                                                  aiProcess_Triangulate            |
@@ -112,12 +144,15 @@ namespace iKan {
 
         RecursiveNodeProcess(m_Scene->mRootNode);
         AnimNodeProcess();
-        m_GlobalInverseTransform = glm::inverse(AiToGLMMat4(m_Scene->mRootNode->mTransformation));
+        m_GlobalInverseTransform = glm::inverse(Bone::AiToGLMMat4(m_Scene->mRootNode->mTransformation));
         
         m_Directory = path.substr(0, path.find_last_of('/'));
         ProcessNode(m_Scene->mRootNode);
     }
     
+    // ******************************************************************************
+    // Process each node
+    // ******************************************************************************
     void Mesh::ProcessNode(aiNode *node)
     {
         for(uint32_t i = 0; i < node->mNumMeshes; i++)
@@ -131,6 +166,9 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Process and store each mesh
+    // ******************************************************************************
     SubMesh Mesh::ProcessMesh(aiMesh *mesh)
     {
         std::vector<MeshVertex>   vertices;
@@ -241,6 +279,9 @@ namespace iKan {
         return SubMesh(vertices, indices, textures);
     }
     
+    // ******************************************************************************
+    // Load material texture in mesh
+    // ******************************************************************************
     std::vector<MeshTexture> Mesh::LoadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
     {
         std::vector<MeshTexture> meshTextureVector;
@@ -276,6 +317,9 @@ namespace iKan {
         return meshTextureVector;
     }
 
+    // ******************************************************************************
+    // Nopde processing recursive
+    // ******************************************************************************
     void Mesh::RecursiveNodeProcess(aiNode* node)
     {
         m_AiNodes.push_back(node);
@@ -284,6 +328,9 @@ namespace iKan {
             RecursiveNodeProcess(node->mChildren[i]);
     }
 
+    // ******************************************************************************
+    // Process animation
+    // ******************************************************************************
     void Mesh::AnimNodeProcess()
     {
         if(m_Scene->mNumAnimations == 0)
@@ -293,6 +340,9 @@ namespace iKan {
             m_AiNodesAnim.push_back(m_Scene->mAnimations[0]->mChannels[i]);
     }
 
+    // ******************************************************************************
+    // Find Bone
+    // ******************************************************************************
     Bone* Mesh::FindBone(const std::string& name)
     {
         for (auto& bone : m_Bones)
@@ -303,6 +353,9 @@ namespace iKan {
         return nullptr;
     }
 
+    // ******************************************************************************
+    // Find AI Node
+    // ******************************************************************************
     aiNode* Mesh::FindAiNode(const std::string& name)
     {
         for (auto aiNode : m_AiNodes)
@@ -313,6 +366,9 @@ namespace iKan {
         return nullptr;
     }
 
+    // ******************************************************************************
+    // Find AI Anim Node
+    // ******************************************************************************
     aiNodeAnim* Mesh::FindAiNodeAnim(const std::string& name)
     {
         for (auto aiAnimNode : m_AiNodesAnim)
@@ -323,6 +379,9 @@ namespace iKan {
         return nullptr;
     }
 
+    // ******************************************************************************
+    // Find Bone ID by name
+    // ******************************************************************************
     int32_t Mesh::FindBoneIDByName(const std::string& name)
     {
         int32_t i = 0;

@@ -1,16 +1,25 @@
+// ******************************************************************************
+//   File    : ImGuiLayer.cpp
+//   Project : i-Kan : ImGui
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/ImGui/ImguiLayer.h>
-
 #include <iKan/Core/Application.h>
-
 #include <examples/imgui_impl_opengl3.h>
 #include <examples/imgui_impl_glfw.h>
-
 #include <GLFW/glfw3.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Attach ImGuiLayer
+    // ******************************************************************************
     void ImguiLayer::OnAttach()
     {
+        IK_CORE_INFO("Imgui layer is attached to application");
+
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -42,16 +51,26 @@ namespace iKan {
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 410");
     }
-    
+
+    // ******************************************************************************
+    // Detatch ImGuiLayer
+    // ******************************************************************************
     void ImguiLayer::OnDetach()
     {
+        IK_CORE_WARN("Imgui layer is detached to application");
+
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
     
+    // ******************************************************************************
+    // Event handler in ImGuiLayer
+    // ******************************************************************************
     void ImguiLayer::OnEvent(Event& event)
     {
+        IK_CORE_INFO("Imgui layer Events is handling");
+
         if (m_BlockEvents)
         {
             ImGuiIO& io = ImGui::GetIO();
@@ -61,6 +80,9 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Begin ImGuiLayer
+    // ******************************************************************************
     void ImguiLayer::Begin()
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -69,6 +91,9 @@ namespace iKan {
         ImGuizmo::BeginFrame();
     }
     
+    // ******************************************************************************
+    // Ends ImGuiLayer
+    // ******************************************************************************
     void ImguiLayer::End()
     {
         ImGuiIO& io      = ImGui::GetIO();

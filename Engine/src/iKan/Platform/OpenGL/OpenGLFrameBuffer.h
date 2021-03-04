@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : OpenGlFrameBuffer.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/FrameBuffer.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Implementation of Open GL frame buffers
+    // ******************************************************************************
     class OpenGLFrameBuffer : public Framebuffer
     {
     public:
@@ -29,8 +39,8 @@ namespace iKan {
         uint32_t                  m_RendererId = 0;
         FramebufferSpecification  m_Specifications;
 
-        std::vector<FramebufferTextureSpecification> m_ColorAttachmentSpecifications;
-        FramebufferTextureSpecification m_DepthAttachmentSpecification = FramebufferTextureFormat::None;
+        std::vector<FbTextureSpecification> m_ColorAttachmentSpecifications;
+        FbTextureSpecification m_DepthAttachmentSpecification = FbTextureFormat::None;
 
         std::vector<uint32_t> m_ColorAttachments;
         uint32_t m_DepthAttachment = 0;

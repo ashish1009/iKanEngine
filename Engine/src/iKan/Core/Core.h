@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Core.h
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #ifdef IK_ENABLE_ASSERT
@@ -19,13 +26,9 @@
 
 namespace iKan {
 
-    static int32_t GetBitPos(int32_t value)
-    {
-        if (!value)
-            return -1;
-        return log2(value);
-    }
-    
+    // ******************************************************************************
+    // Unique pointer iKan API
+    // ******************************************************************************
     template<typename T>
     using Scope = std::unique_ptr<T>;
     

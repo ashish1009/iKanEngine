@@ -1,7 +1,17 @@
+// ******************************************************************************
+//   File    : Math.cpp
+//   Project : i-Kan : Math
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Math/Maths.h>
 
 namespace iKan::Math {
 
+    // ******************************************************************************
+    // Decompose mat 4 into translation, rotation and scale
+    // ******************************************************************************
     bool DecomposeTransform(const glm::mat4& transform, glm::vec3& translation, glm::vec3& rotation, glm::vec3& scale)
     {
         // From glm::decompose in matrix_decompose.inl

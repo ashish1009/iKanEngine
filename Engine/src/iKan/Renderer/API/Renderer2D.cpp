@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Renderer2D.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/API/Renderer2D.h>
 #include <iKan/Renderer/API/Renderer.h>
 #include <iKan/Renderer/API/RendererStats.h>
@@ -9,6 +16,9 @@
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Stores the vertex information of a Quad
+    // ******************************************************************************
     struct QuadVertex
     {
         glm::vec3 Position;
@@ -21,6 +31,9 @@ namespace iKan {
         int32_t ObjectID;
     };
     
+    // ******************************************************************************
+    // Stores the 2D Renderer information. ALl data and buffer pointers
+    // ******************************************************************************
     struct Renderer2DData
     {
         // Consts to store limits of renderer
@@ -51,6 +64,9 @@ namespace iKan {
     
     static Renderer2DData s_Data;
     
+    // ******************************************************************************
+    // Initialise the 2D renderer
+    // ******************************************************************************
     void Renderer2D::Init()
     {
         IK_CORE_INFO("Initialising Renderer2D ");
@@ -108,8 +124,13 @@ namespace iKan {
         SetShaader("../../Engine/assets/shaders/BatchRenderer2DShader.glsl");
     }
     
+    // ******************************************************************************
+    // Set the 2DD shader
+    // ******************************************************************************
     void Renderer2D::SetShaader(const std::string &path)
     {
+        IK_CORE_INFO("Set the 2D Renderer Shader {0}", path.c_str());
+
         // Creating array of Slots to store hem in shader
         int32_t samplers[s_Data.MaxTextureSlots];
         for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
@@ -121,11 +142,19 @@ namespace iKan {
         s_Data.TextureShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
     }
     
+    // ******************************************************************************
+    // Shut down the 2D Renderer
+    // ******************************************************************************
     void Renderer2D::Shutdown()
     {
+        IK_CORE_WARN("Shutting down the 2D renderer");
+
         delete[] s_Data.QuadVertexBufferBase;
     }
     
+    // ******************************************************************************
+    // Begin the 2D Scene
+    // ******************************************************************************
     void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
     {
         // Upload Camera View Projection Matris to shader
@@ -137,6 +166,9 @@ namespace iKan {
         StartBatch();
     }
 
+    // ******************************************************************************
+    // Begin the 2D Scene
+    // ******************************************************************************
     void Renderer2D::BeginScene(const EditorCamera& camera)
     {
         glm::mat4 viewProj = camera.GetViewProjection();
@@ -147,11 +179,17 @@ namespace iKan {
         StartBatch();
     }
     
+    // ******************************************************************************
+    // End the 2D Scene
+    // ******************************************************************************
     void Renderer2D::EndScene()
     {
         Flush();
     }
     
+    // ******************************************************************************
+    // Start the batch
+    // ******************************************************************************
     void Renderer2D::StartBatch()
     {
         s_Data.QuadIndexCount = 0;
@@ -160,6 +198,9 @@ namespace iKan {
         s_Data.TextureSlotIndex = 1;
     }
 
+    // ******************************************************************************
+    // Flush the batch
+    // ******************************************************************************
     void Renderer2D::Flush()
     {
         // Nothing to draw
@@ -180,9 +221,14 @@ namespace iKan {
         // Render the Scene
         Renderer::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
     }
-    
+
+    // ******************************************************************************
+    // New batch
+    // ******************************************************************************
     void Renderer2D::NextBatch()
     {
+        IK_CORE_WARN("Starts the new batch");
+
         // if num Quad per Batch exceeds then Render the Scene and reset all parameters
         EndScene();
         

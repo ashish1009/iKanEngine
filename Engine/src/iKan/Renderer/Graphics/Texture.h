@@ -1,7 +1,17 @@
+// ******************************************************************************
+//   File    : Texture.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Interface fo storing Texture
+    // ******************************************************************************
     class Texture : public RefCounted
     {
     public:
@@ -23,6 +33,9 @@ namespace iKan {
         static Ref<Texture> Create(uint32_t width, uint32_t height, void* data, uint32_t size);
     };
     
+    // ******************************************************************************
+    // Implementation for storung Subtexture for tiles
+    // ******************************************************************************
     class SubTexture : public RefCounted
     {
     public:
@@ -34,18 +47,20 @@ namespace iKan {
         const glm::vec2& GetCellSize() const { return m_CellSize; }
         const glm::vec2& GetCoords() const { return m_Coords; }
         
-        /* By Default Tile size is 16 x 16 */
+        // By Default Tile size is 16 x 16
         static Ref<SubTexture> CreateFromCoords(const Ref<Texture>& texture, const glm::vec2& coords, const glm::vec2& spriteSize = {1.0f, 1.0f}, const glm::vec2& cellSize = {16.0f, 16.0f});
         
     private:
         Ref<Texture> m_Texture;
-        glm::vec2                m_TexCoord[4];
-        glm::vec2                m_SpriteSize;
-        glm::vec2                m_CellSize;
-        glm::vec2                m_Coords;
+        glm::vec2 m_TexCoord[4];
+        glm::vec2 m_SpriteSize;
+        glm::vec2 m_CellSize;
+        glm::vec2 m_Coords;
     };
 
-    // --------------------------- Cube Maps ---------------------------------
+    // ******************************************************************************
+    // Interface for storing cubemaps
+    // ******************************************************************************
     class CubeMapTexture : public RefCounted
     {
     public:
@@ -56,6 +71,6 @@ namespace iKan {
         static Ref<CubeMapTexture> Create(const std::string& paths);
         
     private:
-        uint32_t                 m_RendererId;
+        uint32_t m_RendererId;
     };
 }

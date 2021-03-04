@@ -1,21 +1,35 @@
+// ******************************************************************************
+//   File    : Events.h
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 namespace iKan {
     
+    // ******************************************************************************
     // Events in Hazel are currently blocking, meaning when an event occurs it
     // immediately gets dispatched and must be dealt with right then an there.
     // For the future, a better strategy might be to buffer events in an event
     // bus and process them during the "event" part of the update stage.
-    
+    // ******************************************************************************
+
+    // ******************************************************************************
+    // Type of events
+    // ******************************************************************************
     enum class EventType
     {
         None = 0,
         WindowClose, WindowResize, WindowFocus, WindowLostFocus, WindowMoved,
-        AppTick, AppUpdate, AppRender,
         KeyPressed, KeyReleased, KeyTyped,
         MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
     };
     
+    // ******************************************************************************
+    // event categories
+    // ******************************************************************************
     enum EventCategory
     {
         None = 0,
@@ -32,6 +46,9 @@ virtual const char* GetName() const override { return #type; }
     
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
     
+    // ******************************************************************************
+    // Event Base class
+    // ******************************************************************************
     class Event
     {
     public:
@@ -42,8 +59,7 @@ virtual const char* GetName() const override { return #type; }
         virtual EventType GetEventType() const = 0;
         virtual const char* GetName() const = 0;
         virtual int GetCategoryFlags() const = 0;
-        virtual std::string ToString() const { return GetName(); }
-        
+
         bool IsInCategory(EventCategory category)
         {
             return GetCategoryFlags() & category;
@@ -72,10 +88,5 @@ virtual const char* GetName() const override { return #type; }
     private:
         Event& m_Event;
     };
-    
-    inline std::ostream& operator<<(std::ostream& os, const Event& e)
-    {
-        return os << e.ToString();
-    }
-    
+
 }

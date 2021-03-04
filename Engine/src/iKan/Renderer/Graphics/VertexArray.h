@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : VertexArray.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/Buffers.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Interface of Vertex Array Class
+    // ******************************************************************************
     class VertexArray : public RefCounted
     {
     public:

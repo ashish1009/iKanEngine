@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Window.h
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Core/Events/Events.h>
@@ -7,6 +14,9 @@ namespace iKan {
     static const uint32_t s_WindowWidth = 1280;
     static const uint32_t s_WindowHeight = 720;
     
+    // ******************************************************************************
+    // Wrapper to create the property of Window
+    // ******************************************************************************
     struct WindowProp
     {
         std::string Title;
@@ -16,6 +26,9 @@ namespace iKan {
         : Title(title), Height(height), Width(width) { }
     };
     
+    // ******************************************************************************
+    // Interface for Creating window
+    // ******************************************************************************
     class Window
     {
     public:

@@ -1,8 +1,18 @@
+// ******************************************************************************
+//   File    : KeyCode.h
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 namespace iKan
 {
-    typedef enum class KeyCode : uint16_t
+    // ******************************************************************************
+    // Key codes
+    // ******************************************************************************
+    enum class KeyCode : uint16_t
     {
         // From glfw3.h
         Space               = 32,
@@ -135,11 +145,6 @@ namespace iKan
         RightAlt            = 346,
         RightSuper          = 347,
         Menu                = 348
-    } Key;
-    
-    inline std::ostream& operator<<(std::ostream& os, KeyCode keyCode)
-    {
-        os << static_cast<int32_t>(keyCode);
-        return os;
-    }
+    };
+
 }

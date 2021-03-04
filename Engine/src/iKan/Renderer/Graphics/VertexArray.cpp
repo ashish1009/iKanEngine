@@ -1,13 +1,19 @@
+// ******************************************************************************
+//   File    : VertexArray.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/Graphics/VertexArray.h>
-
 #include <iKan/Renderer/API/RendererAPI.h>
-
-#include <iKan/Core/Core.h>
-
 #include <iKan/Platform/OpenGL/OpenGlVertexArray.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // creating instance of Verytex Array
+    // ******************************************************************************
     Ref<VertexArray> VertexArray::Create()
     {
         switch (RendererAPI::GetAPI())

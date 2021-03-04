@@ -174,35 +174,35 @@ namespace iKan {
     {
         // Move camera
         const float cameraSpeed = 5.5 * timeStep;
-        if (iKan::Input::IsKeyPressed(iKan::Key::Q))
+        if (iKan::Input::IsKeyPressed(iKan::KeyCode::Q))
         {
             s_PerspectivCameraPosition += cameraSpeed * s_CameraFront;
             s_OrthoZoom -= cameraSpeed;
             s_OrthoZoom = std::max(s_OrthoZoom, 0.25f);
             
         }
-        if (iKan::Input::IsKeyPressed(iKan::Key::E))
+        if (iKan::Input::IsKeyPressed(iKan::KeyCode::E))
         {
             s_PerspectivCameraPosition -= cameraSpeed * s_CameraFront;
             s_OrthoZoom += cameraSpeed;
         }
-        if (iKan::Input::IsKeyPressed(iKan::Key::A))
+        if (iKan::Input::IsKeyPressed(iKan::KeyCode::A))
         {
             s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
             s_OrthoCameraPosition.x -= cameraSpeed;
         }
-        if (iKan::Input::IsKeyPressed(iKan::Key::D))
+        if (iKan::Input::IsKeyPressed(iKan::KeyCode::D))
         {
             s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraUp)) * cameraSpeed;
             s_OrthoCameraPosition.x += cameraSpeed;
         }
-        if (iKan::Input::IsKeyPressed(iKan::Key::S))
+        if (iKan::Input::IsKeyPressed(iKan::KeyCode::S))
         {
             s_PerspectivCameraPosition -= glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
             s_OrthoCameraPosition.y -= cameraSpeed;
         }
         
-        if (iKan::Input::IsKeyPressed(iKan::Key::S))
+        if (iKan::Input::IsKeyPressed(iKan::KeyCode::S))
         {
             s_PerspectivCameraPosition += glm::normalize(glm::cross(s_CameraFront, s_CameraLeft)) * cameraSpeed;
             s_OrthoCameraPosition.y += cameraSpeed;

@@ -1,14 +1,19 @@
+// ******************************************************************************
+//   File    : Texture.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/Graphics/Texture.h>
-
 #include <iKan/Renderer/API/RendererAPI.h>
-
-#include <iKan/Core/Core.h>
-
 #include <iKan/Platform/OpenGL/OpenGlTexture.h>
 
 namespace iKan {
     
-    // ------------------------- Vertex Buffer --------------------------------------------
+    // ******************************************************************************
+    // Creating Texture
+    // ******************************************************************************
     Ref<Texture> Texture::Create(const std::string& path)
     {
         switch (RendererAPI::GetAPI())
@@ -20,6 +25,9 @@ namespace iKan {
         return nullptr;
     }
     
+    // ******************************************************************************
+    // Creating Texture
+    // ******************************************************************************
     Ref<Texture> Texture::Create(uint32_t width, uint32_t height, void* data, uint32_t size)
     {
         switch (RendererAPI::GetAPI())
@@ -31,6 +39,9 @@ namespace iKan {
         return nullptr;
     }
     
+    // ******************************************************************************
+    // Creating SubTexture
+    // ******************************************************************************
     SubTexture::SubTexture(const Ref<Texture>& texture, const glm::vec2& min, const glm::vec2& max, const glm::vec2& spriteSize, const glm::vec2& cellSize, const glm::vec2& coords)
     : m_Texture(texture), m_SpriteSize(spriteSize), m_CellSize(cellSize), m_Coords(coords)
     {
@@ -40,6 +51,9 @@ namespace iKan {
         m_TexCoord[3] = {min.x, max.y};
     }
     
+    // ******************************************************************************
+    // Creating SubTexture
+    // ******************************************************************************
     Ref<SubTexture> SubTexture::CreateFromCoords(const Ref<Texture>& texture, const glm::vec2& coords, const glm::vec2& spriteSize, const glm::vec2& cellSize)
     {
         glm::vec2 min = { (coords.x * cellSize.x) / texture->GetWidth(), (coords.y * cellSize.y) / texture->GetHeight() };
@@ -47,6 +61,9 @@ namespace iKan {
         return Ref<SubTexture>::Create(texture, min, max, spriteSize, cellSize, coords);
     }
     
+    // ******************************************************************************
+    // Creating Cubemap
+    // ******************************************************************************
     Ref<CubeMapTexture> CubeMapTexture::Create(std::vector<std::string> paths)
     {
         switch (RendererAPI::GetAPI())
@@ -58,6 +75,9 @@ namespace iKan {
         return nullptr;
     }
     
+    // ******************************************************************************
+    // Creating Cubemap
+    // ******************************************************************************
     Ref<CubeMapTexture> CubeMapTexture::Create(const std::string& path)
     {
         switch (RendererAPI::GetAPI())

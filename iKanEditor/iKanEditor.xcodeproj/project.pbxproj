@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F024ED275600A14055 /* OpenGL.framework */; };
-		B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F224ED275B00A14055 /* IOKit.framework */; };
-		B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F424ED276400A14055 /* Cocoa.framework */; };
-		B23FF91B25F0F787001DFEEF /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B23FF91A25F0F787001DFEEF /* libassimp.5.dylib */; };
-		B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF87724ED197300884EDA /* EditorApp.cpp */; };
-		B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B24FF89824ED1BF900884EDA /* libEngine.a */; };
-		B253892C251FBF8300E5FD98 /* SceneEditorLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */; };
+		B23FF92925F0FA98001DFEEF /* EditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23FF92825F0FA98001DFEEF /* EditorApp.cpp */; };
+		B2E39FD725F0FDC8007C8E64 /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FD625F0FDC8007C8E64 /* libEngine.a */; };
+		B2E39FD925F0FDF0007C8E64 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FD825F0FDF0007C8E64 /* OpenGL.framework */; };
+		B2E39FDB25F0FDF4007C8E64 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FDA25F0FDF4007C8E64 /* Cocoa.framework */; };
+		B2E39FDD25F0FDFC007C8E64 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FDC25F0FDFC007C8E64 /* IOKit.framework */; };
+		B2E39FDF25F0FE10007C8E64 /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FDE25F0FE10007C8E64 /* libassimp.5.dylib */; };
+		B2E39FE125F0FE1B007C8E64 /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FE025F0FE1B007C8E64 /* libIrrXML.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B24FF87224ED197300884EDA /* CopyFiles */ = {
+		B23FF92325F0FA98001DFEEF /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -29,126 +29,106 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		B23FF91A25F0F787001DFEEF /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
-		B24FF87424ED197300884EDA /* Editor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Editor; sourceTree = BUILT_PRODUCTS_DIR; };
-		B24FF87724ED197300884EDA /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
-		B24FF89824ED1BF900884EDA /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SceneEditorLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
-		B253892B251FBF8300E5FD98 /* SceneEditorLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneEditorLayer.h; sourceTree = "<group>"; };
-		B2E735022520FE2500BD41D3 /* libassimp.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.0.0.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.0.0.dylib; sourceTree = "<group>"; };
+		B23FF92525F0FA98001DFEEF /* iKanEditor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iKanEditor; sourceTree = BUILT_PRODUCTS_DIR; };
+		B23FF92825F0FA98001DFEEF /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
+		B2E39FD625F0FDC8007C8E64 /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2E39FD825F0FDF0007C8E64 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		B2E39FDA25F0FDF4007C8E64 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		B2E39FDC25F0FDFC007C8E64 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		B2E39FDE25F0FE10007C8E64 /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
+		B2E39FE025F0FE1B007C8E64 /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = ../Engine/vendor/Assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B24FF87124ED197300884EDA /* Frameworks */ = {
+		B23FF92225F0FA98001DFEEF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B23FF91B25F0F787001DFEEF /* libassimp.5.dylib in Frameworks */,
-				B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */,
-				B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */,
-				B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */,
-				B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */,
+				B2E39FE125F0FE1B007C8E64 /* libIrrXML.dylib in Frameworks */,
+				B2E39FDF25F0FE10007C8E64 /* libassimp.5.dylib in Frameworks */,
+				B2E39FDD25F0FDFC007C8E64 /* IOKit.framework in Frameworks */,
+				B2E39FDB25F0FDF4007C8E64 /* Cocoa.framework in Frameworks */,
+				B2E39FD925F0FDF0007C8E64 /* OpenGL.framework in Frameworks */,
+				B2E39FD725F0FDC8007C8E64 /* libEngine.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B24FF86B24ED197300884EDA = {
+		B23FF91C25F0FA98001DFEEF = {
 			isa = PBXGroup;
 			children = (
-				B2993E0E25459C8800017D92 /* assets */,
-				B24FF87624ED197300884EDA /* src */,
-				B24FF87524ED197300884EDA /* Products */,
-				B24FF89724ED1BF900884EDA /* Frameworks */,
+				B23FF92725F0FA98001DFEEF /* src */,
+				B23FF92625F0FA98001DFEEF /* Products */,
+				B2E39FD525F0FDC7007C8E64 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		B24FF87524ED197300884EDA /* Products */ = {
+		B23FF92625F0FA98001DFEEF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B24FF87424ED197300884EDA /* Editor */,
+				B23FF92525F0FA98001DFEEF /* iKanEditor */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B24FF87624ED197300884EDA /* src */ = {
+		B23FF92725F0FA98001DFEEF /* src */ = {
 			isa = PBXGroup;
 			children = (
-				B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */,
-				B253892B251FBF8300E5FD98 /* SceneEditorLayer.h */,
-				B24FF87724ED197300884EDA /* EditorApp.cpp */,
+				B23FF92825F0FA98001DFEEF /* EditorApp.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		B24FF89724ED1BF900884EDA /* Frameworks */ = {
+		B2E39FD525F0FDC7007C8E64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B23FF91A25F0F787001DFEEF /* libassimp.5.dylib */,
-				B2E735022520FE2500BD41D3 /* libassimp.5.0.0.dylib */,
-				B21375F424ED276400A14055 /* Cocoa.framework */,
-				B21375F224ED275B00A14055 /* IOKit.framework */,
-				B21375F024ED275600A14055 /* OpenGL.framework */,
-				B24FF89824ED1BF900884EDA /* libEngine.a */,
+				B2E39FE025F0FE1B007C8E64 /* libIrrXML.dylib */,
+				B2E39FDE25F0FE10007C8E64 /* libassimp.5.dylib */,
+				B2E39FDC25F0FDFC007C8E64 /* IOKit.framework */,
+				B2E39FDA25F0FDF4007C8E64 /* Cocoa.framework */,
+				B2E39FD825F0FDF0007C8E64 /* OpenGL.framework */,
+				B2E39FD625F0FDC8007C8E64 /* libEngine.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B2993E0E25459C8800017D92 /* assets */ = {
-			isa = PBXGroup;
-			children = (
-				B2993E0F25459C8800017D92 /* scene */,
-			);
-			path = assets;
-			sourceTree = "<group>";
-		};
-		B2993E0F25459C8800017D92 /* scene */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = scene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B24FF87324ED197300884EDA /* Editor */ = {
+		B23FF92425F0FA98001DFEEF /* iKanEditor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B24FF87B24ED197300884EDA /* Build configuration list for PBXNativeTarget "Editor" */;
+			buildConfigurationList = B23FF92C25F0FA98001DFEEF /* Build configuration list for PBXNativeTarget "iKanEditor" */;
 			buildPhases = (
-				B24FF87024ED197300884EDA /* Sources */,
-				B24FF87124ED197300884EDA /* Frameworks */,
-				B24FF87224ED197300884EDA /* CopyFiles */,
+				B23FF92125F0FA98001DFEEF /* Sources */,
+				B23FF92225F0FA98001DFEEF /* Frameworks */,
+				B23FF92325F0FA98001DFEEF /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = Editor;
-			productName = Editor;
-			productReference = B24FF87424ED197300884EDA /* Editor */;
+			name = iKanEditor;
+			productName = iKanEditor;
+			productReference = B23FF92525F0FA98001DFEEF /* iKanEditor */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B24FF86C24ED197300884EDA /* Project object */ = {
+		B23FF91D25F0FA98001DFEEF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				DefaultBuildSystemTypeForWorkspace = Original;
 				LastUpgradeCheck = 1220;
-				ORGANIZATIONNAME = "Ashish .";
 				TargetAttributes = {
-					B24FF87324ED197300884EDA = {
-						CreatedOnToolsVersion = 11.6;
+					B23FF92425F0FA98001DFEEF = {
+						CreatedOnToolsVersion = 12.2;
 					};
 				};
 			};
-			buildConfigurationList = B24FF86F24ED197300884EDA /* Build configuration list for PBXProject "Editor" */;
+			buildConfigurationList = B23FF92025F0FA98001DFEEF /* Build configuration list for PBXProject "iKanEditor" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -156,30 +136,29 @@
 				en,
 				Base,
 			);
-			mainGroup = B24FF86B24ED197300884EDA;
-			productRefGroup = B24FF87524ED197300884EDA /* Products */;
+			mainGroup = B23FF91C25F0FA98001DFEEF;
+			productRefGroup = B23FF92625F0FA98001DFEEF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B24FF87324ED197300884EDA /* Editor */,
+				B23FF92425F0FA98001DFEEF /* iKanEditor */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B24FF87024ED197300884EDA /* Sources */ = {
+		B23FF92125F0FA98001DFEEF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B253892C251FBF8300E5FD98 /* SceneEditorLayer.cpp in Sources */,
-				B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */,
+				B23FF92925F0FA98001DFEEF /* EditorApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		B24FF87924ED197300884EDA /* Debug */ = {
+		B23FF92A25F0FA98001DFEEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -230,7 +209,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -238,7 +217,7 @@
 			};
 			name = Debug;
 		};
-		B24FF87A24ED197300884EDA /* Release */ = {
+		B23FF92B25F0FA98001DFEEF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -283,63 +262,58 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		B24FF87C24ED197300884EDA /* Debug */ = {
+		B23FF92D25F0FA98001DFEEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/src/PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
-					IK_ENABLE_LOG,
 					IK_ENABLE_ASSERT,
+					IK_ENABLE_LOG,
 				);
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../Engine/src",
-					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
-					"${PROJECT_DIR}/../Engine/vendor/glm",
-					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
+					"$(PROJECT_DIR)/src",
+					"$(PROJECT_DIR)/../Engine/src",
+					"$(PROJECT_DIR)/../Engine/vendor/spdlog/include",
+					"$(PROJECT_DIR)/../Engine/vendor/glm",
+					"$(PROJECT_DIR)/../Engine/vendor/imgui/imgui",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
 					"${PROJECT_DIR}/../Engine/vendor/imguizmo",
 				);
-				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		B24FF87D24ED197300884EDA /* Release */ = {
+		B23FF92E25F0FA98001DFEEF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
-				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_DIR}/../Engine/src/PrefixHeader.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					IK_ENABLE_LOG,
-					IK_ENABLE_ASSERT,
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = IK_ENABLE_ASSERT;
 				HEADER_SEARCH_PATHS = (
-					"${PROJECT_DIR}/../Engine/src",
-					"${PROJECT_DIR}/../Engine/vendor/spdlog/include",
-					"${PROJECT_DIR}/../Engine/vendor/glm",
-					"${PROJECT_DIR}/../Engine/vendor/Imgui/Imgui",
+					"$(PROJECT_DIR)/src",
+					"$(PROJECT_DIR)/../Engine/src",
+					"$(PROJECT_DIR)/../Engine/vendor/spdlog/include",
+					"$(PROJECT_DIR)/../Engine/vendor/glm",
+					"$(PROJECT_DIR)/../Engine/vendor/imgui/imgui",
 					"${PROJECT_DIR}/../Engine/vendor/EnTT/include",
 					"${PROJECT_DIR}/../Engine/vendor/Assimp/include",
 					"${PROJECT_DIR}/../Engine/vendor/imguizmo",
 				);
-				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -347,25 +321,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B24FF86F24ED197300884EDA /* Build configuration list for PBXProject "Editor" */ = {
+		B23FF92025F0FA98001DFEEF /* Build configuration list for PBXProject "iKanEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24FF87924ED197300884EDA /* Debug */,
-				B24FF87A24ED197300884EDA /* Release */,
+				B23FF92A25F0FA98001DFEEF /* Debug */,
+				B23FF92B25F0FA98001DFEEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B24FF87B24ED197300884EDA /* Build configuration list for PBXNativeTarget "Editor" */ = {
+		B23FF92C25F0FA98001DFEEF /* Build configuration list for PBXNativeTarget "iKanEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B24FF87C24ED197300884EDA /* Debug */,
-				B24FF87D24ED197300884EDA /* Release */,
+				B23FF92D25F0FA98001DFEEF /* Debug */,
+				B23FF92E25F0FA98001DFEEF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B24FF86C24ED197300884EDA /* Project object */;
+	rootObject = B23FF91D25F0FA98001DFEEF /* Project object */;
 }

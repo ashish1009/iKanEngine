@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : RendererAPI.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/VertexArray.h>
@@ -7,6 +14,9 @@ namespace iKan {
     enum class API { None = 0, OpenGL = 1 };
     enum class State { Disable = 0, Enable = 1 };
     
+    // ******************************************************************************
+    // Stores the capability of renderer
+    // ******************************************************************************
     struct RenderAPICapabilities
     {
         std::string Vendor;
@@ -14,6 +24,10 @@ namespace iKan {
         std::string Version;
     };
     
+    // ******************************************************************************
+    // Stores the renderer API type, or graphics type and call the renderer function
+    // accordingly
+    // ******************************************************************************
     class RendererAPI
     {
     public:

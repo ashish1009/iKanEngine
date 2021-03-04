@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : ScriptableEntity.h
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Scene/Entity.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Base class for each stribtable entity or native sctipt
+    // ******************************************************************************
     class ScriptableEntity
     {
     public:
@@ -25,7 +35,7 @@ namespace iKan {
         virtual void OnCreate() { m_Created = true; }
         virtual void OnUpdate(TimeStep ts) {}
         virtual void OnDestroy() {}
-        virtual void OnCollision(Entity* colloidedEntity, int32_t Collision = 0) {}
+        virtual void OnBoxCollision(Entity* colloidedEntity, int32_t Collision = 0) {}
         
     protected:
         bool m_Created = false;

@@ -18,23 +18,23 @@ namespace iKan {
                 auto& translation = GetComponent<TransformComponent>().Translation;
                 float speed = 2.5f;
                 
-                if(Input::IsKeyPressed(Key::Left))
+                if(Input::IsKeyPressed(KeyCode::Left))
                 {
                     if (!IsCollision(Left))
                     {
                         translation.x -= speed * ts;
                     }
                 }
-                if(Input::IsKeyPressed(Key::Right))
+                if(Input::IsKeyPressed(KeyCode::Right))
                 {
                     if (!IsCollision(Right))
                     {
                         translation.x += speed * ts;
                     }
                 }
-                if(Input::IsKeyPressed(Key::Down))
+                if(Input::IsKeyPressed(KeyCode::Down))
                     translation.y += speed * ts;
-                if(Input::IsKeyPressed(Key::Up))
+                if(Input::IsKeyPressed(KeyCode::Up))
                     translation.y -= speed * ts;
             }
         }
@@ -99,13 +99,13 @@ namespace iKan {
                     auto& translation = GetComponent<TransformComponent>().Translation;
                     float speed = 0.5f;
                     
-                    if(Input::IsKeyPressed(Key::D))
+                    if(Input::IsKeyPressed(KeyCode::D))
                         translation.x -= speed * ts;
-                    if(Input::IsKeyPressed(Key::A))
+                    if(Input::IsKeyPressed(KeyCode::A))
                         translation.x += speed * ts;
-                    if(Input::IsKeyPressed(Key::S))
+                    if(Input::IsKeyPressed(KeyCode::S))
                         translation.y += speed * ts;
-                    if(Input::IsKeyPressed(Key::W))
+                    if(Input::IsKeyPressed(KeyCode::W))
                         translation.y -= speed * ts;
                 }
             }

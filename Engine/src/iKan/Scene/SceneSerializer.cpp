@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : SceneSerializer.\cpp
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Scene/SceneSerializer.h>
 
 #include <iKan/Scene/Entity.h>
@@ -8,6 +15,9 @@
 
 namespace YAML {
     
+    // ******************************************************************************
+    // yml converstions
+    // ******************************************************************************
     template<>
     struct convert<glm::vec3>
     {
@@ -33,6 +43,9 @@ namespace YAML {
         }
     };
     
+    // ******************************************************************************
+    // yml converstions
+    // ******************************************************************************
     template<>
     struct convert<glm::vec4>
     {
@@ -63,6 +76,9 @@ namespace YAML {
 }
 namespace iKan {
     
+    // ******************************************************************************
+    // yml operators
+    // ******************************************************************************
     YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec3& v)
     {
         out << YAML::Flow;
@@ -70,6 +86,9 @@ namespace iKan {
         return out;
     }
     
+    // ******************************************************************************
+    // yml operators
+    // ******************************************************************************
     YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec4& v)
     {
         out << YAML::Flow;
@@ -77,11 +96,18 @@ namespace iKan {
         return out;
     }
     
+    // ******************************************************************************
+    // SceneSerializer constructor
+    // ******************************************************************************
     SceneSerializer::SceneSerializer(const Ref<Scene>& scene)
     : m_Scene(scene)
     {
+        IK_CORE_INFO("Serialising a scene ...");
     }
     
+    // ******************************************************************************
+    // Serialize the entity. Extract the entity componenets from serialiser
+    // ******************************************************************************
     static void SerializeEntity(YAML::Emitter& out, Entity entity)
     {
         UUID uuid = entity.GetComponent<IDComponent>().ID;
@@ -210,6 +236,9 @@ namespace iKan {
         out << YAML::EndMap; // Entity
     }
     
+    // ******************************************************************************
+    // Serialize the Scene each enityt
+    // ******************************************************************************
     void SceneSerializer::Serialize(const std::string& filepath)
     {
         YAML::Emitter out;
@@ -231,12 +260,18 @@ namespace iKan {
         fout << out.c_str();
     }
     
+    // ******************************************************************************
+    // Serialize the Scene Runtime
+    // ******************************************************************************
     void SceneSerializer::SerializeRuntime(const std::string& filepath)
     {
         // Not implemented
         IK_CORE_ASSERT(false, "Not Implemented Yet");
     }
     
+    // ******************************************************************************
+    // Deserialize the Scene Runtime
+    // ******************************************************************************
     bool SceneSerializer::Deserialize(const std::string& filepath)
     {
         YAML::Node data = YAML::LoadFile(filepath);
@@ -273,9 +308,9 @@ namespace iKan {
                     tc.Scale = transformComponent["Scale"].as<glm::vec3>();
                     
                     IK_CORE_INFO("  Entity Transform:");
-                    IK_CORE_INFO("    Translation: {0}, {1}, {2}", tc.Translation.x, tc.Translation.y, tc.Translation.z);
-                    IK_CORE_INFO("    Rotation: {0}, {1}, {2}", tc.Rotation.x, tc.Rotation.y, tc.Rotation.z);
-                    IK_CORE_INFO("    Scale: {0}, {1}, {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
+                    IK_CORE_INFO("      Translation: {0}, {1}, {2}", tc.Translation.x, tc.Translation.y, tc.Translation.z);
+                    IK_CORE_INFO("      Rotation: {0}, {1}, {2}", tc.Rotation.x, tc.Rotation.y, tc.Rotation.z);
+                    IK_CORE_INFO("      Scale: {0}, {1}, {2}", tc.Scale.x, tc.Scale.y, tc.Scale.z);
                 }
                 
                 auto cameraComponent = entity["CameraComponent"];
@@ -298,17 +333,17 @@ namespace iKan {
                     cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
                     
                     IK_CORE_INFO("  Entity Camera:");
-                    IK_CORE_INFO("    Primary: {0}", cc.Primary);
-                    IK_CORE_INFO("    FixedAspectRatio: {0}", cc.FixedAspectRatio);
-                    IK_CORE_INFO("      Projection Type: {0}", cc.Camera.GetProjectionType());
+                    IK_CORE_INFO("      Primary: {0}", cc.Primary);
+                    IK_CORE_INFO("      FixedAspectRatio: {0}", cc.FixedAspectRatio);
+                    IK_CORE_INFO("          Projection Type: {0}", cc.Camera.GetProjectionType());
                     
-                    IK_CORE_INFO("      PerspectiveFOV: {0}", cc.Camera.GetPerspectiveFOV());
-                    IK_CORE_INFO("      PerspectiveFar: {0}", cc.Camera.GetPerspectiveFarClip());
-                    IK_CORE_INFO("      PerspectiveNear: {0}", cc.Camera.GetPerspectiveNearClip());
+                    IK_CORE_INFO("              PerspectiveFOV: {0}", cc.Camera.GetPerspectiveFOV());
+                    IK_CORE_INFO("              PerspectiveFar: {0}", cc.Camera.GetPerspectiveFarClip());
+                    IK_CORE_INFO("              PerspectiveNear: {0}", cc.Camera.GetPerspectiveNearClip());
 
-                    IK_CORE_INFO("      OrthographicSize: {0}", cc.Camera.GetOrthographicSize());
-                    IK_CORE_INFO("      OrthographicNear: {0}", cc.Camera.GetOrthographicNearClip());
-                    IK_CORE_INFO("      OrthographicFar: {0}",  cc.Camera.GetOrthographicFarClip());
+                    IK_CORE_INFO("              OrthographicSize: {0}", cc.Camera.GetOrthographicSize());
+                    IK_CORE_INFO("              OrthographicNear: {0}", cc.Camera.GetOrthographicNearClip());
+                    IK_CORE_INFO("              OrthographicFar: {0}",  cc.Camera.GetOrthographicFarClip());
                 }
                 
                 auto spriteRendererComponent = entity["SpriteRendererComponent"];
@@ -328,9 +363,9 @@ namespace iKan {
                     
                     IK_CORE_INFO("  Entity Sprite:");
                     
-                    IK_CORE_INFO("    Color: {0}, {1}, {2}", src.Color.x, src.Color.y, src.Color.z);
-                    IK_CORE_INFO("    Texture Tiling Factor: {0}", src.TilingFactor);
-                    IK_CORE_INFO("    Texture Asset Path: {0}", texPath);
+                    IK_CORE_INFO("      Color: {0}, {1}, {2}", src.Color.x, src.Color.y, src.Color.z);
+                    IK_CORE_INFO("      Texture Tiling Factor: {0}", src.TilingFactor);
+                    IK_CORE_INFO("      Texture Asset Path: {0}", texPath);
                 }
                 
                 auto meshComponent = entity["MeshComponent"];
@@ -341,7 +376,7 @@ namespace iKan {
                         deserializedEntity.AddComponent<MeshComponent>(Ref<Mesh>::Create(meshPath, deserializedEntity));
 
                     IK_CORE_INFO("  Entity Mesh:");
-                    IK_CORE_INFO("    Mesh Asset Path: {0}", meshPath);
+                    IK_CORE_INFO("      Mesh Asset Path: {0}", meshPath);
                 }
                 
                 auto lightComponent = entity["LightComponent"];
@@ -375,28 +410,28 @@ namespace iKan {
                     lc.IsLight = lightComponent["Is Light"].as<bool>();
                     
                     IK_CORE_INFO("  Entity Light:");
-                    IK_CORE_INFO("    Is Light: {0}", lc.IsLight);
+                    IK_CORE_INFO("      Is Light: {0}", lc.IsLight);
                     
-                    IK_CORE_INFO("      Is Type: {0}",  lc.Light.GetType());
+                    IK_CORE_INFO("          Is Type: {0}",  lc.Light.GetType());
                     
-                    IK_CORE_INFO("      Is Ambient: {0}",  lc.Light.GetAmbientFlag());
-                    IK_CORE_INFO("      Is Diffuse: {0}",  lc.Light.GetDiffuseFlag());
-                    IK_CORE_INFO("      Is Specular: {0}", lc.Light.GetSpecularFlag());
+                    IK_CORE_INFO("          Is Ambient: {0}",  lc.Light.GetAmbientFlag());
+                    IK_CORE_INFO("          Is Diffuse: {0}",  lc.Light.GetDiffuseFlag());
+                    IK_CORE_INFO("          Is Specular: {0}", lc.Light.GetSpecularFlag());
 
-                    IK_CORE_INFO("      Is Blinn: {0}",  lc.Light.GetBlinnFlag());
+                    IK_CORE_INFO("          Is Blinn: {0}",  lc.Light.GetBlinnFlag());
 
-                    IK_CORE_INFO("      Ambient: {0}, {1}, {2}",  lc.Light.GetAmbient().x, lc.Light.GetAmbient().y, lc.Light.GetAmbient().z);
-                    IK_CORE_INFO("      Diffuse: {0}, {1}, {2}",  lc.Light.GetDiffuse().x, lc.Light.GetDiffuse().y, lc.Light.GetDiffuse().z);
-                    IK_CORE_INFO("      Specular: {0}, {1}, {2}", lc.Light.GetSpecular().x, lc.Light.GetSpecular().y, lc.Light.GetSpecular().z);
+                    IK_CORE_INFO("          Ambient: {0}, {1}, {2}",  lc.Light.GetAmbient().x, lc.Light.GetAmbient().y, lc.Light.GetAmbient().z);
+                    IK_CORE_INFO("          Diffuse: {0}, {1}, {2}",  lc.Light.GetDiffuse().x, lc.Light.GetDiffuse().y, lc.Light.GetDiffuse().z);
+                    IK_CORE_INFO("          Specular: {0}, {1}, {2}", lc.Light.GetSpecular().x, lc.Light.GetSpecular().y, lc.Light.GetSpecular().z);
                     
-                    IK_CORE_INFO("      Constant: {0}",  lc.Light.GetConstant());
-                    IK_CORE_INFO("      Quadratic: {0}",  lc.Light.GetQuadratic());
-                    IK_CORE_INFO("      Linear: {0}", lc.Light.GetLinear());
+                    IK_CORE_INFO("          Constant: {0}",  lc.Light.GetConstant());
+                    IK_CORE_INFO("          Quadratic: {0}",  lc.Light.GetQuadratic());
+                    IK_CORE_INFO("          Linear: {0}", lc.Light.GetLinear());
                     
-                    IK_CORE_INFO("      Spot Light Direction: {0}, {1}, {2}",  lc.Light.GetSpotLightDir().x, lc.Light.GetSpotLightDir().y, lc.Light.GetSpotLightDir().z);
+                    IK_CORE_INFO("          Spot Light Direction: {0}, {1}, {2}",  lc.Light.GetSpotLightDir().x, lc.Light.GetSpotLightDir().y, lc.Light.GetSpotLightDir().z);
                     
-                    IK_CORE_INFO("      Cutoff: {0}",  lc.Light.GetCutoff());
-                    IK_CORE_INFO("      Outer Cutoff: {0}", lc.Light.GetOuterCutoff());
+                    IK_CORE_INFO("          Cutoff: {0}",  lc.Light.GetCutoff());
+                    IK_CORE_INFO("          Outer Cutoff: {0}", lc.Light.GetOuterCutoff());
                 }
                 
             }

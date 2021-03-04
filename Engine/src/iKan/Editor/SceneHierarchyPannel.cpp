@@ -1,19 +1,37 @@
+// ******************************************************************************
+//   File    : SceneHirarchyPannel.cpp
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Editor/SceneHierarchyPannel.h>
 #include <iKan/Editor/SceneProperyGrid.h>
 #include <iKan/Core/GlmMath.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Scene hirarchy pannel constructot
+    // ******************************************************************************
     SceneHeirarchyPannel::SceneHeirarchyPannel(const Ref<Scene>& context)
     {
+        IK_CORE_INFO("Scene hierarchy Pannel created");
         SetContext(context);
     }
     
+    // ******************************************************************************
+    // Scene hirarchy pannel Context is updated
+    // ******************************************************************************
     void SceneHeirarchyPannel::SetContext(const Ref<Scene>& context)
     {
+        IK_CORE_INFO("Context Updated in Scene Hierarchy pannel");
         m_Context = context;
     }
     
+    // ******************************************************************************
+    // Scene hirarchy pannel Imgui renderer
+    // ******************************************************************************
     void SceneHeirarchyPannel::OnImguiender(bool* pIsOpen)
     {
         ImGui::Begin("Scene Hierarchy", pIsOpen);
@@ -45,6 +63,9 @@ namespace iKan {
         ImGui::End();
     }
 
+    // ******************************************************************************
+    // Scene hirarchy pannel Draw each entity
+    // ******************************************************************************
     void SceneHeirarchyPannel::DrawEntityNode(Entity entity)
     {
         auto& tag = entity.GetComponent<TagComponent>().Tag;
@@ -128,6 +149,9 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Scene hirarchy pannel Draw component
+    // ******************************************************************************
     void SceneHeirarchyPannel::DrawComponents(Entity entity)
     {
         if (entity.HasComponent<TagComponent>())

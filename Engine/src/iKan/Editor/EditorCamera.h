@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : EditorCamera.h
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Camera/Camera.h>
@@ -7,6 +14,9 @@
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Editr camera class. MAjor 3D functionality
+    // ******************************************************************************
     class EditorCamera : public Camera
     {
     public:

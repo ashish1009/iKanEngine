@@ -5,27 +5,37 @@
 
 #include <BackgroundTiles.h>
 
-#define IsCollision(side, speed) (m_Entity.GetScene()->BoxCollisionDetection(m_Entity, speed) & (int)Scene::CollisionSide::side)
+#define IsCollision(side, speed) (m_Entity.GetScene()->BoxCollisionDetection(m_Entity, speed) & (int)Scene::BoxCollisionSide::side)
 
 using namespace iKan;
 
 namespace Mario {
+
+    // ******************************************************************************
+    // Get the set bit postition (if value is power of 2)
+    // ******************************************************************************
+    static int32_t GetBitPos(int32_t value)
+    {
+        if (!value)
+            return -1;
+        return log2(value);
+    }
 
     class PlayerController : public ScriptableEntity
     {
     public:
         void OnCreate()
         {
-            m_CollisionFnPtr[GetBitPos((int32_t)Scene::CollisionSide::Up)]    = &PlayerController::UpCollision;
-            m_CollisionFnPtr[GetBitPos((int32_t)Scene::CollisionSide::Down)]  = &PlayerController::DownCollision;
-            m_CollisionFnPtr[GetBitPos((int32_t)Scene::CollisionSide::Right)] = &PlayerController::RightCollision;
-            m_CollisionFnPtr[GetBitPos((int32_t)Scene::CollisionSide::Left)]  = &PlayerController::LeftCollision;
+            m_CollisionFnPtr[GetBitPos((int32_t)Scene::BoxCollisionSide::Up)]    = &PlayerController::UpCollision;
+            m_CollisionFnPtr[GetBitPos((int32_t)Scene::BoxCollisionSide::Down)]  = &PlayerController::DownCollision;
+            m_CollisionFnPtr[GetBitPos((int32_t)Scene::BoxCollisionSide::Right)] = &PlayerController::RightCollision;
+            m_CollisionFnPtr[GetBitPos((int32_t)Scene::BoxCollisionSide::Left)]  = &PlayerController::LeftCollision;
         }
 
         void OnUpdate(TimeStep ts)
         {
             static float i = 0;
-            if(Input::IsKeyPressed(Key::Left))
+            if(Input::IsKeyPressed(KeyCode::Left))
             {
                 if (!IsCollision(Left, m_Player.m_TranslationSpeed) && m_Player.m_Position.x >= 0)
                 {
@@ -45,7 +55,7 @@ namespace Mario {
                     m_Player.UpdateRunningImage(int32_t(i));
                 }
             }
-            if(Input::IsKeyPressed(Key::Right))
+            if(Input::IsKeyPressed(KeyCode::Right))
             {
                 if (!IsCollision(Right, m_Player.m_TranslationSpeed))
                 {
@@ -70,14 +80,14 @@ namespace Mario {
             i += ts * 10;
         }
 
-        void OnCollision(Entity* colloidedEntity, int32_t collision = 0)
+        void OnBoxCollision(Entity* colloidedEntity, int32_t collision = 0)
         {
             if (collision)
             {
-                CollisionCallback(Scene::CollisionSide::Up, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Up)]);
-                CollisionCallback(Scene::CollisionSide::Down, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Down)]);
-                CollisionCallback(Scene::CollisionSide::Left, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Left)]);
-                CollisionCallback(Scene::CollisionSide::Right, collision, colloidedEntity[GetBitPos((int32_t)Scene::CollisionSide::Right)]);
+                CollisionCallback(Scene::BoxCollisionSide::Up, collision, colloidedEntity[GetBitPos((int32_t)Scene::BoxCollisionSide::Up)]);
+                CollisionCallback(Scene::BoxCollisionSide::Down, collision, colloidedEntity[GetBitPos((int32_t)Scene::BoxCollisionSide::Down)]);
+                CollisionCallback(Scene::BoxCollisionSide::Left, collision, colloidedEntity[GetBitPos((int32_t)Scene::BoxCollisionSide::Left)]);
+                CollisionCallback(Scene::BoxCollisionSide::Right, collision, colloidedEntity[GetBitPos((int32_t)Scene::BoxCollisionSide::Right)]);
             }
             else
             {
@@ -93,7 +103,7 @@ namespace Mario {
 
     private:
 
-        void CollisionCallback(Scene::CollisionSide collisionSide, int32_t collision, Entity colloidedEntity)
+        void CollisionCallback(Scene::BoxCollisionSide collisionSide, int32_t collision, Entity colloidedEntity)
         {
             int32_t index = GetBitPos(collision & (int32_t)collisionSide);
             if (index >= 0)
@@ -120,7 +130,7 @@ namespace Mario {
             else
             {
                 m_Player.m_InAirOffset = false;
-                BackgroundTile::OnCollision(Scene::CollisionSide::Up, colloidedEntity);
+                BackgroundTile::OnCollision(Scene::BoxCollisionSide::Up, colloidedEntity);
             }
         }
 

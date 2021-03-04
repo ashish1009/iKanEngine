@@ -1,9 +1,23 @@
+// ******************************************************************************
+//   File    : PrefixHeader.h
+//   Project : i-Kan
+//
+//   Created by Ashish
+// ******************************************************************************
+
+
+// ******************************************************************************
+// Precompiled headers are placed here for both core and client
+// ******************************************************************************
+
 #pragma once
 
 #pragma clang diagnostic ignored "-Wdocumentation"
 #pragma clang diagnostic ignored "-Wformat-security"
 
-// C++ headers
+// ******************************************************************************
+// C++ Headers
+// ******************************************************************************
 #include <iostream>
 #include <sstream>
 #include <memory>
@@ -13,17 +27,21 @@
 #include <cmath>
 #include <filesystem>
 
-// Logger
+// ******************************************************************************
+// Core Logger
+// ******************************************************************************
 #include <iKan/Core/Log.h>
 #include <iKan/Core/Core.h>
 
-// ImGui
+// ******************************************************************************
+// Imgui, Imguizmo
+// ******************************************************************************
 #include <imgui.h>
-
-// Imguizmo
 #include <ImGuizmo.h>
 
-// Glm Match Library
+// ******************************************************************************
+// glm math library
+// ******************************************************************************
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>

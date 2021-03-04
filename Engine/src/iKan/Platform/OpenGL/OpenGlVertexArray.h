@@ -1,7 +1,17 @@
+// ******************************************************************************
+//   File    : OpenGlVertexArray.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/VertexArray.h>
 
+// ******************************************************************************
+// Implementation of Open GL Vertex Array
+// ******************************************************************************
 namespace iKan {
     
     class OpenGlVertexArray : public VertexArray

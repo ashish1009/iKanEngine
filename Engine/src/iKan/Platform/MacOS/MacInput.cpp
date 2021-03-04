@@ -1,10 +1,19 @@
+// ******************************************************************************
+//   File    : MacInput.cpp
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Core/Application.h>
 #include <iKan/Core/Input.h>
-
 #include <GLFW/glfw3.h>
 
+// ******************************************************************************
+// Implementation for handling MAC Input
+// ******************************************************************************
 namespace iKan {
-    
+
     bool Input::IsKeyPressed(KeyCode key)
     {
         auto window  = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());

@@ -1,18 +1,26 @@
+// ******************************************************************************
+//   File    : OpenGlTexture.cpp
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Platform/OpenGL/OpenGlTexture.h>
-
-#include <iKan/Core/Core.h>
-
 #include <stb_image.h>
 
 namespace iKan {
  
+    // ******************************************************************************
+    // Open GL Texture Constructor
+    // ******************************************************************************
     OpenGlTexture::OpenGlTexture(const std::string& path)
     : m_Filepath(path)
     {
-        // Texture
+        IK_CORE_INFO("Creating Open GL Texture from file : {0}", path.c_str());
+
         stbi_set_flip_vertically_on_load(1);
         
-        int height, width, channel;
+        int32_t height, width, channel;
         
         stbi_uc* data = nullptr;
         data = stbi_load(path.c_str(), &width, &height, &channel, 0);
@@ -32,7 +40,10 @@ namespace iKan {
             m_InternalFormat = GL_RGB8;
             m_DataFormat     = GL_RGB;
         }
-        IK_CORE_ASSERT((m_InternalFormat & m_DataFormat), "invalid Format ");
+        else
+        {
+            IK_CORE_ASSERT(false, "Invalid Format ");
+        }
         
         glGenTextures(1, &m_RendererId);
         glBindTexture(GL_TEXTURE_2D, m_RendererId);
@@ -45,11 +56,18 @@ namespace iKan {
         glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
         
         if (data)
+        {
             stbi_image_free(data);
+        }
     }
     
+    // ******************************************************************************
+    // Open GL Texture Constructor with white texture
+    // ******************************************************************************
     OpenGlTexture::OpenGlTexture(uint32_t width, uint32_t height, void* data, uint32_t size)
     {
+        IK_CORE_INFO("Creating Open GL Texture with white data ");
+
         m_Width  = width;
         m_Height = height;
         
@@ -69,36 +87,52 @@ namespace iKan {
         glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Width, m_Height, 0, m_DataFormat, GL_UNSIGNED_BYTE, data);
     }
     
+    // ******************************************************************************
+    // Open GL Destructor
+    // ******************************************************************************
     OpenGlTexture::~OpenGlTexture()
     {
+        IK_CORE_WARN("Destroying Open GL Texture");
+
         glDeleteTextures(1, &m_RendererId);
     }
     
+    // ******************************************************************************
+    // Bind Open GL Destructor
+    // ******************************************************************************
     void OpenGlTexture::Bind(uint32_t slot) const
     {
         glActiveTexture(GL_TEXTURE0 + slot);
         glBindTexture(GL_TEXTURE_2D, m_RendererId);
     }
     
+    // ******************************************************************************
+    // Unbind Open GL Destructor
+    // ******************************************************************************
     void OpenGlTexture::Unbind() const
     {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
-    
-    
+
+    // ******************************************************************************
+    // Open GL Cubemap Constructor
+    // ******************************************************************************
     OpenGlCubeMapTexture::OpenGlCubeMapTexture(std::vector<std::string> paths)
     {
+        IK_CORE_INFO("Creating Open GL Cubemap from paths");
+
         stbi_set_flip_vertically_on_load(0);
         
         glGenTextures(1, &m_RendererId);
         glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererId);
         
-        int width, height, nrChannels;
-        int i = 0;
+        int32_t width, height, nrChannels;
+        int32_t i = 0;
         for (auto path : paths)
         {
-            unsigned char *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
-            
+            IK_CORE_INFO("{0}", path.c_str());
+
+            uint8_t *data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
             GLenum internalFormat = GL_RGB8, dataFormat = GL_RGB;
 
             if (4 == nrChannels)
@@ -111,7 +145,10 @@ namespace iKan {
                 internalFormat = GL_RGB8;
                 dataFormat     = GL_RGB;
             }
-            IK_CORE_ASSERT((internalFormat & dataFormat), "invalid Format ");
+            else
+            {
+                IK_CORE_ASSERT(false, "Invalid Format ");
+            }
             
             if (data)
             {
@@ -132,9 +169,14 @@ namespace iKan {
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
     }
     
+    // ******************************************************************************
+    // Open GL Cubemap Constructor
+    // ******************************************************************************
     OpenGlCubeMapTexture::OpenGlCubeMapTexture(const std::string& path)
     {
-        int width, height, channels;
+        IK_CORE_INFO("Constructing Open GL Cubemaps from path : {0}", path.c_str());
+
+        int32_t width, height, channels;
         stbi_set_flip_vertically_on_load(false);
         uint8_t* imageData = stbi_load(path.c_str(), &width, &height, &channels, STBI_rgb);
         
@@ -142,18 +184,20 @@ namespace iKan {
         {
             IK_CORE_ERROR("Cubemap texture failed to load at path: {0}",  path);
             stbi_image_free(imageData);
-            
         }
         
-        uint32_t faceWidth = width / 4;
+        uint32_t faceWidth  = width / 4;
         uint32_t faceHeight = height / 3;
+
         IK_CORE_ASSERT((faceWidth == faceHeight), "Non-square faces!");
         
         std::array<uint8_t*, 6> faces;
         for (size_t i = 0; i < faces.size(); i++)
+        {
             faces[i] = new uint8_t[faceWidth * faceHeight * 3]; // 3 BPP
+        }
         
-        int faceIndex = 0;
+        int32_t faceIndex = 0;
         
         for (size_t i = 0; i < 4; i++)
         {
@@ -175,7 +219,9 @@ namespace iKan {
         {
             // Skip the middle one
             if (i == 1)
+            {
                 continue;
+            }
             
             for (size_t y = 0; y < faceHeight; y++)
             {
@@ -199,8 +245,7 @@ namespace iKan {
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-//        glTextureParameterf(m_RendererId, GL_TEXTURE_MAX_ANISOTROPY, RendererAPI::GetCapabilities().MaxAnisotropy);
-            
+
         auto format = GL_RGB;
         glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[2]);
         glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, format, faceWidth, faceHeight, 0, format, GL_UNSIGNED_BYTE, faces[0]);
@@ -216,16 +261,26 @@ namespace iKan {
         glBindTexture(GL_TEXTURE_2D, 0);
             
         for (size_t i = 0; i < faces.size(); i++)
+        {
             delete[] faces[i];
+        }
         
         stbi_image_free(imageData);
     }
-    
+
+    // ******************************************************************************
+    // Open GL Cubemap Destructor
+    // ******************************************************************************
     OpenGlCubeMapTexture::~OpenGlCubeMapTexture()
     {
+        IK_CORE_WARN("Destroying OpenGL Cubemap");
+
         glDeleteTextures(1, &m_RendererId);
     }
     
+    // ******************************************************************************
+    // Bind Open GL Cubemap
+    // ******************************************************************************
     void OpenGlCubeMapTexture::Bind(uint32_t slot) const
     {
         glActiveTexture(GL_TEXTURE0 + slot);

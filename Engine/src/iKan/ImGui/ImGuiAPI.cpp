@@ -1,12 +1,20 @@
+// ******************************************************************************
+//   File    : ImGuiAPI.cpp
+//   Project : i-Kan : ImGui
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/ImGui/ImGuiAPI.h>
-
 #include <imgui_internal.h>
-
 #include <iKan/Renderer/API/RendererAPI.h>
 #include <iKan/Renderer/API/RendererStats.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Renderer Version
+    // ******************************************************************************
     void ImGuiAPI::RendererVersion(bool *pIsOpen)
     {
         ImGui::Begin("Renderer", pIsOpen);
@@ -35,6 +43,9 @@ namespace iKan {
         ImGui::End();
     }
     
+    // ******************************************************************************
+    // Frame Rate
+    // ******************************************************************************
     void ImGuiAPI::FrameRate(bool *pIsOpen)
     {
         ImGui::Begin("Frame Rate", pIsOpen);
@@ -42,6 +53,9 @@ namespace iKan {
         ImGui::End();
     }
     
+    // ******************************************************************************
+    // renderer Stats
+    // ******************************************************************************
     void ImGuiAPI::RendererStats(bool *pIsOpen)
     {
         //------------------------ Statistics -------------------------------------------------------------
@@ -73,6 +87,9 @@ namespace iKan {
         ImGui::End();
     }
     
+    // ******************************************************************************
+    // Integer counter
+    // ******************************************************************************
     void ImGuiAPI::Counter(const std::string& name, uint32_t& counter)
     {
         ImGui::Text(name.c_str());
@@ -94,6 +111,9 @@ namespace iKan {
         ImGui::Text("%d", counter);
     }
 
+    // ******************************************************************************
+    // Float counter
+    // ******************************************************************************
     void ImGuiAPI::Counter(const std::string& name, float& value)
     {
         uint32_t counter = (uint32_t)value;
@@ -101,6 +121,9 @@ namespace iKan {
         value = (uint32_t)counter;
     }
     
+    // ******************************************************************************
+    // Color Edit
+    // ******************************************************************************
     void ImGuiAPI::ColorEdit(glm::vec4& colorRef)
     {
         static ImVec4 color         = ImVec4(colorRef.r, colorRef.g, colorRef.b, colorRef.a);
@@ -131,6 +154,9 @@ namespace iKan {
         colorRef = { color.x, color.y, color.z, color.w };
     }
     
+    // ******************************************************************************
+    // Enabling Docking
+    // ******************************************************************************
     void ImGuiAPI::EnableDcocking()
     {
         // Note: Switch this to true to enable dockspace
@@ -184,13 +210,21 @@ namespace iKan {
         style.WindowMinSize.y = minWinSizeY;
     }
     
+    // ******************************************************************************
+    // Close Docking
+    // ******************************************************************************
     void ImGuiAPI::EndDocking()
     {
         ImGui::End();
     }
     
+    // ******************************************************************************
+    // Grey theme
+    // ******************************************************************************
     void ImGuiAPI::SetGreyThemeColors()
     {
+        IK_CORE_INFO("Imgui theme is set to Grey");
+
         ImVec4* colors = ImGui::GetStyle().Colors;
         // Text
         colors[ImGuiCol_Text]                   = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -267,8 +301,13 @@ namespace iKan {
         colors[ImGuiCol_NavWindowingHighlight]  = ImVec4(1.0f, 1.0f, 1.0f, 0.7f);
     }
     
+    // ******************************************************************************
+    // Dark grey theme
+    // ******************************************************************************
     void ImGuiAPI::SetDarkThemeColors()
     {
+        IK_CORE_INFO("Imgui theme is set to Dark");
+
         auto& colors = ImGui::GetStyle().Colors;
         colors[ImGuiCol_WindowBg]               = ImVec4{ 0.05f, 0.05f, 0.05f, 1.0f };
                 
@@ -350,8 +389,13 @@ namespace iKan {
         colors[ImGuiCol_NavWindowingHighlight]  = ImVec4(1.0f, 1.0f, 1.0f, 0.7f);
     }
     
+    // ******************************************************************************
+    // Light theme
+    // ******************************************************************************
     void ImGuiAPI::SetLightThemeColors()
     {
+        IK_CORE_INFO("Imgui theme is set to Light");
+
         auto& colors = ImGui::GetStyle().Colors;
         colors[ImGuiCol_WindowBg]           = ImVec4{ 0.7f, 0.7f, 0.7f, 1.0f };
         

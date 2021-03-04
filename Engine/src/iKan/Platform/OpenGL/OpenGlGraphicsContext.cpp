@@ -1,18 +1,32 @@
-#include <glad/glad.h>
+// ******************************************************************************
+//   File    : OpneGlGraphicsContext.cpp
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
 
+#include <glad/glad.h>
 #include <iKan/Platform/OpenGL/OpenGlGraphicsContext.h>
-#include <iKan/Core/Core.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Construcitng Open GL Context
+    // ******************************************************************************
     OpneGlGraphicsContext::OpneGlGraphicsContext(GLFWwindow* window)
     : m_Window(window)
     {
+        IK_CORE_INFO("Open GL Constructor called ");
         Init();
     }
     
+    // ******************************************************************************
+    // Initialize Open GL Context
+    // ******************************************************************************
     void OpneGlGraphicsContext::Init()
     {
+        IK_CORE_INFO("Initialize Open GL ");
+
         // make GLFW Window Context
         glfwMakeContextCurrent(m_Window);
 
@@ -33,9 +47,11 @@ namespace iKan {
         IK_CORE_INFO("--------------------------------------------------");
     }
     
+    // ******************************************************************************
+    // Swap Open GL Buffers
+    // ******************************************************************************
     void OpneGlGraphicsContext::SwapBuffers()
     {
-        // Only for OpenGl
         glfwSwapBuffers(m_Window);
     }
     

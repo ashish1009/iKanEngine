@@ -344,9 +344,9 @@ namespace Mario {
         } // for (uint32_t y = 0; y < mapHeight; y++)
     }
 
-    void BackgroundTile::OnCollision(Scene::CollisionSide collisionSide, Entity colloidedEntity)
+    void BackgroundTile::OnCollision(Scene::BoxCollisionSide collisionSide, Entity colloidedEntity)
     {
-        if (Scene::CollisionSide::Up == collisionSide)
+        if (Scene::BoxCollisionSide::Up == collisionSide)
         {
             if (colloidedEntity.GetComponent<TagComponent>().Tag == "Bricks")
             {

@@ -1,10 +1,18 @@
-#pragma once
+// ******************************************************************************
+//   File    : Framebuffer.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
 
-#include <iKan/Core/Core.h>
+#pragma once
 
 namespace iKan {
 
-    enum class FramebufferTextureFormat
+    // ******************************************************************************
+    // Enum for texture format. ONly interface, real conversion will be done
+    // ******************************************************************************
+    enum class FbTextureFormat
     {
         None = 0,
 
@@ -23,35 +31,47 @@ namespace iKan {
 
     };
 
-    struct FramebufferTextureSpecification
+    // ******************************************************************************
+    // Frame buffer Texture specification. Stores the texture format.
+    // ******************************************************************************
+    struct FbTextureSpecification
     {
-        FramebufferTextureSpecification() = default;
-        FramebufferTextureSpecification(FramebufferTextureFormat format)
+        FbTextureSpecification() = default;
+        FbTextureSpecification(FbTextureFormat format)
         : TextureFormat(format) {}
 
-        FramebufferTextureFormat TextureFormat = FramebufferTextureFormat::None;
+        FbTextureFormat TextureFormat = FbTextureFormat::None;
         // TODO: filtering/wrap
     };
 
-    struct FramebufferAttachmentSpecification
+    // ******************************************************************************
+    // Frame buffer attachment specification. Stores all the attachment in a vector
+    // ******************************************************************************
+    struct FbAttachmentSpecification
     {
-        FramebufferAttachmentSpecification() = default;
-        FramebufferAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments)
+        FbAttachmentSpecification() = default;
+        FbAttachmentSpecification(std::initializer_list<FbTextureSpecification> attachments)
         : Attachments(attachments) {}
 
-        std::vector<FramebufferTextureSpecification> Attachments;
+        std::vector<FbTextureSpecification> Attachments;
     };
 
+    // ******************************************************************************
+    // Frame buffer specification. Store all the FB specificiaction
+    // ******************************************************************************
     struct FramebufferSpecification
     {
         uint32_t Width, Height;
         uint32_t Samples = 1;
 
-        FramebufferAttachmentSpecification Attachments;
+        FbAttachmentSpecification Attachments;
 
         bool SwapChainTarget = false;
     };
     
+    // ******************************************************************************
+    // Interface for Frame buffer class
+    // ******************************************************************************
     class Framebuffer : public RefCounted
     {
     public:

@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Log.cpp
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Core/Log.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/basic_file_sink.h>
@@ -7,6 +14,9 @@ namespace iKan {
     std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
     std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
     
+    // ******************************************************************************
+    // Initialize the logger
+    // ******************************************************************************
     void Log::Init()
     {
         std::vector<spdlog::sink_ptr> logSinks;

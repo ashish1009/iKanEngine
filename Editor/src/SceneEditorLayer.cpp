@@ -19,7 +19,7 @@ namespace iKan {
         ImGuiAPI::SetDarkThemeColors();
 
         FramebufferSpecification specs;
-        specs.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth, FramebufferTextureFormat::R32I};
+        specs.Attachments = { FbTextureFormat::RGBA8, FbTextureFormat::Depth, FbTextureFormat::R32I};
         specs.Width       = s_WindowWidth;
         specs.Height      = s_WindowWidth;
         
@@ -206,7 +206,7 @@ namespace iKan {
             glm::mat4 transform = tc.GetTransform();
 
             // Snapping
-            bool snap = Input::IsKeyPressed(Key::LeftControl);
+            bool snap = Input::IsKeyPressed(KeyCode::LeftControl);
             float snapValue = 0.5f; // Snap to 0.5m for translation/scale
                                     // Snap to 45 degrees for rotation
             if (m_GizmoType == ImGuizmo::OPERATION::ROTATE)
@@ -259,23 +259,23 @@ namespace iKan {
         if (event.GetRepeatCount() > 0)
             return false;
         
-        bool cmd   = Input::IsKeyPressed(Key::LeftSuper) || Input::IsKeyPressed(Key::RightSuper);
-        bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+        bool cmd   = Input::IsKeyPressed(KeyCode::LeftSuper) || Input::IsKeyPressed(KeyCode::RightSuper);
+        bool shift = Input::IsKeyPressed(KeyCode::LeftShift) || Input::IsKeyPressed(KeyCode::RightShift);
         switch (event.GetKeyCode())
         {
-            case Key::N:
+            case KeyCode::N:
             {
                 if (cmd)
                     NewScene();
                 break;
             }
-            case Key::O:
+            case KeyCode::O:
             {
                 if (cmd)
                     OpenScene();
                 break;
             }
-            case Key::S:
+            case KeyCode::S:
             {
                 if (cmd && shift)
                     SaveSceneAs();
@@ -283,16 +283,16 @@ namespace iKan {
             }
 
                 // Gizmos
-            case Key::Q:
+            case KeyCode::Q:
                 m_GizmoType = -1;
                 break;
-            case Key::W:
+            case KeyCode::W:
                 m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
                 break;
-            case Key::E:
+            case KeyCode::E:
                 m_GizmoType = ImGuizmo::OPERATION::ROTATE;
                 break;
-            case Key::R:
+            case KeyCode::R:
                 m_GizmoType = ImGuizmo::OPERATION::SCALE;
                 break;
                 

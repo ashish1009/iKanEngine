@@ -1,11 +1,20 @@
+// ******************************************************************************
+//   File    : OpenGlShader.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/Shader.h>
-
 #include <glad/glad.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Implementation of Open GL Shader
+    // ******************************************************************************
     class OpenGlShader : public Shader
     {
     public:
@@ -39,11 +48,12 @@ namespace iKan {
         std::string ReadFromFile(const std::string& path);
 
     private:
-        uint32_t m_RendererId;
+        uint32_t    m_RendererId;
         std::string m_Name;
+
         std::unordered_map<std::string, int32_t> m_LocationMap;
-        std::unordered_map<GLenum, std::string> m_Source;
-        std::vector<ShaderReloadedCallback> m_ShaderReloadedCallbacks;
+        std::unordered_map<GLenum, std::string>  m_Source;
+        std::vector<ShaderReloadedCallback>      m_ShaderReloadedCallbacks;
     };
     
 }

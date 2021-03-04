@@ -1,7 +1,17 @@
+// ******************************************************************************
+//   File    : Shader.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Interface for Graphics Shader
+    // ******************************************************************************
     class Shader : public RefCounted
     {
     public:
@@ -31,6 +41,9 @@ namespace iKan {
         static Ref<Shader> Create(const std::string& path);
     };
     
+    // ******************************************************************************
+    // Implementation to store shaders in a library
+    // ******************************************************************************
     class ShaderLibrary : public RefCounted
     {
     public:

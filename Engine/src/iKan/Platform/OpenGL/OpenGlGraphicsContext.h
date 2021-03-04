@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : OpneGlGraphicsContext.cpp
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/Graphics/GraphicsContext.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Implementation for creating Open GL Context
+    // ******************************************************************************
     class OpneGlGraphicsContext : public GraphicsContext
     {
     public:

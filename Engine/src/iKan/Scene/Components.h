@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Entity.h
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Core/UUID.h>
@@ -9,6 +16,9 @@
 #include <iKan/Renderer/Graphics/Texture.h>
 #include <iKan/Renderer/Graphics/Mesh.h>
 
+// ******************************************************************************
+// Defined components that entity can have
+// ******************************************************************************
 namespace iKan {
     
     static constexpr float MaterialRefractiveIndex[] = { 1.00f, 1.33f, 1.309, 1.52, 2.42 };

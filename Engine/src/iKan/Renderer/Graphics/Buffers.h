@@ -1,14 +1,25 @@
-#pragma once
+// ******************************************************************************
+//   File    : Buffers.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
 
-#include <iKan/Core/Core.h>
+#pragma once
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Data types of Shader we are going to use
+    // ******************************************************************************
     enum class ShaderDataType
     {
         NoType = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
     };
     
+    // ******************************************************************************
+    // Get the number of bytes in Shader data types. Size
+    // ******************************************************************************
     static uint32_t ShaderDataTypeSize(ShaderDataType type)
     {
         switch (type)
@@ -30,6 +41,9 @@ namespace iKan {
         return 0;
     }
         
+    // ******************************************************************************
+    // Get the number of same data type elements. Count
+    // ******************************************************************************
     static uint32_t GetElementCount(ShaderDataType type)
     {
         switch (type)
@@ -50,6 +64,9 @@ namespace iKan {
         IK_CORE_ASSERT(false, "Unkown Shader datatype!! ");
     }
     
+    // ******************************************************************************
+    // Buffer Elements. Stores all the property of a element in a buffer
+    // ******************************************************************************
     struct BufferElement
     {
         std::string     Name;
@@ -63,6 +80,9 @@ namespace iKan {
         : Name(name), Type(type), Size(ShaderDataTypeSize(type)), Count(GetElementCount(type)), Offset(0), Normalized(normalized) {}
     };
     
+    // ******************************************************************************
+    // Get the number of same data type elements. Count
+    // ******************************************************************************
     class BufferLayout
     {
     public:
@@ -101,7 +121,9 @@ namespace iKan {
         uint32_t                   m_Stride = 0;
     };
     
-    // ------------------------- Vertex Buffer --------------------------------------------
+    // ******************************************************************************
+    // Interface of Vertex Buffer class
+    // ******************************************************************************
     class VertexBuffer : public RefCounted
     {
     public:
@@ -119,7 +141,9 @@ namespace iKan {
         static Ref<VertexBuffer> Create(uint32_t size, float* data);
     };
     
-    // ------------------------- Index Buffer --------------------------------------------
+    // ******************************************************************************
+    // Interface of Index Buffer class
+    // ******************************************************************************
     class IndexBuffer : public RefCounted
     {
     public:

@@ -1,11 +1,20 @@
+// ******************************************************************************
+//   File    : Renderer.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/API/RendererCommand.h>
-
 #include <iKan/Renderer/Graphics/Shader.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Wrapper renderer that is vissible to Application
+    // ******************************************************************************
     class Renderer
     {
     public:

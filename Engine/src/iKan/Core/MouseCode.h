@@ -1,8 +1,18 @@
+// ******************************************************************************
+//   File    : MouseCode.h
+//   Project : i-Kan : Core
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 namespace iKan
 {
-    typedef enum class MouseCode : uint16_t
+    // ******************************************************************************
+    // Mouse button codes
+    // ******************************************************************************
+    enum class MouseCode : uint16_t
     {
         /* From glfw3.h */
         Button0                = 0,
@@ -18,11 +28,6 @@ namespace iKan
         ButtonLeft             = Button0,
         ButtonRight            = Button1,
         ButtonMiddle           = Button2
-    } Mouse;
-    
-    inline std::ostream& operator<<(std::ostream& os, MouseCode mouseCode)
-    {
-        os << static_cast<int32_t>(mouseCode);
-        return os;
-    }
+    };
+
 }

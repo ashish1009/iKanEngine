@@ -1,33 +1,48 @@
+// ******************************************************************************
+//   File    : OpenGlShader.h
+//   Project : i-Kan : Platform
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Platform/OpenGL/OpenGlShader.h>
-
-#include <iKan/Core/Core.h>
-
 #include <glad/glad.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Get the Open GL Shader Type from string
+    // ******************************************************************************
     static GLenum ShaderTypeFromString(const std::string& type)
     {
-        if ("vertex" == type)
-            return GL_VERTEX_SHADER;
-        if ("fragment" == type)
-            return GL_FRAGMENT_SHADER;
-        if ("geometry" == type)
-            return GL_GEOMETRY_SHADER;
+        if ("vertex" == type)   return GL_VERTEX_SHADER;
+        if ("fragment" == type) return GL_FRAGMENT_SHADER;
+        if ("geometry" == type) return GL_GEOMETRY_SHADER;
+
         IK_CORE_ASSERT(false, "Unknown shader type!");
         return 0;
     }
     
+    // ******************************************************************************
+    // Open GL Constructor
+    // ******************************************************************************
     OpenGlShader::OpenGlShader(const std::string& vertexSrc, const std::string& fragmentSrc)
     {
+        IK_CORE_INFO("Open GL Constructed from strings ");
+
         m_Source[GL_VERTEX_SHADER]   = vertexSrc;
         m_Source[GL_FRAGMENT_SHADER] = fragmentSrc;
         
         Compile();
     }
     
+    // ******************************************************************************
+    // Open GL Constructor
+    // ******************************************************************************
     OpenGlShader::OpenGlShader(const std::string& path)
     {
+        IK_CORE_INFO("Open GL Constructed from path : {0}", path.c_str());
+
         std::string source  = ReadFromFile(path);
         m_Source            = PreprocessFile(source);
         
@@ -43,8 +58,13 @@ namespace iKan {
         Compile();
     }
     
+    // ******************************************************************************
+    // Open GL Read from file
+    // ******************************************************************************
     std::string OpenGlShader::ReadFromFile(const std::string& path)
     {
+        IK_CORE_INFO("Reading Open GL Shdaer from file : {0}", path.c_str());
+
         std::string result;
         std::ifstream in(path, std::ios::in | std::ios::binary);
         if (in)
@@ -71,8 +91,13 @@ namespace iKan {
         return result;
     }
     
+    // ******************************************************************************
+    // Process the Shader file
+    // ******************************************************************************
     std::unordered_map<GLenum, std::string> OpenGlShader::PreprocessFile(const std::string& source)
     {
+        IK_CORE_INFO("Process the Open GL Shader file : {0}", source.c_str());
+
         std::unordered_map<GLenum, std::string> shaderSource;
         
         const char* token = "#type";
@@ -95,11 +120,16 @@ namespace iKan {
         return shaderSource;
     }
     
+    // ******************************************************************************
+    // Compile the Shader file
+    // ******************************************************************************
     void OpenGlShader::Compile()
     {
-        int program = glCreateProgram();
+        IK_CORE_INFO("Compiling Open GL Shader {0} ", m_Name.c_str());
+
+        int32_t program = glCreateProgram();
+        int32_t glShaderIDIndex = 0;
         std::array<uint32_t, 3> shaderId;
-        int glShaderIDIndex = 0;
 
         for (auto& kv : m_Source)
         {
@@ -142,7 +172,7 @@ namespace iKan {
         // Error Handling
         // Note the different functions here: glGetProgram* instead of glGetShader
         GLint isLinked = 0;
-        glGetProgramiv(m_RendererId, GL_LINK_STATUS, (int*)&isLinked);
+        glGetProgramiv(m_RendererId, GL_LINK_STATUS, (int32_t*)&isLinked);
         if (isLinked == GL_FALSE)
         {
             GLint maxLength = 0;
@@ -156,7 +186,9 @@ namespace iKan {
             glDeleteProgram(m_RendererId);
             
             for (auto id : shaderId)
+            {
                 glDeleteShader(id);
+            }
             
             IK_CORE_ERROR("{0}", infoLog.data());
             IK_CORE_ASSERT(false, "Shader link failure!");
@@ -165,21 +197,35 @@ namespace iKan {
             glDeleteShader(id);
     }
     
+    // ******************************************************************************
+    // Destructor for Open GL Shader file
+    // ******************************************************************************
     OpenGlShader::~OpenGlShader()
     {
+        IK_CORE_WARN("Destroying Open GL Shader : {0}", m_Name.c_str());
+
         glDeleteProgram(m_RendererId);
     }
     
+    // ******************************************************************************
+    // Bind Open GL Shader file
+    // ******************************************************************************
     void OpenGlShader::Bind() const
     {
         glUseProgram(m_RendererId);
     }
     
+    // ******************************************************************************
+    // Unbind Open GL Shader file
+    // ******************************************************************************
     void OpenGlShader::Unbind() const
     {
         glUseProgram(0);
     }
     
+    // ******************************************************************************
+    // Destructor for Open GL Shader file
+    // ******************************************************************************
     void OpenGlShader::AddShaderReloadedCallback(const ShaderReloadedCallback& callback)
     {
         m_ShaderReloadedCallbacks.push_back(callback);
@@ -226,6 +272,9 @@ namespace iKan {
         glUniform4f(GetUniformLocation(name), value.x, value.y, value.z, value.w);
     }
     
+    // ******************************************************************************
+    // get the uniform Location
+    // ******************************************************************************
     int32_t OpenGlShader::GetUniformLocation(const std::string& name)
     {
         if (m_LocationMap.find(name) != m_LocationMap.end())

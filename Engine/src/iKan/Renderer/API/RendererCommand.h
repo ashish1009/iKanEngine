@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : RendererCommand.h
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #pragma once
 
 #include <iKan/Renderer/API/RendererAPI.h>
 
 namespace iKan {
 
+    // ******************************************************************************
+    // Interface to give renderer command to graphics
+    // ******************************************************************************
     class RendererCommand
     {
     public:

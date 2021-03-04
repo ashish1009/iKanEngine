@@ -1,13 +1,19 @@
+// ******************************************************************************
+//   File    : GraphoicsContext.cpp
+//   Project : i-Kan : Renderer
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Renderer/Graphics/GraphicsContext.h>
-
 #include <iKan/Renderer/API/RendererAPI.h>
-
 #include <iKan/Platform/OpenGL/OpenGlGraphicsContext.h>
-
-#include <iKan/Core/Core.h>
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Creating Instance of Graphics context depending on the API
+    // ******************************************************************************
     Scope<GraphicsContext> GraphicsContext::CreateContext(GLFWwindow* window)
     {
         switch (RendererAPI::GetAPI())

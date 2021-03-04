@@ -1,3 +1,10 @@
+// ******************************************************************************
+//   File    : Scene.cpp
+//   Project : i-Kan : Scene
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan/Scene/Scene.h>
 #include <iKan/Scene/Components.h>
 #include <iKan/Scene/Entity.h>
@@ -9,21 +16,39 @@
 
 namespace iKan {
 
-    // To store the entity of collisions
-    static Entity s_ColloidedEntity[4];
-    
+    // ******************************************************************************
+    // Get the set bit postition (if value is power of 2)
+    // ******************************************************************************
+    static int32_t GetBitPos(int32_t value)
+    {
+        if (!value)
+            return -1;
+        return log2(value);
+    }
+
+    // ******************************************************************************
+    // Scene Constructor
+    // ******************************************************************************
     Scene::Scene()
     {
         IK_CORE_INFO("Creating Scene !!");
     }
     
+    // ******************************************************************************
+    // Scene Destructor
+    // ******************************************************************************
     Scene::~Scene()
     {
-        IK_CORE_INFO("Destroying Scene !!");
+        IK_CORE_WARN("Destroying Scene !!");
     }
     
+    // ******************************************************************************
+    // Create Entity in Scene
+    // ******************************************************************************
     Entity Scene::CreateEntity(const std::string& name)
     {
+        IK_CORE_TRACE("Creating Entity in Scene, Name: {0}", name.c_str());
+
         // Creating the Entity
         Entity entity = { m_Registry.create(), this };
 
@@ -40,8 +65,13 @@ namespace iKan {
         return entity;
     }
     
+    // ******************************************************************************
+    // Create Entity in Scene with UUID
+    // ******************************************************************************
     Entity Scene::CreateEntityWithID(UUID uuid, const std::string& name)
     {
+        IK_CORE_TRACE("Creating Entity in Scene, Name: {0}, ID: {1}", name.c_str(), uuid);
+
         auto entity = Entity{ m_Registry.create(), this };
         auto& idComponent = entity.AddComponent<IDComponent>();
         idComponent.ID = uuid;
@@ -55,11 +85,18 @@ namespace iKan {
         return entity;
     }
 
+    // ******************************************************************************
+    // Destroy Entity from Scene
+    // ******************************************************************************
     void Scene::DestroyEntity(Entity entity)
     {
+        IK_CORE_WARN("Destrying Entity '{0}' from the scene", entity.GetComponent<TagComponent>().Tag.c_str());
         m_Registry.destroy(entity);
     }
     
+    // ******************************************************************************
+    // Update Sene Editor
+    // ******************************************************************************
     void Scene::OnUpdateEditor(TimeStep ts, EditorCamera &editorCamera)
     {
         // Get the Light
@@ -107,7 +144,10 @@ namespace iKan {
         }
     }
 
-    int32_t Scene::Pixel(int mx, int my)
+    // ******************************************************************************
+    // Get the pixel from scene
+    // ******************************************************************************
+    int32_t Scene::Pixel(int32_t mx, int32_t my)
     {
         glReadBuffer(GL_COLOR_ATTACHMENT1);
         int32_t pixelData = -1;
@@ -116,6 +156,9 @@ namespace iKan {
         return pixelData;
     }
 
+    // ******************************************************************************
+    // Update runtime Scene
+    // ******************************************************************************
     void Scene::OnUpdateRuntime(TimeStep ts)
     {
         // For all Entity having Native Scripts just instantiate the Scrips Binded to them and update them
@@ -154,8 +197,12 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Resize scene view port
+    // ******************************************************************************
     void Scene::OnViewportResize(uint32_t width, uint32_t height)
     {
+        IK_CORE_INFO("Scene Viewport resized to {0} x {1}", width, height);
         m_ViewportWidth  = width;
         m_ViewportHeight = height;
         
@@ -169,6 +216,9 @@ namespace iKan {
         }
     }
      
+    // ******************************************************************************
+    // get the main canera component
+    // ******************************************************************************
     Entity Scene::GetMainCameraEntity()
     {
         auto view = m_Registry.view<CameraComponent>();
@@ -181,6 +231,9 @@ namespace iKan {
         return {};
     }
     
+    // ******************************************************************************
+    // get the main Light component
+    // ******************************************************************************
     Entity Scene::GetLightEntity()
     {
         auto view = m_Registry.view<LightComponent>();
@@ -193,6 +246,9 @@ namespace iKan {
         return {};
     }
     
+    // ******************************************************************************
+    // Instantiate the native script component of each entity
+    // ******************************************************************************
     void Scene::InstantiateScripts(TimeStep ts)
     {
         m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
@@ -211,9 +267,18 @@ namespace iKan {
         });
     }
     
-    int Scene:: BoxCollisionDetection(Entity& currEntity, float speed)
+    // ******************************************************************************
+    // Chech the box Collision : Only for 2D
+    // ******************************************************************************
+    int32_t Scene:: BoxCollisionDetection(Entity& currEntity, float speed)
     {
-        int result = 0;
+        // ******************************************************************************
+        // To store the entity of collisions. storing 4 as an entityt can be colloided
+        // with 4 entitiy at one time (only Box collision)
+        // ******************************************************************************
+        static Entity s_BoxColloidedEntity[4];
+
+        int32_t result = 0;
         const auto& currEntPos  = currEntity.GetComponent<TransformComponent>().Translation;
         const auto& currEntSize = currEntity.GetComponent<TransformComponent>().Scale;
 
@@ -246,15 +311,15 @@ namespace iKan {
                     if ((currEntPos.x + speed + (std::abs(currEntSize.x) / 2) >= entPos.x - (std::abs(entSize.x) / 2)) &&
                         (currEntPos.x - (std::abs(currEntSize.x) / 2) < entPos.x + (std::abs(entSize.x) / 2)))
                     {
-                        result |= (int32_t)CollisionSide::Right;
-                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Right)] = Entity(entity, this);
+                        result |= (int32_t)BoxCollisionSide::Right;
+                        s_BoxColloidedEntity[GetBitPos((int32_t)BoxCollisionSide::Right)] = Entity(entity, this);
                     }
                     // Left collision of current entity
                     if ((currEntPos.x + (std::abs(currEntSize.x) / 2) > entPos.x - (std::abs(entSize.x) / 2)) &&
                         (currEntPos.x - speed - (std::abs(currEntSize.x) / 2) <= entPos.x + (std::abs(entSize.x) / 2)))
                     {
-                        result |= (int32_t)CollisionSide::Left;
-                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Left)] = Entity(entity, this);
+                        result |= (int32_t)BoxCollisionSide::Left;
+                        s_BoxColloidedEntity[GetBitPos((int32_t)BoxCollisionSide::Left)] = Entity(entity, this);
                     }
                 }
                 
@@ -276,15 +341,15 @@ namespace iKan {
                     if ((currEntPos.y + speed + (std::abs(currEntSize.y) / 2) >= entPos.y - (std::abs(entSize.y) / 2)) &&
                         (currEntPos.y - (std::abs(currEntSize.y) / 2) < entPos.y - (std::abs(entSize.y) / 2)))
                     {
-                        result |= (int32_t)CollisionSide::Up;
-                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Up)] = Entity(entity, this);
+                        result |= (int32_t)BoxCollisionSide::Up;
+                        s_BoxColloidedEntity[GetBitPos((int32_t)BoxCollisionSide::Up)] = Entity(entity, this);
                     }
                     // Down collision of current entity
                     if ((currEntPos.y + (std::abs(currEntSize.y) / 2) > entPos.y - (std::abs(entSize.y) / 2)) &&
                         (currEntPos.y - speed - (std::abs(currEntSize.y) / 2) <= entPos.y + (std::abs(entSize.y) / 2)))
                     {
-                        result |= (int32_t)CollisionSide::Down;
-                        s_ColloidedEntity[GetBitPos((int32_t)CollisionSide::Down)] = Entity(entity, this);
+                        result |= (int32_t)BoxCollisionSide::Down;
+                        s_BoxColloidedEntity[GetBitPos((int32_t)BoxCollisionSide::Down)] = Entity(entity, this);
                     }
                 }
             } // if (boxColl.IsRigid)
@@ -303,7 +368,7 @@ namespace iKan {
                         script->m_Entity = { entity, this };
                         script->OnCreate();
                     }
-                    script->OnCollision(s_ColloidedEntity, result);
+                    script->OnBoxCollision(s_BoxColloidedEntity, result);
                 }
             });
         }

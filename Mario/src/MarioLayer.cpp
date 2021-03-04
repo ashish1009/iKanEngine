@@ -30,7 +30,7 @@ namespace Mario {
         
         // Frame Buffers
         FramebufferSpecification fbSpec;
-        fbSpec.Attachments = { FramebufferTextureFormat::RGBA8 };
+        fbSpec.Attachments = { FbTextureFormat::RGBA8 };
         fbSpec.Width  = s_WindowWidth;
         fbSpec.Height = s_WindowHeight;
         
