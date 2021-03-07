@@ -19,6 +19,11 @@ namespace iKan {
         IK_CORE_INFO("Open GL Graohics Context Constructor called ");
         Init();
     }
+
+    OpneGlGraphicsContext::~OpneGlGraphicsContext()
+    {
+        IK_CORE_WARN("Open GL Graohics Context Destroyed ");
+    }
     
     // ******************************************************************************
     // Initialize Open GL Context

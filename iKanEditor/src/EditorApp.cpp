@@ -1,12 +1,14 @@
 // ******************************************************************************
 //   File    : EditorApp.cpp
-//   Project : i-Kan
+//   Project : iKanEditor
 //
 //   Created by Ashish
 // ******************************************************************************
 
 #include <iKan.h>
 #include <iKan/EntryPoint.h>
+
+#include "EditorLayer.h"
 
 // ******************************************************************************
 // Client applciation
@@ -17,6 +19,7 @@ public:
     EditorApp(const iKan::ApplicationProps& props)
     : iKan::Application(props)
     {
+        Application::PushLayer(new Editor());
     }
 
     virtual ~EditorApp()

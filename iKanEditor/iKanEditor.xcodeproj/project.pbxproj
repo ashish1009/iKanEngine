@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B23FF92925F0FA98001DFEEF /* EditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B23FF92825F0FA98001DFEEF /* EditorApp.cpp */; };
+		B2C8A49E25F4B4510097F86F /* EditorLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2C8A49C25F4B4510097F86F /* EditorLayer.cpp */; };
 		B2E39FD725F0FDC8007C8E64 /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FD625F0FDC8007C8E64 /* libEngine.a */; };
 		B2E39FD925F0FDF0007C8E64 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FD825F0FDF0007C8E64 /* OpenGL.framework */; };
 		B2E39FDB25F0FDF4007C8E64 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E39FDA25F0FDF4007C8E64 /* Cocoa.framework */; };
@@ -31,6 +32,8 @@
 /* Begin PBXFileReference section */
 		B23FF92525F0FA98001DFEEF /* iKanEditor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = iKanEditor; sourceTree = BUILT_PRODUCTS_DIR; };
 		B23FF92825F0FA98001DFEEF /* EditorApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorApp.cpp; sourceTree = "<group>"; };
+		B2C8A49C25F4B4510097F86F /* EditorLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EditorLayer.cpp; sourceTree = "<group>"; };
+		B2C8A49D25F4B4510097F86F /* EditorLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorLayer.h; sourceTree = "<group>"; wrapsLines = 0; };
 		B2E39FD625F0FDC8007C8E64 /* libEngine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libEngine.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2E39FD825F0FDF0007C8E64 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B2E39FDA25F0FDF4007C8E64 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -77,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				B23FF92825F0FA98001DFEEF /* EditorApp.cpp */,
+				B2C8A49C25F4B4510097F86F /* EditorLayer.cpp */,
+				B2C8A49D25F4B4510097F86F /* EditorLayer.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -151,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2C8A49E25F4B4510097F86F /* EditorLayer.cpp in Sources */,
 				B23FF92925F0FA98001DFEEF /* EditorApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

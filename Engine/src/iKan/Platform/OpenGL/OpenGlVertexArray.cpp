@@ -51,7 +51,7 @@ namespace iKan {
     // ******************************************************************************
     OpenGlVertexArray::~OpenGlVertexArray()
     {
-        IK_CORE_WARN("Open GL destroyed ");
+        IK_CORE_WARN("Open GL Vertex array destroyed ");
 
         glDeleteVertexArrays(1, &m_RendererId);
     }

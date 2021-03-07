@@ -174,7 +174,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGLFrameBuffer::Invalidate()
     {
-        IK_CORE_WARN("Invalidate Open GL Framebuffer");
+        IK_CORE_INFO("Invalidate Open GL Framebuffer");
 
         if (m_RendererId)
         {

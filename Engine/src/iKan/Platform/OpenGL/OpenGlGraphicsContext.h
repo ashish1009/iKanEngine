@@ -18,7 +18,7 @@ namespace iKan {
     {
     public:
         OpneGlGraphicsContext(GLFWwindow* window);
-        virtual ~OpneGlGraphicsContext() = default;
+        virtual ~OpneGlGraphicsContext();
         
         virtual void Init() override;
         virtual void SwapBuffers() override;
