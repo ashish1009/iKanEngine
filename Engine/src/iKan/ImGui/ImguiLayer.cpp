@@ -69,8 +69,6 @@ namespace iKan {
     // ******************************************************************************
     void ImguiLayer::OnEvent(Event& event)
     {
-        IK_CORE_INFO("Imgui layer Events is handling");
-
         if (m_BlockEvents)
         {
             ImGuiIO& io = ImGui::GetIO();

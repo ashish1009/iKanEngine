@@ -41,7 +41,7 @@ namespace iKan {
     // ******************************************************************************
     OpenGlShader::OpenGlShader(const std::string& path)
     {
-        IK_CORE_INFO("Open GL Constructed from path : {0}", path.c_str());
+        IK_CORE_INFO("Open GL Shader Constructed from path : {0}", path.c_str());
 
         std::string source  = ReadFromFile(path);
         m_Source            = PreprocessFile(source);
@@ -96,7 +96,7 @@ namespace iKan {
     // ******************************************************************************
     std::unordered_map<GLenum, std::string> OpenGlShader::PreprocessFile(const std::string& source)
     {
-        IK_CORE_INFO("Process the Open GL Shader file : {0}", source.c_str());
+        IK_CORE_INFO("Process the Open GL Shader: {0}", m_Name.c_str());
 
         std::unordered_map<GLenum, std::string> shaderSource;
         
@@ -125,7 +125,7 @@ namespace iKan {
     // ******************************************************************************
     void OpenGlShader::Compile()
     {
-        IK_CORE_INFO("Compiling Open GL Shader {0} ", m_Name.c_str());
+        IK_CORE_INFO("Compiling Open GL Shader: {0} ", m_Name.c_str());
 
         int32_t program = glCreateProgram();
         int32_t glShaderIDIndex = 0;

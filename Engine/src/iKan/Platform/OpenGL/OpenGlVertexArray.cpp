@@ -40,7 +40,7 @@ namespace iKan {
     // ******************************************************************************
     OpenGlVertexArray::OpenGlVertexArray()
     {
-        IK_CORE_INFO("Open GL Constructor called ");
+        IK_CORE_INFO("Open GL Vertex Array Constructor called ");
 
         glGenVertexArrays(1, &m_RendererId);
         glBindVertexArray(m_RendererId);

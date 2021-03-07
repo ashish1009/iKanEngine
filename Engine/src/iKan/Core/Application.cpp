@@ -20,7 +20,6 @@ namespace iKan {
     // ******************************************************************************
     Application::Application(const ApplicationProps& props)
     {
-//        std::vector<int, int> test;
         IK_CORE_INFO("Application constructor called ");
         IK_CORE_ASSERT(!s_Instance, "Application already exists !!!");
         s_Instance = this;

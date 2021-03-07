@@ -65,8 +65,6 @@ namespace iKan {
     // ******************************************************************************
     void OpenGlVertexBuffer::SetData(const void* data, uint32_t size)
     {
-        IK_CORE_INFO("Setting the Open GL Vertex Buffer dynamically {0}", size);
-
         glBindBuffer(GL_ARRAY_BUFFER, m_RendererId);
         glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
     }

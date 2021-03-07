@@ -16,7 +16,7 @@ namespace iKan {
     OpneGlGraphicsContext::OpneGlGraphicsContext(GLFWwindow* window)
     : m_Window(window)
     {
-        IK_CORE_INFO("Open GL Constructor called ");
+        IK_CORE_INFO("Open GL Graohics Context Constructor called ");
         Init();
     }
     
@@ -25,17 +25,16 @@ namespace iKan {
     // ******************************************************************************
     void OpneGlGraphicsContext::Init()
     {
-        IK_CORE_INFO("Initialize Open GL ");
+        IK_CORE_INFO("Initialize Open GL Graohics context ");
 
         // make GLFW Window Context
         glfwMakeContextCurrent(m_Window);
 
-        // Initialize OpenGl (Glad)
-        /*
-         We pass GLAD the function to load the address of the OpenGL function
-         pointers which is OS-specific. GLFW gives us glfwGetProcAddress that
-         defines the correct function based on which OS we're compiling for
-         */
+        // ******************************************************************************
+        // We pass GLAD the function to load the address of the OpenGL function
+        // pointers which is OS-specific. GLFW gives us glfwGetProcAddress that
+        // defines the correct function based on which OS we're compiling for
+        // ******************************************************************************
         bool success = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         IK_CORE_ASSERT(success, "Can not initialize the Glad");
         

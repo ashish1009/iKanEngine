@@ -177,7 +177,7 @@ namespace iKan {
         IK_CORE_WARN("Shutting down MAC Window");
 
         glfwDestroyWindow(m_Window);
-        IK_CORE_INFO("Window : {0} Destroyed", m_Data.Title);
+        IK_CORE_WARN("Window : {0} Destroyed", m_Data.Title);
         glfwTerminate();
     }
     
