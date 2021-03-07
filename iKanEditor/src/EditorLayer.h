@@ -26,6 +26,7 @@ public:
 
 private:
     void OpenMenue();
+    void RendererStats();
     void OnViewport();
     
 private:
@@ -36,7 +37,6 @@ private:
         bool Hovered = false;
 
         glm::vec2 Size = { 0.0f, 0.0f };
-
         Ref<Framebuffer> FrameBuffer;
 
         Viewport() = default;
@@ -45,8 +45,11 @@ private:
     Viewport m_Viewport;
 
     // Changes the background color according to the theme
-    glm::vec4 m_BgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+    glm::vec4 m_BgColor = { 0.2f, 0.2f, 0.2f, 1.0f };
 
-    // Handle the Edotor camera
-    EditorCamera m_EditorCamera;
+    // Handle the Edotor camera, Scene Pannel and manage the scene
+    EditorCamera         m_EditorCamera;
+    SceneHeirarchyPannel m_ScenePannel;
+    Ref<Scene>           m_ActiveScene;
+
 };

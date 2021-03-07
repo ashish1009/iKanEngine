@@ -65,8 +65,6 @@ namespace iKan {
         ~Renderer2DData()
         {
             IK_CORE_WARN("Renderer2D Data instance Destryoyed and cleared the data");
-            delete[] QuadVertexBufferBase;
-            delete[] QuadVertexBufferPtr;
         }
     };
     static Renderer2DData* s_Data = new Renderer2DData();
@@ -155,6 +153,7 @@ namespace iKan {
     void Renderer2D::Shutdown()
     {
         IK_CORE_WARN("Shutting down the 2D renderer");
+        delete[] s_Data->QuadVertexBufferPtr;
         delete s_Data;
     }
     

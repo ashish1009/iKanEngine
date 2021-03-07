@@ -7,6 +7,13 @@
 
 #include "EditorLayer.h"
 
+// boolean to check Scene heirarchyPannnel and other property
+static bool IsSceneHeirarchyPannel = true;
+static bool IsFrameRate            = true;
+static bool IsRendererStats        = true;
+static bool IsVendorType           = true;
+
+// Background color
 static const std::string s_LayerName = "iKan Editor Layer";
 
 // ******************************************************************************
@@ -44,6 +51,9 @@ void Editor::OnAttach()
     // Viewport framebuffer
     m_Viewport.FrameBuffer = Framebuffer::Create(specs);
 
+    // Resister the Active scene
+    m_ActiveScene = Ref<Scene>::Create();
+    m_ScenePannel.SetContext(m_ActiveScene);
 }
 
 // ******************************************************************************
@@ -74,11 +84,25 @@ void Editor::OnUpdate(TimeStep timeStep)
     {
         m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         m_EditorCamera.SetViewportSize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
+        m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
     }
 
     // Update the camera per frame
     m_EditorCamera.OnUpdate(timeStep);
 
+    RendererStatistics::Reset();
+    m_Viewport.FrameBuffer->Bind();
+
+    // Rendering should happen inside FrameBuffer Bind
+    {
+        // Clear the color each frame;
+        Renderer::Clear(m_BgColor);
+
+        // Update Editor Scene
+        m_ActiveScene->OnUpdateEditor(timeStep, m_EditorCamera);
+    }
+
+    m_Viewport.FrameBuffer->Unbind();
 }
 
 // ******************************************************************************
@@ -92,9 +116,13 @@ void Editor::OnImguiRender()
         OpenMenue();
 
         // Stats and Version
-        ImGuiAPI::FrameRate();
-        ImGuiAPI::RendererStats();
-        ImGuiAPI::RendererVersion();
+        RendererStats();
+
+        // SceneHierarchy Pannel
+        if (IsSceneHeirarchyPannel)
+        {
+            m_ScenePannel.OnImguiender(&IsSceneHeirarchyPannel);
+        }
 
         // View Port
         OnViewport();
@@ -123,7 +151,6 @@ void Editor::OnViewport()
 
     ImGui::End(); // For View port begin
     ImGui::PopStyleVar(); // For View port push
-
 }
 
 // ******************************************************************************
@@ -142,8 +169,34 @@ void Editor::OpenMenue()
             ImGui::EndMenu();
         } // if (ImGui::BeginMenu("File"))
 
+        if (ImGui::BeginMenu("View"))
+        {
+            if (ImGui::MenuItem("Scene Heirarchy Panel"))
+            {
+                IsSceneHeirarchyPannel = !IsSceneHeirarchyPannel;
+            }
+            ImGui::EndMenu();
+        } // if (ImGui::BeginMenu("View"))
+
         if (ImGui::BeginMenu("Properties"))
         {
+            if (ImGui::BeginMenu("Pannels"))
+            {
+                if (ImGui::MenuItem("Frame Rate"))
+                {
+                    IsFrameRate = !IsFrameRate;
+                }
+                if (ImGui::MenuItem("Render Stats"))
+                {
+                    IsRendererStats = !IsRendererStats;
+                }
+                if (ImGui::MenuItem("Vendor Types"))
+                {
+                    IsVendorType = !IsVendorType;
+                }
+                ImGui::EndMenu();
+            } // if (ImGui::BeginMenu("Pannels"))
+            
             if (ImGui::BeginMenu("Theme"))
             {
                 if (ImGui::MenuItem("Light"))
@@ -167,5 +220,20 @@ void Editor::OpenMenue()
         } // if (ImGui::BeginMenu("Properties"))
         ImGui::EndMenuBar();
     } // if (ImGui::BeginMenuBar())
+}
 
+void Editor::RendererStats()
+{
+    if (IsFrameRate)
+    {
+        ImGuiAPI::FrameRate(&IsFrameRate);
+    }
+    if (IsRendererStats)
+    {
+        ImGuiAPI::RendererStats(&IsRendererStats);
+    }
+    if (IsVendorType)
+    {
+        ImGuiAPI::RendererVersion(&IsVendorType);
+    }
 }
