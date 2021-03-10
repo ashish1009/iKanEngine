@@ -22,6 +22,9 @@ namespace iKan {
         void OpenScene();
         void SaveSceneAs();
         
+        void UpdateViewportMousePos();
+        void UpdateHoveredEntity();
+        
     private:
         struct Viewport
         {

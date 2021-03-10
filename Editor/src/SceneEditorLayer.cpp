@@ -41,16 +41,32 @@ namespace iKan {
             m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
             m_EditorCamera.SetViewportSize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         }
-        
         m_EditorCamera.OnUpdate(timeStep);
-        
         RendererStatistics::Reset();
-        m_Viewport.FrameBuffer->Bind();
         
-        Renderer::Clear(m_BgColor);
-
-        m_ActiveScene->OnUpdateEditor(timeStep, m_EditorCamera);
-
+        m_Viewport.FrameBuffer->Bind();
+        {
+            Renderer::Clear(m_BgColor);
+            m_ActiveScene->OnUpdateEditor(timeStep, m_EditorCamera);
+            
+            UpdateViewportMousePos();
+            UpdateHoveredEntity();
+        }
+        m_Viewport.FrameBuffer->Unbind();
+    }
+    
+    void SceneEditor::UpdateHoveredEntity()
+    {
+        if (m_Viewport.MouseX >= 0 && m_Viewport.MouseY >= 0 && m_Viewport.MouseX <= m_Viewport.Width && m_Viewport.MouseY <= m_Viewport.Height )
+        {
+            int32_t ID = m_ActiveScene->Pixel(m_Viewport.MouseX, m_Viewport.MouseY);
+            // TODO:: remove entt::entity
+            m_HoveredEntity = (ID == 1028443341) ? Entity() : Entity((entt::entity)ID, m_ActiveScene.Raw());
+        }
+    }
+    
+    void SceneEditor::UpdateViewportMousePos()
+    {
         auto [mx, my] = ImGui::GetMousePos();
         mx -= m_Viewport.Bounds[0].x;
         my -= m_Viewport.Bounds[0].y;
@@ -62,15 +78,6 @@ namespace iKan {
 
         m_Viewport.MouseX = (int32_t)mx;
         m_Viewport.MouseY = (int32_t)my;
-
-        if (m_Viewport.MouseX >= 0 && m_Viewport.MouseY >= 0 && m_Viewport.MouseX <= m_Viewport.Width && m_Viewport.MouseY <= m_Viewport.Height )
-        {
-            int32_t ID = m_ActiveScene->Pixel(mx, my);
-            // TODO:: remove entt::entity
-            m_HoveredEntity = (ID == 1028443341) ? Entity() : Entity((entt::entity)ID, m_ActiveScene.Raw());
-        }
-
-        m_Viewport.FrameBuffer->Unbind();
     }
     
     void SceneEditor::OnImguiRender()
