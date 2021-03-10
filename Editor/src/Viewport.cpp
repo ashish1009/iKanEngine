@@ -1,7 +1,17 @@
+// ******************************************************************************
+//   File    : Viewport.cpp
+//   Project : Editor
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include "Viewport.h"
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Update the view port bouds
+    // ******************************************************************************
     void Viewport::UpdateBounds()
     {
         ImVec2 windowSize = ImGui::GetWindowSize();
@@ -15,6 +25,9 @@ namespace iKan {
         Bounds[1] = { maxBound.x, maxBound.y };
     }
     
+    // ******************************************************************************
+    // Update the Viewport
+    // ******************************************************************************
     void Viewport::OnUpdate()
     {
         Offset = ImGui::GetCursorPos();
@@ -30,6 +43,9 @@ namespace iKan {
         ImGui::Image((void*)textureID, ImVec2{ Size.x, Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
     }
     
+    // ******************************************************************************
+    // Update mouse position of viewport
+    // ******************************************************************************
     void Viewport::UpdateMousePos()
     {
         auto [mx, my] = ImGui::GetMousePos();

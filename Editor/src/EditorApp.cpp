@@ -1,8 +1,18 @@
+// ******************************************************************************
+//   File    : EditorApp.cpp
+//   Project : Editor
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan.h>
 #include <iKan/EntryPoint.h>
 
 #include "SceneEditorLayer.h"
 
+// ******************************************************************************
+// Client side Applicaiton
+// ******************************************************************************
 class EditorApp : public iKan::Application
 {
 public:
@@ -17,9 +27,9 @@ public:
     }
 };
 
-/*
- Client should decide which Application should run
- */
+// ******************************************************************************
+// Client should decide which Application should run
+// ******************************************************************************
 iKan::Application* iKan::CreateApplication()
 {
     return new EditorApp({ "Editor", 800, 450 });

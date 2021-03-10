@@ -1,18 +1,37 @@
+// ******************************************************************************
+//   File    : SceneEditor.h
+//   Project : Editor
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include "SceneEditorLayer.h"
 
 namespace iKan {
     
+    // ******************************************************************************
+    // Scene Editor Constructor
+    // ******************************************************************************
     SceneEditor::SceneEditor()
-    : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
+    : Layer("Scene Editor"), m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
     {
+        IK_INFO("Scene Editor created");
     }
     
+    // ******************************************************************************
+    // Scene Editor Destructor
+    // ******************************************************************************
     SceneEditor::~SceneEditor()
     {
+        IK_WARN("Scene Editor destroyed");
     }
     
+    // ******************************************************************************
+    // Attach Scene Editor
+    // ******************************************************************************
     void SceneEditor::OnAttach()
     {
+        IK_INFO("Attach Scene Editor");
         ImGuiAPI::SetDarkThemeColors();
 
         FramebufferSpecification specs;
@@ -26,10 +45,17 @@ namespace iKan {
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     
+    // ******************************************************************************
+    // Dettach Scene Editor
+    // ******************************************************************************
     void SceneEditor::OnDetach()
     {
+        IK_WARN("Detach Scene Editor");
     }
 
+    // ******************************************************************************
+    // Update Scene
+    // ******************************************************************************
     void SceneEditor::OnUpdate(TimeStep timeStep)
     {
         // If resize the window call the update the Scene View port and Frame buffer should be resized
@@ -55,6 +81,8 @@ namespace iKan {
         m_Viewport.FrameBuffer->Unbind();
     }
     
+    // ******************************************************************************
+    // ******************************************************************************
     void SceneEditor::UpdateHoveredEntity()
     {
         if (m_Viewport.MouseX >= 0 && m_Viewport.MouseY >= 0 && m_Viewport.MouseX <= m_Viewport.Width && m_Viewport.MouseY <= m_Viewport.Height )
@@ -65,6 +93,9 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Imgui Render for Scene Editor
+    // ******************************************************************************
     void SceneEditor::OnImguiRender()
     {
         ImGuiAPI::EnableDcocking();
@@ -91,6 +122,9 @@ namespace iKan {
         ImGuiAPI::EndDocking();
     }
     
+    // ******************************************************************************
+    // pdate Guizmo for selected entity
+    // ******************************************************************************
     void SceneEditor::UpdateGuizmo()
     {
         // Gizmos
@@ -145,6 +179,9 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Prinitng Hovered Entity in Imgui Window
+    // ******************************************************************************
     void SceneEditor::PrintHoveredEntity()
     {
         ImGui::Begin("Selected Entity");
@@ -157,6 +194,9 @@ namespace iKan {
         ImGui::End();
     }
     
+    // ******************************************************************************
+    // Menu for Imgui View port
+    // ******************************************************************************
     void SceneEditor::ShowMenu()
     {
         if (ImGui::BeginMenuBar())
@@ -205,6 +245,9 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Scene Editor Events
+    // ******************************************************************************
     void SceneEditor::OnEvent(Event& event)
     {
         m_EditorCamera.OnEvent(event);
@@ -214,6 +257,9 @@ namespace iKan {
         dispatcher.Dispatch<MouseButtonPressedEvent>(IK_BIND_EVENT_FN(SceneEditor::OnMouseButtonPressed));
     }
 
+    // ******************************************************************************
+    // Mouse button press event
+    // ******************************************************************************
     bool SceneEditor::OnMouseButtonPressed(MouseButtonPressedEvent& e)
     {
         if (e.GetMouseButton() == MouseCode::ButtonLeft && !ImGuizmo::IsOver() && !Input::IsKeyPressed(KeyCode::LeftAlt))
@@ -222,6 +268,9 @@ namespace iKan {
         return false;
     }
     
+    // ******************************************************************************
+    // key press events
+    // ******************************************************************************
     bool SceneEditor::OnKeyPressed(KeyPressedEvent& event)
     {
         // Shortcuts
@@ -271,16 +320,24 @@ namespace iKan {
         return false;
     }
     
+    // ******************************************************************************
+    // New scene
+    // ******************************************************************************
     void SceneEditor::NewScene()
     {
+        IK_INFO("New scene is created");
         m_ActiveScene = Ref<Scene>::Create();
         m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     
+    // ******************************************************************************
+    // Open saved scene
+    // ******************************************************************************
     void SceneEditor::OpenScene()
     {
         std::string filepath = "../../Editor/assets/scene/Example.iKan";
+        IK_INFO("Opening saved scene from {0}", filepath.c_str());
         if (!filepath.empty())
         {
             m_ActiveScene = Ref<Scene>::Create();
@@ -292,9 +349,13 @@ namespace iKan {
         }
     }
     
+    // ******************************************************************************
+    // Saving Scene
+    // ******************************************************************************
     void SceneEditor::SaveSceneAs()
     {
         std::string filepath = "../../Editor/assets/scene/Example.iKan";
+        IK_INFO("Saving Scene at {0}", filepath.c_str());
         if (!filepath.empty())
         {
             SceneSerializer serializer(m_ActiveScene);

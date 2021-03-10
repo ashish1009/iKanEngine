@@ -81,9 +81,9 @@
 		B24FF87624ED197300884EDA /* src */ = {
 			isa = PBXGroup;
 			children = (
+				B24FF87724ED197300884EDA /* EditorApp.cpp */,
 				B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */,
 				B253892B251FBF8300E5FD98 /* SceneEditorLayer.h */,
-				B24FF87724ED197300884EDA /* EditorApp.cpp */,
 				B2132D9125F927E6008F829E /* Viewport.cpp */,
 				B2132D9225F927E6008F829E /* Viewport.h */,
 			);
