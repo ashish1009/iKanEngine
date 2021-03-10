@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2132D9325F927E6008F829E /* Viewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2132D9125F927E6008F829E /* Viewport.cpp */; };
 		B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F024ED275600A14055 /* OpenGL.framework */; };
 		B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F224ED275B00A14055 /* IOKit.framework */; };
 		B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F424ED276400A14055 /* Cocoa.framework */; };
@@ -29,6 +30,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B2132D9125F927E6008F829E /* Viewport.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; };
+		B2132D9225F927E6008F829E /* Viewport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Viewport.h; sourceTree = "<group>"; };
 		B21375F024ED275600A14055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		B21375F224ED275B00A14055 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B21375F424ED276400A14055 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -81,6 +84,8 @@
 				B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */,
 				B253892B251FBF8300E5FD98 /* SceneEditorLayer.h */,
 				B24FF87724ED197300884EDA /* EditorApp.cpp */,
+				B2132D9125F927E6008F829E /* Viewport.cpp */,
+				B2132D9225F927E6008F829E /* Viewport.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B253892C251FBF8300E5FD98 /* SceneEditorLayer.cpp in Sources */,
+				B2132D9325F927E6008F829E /* Viewport.cpp in Sources */,
 				B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

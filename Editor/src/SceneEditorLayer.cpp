@@ -49,7 +49,7 @@ namespace iKan {
             Renderer::Clear(m_BgColor);
             m_ActiveScene->OnUpdateEditor(timeStep, m_EditorCamera);
             
-            UpdateViewportMousePos();
+            m_Viewport.UpdateMousePos();
             UpdateHoveredEntity();
         }
         m_Viewport.FrameBuffer->Unbind();
@@ -63,21 +63,6 @@ namespace iKan {
             // TODO:: remove entt::entity
             m_HoveredEntity = (ID == 1028443341) ? Entity() : Entity((entt::entity)ID, m_ActiveScene.Raw());
         }
-    }
-    
-    void SceneEditor::UpdateViewportMousePos()
-    {
-        auto [mx, my] = ImGui::GetMousePos();
-        mx -= m_Viewport.Bounds[0].x;
-        my -= m_Viewport.Bounds[0].y;
-
-        m_Viewport.Height = m_Viewport.Bounds[1].y - m_Viewport.Bounds[0].y;
-        m_Viewport.Width  = m_Viewport.Bounds[1].x - m_Viewport.Bounds[0].x;
-
-        my = m_Viewport.Height - my;
-
-        m_Viewport.MouseX = (int32_t)mx;
-        m_Viewport.MouseY = (int32_t)my;
     }
     
     void SceneEditor::OnImguiRender()
@@ -95,8 +80,8 @@ namespace iKan {
         ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
         ImGui::Begin("Viewport");
         {
-            ImVec2 viewportOffset = UpdateViewport();
-            SetViewportBounds(viewportOffset);
+            m_Viewport.OnUpdate();
+            m_Viewport.UpdateBounds();
             UpdateGuizmo();
         }
 
@@ -158,36 +143,6 @@ namespace iKan {
                 tc.Scale = scale;
             }
         }
-    }
-    
-    void SceneEditor::SetViewportBounds(const ImVec2& viewportOffset)
-    {
-        ImVec2 windowSize = ImGui::GetWindowSize();
-        ImVec2 minBound   = ImGui::GetWindowPos();
-        
-        minBound.x += viewportOffset.x;
-        minBound.y += viewportOffset.y;
-
-        ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
-        m_Viewport.Bounds[0] = { minBound.x, minBound.y };
-        m_Viewport.Bounds[1] = { maxBound.x, maxBound.y };
-    }
-    
-    ImVec2 SceneEditor::UpdateViewport()
-    {
-        auto viewportOffset = ImGui::GetCursorPos();
-
-        m_Viewport.Focused = ImGui::IsWindowFocused();
-        m_Viewport.Hovered = ImGui::IsWindowHovered();
-        Application::Get().GetImGuiLayer()->BlockEvents(!m_Viewport.Focused && !m_Viewport.Hovered);
-
-        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        m_Viewport.Size = { viewportPanelSize.x, viewportPanelSize.y };
-        
-        size_t textureID = m_Viewport.FrameBuffer->GetColorAttachmentRendererID();
-        ImGui::Image((void*)textureID, ImVec2{ m_Viewport.Size.x, m_Viewport.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-        
-        return viewportOffset;
     }
     
     void SceneEditor::PrintHoveredEntity()

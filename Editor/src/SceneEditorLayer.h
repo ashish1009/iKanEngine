@@ -1,4 +1,4 @@
-#include <iKan.h>
+#include "Viewport.h"
 
 namespace iKan {
     
@@ -22,37 +22,18 @@ namespace iKan {
         void OpenScene();
         void SaveSceneAs();
         
-        void UpdateViewportMousePos();
         void UpdateHoveredEntity();
         
         void ShowMenu();
         void PrintHoveredEntity();
-        ImVec2 UpdateViewport();
-        void SetViewportBounds(const ImVec2& viewportOffset);
         void UpdateGuizmo();
         
     private:
-        struct Viewport
-        {
-            bool Focused = false;
-            bool Hovered = false;
-            
-            float Width  = 0.0f;
-            float Height = 0.0f;
-            
-            int32_t MouseX = -1;
-            int32_t MouseY = -1;
-    
-            glm::vec2 Size = { 0.0f, 0.0f };
-            glm::vec2 Bounds[2];
-            
-            Ref<Framebuffer> FrameBuffer;
-        };
-        Viewport m_Viewport;
         
         int32_t m_GizmoType = -1;
         
         Ref<Scene>           m_ActiveScene;
+        Viewport             m_Viewport;
         Entity               m_HoveredEntity;
         SceneHeirarchyPannel m_SceneHierarchyPannel;
         EditorCamera         m_EditorCamera;
