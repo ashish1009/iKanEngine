@@ -25,6 +25,9 @@ namespace iKan {
         void UpdateViewportMousePos();
         void UpdateHoveredEntity();
         
+        void ShowMenu();
+        void PrintHoveredEntity();
+        
     private:
         struct Viewport
         {

@@ -83,69 +83,14 @@ namespace iKan {
     void SceneEditor::OnImguiRender()
     {
         ImGuiAPI::EnableDcocking();
+        ShowMenu();
         
-        //------------------------ Menu Bar  ------------------------------------------------------
-        if (ImGui::BeginMenuBar())
-        {
-            if (ImGui::BeginMenu("File"))
-            {
-                if (ImGui::MenuItem("New", "Cmd+N"))
-                    NewScene();
-                
-                if (ImGui::MenuItem("Save", "Cmd+S"))
-                    SaveSceneAs();
-                    
-                if (ImGui::MenuItem("Open", "Cmd+S"))
-                    OpenScene();
-                
-                if (ImGui::MenuItem("Exit"))
-                    Application::Get().Close();
-                
-                ImGui::EndMenu();
-            }
-            
-            if (ImGui::BeginMenu("Properties"))
-            {
-                if (ImGui::BeginMenu("Theme"))
-                {
-                    if (ImGui::MenuItem("Light"))
-                    {
-                        ImGuiAPI::SetLightThemeColors();
-                        m_BgColor = { 0.8f, 0.8f, 0.8f, 1.0f };
-                    }
-                    if (ImGui::MenuItem("Dark"))
-                    {
-                        ImGuiAPI::SetDarkThemeColors();
-                        m_BgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
-                    }
-                    if (ImGui::MenuItem("Grey"))
-                    {
-                        ImGuiAPI::SetGreyThemeColors();
-                        m_BgColor = { 0.25f, 0.25f, 0.25f, 1.0f };
-                    }
-                    ImGui::EndMenu();
-                }
-                ImGui::EndMenu();
-            }
-            ImGui::EndMenuBar();
-        }
-        
-        //------------------------ Stats and Version  ------------------------------------------------------
         ImGuiAPI::FrameRate();
         ImGuiAPI::RendererStats();
         ImGuiAPI::RendererVersion();
 
-        // ----------------------  Hovered Entity --------------------------------------------------------
-        ImGui::Begin("Selected Entity");
-        std::string entityName = "NULL";
-        if ((entt::entity)m_HoveredEntity != entt::null)
-        {
-            entityName = m_HoveredEntity.GetComponent<TagComponent>().Tag;
-            ImGui::Text("Hovered Entity -> ID: %d, Tag: %s", (uint32_t)m_HoveredEntity, entityName.c_str());
-        }
-        ImGui::End();
+        PrintHoveredEntity();
 
-        //------------------------ SceneHierarchy Pannel  --------------------------------------------------
         m_SceneHierarchyPannel.OnImguiender();
         
         //------------------------ View Port ---------------------------------------------------------------
@@ -228,6 +173,66 @@ namespace iKan {
         ImGui::PopStyleVar();
         
         ImGuiAPI::EndDocking();
+    }
+    
+    void SceneEditor::PrintHoveredEntity()
+    {
+        ImGui::Begin("Selected Entity");
+        std::string entityName = "NULL";
+        if ((entt::entity)m_HoveredEntity != entt::null)
+        {
+            entityName = m_HoveredEntity.GetComponent<TagComponent>().Tag;
+            ImGui::Text("Hovered Entity -> ID: %d, Tag: %s", (uint32_t)m_HoveredEntity, entityName.c_str());
+        }
+        ImGui::End();
+    }
+    
+    void SceneEditor::ShowMenu()
+    {
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("New", "Cmd+N"))
+                    NewScene();
+                
+                if (ImGui::MenuItem("Save", "Cmd+S"))
+                    SaveSceneAs();
+                    
+                if (ImGui::MenuItem("Open", "Cmd+S"))
+                    OpenScene();
+                
+                if (ImGui::MenuItem("Exit"))
+                    Application::Get().Close();
+                
+                ImGui::EndMenu(); // ImGui::BeginMenu("File")
+            } // if (ImGui::BeginMenuBar())
+            
+            if (ImGui::BeginMenu("Properties"))
+            {
+                if (ImGui::BeginMenu("Theme"))
+                {
+                    if (ImGui::MenuItem("Light"))
+                    {
+                        ImGuiAPI::SetLightThemeColors();
+                        m_BgColor = { 0.8f, 0.8f, 0.8f, 1.0f };
+                    }
+                    if (ImGui::MenuItem("Dark"))
+                    {
+                        ImGuiAPI::SetDarkThemeColors();
+                        m_BgColor = { 0.1f, 0.1f, 0.1f, 1.0f };
+                    }
+                    if (ImGui::MenuItem("Grey"))
+                    {
+                        ImGuiAPI::SetGreyThemeColors();
+                        m_BgColor = { 0.25f, 0.25f, 0.25f, 1.0f };
+                    }
+                    ImGui::EndMenu(); // ImGui::BeginMenu("Theme")
+                }
+                ImGui::EndMenu(); // ImGui::BeginMenu("Properties")
+            } // if (ImGui::BeginMenu("Properties"))
+            ImGui::EndMenuBar(); // ImGui::BeginMenuBar()
+        }
     }
     
     void SceneEditor::OnEvent(Event& event)
