@@ -29,6 +29,7 @@ namespace iKan {
         void PrintHoveredEntity();
         ImVec2 UpdateViewport();
         void SetViewportBounds(const ImVec2& viewportOffset);
+        void UpdateGuizmo();
         
     private:
         struct Viewport

@@ -92,9 +92,22 @@ namespace iKan {
         PrintHoveredEntity();
         m_SceneHierarchyPannel.OnImguiender();
         
-        ImVec2 viewportOffset = UpdateViewport();
-        SetViewportBounds(viewportOffset);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::Begin("Viewport");
+        {
+            ImVec2 viewportOffset = UpdateViewport();
+            SetViewportBounds(viewportOffset);
+            UpdateGuizmo();
+        }
 
+        ImGui::End();
+        ImGui::PopStyleVar();
+        
+        ImGuiAPI::EndDocking();
+    }
+    
+    void SceneEditor::UpdateGuizmo()
+    {
         // Gizmos
         Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
         if (selectedEntity && m_GizmoType != -1)
@@ -145,11 +158,6 @@ namespace iKan {
                 tc.Scale = scale;
             }
         }
-
-        ImGui::End();
-        ImGui::PopStyleVar();
-        
-        ImGuiAPI::EndDocking();
     }
     
     void SceneEditor::SetViewportBounds(const ImVec2& viewportOffset)
@@ -167,9 +175,6 @@ namespace iKan {
     
     ImVec2 SceneEditor::UpdateViewport()
     {
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Viewport");
-
         auto viewportOffset = ImGui::GetCursorPos();
 
         m_Viewport.Focused = ImGui::IsWindowFocused();
