@@ -90,33 +90,10 @@ namespace iKan {
         ImGuiAPI::RendererVersion();
 
         PrintHoveredEntity();
-
         m_SceneHierarchyPannel.OnImguiender();
         
-        //------------------------ View Port ---------------------------------------------------------------
-        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-        ImGui::Begin("Viewport");
-
-        auto viewportOffet = ImGui::GetCursorPos();
-
-        m_Viewport.Focused = ImGui::IsWindowFocused();
-        m_Viewport.Hovered = ImGui::IsWindowHovered();
-        Application::Get().GetImGuiLayer()->BlockEvents(!m_Viewport.Focused && !m_Viewport.Hovered);
-
-        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        m_Viewport.Size = { viewportPanelSize.x, viewportPanelSize.y };
-        
-        size_t textureID = m_Viewport.FrameBuffer->GetColorAttachmentRendererID();
-        ImGui::Image((void*)textureID, ImVec2{ m_Viewport.Size.x, m_Viewport.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-
-        auto windowSize = ImGui::GetWindowSize();
-        ImVec2 minBound = ImGui::GetWindowPos();
-        minBound.x += viewportOffet.x;
-        minBound.y += viewportOffet.y;
-
-        ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
-        m_Viewport.Bounds[0] = { minBound.x, minBound.y };
-        m_Viewport.Bounds[1] = { maxBound.x, maxBound.y };
+        ImVec2 viewportOffset = UpdateViewport();
+        SetViewportBounds(viewportOffset);
 
         // Gizmos
         Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
@@ -173,6 +150,39 @@ namespace iKan {
         ImGui::PopStyleVar();
         
         ImGuiAPI::EndDocking();
+    }
+    
+    void SceneEditor::SetViewportBounds(const ImVec2& viewportOffset)
+    {
+        ImVec2 windowSize = ImGui::GetWindowSize();
+        ImVec2 minBound   = ImGui::GetWindowPos();
+        
+        minBound.x += viewportOffset.x;
+        minBound.y += viewportOffset.y;
+
+        ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
+        m_Viewport.Bounds[0] = { minBound.x, minBound.y };
+        m_Viewport.Bounds[1] = { maxBound.x, maxBound.y };
+    }
+    
+    ImVec2 SceneEditor::UpdateViewport()
+    {
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+        ImGui::Begin("Viewport");
+
+        auto viewportOffset = ImGui::GetCursorPos();
+
+        m_Viewport.Focused = ImGui::IsWindowFocused();
+        m_Viewport.Hovered = ImGui::IsWindowHovered();
+        Application::Get().GetImGuiLayer()->BlockEvents(!m_Viewport.Focused && !m_Viewport.Hovered);
+
+        ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+        m_Viewport.Size = { viewportPanelSize.x, viewportPanelSize.y };
+        
+        size_t textureID = m_Viewport.FrameBuffer->GetColorAttachmentRendererID();
+        ImGui::Image((void*)textureID, ImVec2{ m_Viewport.Size.x, m_Viewport.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+        
+        return viewportOffset;
     }
     
     void SceneEditor::PrintHoveredEntity()
