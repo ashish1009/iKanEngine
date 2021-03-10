@@ -1,9 +1,6 @@
 #include "SceneEditorLayer.h"
 
 namespace iKan {
-
-    static float ViewportHeight, ViewPortWidht;
-    static int32_t MouseX, MouseY;
     
     SceneEditor::SceneEditor()
     : m_EditorCamera(glm::radians(45.0f), 1800.0f/800.0f, 0.01f, 10000.0f)
@@ -23,18 +20,10 @@ namespace iKan {
         specs.Width       = s_WindowWidth;
         specs.Height      = s_WindowWidth;
         
-        m_FrameBuffer = Framebuffer::Create(specs);
-        m_DepthFrameBuffer = Framebuffer::Create(specs);
+        m_Viewport.FrameBuffer = Framebuffer::Create(specs);
 
         m_ActiveScene  = Ref<Scene>::Create();
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
-
-        // Temp for Skeleton Mesh testing
-#if 0
-        Entity meshComp = m_ActiveScene->CreateEntity("Mesh");
-        Ref<Mesh> mesh  = Ref<Mesh>::Create("/Users/ashish./iKan/Github/iKanEngine/Editor/assets/resources/objects/Animation/Model/Model.fbx");
-        meshComp.AddComponent<MeshComponent>(mesh);
-#endif
     }
     
     void SceneEditor::OnDetach()
@@ -44,46 +33,44 @@ namespace iKan {
     void SceneEditor::OnUpdate(TimeStep timeStep)
     {
         // If resize the window call the update the Scene View port and Frame buffer should be resized
-        if (FramebufferSpecification spec = m_FrameBuffer->GetSpecification();
-            m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
-            (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+        if (FramebufferSpecification spec = m_Viewport.FrameBuffer->GetSpecification();
+            m_Viewport.Size.x > 0.0f && m_Viewport.Size.y > 0.0f && // zero sized framebuffer is invalid
+            (spec.Width != m_Viewport.Size.x || spec.Height != m_Viewport.Size.y))
         {
-            m_FrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-            m_DepthFrameBuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-
-            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-            m_EditorCamera.SetViewportSize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_Viewport.FrameBuffer->Resize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
+            m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
+            m_EditorCamera.SetViewportSize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         }
         
         m_EditorCamera.OnUpdate(timeStep);
         
         RendererStatistics::Reset();
-        m_FrameBuffer->Bind();
+        m_Viewport.FrameBuffer->Bind();
         
         Renderer::Clear(m_BgColor);
 
         m_ActiveScene->OnUpdateEditor(timeStep, m_EditorCamera);
 
         auto [mx, my] = ImGui::GetMousePos();
-        mx -= m_ViewportBounds[0].x;
-        my -= m_ViewportBounds[0].y;
+        mx -= m_Viewport.Bounds[0].x;
+        my -= m_Viewport.Bounds[0].y;
 
-        ViewportHeight = m_ViewportBounds[1].y - m_ViewportBounds[0].y;
-        ViewPortWidht  = m_ViewportBounds[1].x - m_ViewportBounds[0].x;
+        m_Viewport.Height = m_Viewport.Bounds[1].y - m_Viewport.Bounds[0].y;
+        m_Viewport.Width  = m_Viewport.Bounds[1].x - m_Viewport.Bounds[0].x;
 
-        my = ViewportHeight - my;
+        my = m_Viewport.Height - my;
 
-        MouseX = (int32_t)mx;
-        MouseY = (int32_t)my;
+        m_Viewport.MouseX = (int32_t)mx;
+        m_Viewport.MouseY = (int32_t)my;
 
-        if (MouseX >= 0 && MouseY >= 0 && MouseX <= ViewPortWidht && MouseY <= ViewportHeight )
+        if (m_Viewport.MouseX >= 0 && m_Viewport.MouseY >= 0 && m_Viewport.MouseX <= m_Viewport.Width && m_Viewport.MouseY <= m_Viewport.Height )
         {
             int32_t ID = m_ActiveScene->Pixel(mx, my);
             // TODO:: remove entt::entity
             m_HoveredEntity = (ID == 1028443341) ? Entity() : Entity((entt::entity)ID, m_ActiveScene.Raw());
         }
 
-        m_FrameBuffer->Unbind();
+        m_Viewport.FrameBuffer->Unbind();
     }
     
     void SceneEditor::OnImguiRender()
@@ -160,15 +147,15 @@ namespace iKan {
 
         auto viewportOffet = ImGui::GetCursorPos();
 
-        m_ViewportFocused = ImGui::IsWindowFocused();
-        m_ViewportHovered = ImGui::IsWindowHovered();
-        Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
+        m_Viewport.Focused = ImGui::IsWindowFocused();
+        m_Viewport.Hovered = ImGui::IsWindowHovered();
+        Application::Get().GetImGuiLayer()->BlockEvents(!m_Viewport.Focused && !m_Viewport.Hovered);
 
         ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-        m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+        m_Viewport.Size = { viewportPanelSize.x, viewportPanelSize.y };
         
-        size_t textureID = m_FrameBuffer->GetColorAttachmentRendererID();
-        ImGui::Image((void*)textureID, ImVec2{ m_ViewportSize.x, m_ViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+        size_t textureID = m_Viewport.FrameBuffer->GetColorAttachmentRendererID();
+        ImGui::Image((void*)textureID, ImVec2{ m_Viewport.Size.x, m_Viewport.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
 
         auto windowSize = ImGui::GetWindowSize();
         ImVec2 minBound = ImGui::GetWindowPos();
@@ -176,8 +163,8 @@ namespace iKan {
         minBound.y += viewportOffet.y;
 
         ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
-        m_ViewportBounds[0] = { minBound.x, minBound.y };
-        m_ViewportBounds[1] = { maxBound.x, maxBound.y };
+        m_Viewport.Bounds[0] = { minBound.x, minBound.y };
+        m_Viewport.Bounds[1] = { maxBound.x, maxBound.y };
 
         // Gizmos
         Entity selectedEntity = m_SceneHierarchyPannel.GetSelectedEntity();
@@ -248,7 +235,7 @@ namespace iKan {
     bool SceneEditor::OnMouseButtonPressed(MouseButtonPressedEvent& e)
     {
         if (e.GetMouseButton() == MouseCode::ButtonLeft && !ImGuizmo::IsOver() && !Input::IsKeyPressed(KeyCode::LeftAlt))
-            if (MouseX >= 0 && MouseY >= 0 && MouseX <= ViewPortWidht && MouseY <= ViewportHeight )
+            if (m_Viewport.MouseX >= 0 && m_Viewport.MouseY >= 0 && m_Viewport.MouseX <= m_Viewport.Width && m_Viewport.MouseY <= m_Viewport.Height )
                 m_SceneHierarchyPannel.SetSelectedEntity(m_HoveredEntity);
         return false;
     }
@@ -305,7 +292,7 @@ namespace iKan {
     void SceneEditor::NewScene()
     {
         m_ActiveScene = Ref<Scene>::Create();
-        m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+        m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
         m_SceneHierarchyPannel.SetContext(m_ActiveScene);
     }
     
@@ -315,7 +302,7 @@ namespace iKan {
         if (!filepath.empty())
         {
             m_ActiveScene = Ref<Scene>::Create();
-            m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+            m_ActiveScene->OnViewportResize((uint32_t)m_Viewport.Size.x, (uint32_t)m_Viewport.Size.y);
             m_SceneHierarchyPannel.SetContext(m_ActiveScene);
             
             SceneSerializer serializer(m_ActiveScene);

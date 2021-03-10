@@ -23,20 +23,28 @@ namespace iKan {
         void SaveSceneAs();
         
     private:
+        struct Viewport
+        {
+            bool Focused = false;
+            bool Hovered = false;
+            
+            float Width  = 0.0f;
+            float Height = 0.0f;
+            
+            int32_t MouseX = -1;
+            int32_t MouseY = -1;
+    
+            glm::vec2 Size = { 0.0f, 0.0f };
+            glm::vec2 Bounds[2];
+            
+            Ref<Framebuffer> FrameBuffer;
+        };
+        Viewport m_Viewport;
+        
         int32_t m_GizmoType = -1;
-
-        bool m_ViewportFocused = false, m_ViewportHovered = false;
-
-        Entity m_HoveredEntity;
         
-        glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
-        glm::vec2 m_ViewportBounds[2];
-        
-        Ref<Framebuffer> m_FrameBuffer;
-        Ref<Framebuffer> m_DepthFrameBuffer;
-
-        Ref<Scene>       m_ActiveScene;
-        
+        Ref<Scene>           m_ActiveScene;
+        Entity               m_HoveredEntity;
         SceneHeirarchyPannel m_SceneHierarchyPannel;
         EditorCamera         m_EditorCamera;
         
