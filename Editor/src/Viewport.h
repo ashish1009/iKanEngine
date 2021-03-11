@@ -15,6 +15,28 @@ namespace iKan {
     // ******************************************************************************
     class Viewport
     {
+    private:
+        Viewport() = default;
+    
+    public:
+        ~Viewport() = default;
+        
+        Viewport(const Viewport& other) = delete;
+        Viewport(Viewport&& other) = delete;
+        
+        Viewport& operator =(const Viewport& other) = delete;
+        Viewport& operator =(Viewport&& other) = delete;
+        
+        void UpdateBounds();
+        void OnUpdate();
+        void UpdateMousePos();
+        
+        static Viewport& Get()
+        {
+            static Viewport viewport;
+            return viewport;
+        }
+        
     public:
         bool Focused = false;
         bool Hovered = false;
@@ -31,11 +53,6 @@ namespace iKan {
         ImVec2 Offset;
         
         Ref<Framebuffer> FrameBuffer;
-        
-    public:
-        void UpdateBounds();
-        void OnUpdate();
-        void UpdateMousePos();
     };
     
 }

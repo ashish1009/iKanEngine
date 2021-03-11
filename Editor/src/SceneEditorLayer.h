@@ -39,16 +39,16 @@ namespace iKan {
         void UpdateGuizmo();
         
     private:
-        
         int32_t m_GizmoType = -1;
         
         Ref<Scene>           m_ActiveScene;
-        Viewport             m_Viewport;
         Entity               m_HoveredEntity;
         SceneHeirarchyPannel m_SceneHierarchyPannel;
         EditorCamera         m_EditorCamera;
         
         glm::vec4 m_BgColor = { 0.05f, 0.05f, 0.05f, 1.0f };
+
+        Viewport& m_Viewport = Viewport::Get();
     };
     
 }
