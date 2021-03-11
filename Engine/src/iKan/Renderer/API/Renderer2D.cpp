@@ -43,16 +43,16 @@ namespace iKan {
         static const uint32_t MaxTextureSlots = 16;
         
         // Data storage for Rendering
-        Ref<VertexArray>    QuadVertexArray;
-        Ref<VertexBuffer>   QuadVertexBuffer;
-        Ref<Shader>         TextureShader;
-        Ref<Texture>        WhiteTexture;
+        Ref<VertexArray>  QuadVertexArray;
+        Ref<VertexBuffer> QuadVertexBuffer;
+        Ref<Shader>       TextureShader;
+        Ref<Texture>      WhiteTexture;
         
         uint32_t    QuadIndexCount = 0;
         
         // Pointer attribute of vertexes
-        QuadVertex* QuadVertexBufferBase    = nullptr;
-        QuadVertex* QuadVertexBufferPtr     = nullptr;
+        QuadVertex* QuadVertexBufferBase = nullptr;
+        QuadVertex* QuadVertexBufferPtr  = nullptr;
         
         // array of textures for now 16 slots are possible
         std::array<Ref<Texture>, MaxTextureSlots> TextureSlots;
@@ -65,6 +65,7 @@ namespace iKan {
         ~Renderer2DData()
         {
             IK_CORE_WARN("Renderer2D Data instance Destryoyed and cleared the data");
+            delete [] QuadVertexBufferBase;
         }
     };
     static Renderer2DData* s_Data = new Renderer2DData();
@@ -153,7 +154,6 @@ namespace iKan {
     void Renderer2D::Shutdown()
     {
         IK_CORE_WARN("Shutting down the 2D renderer");
-        delete[] s_Data->QuadVertexBufferPtr;
         delete s_Data;
     }
     
