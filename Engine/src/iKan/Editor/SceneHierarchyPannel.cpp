@@ -39,7 +39,11 @@ namespace iKan {
         m_Context->m_Registry.each([&](auto entityID)
         {
             Entity entity( { entityID, m_Context.Raw() } );
-            DrawEntityNode(entity);
+            
+            if (entity.GetComponent<SceneHierarchyPannelProp>().IsProp)
+            {
+                DrawEntityNode(entity);
+            }
         });
         
         if (ImGui::IsMouseDown((int)MouseCode::Button0) && ImGui::IsWindowHovered())
@@ -113,6 +117,7 @@ namespace iKan {
                                                  ImGuiTreeNodeFlags_SpanAvailWidth |
                                                  ImGuiTreeNodeFlags_AllowItemOverlap |
                                                  ImGuiTreeNodeFlags_FramePadding;
+        
         if (entity.HasComponent<T>())
         {
             auto& component = entity.GetComponent<T>();

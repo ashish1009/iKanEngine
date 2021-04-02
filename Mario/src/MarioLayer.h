@@ -1,9 +1,19 @@
+// ******************************************************************************
+//   File    : MarioLayer.h
+//   Project : Mario
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan.h>
 
 using namespace iKan;
 
 namespace Mario {
     
+    // ******************************************************************************
+    // Layer created for Mario. Derived from iKab Layer
+    // ******************************************************************************
     class MarioLayer : public Layer
     {
     public:

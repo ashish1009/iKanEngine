@@ -29,7 +29,4 @@ namespace iKan {
         static float GetMouseX();
         static float GetMouseY();
     };
-    
-    static void Test(int a);
-    
 }

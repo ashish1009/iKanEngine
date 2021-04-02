@@ -6,6 +6,7 @@
 // ******************************************************************************
 
 #include "MarioLayer.h"
+#include "Background.h"
 
 namespace Mario {
 
@@ -70,6 +71,8 @@ namespace Mario {
 
             cameraEntity.GetComponent<TransformComponent>().Translation.x = 0.0f;;
         }
+        
+        BackgroundTile::CreateEntities(m_ActiveScene);
     }
     
     // ******************************************************************************
@@ -124,7 +127,7 @@ namespace Mario {
         
         m_Viewport.FrameBuffer->Bind();
         {
-            Renderer::Clear({ 0.1f, 0.1f, 0.1f, 1.0f });
+            Renderer::Clear(BackgroundTile::s_BgColor);
             m_ActiveScene->OnUpdateRuntime(timeStep);
         }
         m_Viewport.FrameBuffer->Unbind();
@@ -151,6 +154,7 @@ namespace Mario {
             if (MarioLayer::s_PropFlag.IsSetting)
             {
                 ImGui::Begin("Setting", &MarioLayer::s_PropFlag.IsSetting);
+                BackgroundTile::ImGuiRenderer();
                 ImGui::End();
             }
             

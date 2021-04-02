@@ -14,6 +14,7 @@
 		B28E172E25DC198900197D65 /* libIrrXML.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B29963542616F51E00247577 /* MarioApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29963522616F51E00247577 /* MarioApp.cpp */; };
 		B29963572616F53F00247577 /* MarioLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B29963552616F53F00247577 /* MarioLayer.cpp */; };
+		B29963612617083B00247577 /* Background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B299635F2617083B00247577 /* Background.cpp */; };
 		B2CB6EA72560270D00F5EF3F /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA62560270C00F5EF3F /* libassimp.5.dylib */; };
 		B2CB6EAA2560273C00F5EF3F /* libIrrXML.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */; };
 /* End PBXBuildFile section */
@@ -41,6 +42,8 @@
 		B29963522616F51E00247577 /* MarioApp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioApp.cpp; sourceTree = "<group>"; };
 		B29963552616F53F00247577 /* MarioLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarioLayer.cpp; sourceTree = "<group>"; wrapsLines = 0; };
 		B29963562616F53F00247577 /* MarioLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarioLayer.h; sourceTree = "<group>"; };
+		B299635F2617083B00247577 /* Background.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Background.cpp; sourceTree = "<group>"; wrapsLines = 0; };
+		B29963602617083B00247577 /* Background.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Background.h; sourceTree = "<group>"; };
 		B2CB6EA62560270C00F5EF3F /* libassimp.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libassimp.5.dylib; path = ../Engine/vendor/Assimp/lib/libassimp.5.dylib; sourceTree = "<group>"; };
 		B2CB6EA92560273C00F5EF3F /* libIrrXML.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libIrrXML.dylib; path = ../Engine/vendor/Assimp/lib/libIrrXML.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,6 +89,8 @@
 				B29963522616F51E00247577 /* MarioApp.cpp */,
 				B29963552616F53F00247577 /* MarioLayer.cpp */,
 				B29963562616F53F00247577 /* MarioLayer.h */,
+				B299635F2617083B00247577 /* Background.cpp */,
+				B29963602617083B00247577 /* Background.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29963612617083B00247577 /* Background.cpp in Sources */,
 				B29963572616F53F00247577 /* MarioLayer.cpp in Sources */,
 				B29963542616F51E00247577 /* MarioApp.cpp in Sources */,
 			);
