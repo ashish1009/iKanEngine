@@ -130,7 +130,7 @@ namespace Mario {
             s_SubTextureVectorMap['G'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 23.0f })); // Grey
             s_SubTextureVectorMap['G'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 21.0f })); // Green
 
-            s_TextureMap['G'].SubTexture = s_SubTextureVectorMap['G'][3];
+            s_TextureMap['G'].SubTexture = s_SubTextureVectorMap['G'][0];
         }
 
         // Bricks SubTextures
@@ -140,7 +140,7 @@ namespace Mario {
             s_SubTextureVectorMap['X'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17.0f, 23.0f })); // Grey;
             s_SubTextureVectorMap['X'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 17.0f, 21.0f })); // green;
 
-            s_TextureMap['X'].SubTexture = s_SubTextureVectorMap['X'][1];
+            s_TextureMap['X'].SubTexture = s_SubTextureVectorMap['X'][0];
         }
 
         // Bonus SubTextures
@@ -155,17 +155,17 @@ namespace Mario {
             s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 27.0f, 23.0f })); // Grey
             s_SubTextureVectorMap['B'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 27.0f, 21.0f })); // Green
 
-            s_TextureMap['B'].SubTexture = s_SubTextureVectorMap['B'][3];
+            s_TextureMap['B'].SubTexture = s_SubTextureVectorMap['B'][0];
         }
 
-        // Steos SubTextures
+        // Steps SubTextures
         {
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 26.0f })); // Brown
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 24.0f })); // Blue
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 22.0f })); // Grey
             s_SubTextureVectorMap['S'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 20.0f })); // Green
 
-            s_TextureMap['S'].SubTexture = s_SubTextureVectorMap['S'][2];
+            s_TextureMap['S'].SubTexture = s_SubTextureVectorMap['S'][0];
         }
 
         // Bridge SubTexture
@@ -173,9 +173,9 @@ namespace Mario {
             s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 18.5f })); // Green
             s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 14.5f })); // Orange
             s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f, 10.5f })); // Grey
-            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f,  8.5f }));  // Pink
+            s_SubTextureVectorMap['-'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 15.0f,  8.5f })); // Pink
 
-            s_TextureMap['-'].SubTexture = s_SubTextureVectorMap['-'][3];
+            s_TextureMap['-'].SubTexture = s_SubTextureVectorMap['-'][0];
         }
 
         // PipesHead
@@ -190,8 +190,8 @@ namespace Mario {
             s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 12.0f }, { 2.0f, 1.0f })); // Grey
             s_SubTextureVectorMap['!'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f,  8.0f }, { 2.0f, 1.0f }));  // Pink
 
-            s_TextureMap['Y'].SubTexture = s_SubTextureVectorMap['Y'][3];
-            s_TextureMap['!'].SubTexture = s_SubTextureVectorMap['!'][3];
+            s_TextureMap['Y'].SubTexture = s_SubTextureVectorMap['Y'][0];
+            s_TextureMap['!'].SubTexture = s_SubTextureVectorMap['!'][0];
         }
 
         // Grass
@@ -201,7 +201,7 @@ namespace Mario {
             s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f, 12.0f })); // Grey
             s_SubTextureVectorMap['<'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 11.0f,  8.0f })); // Pink
 
-            s_TextureMap['<'].SubTexture = s_SubTextureVectorMap['<'][3];
+            s_TextureMap['<'].SubTexture = s_SubTextureVectorMap['<'][0];
             s_TextureMap['<'].IsRigid = false;
 
             s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 18.0f })); // Green
@@ -209,7 +209,7 @@ namespace Mario {
             s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f, 12.0f })); // Grey
             s_SubTextureVectorMap['v'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 12.0f,  8.0f })); // Pink
 
-            s_TextureMap['v'].SubTexture = s_SubTextureVectorMap['v'][3];
+            s_TextureMap['v'].SubTexture = s_SubTextureVectorMap['v'][0];
             s_TextureMap['v'].IsRigid = false;
 
             s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 18.0f })); // Green
@@ -217,7 +217,7 @@ namespace Mario {
             s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 12.0f })); // Grey
             s_SubTextureVectorMap['>'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 13.0f, 8.0f  })); // Pink
 
-            s_TextureMap['>'].SubTexture = s_SubTextureVectorMap['>'][3];
+            s_TextureMap['>'].SubTexture = s_SubTextureVectorMap['>'][0];
             s_TextureMap['>'].IsRigid = false;
         }
 
@@ -228,7 +228,7 @@ namespace Mario {
             s_SubTextureVectorMap['{'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 8.0f, 13.0f })); // Grey
             s_SubTextureVectorMap['{'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 8.0f,  9.0f })); // Pink
 
-            s_TextureMap['{'].SubTexture = s_SubTextureVectorMap['{'][1];
+            s_TextureMap['{'].SubTexture = s_SubTextureVectorMap['{'][0];
             s_TextureMap['{'].IsRigid = false;
 
             s_SubTextureVectorMap['}'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 10.0f, 19.0f })); // Green
@@ -236,7 +236,7 @@ namespace Mario {
             s_SubTextureVectorMap['}'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 10.0f, 13.0f })); // Grey
             s_SubTextureVectorMap['}'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 10.0f,  9.0f })); // Pink
 
-            s_TextureMap['}'].SubTexture = s_SubTextureVectorMap['}'][1];
+            s_TextureMap['}'].SubTexture = s_SubTextureVectorMap['}'][0];
             s_TextureMap['}'].IsRigid = false;
 
 
@@ -245,7 +245,7 @@ namespace Mario {
             s_SubTextureVectorMap['*'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 9.0f, 13.0f })); // Grey
             s_SubTextureVectorMap['*'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 9.0f,  9.0f })); // Pink
 
-            s_TextureMap['*'].SubTexture = s_SubTextureVectorMap['*'][1];
+            s_TextureMap['*'].SubTexture = s_SubTextureVectorMap['*'][0];
             s_TextureMap['*'].IsRigid = false;
 
             s_SubTextureVectorMap['1'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 8.0f, 18.0f })); // Green
@@ -253,7 +253,7 @@ namespace Mario {
             s_SubTextureVectorMap['1'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 8.0f, 12.0f })); // Grey
             s_SubTextureVectorMap['1'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 8.0f,  8.0f })); // Pink
 
-            s_TextureMap['1'].SubTexture = s_SubTextureVectorMap['1'][1];
+            s_TextureMap['1'].SubTexture = s_SubTextureVectorMap['1'][0];
             s_TextureMap['1'].IsRigid = false;
 
             s_SubTextureVectorMap['2'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 9.0f, 18.0f })); // Green
@@ -261,7 +261,7 @@ namespace Mario {
             s_SubTextureVectorMap['2'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 9.0f, 12.0f })); // Grey
             s_SubTextureVectorMap['2'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 9.0f,  8.0f })); // Pink
 
-            s_TextureMap['2'].SubTexture = s_SubTextureVectorMap['2'][1];
+            s_TextureMap['2'].SubTexture = s_SubTextureVectorMap['2'][0];
             s_TextureMap['2'].IsRigid = false;
 
             s_SubTextureVectorMap['3'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 10.0f, 18.0f })); // Green
@@ -269,34 +269,34 @@ namespace Mario {
             s_SubTextureVectorMap['3'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 10.0f, 12.0f })); // Grey
             s_SubTextureVectorMap['3'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 10.0f,  8.0f })); // Pink
 
-            s_TextureMap['3'].SubTexture = s_SubTextureVectorMap['3'][1];
+            s_TextureMap['3'].SubTexture = s_SubTextureVectorMap['3'][0];
             s_TextureMap['3'].IsRigid = false;
         }
 
-        // Grass
+        // Cloud
         {
-            s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+            s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Red
             s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 2.0f }, { 1.0f, 2.0f })); // Red
-            s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
-            s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+            s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 0.0f }, { 1.0f, 2.0f })); // Grey
+            s_SubTextureVectorMap['('].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 0.0f, 2.0f }, { 1.0f, 2.0f })); // Blue
 
-            s_TextureMap['('].SubTexture = s_SubTextureVectorMap['('][3];
+            s_TextureMap['('].SubTexture = s_SubTextureVectorMap['('][0];
             s_TextureMap['('].IsRigid = false;
 
-            s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+            s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Red
             s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Red
-            s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
-            s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+            s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 0.0f }, { 1.0f, 2.0f })); // Grey
+            s_SubTextureVectorMap['^'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 1.0f, 2.0f }, { 1.0f, 2.0f })); // Blue
 
-            s_TextureMap['^'].SubTexture = s_SubTextureVectorMap['^'][3];
+            s_TextureMap['^'].SubTexture = s_SubTextureVectorMap['^'][0];
             s_TextureMap['^'].IsRigid = false;
 
-            s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
+            s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Red
             s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Red
-            s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Blue
-            s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Red
+            s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 0.0f }, { 1.0f, 2.0f })); // Grey
+            s_SubTextureVectorMap[')'].emplace_back(SubTexture::CreateFromCoords(s_TileSpriteSheet, { 2.0f, 2.0f }, { 1.0f, 2.0f })); // Blue
 
-            s_TextureMap[')'].SubTexture = s_SubTextureVectorMap[')'][3];
+            s_TextureMap[')'].SubTexture = s_SubTextureVectorMap[')'][0];
             s_TextureMap[')'].IsRigid = false;
         }
 

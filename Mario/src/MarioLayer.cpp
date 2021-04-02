@@ -69,7 +69,7 @@ namespace Mario {
             camera.SetProjectionType(SceneCamera::ProjectionType::Orthographic);
             camera.SetOrthographicSize(20.0);
 
-            cameraEntity.GetComponent<TransformComponent>().Translation.x = 0.0f;;
+            cameraEntity.GetComponent<TransformComponent>().Translation.x = s_WindowWidth / 32.0f;
         }
         
         BackgroundTile::CreateEntities(m_ActiveScene);
