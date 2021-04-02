@@ -6,6 +6,7 @@
 // ******************************************************************************
 
 #include "Viewport.h"
+#include <iKan/Core/Application.h>
 
 namespace iKan {
     

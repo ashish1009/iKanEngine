@@ -137,4 +137,12 @@ namespace iKan {
         BoxCollider2DComponent(const BoxCollider2DComponent& other) = default;
     };
     
+    struct SceneHierarchyPannelProp
+    {
+        bool IsProp = true;
+        
+        SceneHierarchyPannelProp() = default;
+        SceneHierarchyPannelProp(const SceneHierarchyPannelProp& other) = default;
+    };
+    
 }

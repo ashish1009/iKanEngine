@@ -1,8 +1,18 @@
+// ******************************************************************************
+//   File    : MarioApp.cpp
+//   Project : Mario
+//
+//   Created by Ashish
+// ******************************************************************************
+
 #include <iKan.h>
 #include <iKan/EntryPoint.h>
 
 #include <MarioLayer.h>
 
+// ******************************************************************************
+// Mario Application which is derived from engone
+// ******************************************************************************
 class MarioApp : public iKan::Application
 {
 public:

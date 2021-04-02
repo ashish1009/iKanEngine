@@ -51,7 +51,6 @@ namespace iKan {
 
         // Creating the Entity
         Entity entity = { m_Registry.create(), this };
-
         auto& idComponent = entity.AddComponent<IDComponent>();
         idComponent.ID = {};
 
@@ -59,8 +58,9 @@ namespace iKan {
         
         auto& tag = entity.AddComponent<TagComponent>();
         tag.Tag   = name.empty() ? "Entity" : name;
-        
         m_EntityIDMap[idComponent.ID] = entity;
+        
+        entity.AddComponent<SceneHierarchyPannelProp>();
         
         return entity;
     }
@@ -82,6 +82,9 @@ namespace iKan {
         
         IK_CORE_ASSERT((m_EntityIDMap.find(uuid) == m_EntityIDMap.end()), "Entity Akready Added");
         m_EntityIDMap[uuid] = entity;
+        
+        entity.AddComponent<SceneHierarchyPannelProp>();
+        
         return entity;
     }
 
@@ -418,6 +421,11 @@ namespace iKan {
     
     template<>
     void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
+    {
+    }
+
+    template<>
+    void Scene::OnComponentAdded<SceneHierarchyPannelProp>(Entity entity, SceneHierarchyPannelProp& component)
     {
     }
 

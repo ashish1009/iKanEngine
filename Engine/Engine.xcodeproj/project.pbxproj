@@ -83,6 +83,8 @@
 		B2752D1E24FACD64005EF655 /* RendererCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = B2752D1C24FACD64005EF655 /* RendererCommand.h */; };
 		B28083FE25052642003D0684 /* ImGuiAPI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B28083FC25052642003D0684 /* ImGuiAPI.cpp */; };
 		B28083FF25052642003D0684 /* ImGuiAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = B28083FD25052642003D0684 /* ImGuiAPI.h */; };
+		B299635D2616FE2D00247577 /* Viewport.h in Headers */ = {isa = PBXBuildFile; fileRef = B29963582616FE2D00247577 /* Viewport.h */; };
+		B299635E2616FE2D00247577 /* Viewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B299635C2616FE2D00247577 /* Viewport.cpp */; };
 		B2B1F7E6253F49E6008DD031 /* MacInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B1F7E1253F49E6008DD031 /* MacInput.cpp */; };
 		B2B1F7E7253F49E6008DD031 /* MacWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B2B1F7E2253F49E6008DD031 /* MacWindow.cpp */; };
 		B2B1F7E8253F49E6008DD031 /* MacWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = B2B1F7E3253F49E6008DD031 /* MacWindow.h */; };
@@ -222,6 +224,8 @@
 		B2752D1C24FACD64005EF655 /* RendererCommand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RendererCommand.h; sourceTree = "<group>"; };
 		B28083FC25052642003D0684 /* ImGuiAPI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ImGuiAPI.cpp; sourceTree = "<group>"; };
 		B28083FD25052642003D0684 /* ImGuiAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImGuiAPI.h; sourceTree = "<group>"; };
+		B29963582616FE2D00247577 /* Viewport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Viewport.h; sourceTree = "<group>"; };
+		B299635C2616FE2D00247577 /* Viewport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Viewport.cpp; sourceTree = "<group>"; };
 		B2B1F7E1253F49E6008DD031 /* MacInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MacInput.cpp; sourceTree = "<group>"; };
 		B2B1F7E2253F49E6008DD031 /* MacWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MacWindow.cpp; sourceTree = "<group>"; };
 		B2B1F7E3253F49E6008DD031 /* MacWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacWindow.h; sourceTree = "<group>"; };
@@ -579,6 +583,8 @@
 				B2CDABE825012438008C6BDF /* ScriptableEntity.h */,
 				B2309B3C2544A540001A4EE9 /* SceneSerializer.cpp */,
 				B2309B3D2544A540001A4EE9 /* SceneSerializer.h */,
+				B299635C2616FE2D00247577 /* Viewport.cpp */,
+				B29963582616FE2D00247577 /* Viewport.h */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -630,6 +636,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B299635D2616FE2D00247577 /* Viewport.h in Headers */,
 				B22A8A532517B81600D2B9C8 /* Ref.h in Headers */,
 				B2B1F7E8253F49E6008DD031 /* MacWindow.h in Headers */,
 				B24D18CD25472E2E009FF803 /* SceneRenderer.h in Headers */,
@@ -793,6 +800,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B266522224FECB2F0032AF99 /* OpenGlTexture.cpp in Sources */,
+				B299635E2616FE2D00247577 /* Viewport.cpp in Sources */,
 				B24FF89324ED1AAB00884EDA /* Log.cpp in Sources */,
 				B26D9D11250022CF003291C4 /* FrameBuffer.cpp in Sources */,
 				B2137A5724ED78FA00A14055 /* ImGuiBuild.cpp in Sources */,

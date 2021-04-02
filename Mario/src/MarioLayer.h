@@ -21,14 +21,10 @@ namespace Mario {
         bool OnKeyReleased(KeyReleasedEvent& event);
         
     private:
-        bool m_ViewportFocused = false, m_ViewportHovered = false;
-
-        Ref<Framebuffer> m_FrameBuffer;
-        Ref<Scene> m_ActiveScene;
-
-        glm::vec2 m_ViewportSize = { 0.0f, 0.0f };
-        
+        Ref<Scene>           m_ActiveScene;
         SceneHeirarchyPannel m_SceneHierarchyPannel;
+        
+        Viewport& m_Viewport = Viewport::Get();
     };
     
 }
