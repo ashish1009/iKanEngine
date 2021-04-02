@@ -8,6 +8,8 @@
 #include "MarioLayer.h"
 
 namespace Mario {
+
+    MarioLayer::PropertyFlag MarioLayer::s_PropFlag;
         
     // ******************************************************************************
     // Mario Layer Constructor
@@ -38,6 +40,8 @@ namespace Mario {
         // Upload the Shader
         // NOTE: Upload the shader before calling Renderer2D::Begin Scene
         // As in begin scene Shader need to be bind for texture
+        
+        IK_INFO("Adding Mario Shader to Renderer");
         Renderer2D::SetShaader("../../Mario/assets/shaders/Shader.glsl");
  
         // Creating Scene
@@ -125,98 +129,126 @@ namespace Mario {
         }
         m_Viewport.FrameBuffer->Unbind();
     }
-                    
+
     // ******************************************************************************
     // Mario Layer Render Imgui each frame
     // ******************************************************************************
     void MarioLayer::OnImguiRender()
     {
-        static bool isFrameRate           = true;
-        static bool isRendererStats       = true;
-        static bool isVendorType          = true;
-        static bool isSetting             = false;
-        static bool isSceneHeirarchypanel = false;
-
         // Imgui docking
         ImGuiAPI::EnableDcocking();
         {
-            // ----------------------- Menu Bar ---------------------------------------------------------------
-            if (ImGui::BeginMenuBar())
+            MarioLayer::ShowMenue();
+            MarioLayer::RendererStats();
+            
+            // Show Scene hierarchy pannel in imgui
+            if (MarioLayer::s_PropFlag.IsSceneHeirarchypanel)
             {
-                if (ImGui::BeginMenu("File"))
-                {
-                    if (ImGui::MenuItem("Exit")) Application::Get().Close();
-                    ImGui::EndMenu();
-                }
-                if (ImGui::BeginMenu("View"))
-                {
-                    if (ImGui::MenuItem("Scene Heirarchy Panel"))
-                        isSceneHeirarchypanel = !isSceneHeirarchypanel;
-                    if (ImGui::MenuItem("Setting"))
-                        isSetting = !isSetting;
-                    if (ImGui::MenuItem("Frame Rate"))
-                        isFrameRate = !isFrameRate;
-                    if (ImGui::MenuItem("Render Stats"))
-                        isRendererStats = !isRendererStats;
-                    if (ImGui::MenuItem("Vendor Types"))
-                        isVendorType = !isVendorType;
-                    ImGui::EndMenu();
-                }
-                if (ImGui::BeginMenu("Properties"))
-                {
-                    if (ImGui::BeginMenu("Theme"))
-                    {
-                        if (ImGui::MenuItem("Light"))
-                            ImGuiAPI::SetLightThemeColors();
-                        if (ImGui::MenuItem("Dark"))
-                            ImGuiAPI::SetDarkThemeColors();
-                        if (ImGui::MenuItem("Grey"))
-                            ImGuiAPI::SetGreyThemeColors();
-                        ImGui::EndMenu();
-                    }
-                    ImGui::EndMenu();
-                }
-                ImGui::EndMenuBar();
+                m_SceneHierarchyPannel.OnImguiender(&MarioLayer::s_PropFlag.IsSceneHeirarchypanel);
             }
-            
-            if (isFrameRate)
-                ImGuiAPI::FrameRate(&isFrameRate);
 
-            if (isRendererStats)
-                ImGuiAPI::RendererStats(&isRendererStats);
-            
-            if (isVendorType)
-                ImGuiAPI::RendererVersion(&isVendorType);
-            
-            if (isSceneHeirarchypanel)
-                m_SceneHierarchyPannel.OnImguiender(&isSceneHeirarchypanel);
-
-            // ----------------------- Setings ----------------------------------------------------------------
-            if (isSetting)
+            // Show mario Setting in Imgui
+            if (MarioLayer::s_PropFlag.IsSetting)
             {
-                ImGui::Begin("Setting", &isSetting);
+                ImGui::Begin("Setting", &MarioLayer::s_PropFlag.IsSetting);
                 ImGui::End();
             }
             
-            //------------------------ View Port ---------------------------------------------------------------
+            // View Port update
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
             ImGui::Begin("Viewport");
-            
-            m_Viewport.Focused = ImGui::IsWindowFocused();
-            m_Viewport.Hovered = ImGui::IsWindowHovered();
-            Application::Get().GetImGuiLayer()->BlockEvents(!m_Viewport.Focused || !m_Viewport.Hovered);
-            
-            ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-            m_Viewport.Size = { viewportPanelSize.x, viewportPanelSize.y };
-            
-            size_t textureID = m_Viewport.FrameBuffer->GetColorAttachmentRendererID();
-            ImGui::Image((void*)textureID, ImVec2{ m_Viewport.Size.x, m_Viewport.Size.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
+            {
+                m_Viewport.OnUpdate();
+            }
             ImGui::End();
             ImGui::PopStyleVar();
         }
         // Ending of Docking egining
         ImGuiAPI::EndDocking();
+    }
+    
+    // ******************************************************************************
+    // Show menu for Mario
+    // ******************************************************************************
+    void MarioLayer::ShowMenue()
+    {
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Exit"))
+                {
+                    Application::Get().Close();
+                }
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("View"))
+            {
+                if (ImGui::MenuItem("Scene Heirarchy Panel"))
+                {
+                    MarioLayer::s_PropFlag.IsSceneHeirarchypanel = !MarioLayer::s_PropFlag.IsSceneHeirarchypanel;
+                }
+                if (ImGui::MenuItem("Setting"))
+                {
+                    MarioLayer::s_PropFlag.IsSetting = !MarioLayer::s_PropFlag.IsSetting;
+                }
+                if (ImGui::MenuItem("Frame Rate"))
+                {
+                    MarioLayer::s_PropFlag.IsFrameRate = !MarioLayer::s_PropFlag.IsFrameRate;
+                }
+                if (ImGui::MenuItem("Render Stats"))
+                {
+                    MarioLayer::s_PropFlag.IsRendererStats = !MarioLayer::s_PropFlag.IsRendererStats;
+                }
+                if (ImGui::MenuItem("Vendor Types"))
+                {
+                    MarioLayer::s_PropFlag.IsVendorType = !MarioLayer::s_PropFlag.IsVendorType;
+                }
+                ImGui::EndMenu();
+            }
+            if (ImGui::BeginMenu("Properties"))
+            {
+                if (ImGui::BeginMenu("Theme"))
+                {
+                    if (ImGui::MenuItem("Light"))
+                    {
+                        ImGuiAPI::SetLightThemeColors();
+                    }
+                    if (ImGui::MenuItem("Dark"))
+                    {
+                        ImGuiAPI::SetDarkThemeColors();
+                    }
+                    if (ImGui::MenuItem("Grey"))
+                    {
+                        ImGuiAPI::SetGreyThemeColors();
+                    }
+                    ImGui::EndMenu();
+                }
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
+    }
+    
+    // ******************************************************************************
+    // Show the renderer stats
+    // ******************************************************************************
+    void MarioLayer::RendererStats()
+    {
+        if (MarioLayer::s_PropFlag.IsFrameRate)
+        {
+            ImGuiAPI::FrameRate(&MarioLayer::s_PropFlag.IsFrameRate);
+        }
 
+        if (MarioLayer::s_PropFlag.IsRendererStats)
+        {
+            ImGuiAPI::RendererStats(&MarioLayer::s_PropFlag.IsRendererStats);
+        }
+        
+        if (MarioLayer::s_PropFlag.IsVendorType)
+        {
+            ImGuiAPI::RendererVersion(&MarioLayer::s_PropFlag.IsVendorType);
+        }
     }
                                     
 }
