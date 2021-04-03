@@ -7,6 +7,8 @@
 
 #include <iKan.h>
 
+#include "Player.h"
+
 using namespace iKan;
 
 namespace Mario {
@@ -48,6 +50,8 @@ namespace Mario {
             bool IsSceneHeirarchypanel = false;
         };
         static PropertyFlag s_PropFlag;
+        
+        Player& m_Player = Player::Get();
         
     };
     

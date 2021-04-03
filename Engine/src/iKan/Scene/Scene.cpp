@@ -358,23 +358,6 @@ namespace iKan {
             } // if (boxColl.IsRigid)
         } // for (auto entity : group)
 
-        if (result)
-        {
-            m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
-                                                          {
-                // nsc.Scripts is the Vector to store multiple Scripts for 1 entity
-                for (auto script : nsc.Scripts)
-                {
-                    // If a script is not created before then create the script and update the function
-                    if (!script->m_Created)
-                    {
-                        script->m_Entity = { entity, this };
-                        script->OnCreate();
-                    }
-                    script->OnBoxCollision(s_BoxColloidedEntity, result);
-                }
-            });
-        }
         return result;
     }
 
