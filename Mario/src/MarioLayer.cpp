@@ -36,7 +36,7 @@ namespace Mario {
     {
         IK_INFO("Mario Layer is attached to the appliaction");
         
-       ImGuiAPI::SetDarkThemeColors();
+        ImGuiAPI::SetDarkThemeColors();
         
         // Upload the Shader
         // NOTE: Upload the shader before calling Renderer2D::Begin Scene

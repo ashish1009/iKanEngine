@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75F0F8BA2688B343001B2842 /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B23FF91A25F0F787001DFEEF /* libassimp.5.dylib */; };
+		75F0F8BB2688B38F001B2842 /* libassimp.5.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = B23FF91A25F0F787001DFEEF /* libassimp.5.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F024ED275600A14055 /* OpenGL.framework */; };
 		B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F224ED275B00A14055 /* IOKit.framework */; };
 		B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B21375F424ED276400A14055 /* Cocoa.framework */; };
-		B23FF91B25F0F787001DFEEF /* libassimp.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B23FF91A25F0F787001DFEEF /* libassimp.5.dylib */; };
 		B24FF87824ED197300884EDA /* EditorApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B24FF87724ED197300884EDA /* EditorApp.cpp */; };
 		B24FF89924ED1BF900884EDA /* libEngine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B24FF89824ED1BF900884EDA /* libEngine.a */; };
 		B253892C251FBF8300E5FD98 /* SceneEditorLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B253892A251FBF8300E5FD98 /* SceneEditorLayer.cpp */; };
@@ -19,12 +20,13 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		B24FF87224ED197300884EDA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 6;
 			files = (
+				75F0F8BB2688B38F001B2842 /* libassimp.5.dylib in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -46,7 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B23FF91B25F0F787001DFEEF /* libassimp.5.dylib in Frameworks */,
+				75F0F8BA2688B343001B2842 /* libassimp.5.dylib in Frameworks */,
 				B21375F524ED276400A14055 /* Cocoa.framework in Frameworks */,
 				B21375F324ED275B00A14055 /* IOKit.framework in Frameworks */,
 				B21375F124ED275600A14055 /* OpenGL.framework in Frameworks */,
@@ -314,6 +316,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/imguizmo",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -340,6 +343,7 @@
 					"${PROJECT_DIR}/../Engine/vendor/imguizmo",
 				);
 				LIBRARY_SEARCH_PATHS = "${PROJECT_DIR}/../Engine/vendor/Assimp/lib";
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
